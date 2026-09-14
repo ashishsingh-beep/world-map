@@ -21,6 +21,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         onPick={setSelected}
         labels={showAll ? 'all' : 'selected'}
         selectedIso={selected}
+        padding={{ top: 88, right: 32, bottom: 32, left: 32 }}
       />
 
       <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-4">

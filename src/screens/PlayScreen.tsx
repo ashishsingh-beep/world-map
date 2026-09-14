@@ -50,6 +50,7 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
         revealIso={quiz.revealIso}
         pinIso={quiz.pinIso}
         onPick={quiz.pick}
+        padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />
 
       {/* HUD */}

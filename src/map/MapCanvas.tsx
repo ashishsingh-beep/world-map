@@ -15,6 +15,17 @@ const MARKER_RADIUS_PX = 9
 const REVEAL_PADDING = 6
 const MAX_REVEAL_SCALE = 14
 
+/** Screen-space clearance around the fitted geography, so it doesn't butt up
+ *  against the viewport edge or hide behind HUD chrome a screen overlays. */
+export interface MapPadding {
+  top?: number
+  right?: number
+  bottom?: number
+  left?: number
+}
+
+const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, left: 24 }
+
 export interface MapCanvasProps {
   /** Geography to draw. For a continent round this is just that continent. */
   render: string[]
@@ -32,6 +43,8 @@ export interface MapCanvasProps {
   labels?: 'none' | 'all' | 'selected'
   selectedIso?: string | null
   className?: string
+  /** Clearance around the fitted geography. Defaults to 24px on every side. */
+  padding?: MapPadding
 }
 
 const FILLS: Record<CountryState, string> = {
@@ -53,7 +66,9 @@ export function MapCanvas({
   labels = 'none',
   selectedIso = null,
   className,
+  padding,
 }: MapCanvasProps) {
+  const pad = { ...DEFAULT_PADDING, ...padding }
   const wrapRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const zoomRef = useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null)
@@ -96,8 +111,8 @@ export function MapCanvas({
      */
     p.fitExtent(
       [
-        [8, 8],
-        [size.width - 8, size.height - 8],
+        [pad.left, pad.top],
+        [size.width - pad.right, size.height - pad.bottom],
       ],
       {
         type: 'MultiPoint',
@@ -110,7 +125,7 @@ export function MapCanvas({
       }
     )
     return p
-  }, [view, size.width, size.height])
+  }, [view, size.width, size.height, pad.left, pad.top, pad.right, pad.bottom])
 
   const path = useMemo(() => geoPath(projection), [projection])
 
@@ -142,7 +157,13 @@ export function MapCanvas({
         [0, 0],
         [size.width, size.height],
       ])
+      .on('start', () => {
+        svg.style.cursor = 'grabbing'
+      })
       .on('zoom', (event) => setTransform(event.transform))
+      .on('end', () => {
+        svg.style.cursor = 'grab'
+      })
     select(svg).call(behaviour).on('dblclick.zoom', null)
     zoomRef.current = behaviour
     return () => {
@@ -193,7 +214,7 @@ export function MapCanvas({
         width={size.width}
         height={size.height}
         className="block touch-none select-none"
-        style={{ background: '#22cdfb' }}
+        style={{ background: '#22cdfb', cursor: 'grab' }}
       >
         <g transform={transform.toString()}>
           {drawn.map((f) => {
