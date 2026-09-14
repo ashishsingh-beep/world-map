@@ -1,0 +1,4372 @@
+{
+  "IDN": {
+    "iso": "IDN",
+    "iso2": "ID",
+    "name": "Indonesia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      117.2105,
+      -2.272
+    ],
+    "bounds": [
+      [
+        95.0127,
+        -10.9226
+      ],
+      [
+        140.9776,
+        5.9101
+      ]
+    ],
+    "area": 0.046518
+  },
+  "MYS": {
+    "iso": "MYS",
+    "iso2": "MY",
+    "name": "Malaysia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      109.7005,
+      3.8137
+    ],
+    "bounds": [
+      [
+        99.6452,
+        0.8514
+      ],
+      [
+        119.2781,
+        7.3558
+      ]
+    ],
+    "area": 0.0081137
+  },
+  "CHL": {
+    "iso": "CHL",
+    "iso2": "CL",
+    "name": "Chile",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -71.0452,
+      -36.0801
+    ],
+    "bounds": [
+      [
+        -109.4537,
+        -55.9185
+      ],
+      [
+        -66.4208,
+        -17.5066
+      ]
+    ],
+    "area": 0.018142
+  },
+  "BOL": {
+    "iso": "BOL",
+    "iso2": "BO",
+    "name": "Bolivia",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -64.6978,
+      -16.6807
+    ],
+    "bounds": [
+      [
+        -69.6665,
+        -22.8973
+      ],
+      [
+        -57.4657,
+        -9.6798
+      ]
+    ],
+    "area": 0.026865
+  },
+  "PER": {
+    "iso": "PER",
+    "iso2": "PE",
+    "name": "Peru",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -74.4164,
+      -9.1087
+    ],
+    "bounds": [
+      [
+        -81.3376,
+        -18.3377
+      ],
+      [
+        -68.6843,
+        -0.0291
+      ]
+    ],
+    "area": 0.031908
+  },
+  "ARG": {
+    "iso": "ARG",
+    "iso2": "AR",
+    "name": "Argentina",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -64.7574,
+      -34.6816
+    ],
+    "bounds": [
+      [
+        -73.5727,
+        -55.052
+      ],
+      [
+        -53.6616,
+        -21.7869
+      ]
+    ],
+    "area": 0.068567
+  },
+  "CYP": {
+    "iso": "CYP",
+    "iso2": "CY",
+    "name": "Cyprus",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      33.2219,
+      35.0554
+    ],
+    "bounds": [
+      [
+        32.2717,
+        34.625
+      ],
+      [
+        34.5925,
+        35.692
+      ]
+    ],
+    "area": 0.00022311
+  },
+  "IND": {
+    "iso": "IND",
+    "iso2": "IN",
+    "name": "India",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      79.4495,
+      23.2271
+    ],
+    "bounds": [
+      [
+        68.1434,
+        6.7456
+      ],
+      [
+        97.3623,
+        37.0545
+      ]
+    ],
+    "area": 0.080659
+  },
+  "ISR": {
+    "iso": "ISR",
+    "iso2": "IL",
+    "name": "Israel",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      34.9508,
+      31.3469
+    ],
+    "bounds": [
+      [
+        34.2484,
+        29.4897
+      ],
+      [
+        35.6722,
+        33.2821
+      ]
+    ],
+    "area": 0.00051508
+  },
+  "PSE": {
+    "iso": "PSE",
+    "iso2": "PS",
+    "name": "Palestine",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      35.1999,
+      31.9165
+    ],
+    "bounds": [
+      [
+        34.2003,
+        31.2114
+      ],
+      [
+        35.5725,
+        32.5426
+      ]
+    ],
+    "area": 0.00014976
+  },
+  "LBN": {
+    "iso": "LBN",
+    "iso2": "LB",
+    "name": "Lebanon",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      35.877,
+      33.9175
+    ],
+    "bounds": [
+      [
+        35.0996,
+        33.0556
+      ],
+      [
+        36.6041,
+        34.6875
+      ]
+    ],
+    "area": 0.00024699
+  },
+  "ETH": {
+    "iso": "ETH",
+    "iso2": "ET",
+    "name": "Ethiopia",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      39.6096,
+      8.6145
+    ],
+    "bounds": [
+      [
+        32.9898,
+        3.4033
+      ],
+      [
+        47.9792,
+        14.8795
+      ]
+    ],
+    "area": 0.02789
+  },
+  "SSD": {
+    "iso": "SSD",
+    "iso2": "SS",
+    "name": "South Sudan",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      30.305,
+      7.2836
+    ],
+    "bounds": [
+      [
+        24.1216,
+        3.4902
+      ],
+      [
+        35.9208,
+        12.2162
+      ]
+    ],
+    "area": 0.01551
+  },
+  "SOM": {
+    "iso": "SOM",
+    "iso2": "SO",
+    "name": "Somalia",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      45.8285,
+      6.0474
+    ],
+    "bounds": [
+      [
+        40.9654,
+        -1.6963
+      ],
+      [
+        51.417,
+        11.9891
+      ]
+    ],
+    "area": 0.015816
+  },
+  "KEN": {
+    "iso": "KEN",
+    "iso2": "KE",
+    "name": "Kenya",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      37.8226,
+      0.5505
+    ],
+    "bounds": [
+      [
+        33.8905,
+        -4.6775
+      ],
+      [
+        41.885,
+        5.0304
+      ]
+    ],
+    "area": 0.014494
+  },
+  "MWI": {
+    "iso": "MWI",
+    "iso2": "MW",
+    "name": "Malawi",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      34.2834,
+      -13.2035
+    ],
+    "bounds": [
+      [
+        32.6633,
+        -17.1353
+      ],
+      [
+        35.9043,
+        -9.3812
+      ]
+    ],
+    "area": 0.0029527
+  },
+  "TZA": {
+    "iso": "TZA",
+    "iso2": "TZ",
+    "name": "Tanzania",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      34.8023,
+      -6.2677
+    ],
+    "bounds": [
+      [
+        29.321,
+        -11.7313
+      ],
+      [
+        40.4494,
+        -0.9858
+      ]
+    ],
+    "area": 0.023295
+  },
+  "CHN": {
+    "iso": "CHN",
+    "iso2": "CN",
+    "name": "China",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      103.49,
+      36.684
+    ],
+    "bounds": [
+      [
+        73.6023,
+        18.1693
+      ],
+      [
+        134.7726,
+        53.5694
+      ]
+    ],
+    "area": 0.23004
+  },
+  "SYR": {
+    "iso": "SYR",
+    "iso2": "SY",
+    "name": "Syria",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      38.4664,
+      35.0039
+    ],
+    "bounds": [
+      [
+        35.5877,
+        32.313
+      ],
+      [
+        42.3772,
+        37.3249
+      ]
+    ],
+    "area": 0.0046107
+  },
+  "FRA": {
+    "iso": "FRA",
+    "iso2": "FR",
+    "name": "France",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      -6.662,
+      42.9632
+    ],
+    "bounds": [
+      [
+        -61.7978,
+        -21.3708
+      ],
+      [
+        55.8545,
+        51.0875
+      ]
+    ],
+    "area": 0.015663
+  },
+  "SUR": {
+    "iso": "SUR",
+    "iso2": "SR",
+    "name": "Suriname",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -55.9112,
+      4.1305
+    ],
+    "bounds": [
+      [
+        -58.0677,
+        1.8335
+      ],
+      [
+        -53.9864,
+        6.0116
+      ]
+    ],
+    "area": 0.0035912
+  },
+  "GUY": {
+    "iso": "GUY",
+    "iso2": "GY",
+    "name": "Guyana",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -58.978,
+      4.7893
+    ],
+    "bounds": [
+      [
+        -61.3967,
+        1.1858
+      ],
+      [
+        -56.4818,
+        8.558
+      ]
+    ],
+    "area": 0.0052264
+  },
+  "KOR": {
+    "iso": "KOR",
+    "iso2": "KR",
+    "name": "South Korea",
+    "aliases": [
+      "Korea South",
+      "Republic of Korea"
+    ],
+    "continent": "Asia",
+    "centroid": [
+      127.8146,
+      36.3612
+    ],
+    "bounds": [
+      [
+        124.6136,
+        33.1976
+      ],
+      [
+        130.9207,
+        38.6243
+      ]
+    ],
+    "area": 0.0024273
+  },
+  "PRK": {
+    "iso": "PRK",
+    "iso2": "KP",
+    "name": "North Korea",
+    "aliases": [
+      "DPRK",
+      "Korea North"
+    ],
+    "continent": "Asia",
+    "centroid": [
+      127.1505,
+      40.1372
+    ],
+    "bounds": [
+      [
+        124.2113,
+        37.6756
+      ],
+      [
+        130.7,
+        43.0103
+      ]
+    ],
+    "area": 0.0030117
+  },
+  "MAR": {
+    "iso": "MAR",
+    "iso2": "MA",
+    "name": "Morocco",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -9.1641,
+      29.0396
+    ],
+    "bounds": [
+      [
+        -17.1046,
+        20.7669
+      ],
+      [
+        -1.032,
+        35.9265
+      ]
+    ],
+    "area": 0.01683
+  },
+  "CRI": {
+    "iso": "CRI",
+    "iso2": "CR",
+    "name": "Costa Rica",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -84.1914,
+      9.9732
+    ],
+    "bounds": [
+      [
+        -87.1177,
+        5.5151
+      ],
+      [
+        -82.5628,
+        11.2099
+      ]
+    ],
+    "area": 0.0012653
+  },
+  "NIC": {
+    "iso": "NIC",
+    "iso2": "NI",
+    "name": "Nicaragua",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -85.0348,
+      12.8434
+    ],
+    "bounds": [
+      [
+        -87.6858,
+        10.7135
+      ],
+      [
+        -82.7257,
+        15.031
+      ]
+    ],
+    "area": 0.0031825
+  },
+  "COG": {
+    "iso": "COG",
+    "iso2": "CG",
+    "name": "Republic of the Congo",
+    "aliases": [
+      "Congo",
+      "Congo Brazzaville"
+    ],
+    "continent": "Africa",
+    "centroid": [
+      15.2198,
+      -0.838
+    ],
+    "bounds": [
+      [
+        11.114,
+        -5.0196
+      ],
+      [
+        18.6424,
+        3.7083
+      ]
+    ],
+    "area": 0.0085349
+  },
+  "COD": {
+    "iso": "COD",
+    "iso2": "CD",
+    "name": "DR Congo",
+    "aliases": [
+      "Democratic Republic of the Congo",
+      "DRC",
+      "Congo Kinshasa"
+    ],
+    "continent": "Africa",
+    "centroid": [
+      23.6388,
+      -2.8678
+    ],
+    "bounds": [
+      [
+        12.2105,
+        -13.4584
+      ],
+      [
+        31.2804,
+        5.3753
+      ]
+    ],
+    "area": 0.057537
+  },
+  "BTN": {
+    "iso": "BTN",
+    "iso2": "BT",
+    "name": "Bhutan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      90.407,
+      27.4225
+    ],
+    "bounds": [
+      [
+        88.7301,
+        26.6961
+      ],
+      [
+        92.0888,
+        28.3584
+      ]
+    ],
+    "area": 0.00099748
+  },
+  "UKR": {
+    "iso": "UKR",
+    "iso2": "UA",
+    "name": "Ukraine",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      31.4651,
+      49.0225
+    ],
+    "bounds": [
+      [
+        22.1328,
+        44.381
+      ],
+      [
+        40.1595,
+        52.3689
+      ]
+    ],
+    "area": 0.014713
+  },
+  "BLR": {
+    "iso": "BLR",
+    "iso2": "BY",
+    "name": "Belarus",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      28.0164,
+      53.5201
+    ],
+    "bounds": [
+      [
+        23.1656,
+        51.2352
+      ],
+      [
+        32.7195,
+        56.1568
+      ]
+    ],
+    "area": 0.0050907
+  },
+  "NAM": {
+    "iso": "NAM",
+    "iso2": "NA",
+    "name": "Namibia",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      17.1966,
+      -22.0686
+    ],
+    "bounds": [
+      [
+        11.7176,
+        -28.9594
+      ],
+      [
+        25.2598,
+        -16.9511
+      ]
+    ],
+    "area": 0.020321
+  },
+  "ZAF": {
+    "iso": "ZAF",
+    "iso2": "ZA",
+    "name": "South Africa",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      25.1965,
+      -28.9745
+    ],
+    "bounds": [
+      [
+        16.47,
+        -46.9658
+      ],
+      [
+        37.9778,
+        -22.1265
+      ]
+    ],
+    "area": 0.030093
+  },
+  "OMN": {
+    "iso": "OMN",
+    "iso2": "OM",
+    "name": "Oman",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      56.0632,
+      20.5824
+    ],
+    "bounds": [
+      [
+        51.9786,
+        16.6424
+      ],
+      [
+        59.8446,
+        26.386
+      ]
+    ],
+    "area": 0.0076889
+  },
+  "UZB": {
+    "iso": "UZB",
+    "iso2": "UZ",
+    "name": "Uzbekistan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      63.303,
+      41.7758
+    ],
+    "bounds": [
+      [
+        55.9758,
+        37.1851
+      ],
+      [
+        73.1486,
+        45.5587
+      ]
+    ],
+    "area": 0.011017
+  },
+  "KAZ": {
+    "iso": "KAZ",
+    "iso2": "KZ",
+    "name": "Kazakhstan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      67.2412,
+      48.3609
+    ],
+    "bounds": [
+      [
+        46.4783,
+        40.5847
+      ],
+      [
+        87.3238,
+        55.4346
+      ]
+    ],
+    "area": 0.066836
+  },
+  "TJK": {
+    "iso": "TJK",
+    "iso2": "TJ",
+    "name": "Tajikistan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      71.0291,
+      38.536
+    ],
+    "bounds": [
+      [
+        67.3427,
+        36.6786
+      ],
+      [
+        75.1641,
+        41.04
+      ]
+    ],
+    "area": 0.0035018
+  },
+  "LTU": {
+    "iso": "LTU",
+    "iso2": "LT",
+    "name": "Lithuania",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      23.8982,
+      55.3246
+    ],
+    "bounds": [
+      [
+        20.9246,
+        53.8868
+      ],
+      [
+        26.8007,
+        56.4426
+      ]
+    ],
+    "area": 0.0015926
+  },
+  "BRA": {
+    "iso": "BRA",
+    "iso2": "BR",
+    "name": "Brazil",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -53.21,
+      -10.6314
+    ],
+    "bounds": [
+      [
+        -74.0185,
+        -33.7423
+      ],
+      [
+        -28.8771,
+        5.2672
+      ]
+    ],
+    "area": 0.20953
+  },
+  "URY": {
+    "iso": "URY",
+    "iso2": "UY",
+    "name": "Uruguay",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -56.0243,
+      -32.79
+    ],
+    "bounds": [
+      [
+        -58.4394,
+        -34.9734
+      ],
+      [
+        -53.1108,
+        -30.0969
+      ]
+    ],
+    "area": 0.0043715
+  },
+  "MNG": {
+    "iso": "MNG",
+    "iso2": "MN",
+    "name": "Mongolia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      103.127,
+      46.9552
+    ],
+    "bounds": [
+      [
+        87.7357,
+        41.5861
+      ],
+      [
+        119.907,
+        52.1296
+      ]
+    ],
+    "area": 0.038447
+  },
+  "RUS": {
+    "iso": "RUS",
+    "iso2": "RU",
+    "name": "Russia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      95.8009,
+      66.0376
+    ],
+    "bounds": [
+      [
+        19.6095,
+        41.1927
+      ],
+      [
+        -168.9946,
+        81.8587
+      ]
+    ],
+    "area": 0.41536
+  },
+  "CZE": {
+    "iso": "CZE",
+    "iso2": "CZ",
+    "name": "Czechia",
+    "aliases": [
+      "Czech Republic"
+    ],
+    "continent": "Europe",
+    "centroid": [
+      15.3211,
+      49.737
+    ],
+    "bounds": [
+      [
+        12.0761,
+        48.5579
+      ],
+      [
+        18.8374,
+        51.04
+      ]
+    ],
+    "area": 0.0019339
+  },
+  "DEU": {
+    "iso": "DEU",
+    "iso2": "DE",
+    "name": "Germany",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      10.3607,
+      51.05
+    ],
+    "bounds": [
+      [
+        5.8525,
+        47.2711
+      ],
+      [
+        15.0221,
+        55.0653
+      ]
+    ],
+    "area": 0.00878
+  },
+  "EST": {
+    "iso": "EST",
+    "iso2": "EE",
+    "name": "Estonia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      25.5384,
+      58.672
+    ],
+    "bounds": [
+      [
+        21.8324,
+        57.5158
+      ],
+      [
+        28.1865,
+        59.6709
+      ]
+    ],
+    "area": 0.0011229
+  },
+  "LVA": {
+    "iso": "LVA",
+    "iso2": "LV",
+    "name": "Latvia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      24.9167,
+      56.8605
+    ],
+    "bounds": [
+      [
+        20.9686,
+        55.667
+      ],
+      [
+        28.2173,
+        58.0751
+      ]
+    ],
+    "area": 0.0015831
+  },
+  "NOR": {
+    "iso": "NOR",
+    "iso2": "NO",
+    "name": "Norway",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      12.8005,
+      66.3896
+    ],
+    "bounds": [
+      [
+        -9.1174,
+        -54.4625
+      ],
+      [
+        33.6404,
+        80.7701
+      ]
+    ],
+    "area": 0.0093505
+  },
+  "SWE": {
+    "iso": "SWE",
+    "iso2": "SE",
+    "name": "Sweden",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      16.2772,
+      62.3812
+    ],
+    "bounds": [
+      [
+        11.1082,
+        55.3427
+      ],
+      [
+        24.1634,
+        69.0364
+      ]
+    ],
+    "area": 0.010926
+  },
+  "FIN": {
+    "iso": "FIN",
+    "iso2": "FI",
+    "name": "Finland",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      26.1909,
+      64.2517
+    ],
+    "bounds": [
+      [
+        20.6232,
+        59.8112
+      ],
+      [
+        31.5695,
+        70.0753
+      ]
+    ],
+    "area": 0.0081532
+  },
+  "VNM": {
+    "iso": "VNM",
+    "iso2": "VN",
+    "name": "Vietnam",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      106.3481,
+      16.5403
+    ],
+    "bounds": [
+      [
+        102.1187,
+        8.5656
+      ],
+      [
+        109.4724,
+        23.3663
+      ]
+    ],
+    "area": 0.0081298
+  },
+  "KHM": {
+    "iso": "KHM",
+    "iso2": "KH",
+    "name": "Cambodia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      104.9012,
+      12.715
+    ],
+    "bounds": [
+      [
+        102.3134,
+        10.4158
+      ],
+      [
+        107.6105,
+        14.7046
+      ]
+    ],
+    "area": 0.0044778
+  },
+  "LUX": {
+    "iso": "LUX",
+    "iso2": "LU",
+    "name": "Luxembourg",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      6.0721,
+      49.7663
+    ],
+    "bounds": [
+      [
+        5.7149,
+        49.4413
+      ],
+      [
+        6.5026,
+        50.175
+      ]
+    ],
+    "area": 0.00006405
+  },
+  "ARE": {
+    "iso": "ARE",
+    "iso2": "AE",
+    "name": "United Arab Emirates",
+    "aliases": [
+      "UAE"
+    ],
+    "continent": "Asia",
+    "centroid": [
+      54.2933,
+      23.9058
+    ],
+    "bounds": [
+      [
+        51.5693,
+        22.6209
+      ],
+      [
+        56.3836,
+        26.0748
+      ]
+    ],
+    "area": 0.0017553
+  },
+  "BEL": {
+    "iso": "BEL",
+    "iso2": "BE",
+    "name": "Belgium",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      4.6472,
+      50.6367
+    ],
+    "bounds": [
+      [
+        2.5218,
+        49.4952
+      ],
+      [
+        6.3745,
+        51.4962
+      ]
+    ],
+    "area": 0.00075294
+  },
+  "GEO": {
+    "iso": "GEO",
+    "iso2": "GE",
+    "name": "Georgia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      43.5241,
+      42.1732
+    ],
+    "bounds": [
+      [
+        39.986,
+        41.0441
+      ],
+      [
+        46.6948,
+        43.5758
+      ]
+    ],
+    "area": 0.0017113
+  },
+  "MKD": {
+    "iso": "MKD",
+    "iso2": "MK",
+    "name": "North Macedonia",
+    "aliases": [
+      "Macedonia"
+    ],
+    "continent": "Europe",
+    "centroid": [
+      21.6823,
+      41.5949
+    ],
+    "bounds": [
+      [
+        20.4442,
+        40.8494
+      ],
+      [
+        23.0096,
+        42.3703
+      ]
+    ],
+    "area": 0.00062452
+  },
+  "ALB": {
+    "iso": "ALB",
+    "iso2": "AL",
+    "name": "Albania",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      20.0558,
+      41.1349
+    ],
+    "bounds": [
+      [
+        19.272,
+        39.637
+      ],
+      [
+        21.0367,
+        42.6548
+      ]
+    ],
+    "area": 0.00069718
+  },
+  "AZE": {
+    "iso": "AZE",
+    "iso2": "AZ",
+    "name": "Azerbaijan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      47.5439,
+      40.2874
+    ],
+    "bounds": [
+      [
+        44.7746,
+        38.3926
+      ],
+      [
+        50.6257,
+        41.8904
+      ]
+    ],
+    "area": 0.0021225
+  },
+  "SRB": {
+    "iso": "SRB",
+    "iso2": "RS",
+    "name": "Republic of Serbia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      20.8148,
+      44.0098
+    ],
+    "bounds": [
+      [
+        18.845,
+        41.844
+      ],
+      [
+        22.9846,
+        46.1739
+      ]
+    ],
+    "area": 0.002177
+  },
+  "TUR": {
+    "iso": "TUR",
+    "iso2": "TR",
+    "name": "Turkey",
+    "aliases": [
+      "Turkiye"
+    ],
+    "continent": "Asia",
+    "centroid": [
+      35.1713,
+      39.1365
+    ],
+    "bounds": [
+      [
+        25.6633,
+        35.8198
+      ],
+      [
+        44.807,
+        42.0988
+      ]
+    ],
+    "area": 0.019203
+  },
+  "ESP": {
+    "iso": "ESP",
+    "iso2": "ES",
+    "name": "Spain",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      -3.7106,
+      40.19
+    ],
+    "bounds": [
+      [
+        -18.1672,
+        27.6422
+      ],
+      [
+        4.3371,
+        43.7934
+      ]
+    ],
+    "area": 0.012474
+  },
+  "LAO": {
+    "iso": "LAO",
+    "iso2": "LA",
+    "name": "Laos",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      103.7751,
+      18.4875
+    ],
+    "bounds": [
+      [
+        100.0971,
+        13.9155
+      ],
+      [
+        107.6644,
+        22.496
+      ]
+    ],
+    "area": 0.0056376
+  },
+  "KGZ": {
+    "iso": "KGZ",
+    "iso2": "KG",
+    "name": "Kyrgyzstan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      74.5091,
+      41.474
+    ],
+    "bounds": [
+      [
+        69.2263,
+        39.1892
+      ],
+      [
+        80.2576,
+        43.2617
+      ]
+    ],
+    "area": 0.0048956
+  },
+  "ARM": {
+    "iso": "ARM",
+    "iso2": "AM",
+    "name": "Armenia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      44.9407,
+      40.2859
+    ],
+    "bounds": [
+      [
+        43.4363,
+        38.8637
+      ],
+      [
+        46.6026,
+        41.2905
+      ]
+    ],
+    "area": 0.00072814
+  },
+  "DNK": {
+    "iso": "DNK",
+    "iso2": "DK",
+    "name": "Denmark",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      10.066,
+      55.959
+    ],
+    "bounds": [
+      [
+        8.094,
+        54.5686
+      ],
+      [
+        15.1514,
+        57.7512
+      ]
+    ],
+    "area": 0.0010469
+  },
+  "LBY": {
+    "iso": "LBY",
+    "iso2": "LY",
+    "name": "Libya",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      18.0677,
+      27.016
+    ],
+    "bounds": [
+      [
+        9.2865,
+        19.4961
+      ],
+      [
+        25.1563,
+        33.1812
+      ]
+    ],
+    "area": 0.040073
+  },
+  "TUN": {
+    "iso": "TUN",
+    "iso2": "TN",
+    "name": "Tunisia",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      9.5578,
+      34.0888
+    ],
+    "bounds": [
+      [
+        7.4798,
+        30.2289
+      ],
+      [
+        11.5641,
+        37.3452
+      ]
+    ],
+    "area": 0.0038594
+  },
+  "ROU": {
+    "iso": "ROU",
+    "iso2": "RO",
+    "name": "Romania",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      24.9831,
+      45.8494
+    ],
+    "bounds": [
+      [
+        20.2428,
+        43.6501
+      ],
+      [
+        29.6996,
+        48.2748
+      ]
+    ],
+    "area": 0.0058095
+  },
+  "HUN": {
+    "iso": "HUN",
+    "iso2": "HU",
+    "name": "Hungary",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      19.3804,
+      47.1664
+    ],
+    "bounds": [
+      [
+        16.094,
+        45.7413
+      ],
+      [
+        22.8776,
+        48.5692
+      ]
+    ],
+    "area": 0.0022899
+  },
+  "SVK": {
+    "iso": "SVK",
+    "iso2": "SK",
+    "name": "Slovakia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      19.4703,
+      48.7107
+    ],
+    "bounds": [
+      [
+        16.8445,
+        47.75
+      ],
+      [
+        22.5396,
+        49.6018
+      ]
+    ],
+    "area": 0.0011902
+  },
+  "POL": {
+    "iso": "POL",
+    "iso2": "PL",
+    "name": "Poland",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      19.4237,
+      52.109
+    ],
+    "bounds": [
+      [
+        14.1239,
+        48.994
+      ],
+      [
+        24.1432,
+        54.8384
+      ]
+    ],
+    "area": 0.0076921
+  },
+  "IRL": {
+    "iso": "IRL",
+    "iso2": "IE",
+    "name": "Ireland",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      -8.1527,
+      53.1652
+    ],
+    "bounds": [
+      [
+        -10.4782,
+        51.4457
+      ],
+      [
+        -5.9935,
+        55.3864
+      ]
+    ],
+    "area": 0.0017039
+  },
+  "GBR": {
+    "iso": "GBR",
+    "iso2": "GB",
+    "name": "United Kingdom",
+    "aliases": [
+      "UK",
+      "Great Britain",
+      "Britain"
+    ],
+    "continent": "Europe",
+    "centroid": [
+      -2.7777,
+      54.0337
+    ],
+    "bounds": [
+      [
+        -13.6913,
+        49.9096
+      ],
+      [
+        1.7712,
+        60.8479
+      ]
+    ],
+    "area": 0.0059803
+  },
+  "GRC": {
+    "iso": "GRC",
+    "iso2": "GR",
+    "name": "Greece",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      22.9847,
+      39.0245
+    ],
+    "bounds": [
+      [
+        19.6265,
+        34.815
+      ],
+      [
+        28.2398,
+        41.7505
+      ]
+    ],
+    "area": 0.0032334
+  },
+  "ZMB": {
+    "iso": "ZMB",
+    "iso2": "ZM",
+    "name": "Zambia",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      27.8081,
+      -13.4574
+    ],
+    "bounds": [
+      [
+        21.9799,
+        -18.0692
+      ],
+      [
+        33.6742,
+        -8.1941
+      ]
+    ],
+    "area": 0.018594
+  },
+  "SLE": {
+    "iso": "SLE",
+    "iso2": "SL",
+    "name": "Sierra Leone",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -11.7949,
+      8.5623
+    ],
+    "bounds": [
+      [
+        -13.3011,
+        6.9194
+      ],
+      [
+        -10.2822,
+        9.996
+      ]
+    ],
+    "area": 0.0017717
+  },
+  "GIN": {
+    "iso": "GIN",
+    "iso2": "GN",
+    "name": "Guinea",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -10.9367,
+      10.4358
+    ],
+    "bounds": [
+      [
+        -15.0811,
+        7.1902
+      ],
+      [
+        -7.6624,
+        12.6734
+      ]
+    ],
+    "area": 0.0060432
+  },
+  "LBR": {
+    "iso": "LBR",
+    "iso2": "LR",
+    "name": "Liberia",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -9.3176,
+      6.4514
+    ],
+    "bounds": [
+      [
+        -11.4762,
+        4.3472
+      ],
+      [
+        -7.3841,
+        8.5654
+      ]
+    ],
+    "area": 0.002358
+  },
+  "CAF": {
+    "iso": "CAF",
+    "iso2": "CF",
+    "name": "Central African Republic",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      20.4583,
+      6.5704
+    ],
+    "bounds": [
+      [
+        14.3873,
+        2.2365
+      ],
+      [
+        27.4413,
+        11.0008
+      ]
+    ],
+    "area": 0.015291
+  },
+  "SDN": {
+    "iso": "SDN",
+    "iso2": "SD",
+    "name": "Sudan",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      29.9116,
+      15.9945
+    ],
+    "bounds": [
+      [
+        21.8094,
+        8.6816
+      ],
+      [
+        38.6039,
+        22.227
+      ]
+    ],
+    "area": 0.045604
+  },
+  "DJI": {
+    "iso": "DJI",
+    "iso2": "DJ",
+    "name": "Djibouti",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      42.5658,
+      11.7497
+    ],
+    "bounds": [
+      [
+        41.7491,
+        10.9298
+      ],
+      [
+        43.4187,
+        12.7079
+      ]
+    ],
+    "area": 0.00054037
+  },
+  "ERI": {
+    "iso": "ERI",
+    "iso2": "ER",
+    "name": "Eritrea",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      38.864,
+      15.3568
+    ],
+    "bounds": [
+      [
+        36.4236,
+        12.36
+      ],
+      [
+        43.1239,
+        18.0048
+      ]
+    ],
+    "area": 0.0030296
+  },
+  "AUT": {
+    "iso": "AUT",
+    "iso2": "AT",
+    "name": "Austria",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      14.1146,
+      47.5924
+    ],
+    "bounds": [
+      [
+        9.5212,
+        46.3786
+      ],
+      [
+        17.1483,
+        49.0098
+      ]
+    ],
+    "area": 0.0020635
+  },
+  "IRQ": {
+    "iso": "IRQ",
+    "iso2": "IQ",
+    "name": "Iraq",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      43.7751,
+      33.0097
+    ],
+    "bounds": [
+      [
+        38.7745,
+        29.0631
+      ],
+      [
+        48.5593,
+        37.3755
+      ]
+    ],
+    "area": 0.010781
+  },
+  "ITA": {
+    "iso": "ITA",
+    "iso2": "IT",
+    "name": "Italy",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      12.2028,
+      42.7054
+    ],
+    "bounds": [
+      [
+        6.6027,
+        35.4892
+      ],
+      [
+        18.5174,
+        47.0852
+      ]
+    ],
+    "area": 0.0074077
+  },
+  "CHE": {
+    "iso": "CHE",
+    "iso2": "CH",
+    "name": "Switzerland",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      8.2129,
+      46.7999
+    ],
+    "bounds": [
+      [
+        5.9548,
+        45.8207
+      ],
+      [
+        10.4666,
+        47.8012
+      ]
+    ],
+    "area": 0.0010181
+  },
+  "IRN": {
+    "iso": "IRN",
+    "iso2": "IR",
+    "name": "Iran",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      54.4438,
+      32.5227
+    ],
+    "bounds": [
+      [
+        44.0149,
+        25.0594
+      ],
+      [
+        63.3196,
+        39.7715
+      ]
+    ],
+    "area": 0.039998
+  },
+  "NLD": {
+    "iso": "NLD",
+    "iso2": "NL",
+    "name": "Netherlands",
+    "aliases": [
+      "Holland",
+      "The Netherlands"
+    ],
+    "continent": "Europe",
+    "centroid": [
+      4.8744,
+      52.2207
+    ],
+    "bounds": [
+      [
+        -68.4174,
+        12.022
+      ],
+      [
+        7.1985,
+        53.5581
+      ]
+    ],
+    "area": 0.00091782
+  },
+  "LIE": {
+    "iso": "LIE",
+    "iso2": "LI",
+    "name": "Liechtenstein",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      9.5409,
+      47.1382
+    ],
+    "bounds": [
+      [
+        9.4759,
+        47.0524
+      ],
+      [
+        9.6157,
+        47.2628
+      ]
+    ],
+    "area": 0.0000033722
+  },
+  "CIV": {
+    "iso": "CIV",
+    "iso2": "CI",
+    "name": "Côte d'Ivoire",
+    "aliases": [
+      "Ivory Coast",
+      "Cote d Ivoire"
+    ],
+    "continent": "Africa",
+    "centroid": [
+      -5.5689,
+      7.6254
+    ],
+    "bounds": [
+      [
+        -8.6187,
+        4.3441
+      ],
+      [
+        -2.5063,
+        10.7265
+      ]
+    ],
+    "area": 0.007934
+  },
+  "MLI": {
+    "iso": "MLI",
+    "iso2": "ML",
+    "name": "Mali",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -3.5869,
+      17.3134
+    ],
+    "bounds": [
+      [
+        -12.2641,
+        10.1401
+      ],
+      [
+        4.2356,
+        24.9951
+      ]
+    ],
+    "area": 0.030964
+  },
+  "SEN": {
+    "iso": "SEN",
+    "iso2": "SN",
+    "name": "Senegal",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -14.4672,
+      14.3663
+    ],
+    "bounds": [
+      [
+        -17.536,
+        12.3056
+      ],
+      [
+        -11.3778,
+        16.6914
+      ]
+    ],
+    "area": 0.004852
+  },
+  "NGA": {
+    "iso": "NGA",
+    "iso2": "NG",
+    "name": "Nigeria",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      8.0814,
+      9.5921
+    ],
+    "bounds": [
+      [
+        2.6711,
+        4.2722
+      ],
+      [
+        14.6699,
+        13.8803
+      ]
+    ],
+    "area": 0.022449
+  },
+  "BEN": {
+    "iso": "BEN",
+    "iso2": "BJ",
+    "name": "Benin",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      2.3275,
+      9.6351
+    ],
+    "bounds": [
+      [
+        0.7599,
+        6.2139
+      ],
+      [
+        3.8374,
+        12.3992
+      ]
+    ],
+    "area": 0.0028724
+  },
+  "AGO": {
+    "iso": "AGO",
+    "iso2": "AO",
+    "name": "Angola",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      17.5315,
+      -12.2696
+    ],
+    "bounds": [
+      [
+        11.6694,
+        -18.0314
+      ],
+      [
+        24.0617,
+        -4.3912
+      ]
+    ],
+    "area": 0.030782
+  },
+  "HRV": {
+    "iso": "HRV",
+    "iso2": "HR",
+    "name": "Croatia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      16.3925,
+      45.0626
+    ],
+    "bounds": [
+      [
+        13.5015,
+        42.4163
+      ],
+      [
+        19.4078,
+        46.547
+      ]
+    ],
+    "area": 0.0013525
+  },
+  "SVN": {
+    "iso": "SVN",
+    "iso2": "SI",
+    "name": "Slovenia",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      14.8042,
+      46.1164
+    ],
+    "bounds": [
+      [
+        13.3653,
+        45.4236
+      ],
+      [
+        16.5153,
+        46.864
+      ]
+    ],
+    "area": 0.00049955
+  },
+  "QAT": {
+    "iso": "QAT",
+    "iso2": "QA",
+    "name": "Qatar",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      51.1867,
+      25.3119
+    ],
+    "bounds": [
+      [
+        50.751,
+        24.5599
+      ],
+      [
+        51.6165,
+        26.1601
+      ]
+    ],
+    "area": 0.00027526
+  },
+  "SAU": {
+    "iso": "SAU",
+    "iso2": "SA",
+    "name": "Saudi Arabia",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      44.6632,
+      24.0864
+    ],
+    "bounds": [
+      [
+        34.5728,
+        16.371
+      ],
+      [
+        55.6376,
+        32.1213
+      ]
+    ],
+    "area": 0.047451
+  },
+  "BWA": {
+    "iso": "BWA",
+    "iso2": "BW",
+    "name": "Botswana",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      23.8091,
+      -22.1669
+    ],
+    "bounds": [
+      [
+        19.9783,
+        -26.8918
+      ],
+      [
+        29.3501,
+        -17.7818
+      ]
+    ],
+    "area": 0.014302
+  },
+  "ZWE": {
+    "iso": "ZWE",
+    "iso2": "ZW",
+    "name": "Zimbabwe",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      29.8514,
+      -18.9953
+    ],
+    "bounds": [
+      [
+        25.2194,
+        -22.3973
+      ],
+      [
+        33.0428,
+        -15.6148
+      ]
+    ],
+    "area": 0.0096214
+  },
+  "BGR": {
+    "iso": "BGR",
+    "iso2": "BG",
+    "name": "Bulgaria",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      25.2111,
+      42.7708
+    ],
+    "bounds": [
+      [
+        22.345,
+        41.2381
+      ],
+      [
+        28.6035,
+        44.2284
+      ]
+    ],
+    "area": 0.0027733
+  },
+  "THA": {
+    "iso": "THA",
+    "iso2": "TH",
+    "name": "Thailand",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      101.001,
+      15.0788
+    ],
+    "bounds": [
+      [
+        97.3514,
+        5.6299
+      ],
+      [
+        105.651,
+        20.445
+      ]
+    ],
+    "area": 0.012719
+  },
+  "SMR": {
+    "iso": "SMR",
+    "iso2": "SM",
+    "name": "San Marino",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      12.4422,
+      43.9365
+    ],
+    "bounds": [
+      [
+        12.3856,
+        43.8921
+      ],
+      [
+        12.4924,
+        43.9826
+      ]
+    ],
+    "area": 0.0000014831
+  },
+  "HTI": {
+    "iso": "HTI",
+    "iso2": "HT",
+    "name": "Haiti",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -72.6923,
+      18.9379
+    ],
+    "bounds": [
+      [
+        -74.4892,
+        18.0259
+      ],
+      [
+        -71.6391,
+        20.0898
+      ]
+    ],
+    "area": 0.00066456
+  },
+  "DOM": {
+    "iso": "DOM",
+    "iso2": "DO",
+    "name": "Dominican Republic",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -70.4961,
+      18.8972
+    ],
+    "bounds": [
+      [
+        -72.0098,
+        17.5456
+      ],
+      [
+        -68.3286,
+        19.9377
+      ]
+    ],
+    "area": 0.0011971
+  },
+  "TCD": {
+    "iso": "TCD",
+    "iso2": "TD",
+    "name": "Chad",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      18.6363,
+      15.275
+    ],
+    "bounds": [
+      [
+        13.4492,
+        7.4556
+      ],
+      [
+        23.9844,
+        23.4447
+      ]
+    ],
+    "area": 0.031306
+  },
+  "KWT": {
+    "iso": "KWT",
+    "iso2": "KW",
+    "name": "Kuwait",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      47.5954,
+      29.339
+    ],
+    "bounds": [
+      [
+        46.5324,
+        28.5335
+      ],
+      [
+        48.4328,
+        30.0983
+      ]
+    ],
+    "area": 0.00043105
+  },
+  "SLV": {
+    "iso": "SLV",
+    "iso2": "SV",
+    "name": "El Salvador",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -88.8703,
+      13.7363
+    ],
+    "bounds": [
+      [
+        -90.1148,
+        13.1586
+      ],
+      [
+        -87.6932,
+        14.4454
+      ]
+    ],
+    "area": 0.00050791
+  },
+  "GTM": {
+    "iso": "GTM",
+    "iso2": "GT",
+    "name": "Guatemala",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -90.3626,
+      15.692
+    ],
+    "bounds": [
+      [
+        -92.2463,
+        13.7314
+      ],
+      [
+        -88.2209,
+        17.816
+      ]
+    ],
+    "area": 0.0026901
+  },
+  "TLS": {
+    "iso": "TLS",
+    "iso2": "TL",
+    "name": "Timor-Leste",
+    "aliases": [
+      "East Timor"
+    ],
+    "continent": "Asia",
+    "centroid": [
+      125.8518,
+      -8.8242
+    ],
+    "bounds": [
+      [
+        124.03,
+        -9.5012
+      ],
+      [
+        127.3132,
+        -8.135
+      ]
+    ],
+    "area": 0.00037313
+  },
+  "BRN": {
+    "iso": "BRN",
+    "iso2": "BN",
+    "name": "Brunei",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      114.7272,
+      4.5165
+    ],
+    "bounds": [
+      [
+        113.9988,
+        4.0167
+      ],
+      [
+        115.3607,
+        5.0572
+      ]
+    ],
+    "area": 0.00014146
+  },
+  "MCO": {
+    "iso": "MCO",
+    "iso2": "MC",
+    "name": "Monaco",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      7.399,
+      43.7398
+    ],
+    "bounds": [
+      [
+        7.3658,
+        43.718
+      ],
+      [
+        7.4375,
+        43.7635
+      ]
+    ],
+    "area": 4.6326e-7
+  },
+  "DZA": {
+    "iso": "DZA",
+    "iso2": "DZ",
+    "name": "Algeria",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      2.6658,
+      28.0445
+    ],
+    "bounds": [
+      [
+        -8.6824,
+        18.9756
+      ],
+      [
+        11.9689,
+        37.0939
+      ]
+    ],
+    "area": 0.056968
+  },
+  "MOZ": {
+    "iso": "MOZ",
+    "iso2": "MZ",
+    "name": "Mozambique",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      35.6071,
+      -17.1921
+    ],
+    "bounds": [
+      [
+        30.2138,
+        -26.8603
+      ],
+      [
+        40.848,
+        -10.469
+      ]
+    ],
+    "area": 0.019488
+  },
+  "SWZ": {
+    "iso": "SWZ",
+    "iso2": "SZ",
+    "name": "Eswatini",
+    "aliases": [
+      "Swaziland"
+    ],
+    "continent": "Africa",
+    "centroid": [
+      31.48,
+      -26.561
+    ],
+    "bounds": [
+      [
+        30.7829,
+        -27.3163
+      ],
+      [
+        32.1174,
+        -25.736
+      ]
+    ],
+    "area": 0.00042234
+  },
+  "BDI": {
+    "iso": "BDI",
+    "iso2": "BI",
+    "name": "Burundi",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      29.8752,
+      -3.3572
+    ],
+    "bounds": [
+      [
+        28.9869,
+        -4.4633
+      ],
+      [
+        30.834,
+        -2.3031
+      ]
+    ],
+    "area": 0.00066917
+  },
+  "RWA": {
+    "iso": "RWA",
+    "iso2": "RW",
+    "name": "Rwanda",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      29.9192,
+      -1.9927
+    ],
+    "bounds": [
+      [
+        28.8572,
+        -2.8269
+      ],
+      [
+        30.8878,
+        -1.0587
+      ]
+    ],
+    "area": 0.00062622
+  },
+  "MMR": {
+    "iso": "MMR",
+    "iso2": "MM",
+    "name": "Myanmar",
+    "aliases": [
+      "Burma"
+    ],
+    "continent": "Asia",
+    "centroid": [
+      96.4956,
+      21.0944
+    ],
+    "bounds": [
+      [
+        92.175,
+        9.7907
+      ],
+      [
+        101.1739,
+        28.5385
+      ]
+    ],
+    "area": 0.016382
+  },
+  "BGD": {
+    "iso": "BGD",
+    "iso2": "BD",
+    "name": "Bangladesh",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      90.251,
+      23.8389
+    ],
+    "bounds": [
+      [
+        88.0218,
+        20.7387
+      ],
+      [
+        92.6429,
+        26.6235
+      ]
+    ],
+    "area": 0.0033806
+  },
+  "AND": {
+    "iso": "AND",
+    "iso2": "AD",
+    "name": "Andorra",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      1.5607,
+      42.5413
+    ],
+    "bounds": [
+      [
+        1.4065,
+        42.4287
+      ],
+      [
+        1.7651,
+        42.6494
+      ]
+    ],
+    "area": 0.000011124
+  },
+  "AFG": {
+    "iso": "AFG",
+    "iso2": "AF",
+    "name": "Afghanistan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      65.9295,
+      33.8197
+    ],
+    "bounds": [
+      [
+        60.4868,
+        29.3866
+      ],
+      [
+        74.8923,
+        38.4737
+      ]
+    ],
+    "area": 0.015826
+  },
+  "MNE": {
+    "iso": "MNE",
+    "iso2": "ME",
+    "name": "Montenegro",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      19.2383,
+      42.7849
+    ],
+    "bounds": [
+      [
+        18.4335,
+        41.8524
+      ],
+      [
+        20.3552,
+        43.5479
+      ]
+    ],
+    "area": 0.00033762
+  },
+  "BIH": {
+    "iso": "BIH",
+    "iso2": "BA",
+    "name": "Bosnia and Herzegovina",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      17.7795,
+      44.1687
+    ],
+    "bounds": [
+      [
+        15.7161,
+        42.5592
+      ],
+      [
+        19.6189,
+        45.2845
+      ]
+    ],
+    "area": 0.0012742
+  },
+  "UGA": {
+    "iso": "UGA",
+    "iso2": "UG",
+    "name": "Uganda",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      32.3666,
+      1.2752
+    ],
+    "bounds": [
+      [
+        29.5485,
+        -1.4752
+      ],
+      [
+        35.0065,
+        4.2197
+      ]
+    ],
+    "area": 0.0059852
+  },
+  "CUB": {
+    "iso": "CUB",
+    "iso2": "CU",
+    "name": "Cuba",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -79.0062,
+      21.6403
+    ],
+    "bounds": [
+      [
+        -84.9496,
+        19.8278
+      ],
+      [
+        -74.1329,
+        23.2656
+      ]
+    ],
+    "area": 0.0027155
+  },
+  "HND": {
+    "iso": "HND",
+    "iso2": "HN",
+    "name": "Honduras",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -86.6276,
+      14.8232
+    ],
+    "bounds": [
+      [
+        -89.3638,
+        12.9798
+      ],
+      [
+        -83.1304,
+        17.4186
+      ]
+    ],
+    "area": 0.0027751
+  },
+  "ECU": {
+    "iso": "ECU",
+    "iso2": "EC",
+    "name": "Ecuador",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -78.7695,
+      -1.4266
+    ],
+    "bounds": [
+      [
+        -92.0116,
+        -5.0114
+      ],
+      [
+        -75.2273,
+        1.6644
+      ]
+    ],
+    "area": 0.0063108
+  },
+  "COL": {
+    "iso": "COL",
+    "iso2": "CO",
+    "name": "Colombia",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -73.0798,
+      3.8991
+    ],
+    "bounds": [
+      [
+        -81.7237,
+        -4.2365
+      ],
+      [
+        -66.8751,
+        15.8673
+      ]
+    ],
+    "area": 0.028088
+  },
+  "PRY": {
+    "iso": "PRY",
+    "iso2": "PY",
+    "name": "Paraguay",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -58.4417,
+      -23.2082
+    ],
+    "bounds": [
+      [
+        -62.6504,
+        -27.5868
+      ],
+      [
+        -54.2453,
+        -19.2867
+      ]
+    ],
+    "area": 0.0098758
+  },
+  "PRT": {
+    "iso": "PRT",
+    "iso2": "PT",
+    "name": "Portugal",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      -8.6202,
+      39.6044
+    ],
+    "bounds": [
+      [
+        -31.2849,
+        30.0292
+      ],
+      [
+        -6.2059,
+        42.1536
+      ]
+    ],
+    "area": 0.0022494
+  },
+  "MDA": {
+    "iso": "MDA",
+    "iso2": "MD",
+    "name": "Moldova",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      28.4702,
+      47.1873
+    ],
+    "bounds": [
+      [
+        26.6179,
+        45.4618
+      ],
+      [
+        30.1316,
+        48.486
+      ]
+    ],
+    "area": 0.00081586
+  },
+  "TKM": {
+    "iso": "TKM",
+    "iso2": "TM",
+    "name": "Turkmenistan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      59.4516,
+      39.1258
+    ],
+    "bounds": [
+      [
+        52.4377,
+        35.1406
+      ],
+      [
+        66.6458,
+        42.7912
+      ]
+    ],
+    "area": 0.01159
+  },
+  "JOR": {
+    "iso": "JOR",
+    "iso2": "JO",
+    "name": "Jordan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      36.7572,
+      31.2384
+    ],
+    "bounds": [
+      [
+        34.9494,
+        29.19
+      ],
+      [
+        39.292,
+        33.3717
+      ]
+    ],
+    "area": 0.0021912
+  },
+  "NPL": {
+    "iso": "NPL",
+    "iso2": "NP",
+    "name": "Nepal",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      83.9473,
+      28.257
+    ],
+    "bounds": [
+      [
+        80.0303,
+        26.3438
+      ],
+      [
+        88.1691,
+        30.4169
+      ]
+    ],
+    "area": 0.0036296
+  },
+  "LSO": {
+    "iso": "LSO",
+    "iso2": "LS",
+    "name": "Lesotho",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      28.2304,
+      -29.5788
+    ],
+    "bounds": [
+      [
+        27.0022,
+        -30.6588
+      ],
+      [
+        29.4359,
+        -28.5708
+      ]
+    ],
+    "area": 0.00074263
+  },
+  "CMR": {
+    "iso": "CMR",
+    "iso2": "CM",
+    "name": "Cameroon",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      12.7313,
+      5.6831
+    ],
+    "bounds": [
+      [
+        8.5051,
+        1.6546
+      ],
+      [
+        16.2077,
+        13.0811
+      ]
+    ],
+    "area": 0.011489
+  },
+  "GAB": {
+    "iso": "GAB",
+    "iso2": "GA",
+    "name": "Gabon",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      11.7897,
+      -0.5915
+    ],
+    "bounds": [
+      [
+        8.6956,
+        -3.9369
+      ],
+      [
+        14.499,
+        2.3225
+      ]
+    ],
+    "area": 0.0064335
+  },
+  "NER": {
+    "iso": "NER",
+    "iso2": "NE",
+    "name": "Niger",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      9.3322,
+      17.4113
+    ],
+    "bounds": [
+      [
+        0.1529,
+        11.6958
+      ],
+      [
+        15.9703,
+        23.5174
+      ]
+    ],
+    "area": 0.029198
+  },
+  "BFA": {
+    "iso": "BFA",
+    "iso2": "BF",
+    "name": "Burkina Faso",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -1.7621,
+      12.2707
+    ],
+    "bounds": [
+      [
+        -5.5226,
+        9.3919
+      ],
+      [
+        2.3902,
+        15.0799
+      ]
+    ],
+    "area": 0.0067462
+  },
+  "TGO": {
+    "iso": "TGO",
+    "iso2": "TG",
+    "name": "Togo",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      0.9638,
+      8.5222
+    ],
+    "bounds": [
+      [
+        -0.1661,
+        6.1005
+      ],
+      [
+        1.7824,
+        11.135
+      ]
+    ],
+    "area": 0.0014068
+  },
+  "GHA": {
+    "iso": "GHA",
+    "iso2": "GH",
+    "name": "Ghana",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -1.2167,
+      7.9482
+    ],
+    "bounds": [
+      [
+        -3.2625,
+        4.7371
+      ],
+      [
+        1.188,
+        11.1629
+      ]
+    ],
+    "area": 0.0059049
+  },
+  "GNB": {
+    "iso": "GNB",
+    "iso2": "GW",
+    "name": "Guinea-Bissau",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -14.9778,
+      12.0272
+    ],
+    "bounds": [
+      [
+        -16.7284,
+        10.9276
+      ],
+      [
+        -13.6607,
+        12.6794
+      ]
+    ],
+    "area": 0.00081198
+  },
+  "USA": {
+    "iso": "USA",
+    "iso2": "US",
+    "name": "United States",
+    "aliases": [
+      "USA",
+      "US",
+      "United States of America",
+      "America"
+    ],
+    "continent": "North America",
+    "centroid": [
+      -103.6527,
+      44.7579
+    ],
+    "bounds": [
+      [
+        172.4761,
+        18.9061
+      ],
+      [
+        -66.9773,
+        71.4125
+      ]
+    ],
+    "area": 0.23276
+  },
+  "CAN": {
+    "iso": "CAN",
+    "iso2": "CA",
+    "name": "Canada",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -96.5364,
+      60.427
+    ],
+    "bounds": [
+      [
+        -141.0056,
+        41.6691
+      ],
+      [
+        -52.6166,
+        83.1165
+      ]
+    ],
+    "area": 0.24377
+  },
+  "MEX": {
+    "iso": "MEX",
+    "iso2": "MX",
+    "name": "Mexico",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -102.1782,
+      23.9257
+    ],
+    "bounds": [
+      [
+        -118.3688,
+        14.5463
+      ],
+      [
+        -86.7006,
+        32.7128
+      ]
+    ],
+    "area": 0.048343
+  },
+  "BLZ": {
+    "iso": "BLZ",
+    "iso2": "BZ",
+    "name": "Belize",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -88.6948,
+      17.2063
+    ],
+    "bounds": [
+      [
+        -89.2365,
+        15.8797
+      ],
+      [
+        -87.7831,
+        18.4908
+      ]
+    ],
+    "area": 0.00055121
+  },
+  "PAN": {
+    "iso": "PAN",
+    "iso2": "PA",
+    "name": "Panama",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -80.1209,
+      8.5172
+    ],
+    "bounds": [
+      [
+        -83.0532,
+        7.2057
+      ],
+      [
+        -77.1633,
+        9.6293
+      ]
+    ],
+    "area": 0.0018439
+  },
+  "VEN": {
+    "iso": "VEN",
+    "iso2": "VE",
+    "name": "Venezuela",
+    "aliases": [],
+    "continent": "South America",
+    "centroid": [
+      -66.1576,
+      7.1258
+    ],
+    "bounds": [
+      [
+        -73.3911,
+        0.6493
+      ],
+      [
+        -59.8156,
+        15.7029
+      ]
+    ],
+    "area": 0.022581
+  },
+  "PNG": {
+    "iso": "PNG",
+    "iso2": "PG",
+    "name": "Papua New Guinea",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      145.2245,
+      -6.4746
+    ],
+    "bounds": [
+      [
+        140.8492,
+        -11.6363
+      ],
+      [
+        155.9675,
+        -1.3464
+      ]
+    ],
+    "area": 0.011509
+  },
+  "PAK": {
+    "iso": "PAK",
+    "iso2": "PK",
+    "name": "Pakistan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      68.6645,
+      29.3216
+    ],
+    "bounds": [
+      [
+        60.8444,
+        23.6945
+      ],
+      [
+        75.359,
+        36.8966
+      ]
+    ],
+    "area": 0.019629
+  },
+  "EGY": {
+    "iso": "EGY",
+    "iso2": "EG",
+    "name": "Egypt",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      29.8775,
+      26.4569
+    ],
+    "bounds": [
+      [
+        24.6883,
+        21.9944
+      ],
+      [
+        36.8992,
+        31.6565
+      ]
+    ],
+    "area": 0.024707
+  },
+  "YEM": {
+    "iso": "YEM",
+    "iso2": "YE",
+    "name": "Yemen",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      47.5717,
+      15.9134
+    ],
+    "bounds": [
+      [
+        42.5457,
+        12.1114
+      ],
+      [
+        54.5403,
+        18.9956
+      ]
+    ],
+    "area": 0.011201
+  },
+  "MRT": {
+    "iso": "MRT",
+    "iso2": "MR",
+    "name": "Mauritania",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      -10.3655,
+      20.2196
+    ],
+    "bounds": [
+      [
+        -17.0812,
+        14.7344
+      ],
+      [
+        -4.8216,
+        27.2854
+      ]
+    ],
+    "area": 0.025606
+  },
+  "GNQ": {
+    "iso": "GNQ",
+    "iso2": "GQ",
+    "name": "Equatorial Guinea",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      10.3332,
+      1.7068
+    ],
+    "bounds": [
+      [
+        5.612,
+        -1.4757
+      ],
+      [
+        11.3363,
+        3.7724
+      ]
+    ],
+    "area": 0.00066005
+  },
+  "GMB": {
+    "iso": "GMB",
+    "iso2": "GM",
+    "name": "Gambia",
+    "aliases": [
+      "The Gambia"
+    ],
+    "continent": "Africa",
+    "centroid": [
+      -15.3979,
+      13.451
+    ],
+    "bounds": [
+      [
+        -16.8297,
+        13.065
+      ],
+      [
+        -13.8187,
+        13.82
+      ]
+    ],
+    "area": 0.00025968
+  },
+  "VAT": {
+    "iso": "VAT",
+    "iso2": "VA",
+    "name": "Vatican City",
+    "aliases": [
+      "Holy See"
+    ],
+    "continent": "Europe",
+    "centroid": [
+      12.4534,
+      41.9033
+    ],
+    "bounds": [
+      [
+        12.4527,
+        41.9028
+      ],
+      [
+        12.454,
+        41.9039
+      ]
+    ],
+    "area": 3.0026e-10
+  },
+  "AUS": {
+    "iso": "AUS",
+    "iso2": "AU",
+    "name": "Australia",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      134.3038,
+      -25.7634
+    ],
+    "bounds": [
+      [
+        112.9194,
+        -54.7504
+      ],
+      [
+        159.1065,
+        -9.2402
+      ]
+    ],
+    "area": 0.18985
+  },
+  "FJI": {
+    "iso": "FJI",
+    "iso2": "FJ",
+    "name": "Fiji",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      178.5261,
+      -17.4465
+    ],
+    "bounds": [
+      [
+        174.5889,
+        -21.7111
+      ],
+      [
+        -178.2161,
+        -12.4753
+      ]
+    ],
+    "area": 0.00046791
+  },
+  "NZL": {
+    "iso": "NZL",
+    "iso2": "NZ",
+    "name": "New Zealand",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      172.9067,
+      -41.7188
+    ],
+    "bounds": [
+      [
+        165.8865,
+        -52.6003
+      ],
+      [
+        -171.1857,
+        -8.5432
+      ]
+    ],
+    "area": 0.0066054
+  },
+  "MDG": {
+    "iso": "MDG",
+    "iso2": "MG",
+    "name": "Madagascar",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      46.7442,
+      -19.3177
+    ],
+    "bounds": [
+      [
+        43.2229,
+        -25.5986
+      ],
+      [
+        50.5039,
+        -11.9436
+      ]
+    ],
+    "area": 0.014653
+  },
+  "PHL": {
+    "iso": "PHL",
+    "iso2": "PH",
+    "name": "Philippines",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      122.9095,
+      11.7166
+    ],
+    "bounds": [
+      [
+        116.9549,
+        4.6557
+      ],
+      [
+        126.6177,
+        21.1224
+      ]
+    ],
+    "area": 0.0072538
+  },
+  "LKA": {
+    "iso": "LKA",
+    "iso2": "LK",
+    "name": "Sri Lanka",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      80.7037,
+      7.6142
+    ],
+    "bounds": [
+      [
+        79.6558,
+        5.9237
+      ],
+      [
+        81.8903,
+        9.8296
+      ]
+    ],
+    "area": 0.0016401
+  },
+  "BHS": {
+    "iso": "BHS",
+    "iso2": "BS",
+    "name": "Bahamas",
+    "aliases": [
+      "The Bahamas"
+    ],
+    "continent": "North America",
+    "centroid": [
+      -76.512,
+      24.2143
+    ],
+    "bounds": [
+      [
+        -79.5944,
+        20.9124
+      ],
+      [
+        -72.7462,
+        26.9284
+      ]
+    ],
+    "area": 0.00031121
+  },
+  "TWN": {
+    "iso": "TWN",
+    "iso2": "TW",
+    "name": "Taiwan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      120.9472,
+      23.7492
+    ],
+    "bounds": [
+      [
+        118.2796,
+        21.9046
+      ],
+      [
+        122.0054,
+        25.2874
+      ]
+    ],
+    "area": 0.00089385
+  },
+  "JPN": {
+    "iso": "JPN",
+    "iso2": "JP",
+    "name": "Japan",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      137.605,
+      37.4199
+    ],
+    "bounds": [
+      [
+        122.9382,
+        24.2121
+      ],
+      [
+        153.9856,
+        45.5204
+      ]
+    ],
+    "area": 0.0091977
+  },
+  "ISL": {
+    "iso": "ISL",
+    "iso2": "IS",
+    "name": "Iceland",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      -18.6017,
+      65.0005
+    ],
+    "bounds": [
+      [
+        -24.5399,
+        63.3967
+      ],
+      [
+        -13.5029,
+        66.5642
+      ]
+    ],
+    "area": 0.0025061
+  },
+  "SYC": {
+    "iso": "SYC",
+    "iso2": "SC",
+    "name": "Seychelles",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      52.1081,
+      -6.4974
+    ],
+    "bounds": [
+      [
+        46.2074,
+        -9.7555
+      ],
+      [
+        56.2874,
+        -3.7911
+      ]
+    ],
+    "area": 0.00001078
+  },
+  "KIR": {
+    "iso": "KIR",
+    "iso2": "KI",
+    "name": "Kiribati",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      -167.0491,
+      0.6404
+    ],
+    "bounds": [
+      [
+        169.5221,
+        -11.4611
+      ],
+      [
+        -151.781,
+        4.7231
+      ]
+    ],
+    "area": 0.000023506
+  },
+  "MHL": {
+    "iso": "MHL",
+    "iso2": "MH",
+    "name": "Marshall Islands",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      170.1054,
+      7.1104
+    ],
+    "bounds": [
+      [
+        165.2822,
+        4.5738
+      ],
+      [
+        172.0298,
+        14.6105
+      ]
+    ],
+    "area": 0.0000040781
+  },
+  "TTO": {
+    "iso": "TTO",
+    "iso2": "TT",
+    "name": "Trinidad and Tobago",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -61.2587,
+      10.4686
+    ],
+    "bounds": [
+      [
+        -61.9287,
+        10.0421
+      ],
+      [
+        -60.5221,
+        11.3511
+      ]
+    ],
+    "area": 0.00012672
+  },
+  "GRD": {
+    "iso": "GRD",
+    "iso2": "GD",
+    "name": "Grenada",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -61.6567,
+      12.1533
+    ],
+    "bounds": [
+      [
+        -61.7905,
+        12.0028
+      ],
+      [
+        -61.4216,
+        12.5297
+      ]
+    ],
+    "area": 0.0000085888
+  },
+  "VCT": {
+    "iso": "VCT",
+    "iso2": "VC",
+    "name": "Saint Vincent and the Grenadines",
+    "aliases": [
+      "St Vincent and the Grenadines"
+    ],
+    "continent": "North America",
+    "centroid": [
+      -61.2034,
+      13.2161
+    ],
+    "bounds": [
+      [
+        -61.4598,
+        12.5852
+      ],
+      [
+        -61.1239,
+        13.3808
+      ]
+    ],
+    "area": 0.0000090939
+  },
+  "BRB": {
+    "iso": "BRB",
+    "iso2": "BB",
+    "name": "Barbados",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -59.5612,
+      13.181
+    ],
+    "bounds": [
+      [
+        -59.6542,
+        13.0512
+      ],
+      [
+        -59.4269,
+        13.3445
+      ]
+    ],
+    "area": 0.000010986
+  },
+  "LCA": {
+    "iso": "LCA",
+    "iso2": "LC",
+    "name": "Saint Lucia",
+    "aliases": [
+      "St Lucia"
+    ],
+    "continent": "North America",
+    "centroid": [
+      -60.9703,
+      13.9026
+    ],
+    "bounds": [
+      [
+        -61.0785,
+        13.7147
+      ],
+      [
+        -60.883,
+        14.1119
+      ]
+    ],
+    "area": 0.000014964
+  },
+  "DMA": {
+    "iso": "DMA",
+    "iso2": "DM",
+    "name": "Dominica",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -61.3569,
+      15.4364
+    ],
+    "bounds": [
+      [
+        -61.4889,
+        15.2018
+      ],
+      [
+        -61.2493,
+        15.6339
+      ]
+    ],
+    "area": 0.000018056
+  },
+  "ATG": {
+    "iso": "ATG",
+    "iso2": "AG",
+    "name": "Antigua and Barbuda",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -61.7922,
+      17.2837
+    ],
+    "bounds": [
+      [
+        -62.3483,
+        16.932
+      ],
+      [
+        -61.6676,
+        17.7277
+      ]
+    ],
+    "area": 0.000011169
+  },
+  "KNA": {
+    "iso": "KNA",
+    "iso2": "KN",
+    "name": "Saint Kitts and Nevis",
+    "aliases": [
+      "St Kitts and Nevis"
+    ],
+    "continent": "North America",
+    "centroid": [
+      -62.6985,
+      17.271
+    ],
+    "bounds": [
+      [
+        -62.8611,
+        17.1005
+      ],
+      [
+        -62.5368,
+        17.4158
+      ]
+    ],
+    "area": 0.0000065288
+  },
+  "JAM": {
+    "iso": "JAM",
+    "iso2": "JM",
+    "name": "Jamaica",
+    "aliases": [],
+    "continent": "North America",
+    "centroid": [
+      -77.3184,
+      18.1557
+    ],
+    "bounds": [
+      [
+        -78.3747,
+        17.7032
+      ],
+      [
+        -76.188,
+        18.5251
+      ]
+    ],
+    "area": 0.00027268
+  },
+  "MUS": {
+    "iso": "MUS",
+    "iso2": "MU",
+    "name": "Mauritius",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      57.8504,
+      -20.1871
+    ],
+    "bounds": [
+      [
+        56.5242,
+        -20.5173
+      ],
+      [
+        63.4939,
+        -10.3239
+      ]
+    ],
+    "area": 0.000049773
+  },
+  "COM": {
+    "iso": "COM",
+    "iso2": "KM",
+    "name": "Comoros",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      43.6793,
+      -11.8843
+    ],
+    "bounds": [
+      [
+        43.2132,
+        -12.3803
+      ],
+      [
+        44.5291,
+        -11.3613
+      ]
+    ],
+    "area": 0.00004136
+  },
+  "STP": {
+    "iso": "STP",
+    "iso2": "ST",
+    "name": "São Tomé and Principe",
+    "aliases": [],
+    "continent": "Africa",
+    "centroid": [
+      6.7264,
+      0.4442
+    ],
+    "bounds": [
+      [
+        6.4617,
+        0.0241
+      ],
+      [
+        7.4627,
+        1.6998
+      ]
+    ],
+    "area": 0.000025667
+  },
+  "CPV": {
+    "iso": "CPV",
+    "iso2": "CV",
+    "name": "Cape Verde",
+    "aliases": [
+      "Cabo Verde"
+    ],
+    "continent": "Africa",
+    "centroid": [
+      -23.9725,
+      15.9432
+    ],
+    "bounds": [
+      [
+        -25.3604,
+        14.8039
+      ],
+      [
+        -22.6666,
+        17.1966
+      ]
+    ],
+    "area": 0.000097077
+  },
+  "MLT": {
+    "iso": "MLT",
+    "iso2": "MT",
+    "name": "Malta",
+    "aliases": [],
+    "continent": "Europe",
+    "centroid": [
+      14.4039,
+      35.921
+    ],
+    "bounds": [
+      [
+        14.1836,
+        35.8012
+      ],
+      [
+        14.5671,
+        36.0756
+      ]
+    ],
+    "area": 0.0000080228
+  },
+  "SGP": {
+    "iso": "SGP",
+    "iso2": "SG",
+    "name": "Singapore",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      103.8135,
+      1.3589
+    ],
+    "bounds": [
+      [
+        103.6404,
+        1.2643
+      ],
+      [
+        104.0034,
+        1.4486
+      ]
+    ],
+    "area": 0.000012634
+  },
+  "TON": {
+    "iso": "TON",
+    "iso2": "TO",
+    "name": "Tonga",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      -174.8655,
+      -20.0522
+    ],
+    "bounds": [
+      [
+        -176.2193,
+        -22.3388
+      ],
+      [
+        -173.9143,
+        -15.5595
+      ]
+    ],
+    "area": 0.000014902
+  },
+  "WSM": {
+    "iso": "WSM",
+    "iso2": "WS",
+    "name": "Samoa",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      -172.1617,
+      -13.7547
+    ],
+    "bounds": [
+      [
+        -172.7826,
+        -14.0528
+      ],
+      [
+        -171.4377,
+        -13.4628
+      ]
+    ],
+    "area": 0.000068756
+  },
+  "SLB": {
+    "iso": "SLB",
+    "iso2": "SB",
+    "name": "Solomon Islands",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      159.6265,
+      -8.9114
+    ],
+    "bounds": [
+      [
+        155.508,
+        -12.2906
+      ],
+      [
+        168.8259,
+        -6.5999
+      ]
+    ],
+    "area": 0.00067288
+  },
+  "TUV": {
+    "iso": "TUV",
+    "iso2": "TV",
+    "name": "Tuvalu",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      178.516,
+      -7.758
+    ],
+    "bounds": [
+      [
+        176.1253,
+        -9.4207
+      ],
+      [
+        179.9067,
+        -5.6775
+      ]
+    ],
+    "area": 5.6951e-7
+  },
+  "MDV": {
+    "iso": "MDV",
+    "iso2": "MV",
+    "name": "Maldives",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      73.3025,
+      3.8233
+    ],
+    "bounds": [
+      [
+        72.6848,
+        -0.6886
+      ],
+      [
+        73.7532,
+        7.1072
+      ]
+    ],
+    "area": 0.0000026909
+  },
+  "NRU": {
+    "iso": "NRU",
+    "iso2": "NR",
+    "name": "Nauru",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      166.9331,
+      -0.5208
+    ],
+    "bounds": [
+      [
+        166.907,
+        -0.5519
+      ],
+      [
+        166.9583,
+        -0.4904
+      ]
+    ],
+    "area": 7.1191e-7
+  },
+  "FSM": {
+    "iso": "FSM",
+    "iso2": "FM",
+    "name": "Federated States of Micronesia",
+    "aliases": [
+      "Micronesia"
+    ],
+    "continent": "Oceania",
+    "centroid": [
+      155.3372,
+      7.0268
+    ],
+    "bounds": [
+      [
+        138.0638,
+        0.9182
+      ],
+      [
+        163.0466,
+        9.7756
+      ]
+    ],
+    "area": 0.000015683
+  },
+  "VUT": {
+    "iso": "VUT",
+    "iso2": "VU",
+    "name": "Vanuatu",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      167.6897,
+      -16.1913
+    ],
+    "bounds": [
+      [
+        166.5205,
+        -20.2531
+      ],
+      [
+        169.8989,
+        -13.0649
+      ]
+    ],
+    "area": 0.00030399
+  },
+  "PLW": {
+    "iso": "PLW",
+    "iso2": "PW",
+    "name": "Palau",
+    "aliases": [],
+    "continent": "Oceania",
+    "centroid": [
+      134.3455,
+      7.1967
+    ],
+    "bounds": [
+      [
+        131.1311,
+        2.949
+      ],
+      [
+        134.7273,
+        8.0966
+      ]
+    ],
+    "area": 0.000012171
+  },
+  "BHR": {
+    "iso": "BHR",
+    "iso2": "BH",
+    "name": "Bahrain",
+    "aliases": [],
+    "continent": "Asia",
+    "centroid": [
+      50.5636,
+      26.0353
+    ],
+    "bounds": [
+      [
+        50.3805,
+        25.5799
+      ],
+      [
+        50.8199,
+        26.2874
+      ]
+    ],
+    "area": 0.000016985
+  }
+}

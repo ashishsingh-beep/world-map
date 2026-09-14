@@ -1,0 +1,169 @@
+import { useEffect, useRef, useState } from 'react'
+import { metaOf } from '../data/countries'
+import { MapCanvas } from '../map/MapCanvas'
+import { QUESTION_SECONDS, useQuiz, type Mode } from '../game/useQuiz'
+import type { Round } from '../game/rounds'
+import { flagEmoji, formatClock } from '../ui/bits'
+import { ResultsScreen } from './ResultsScreen'
+
+interface Props {
+  round: Round
+  mode: Mode
+  timed: boolean
+  onExit: () => void
+  onRetry: () => void
+}
+
+export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
+  const quiz = useQuiz({ round, mode, timed })
+  const [draft, setDraft] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setDraft('')
+    if (mode === 'type' && quiz.phase === 'asking') inputRef.current?.focus()
+  }, [quiz.index, quiz.phase, mode])
+
+  if (quiz.phase === 'finished') {
+    return (
+      <ResultsScreen
+        round={round}
+        correct={quiz.correctCount}
+        total={quiz.total}
+        elapsed={quiz.elapsed}
+        onRetry={onRetry}
+        onExit={onExit}
+      />
+    )
+  }
+
+  const target = quiz.current ? metaOf(quiz.current) : null
+
+  return (
+    <div className="relative h-dvh w-full overflow-hidden bg-[#22cdfb]">
+      <MapCanvas
+        className="absolute inset-0"
+        render={round.render}
+        askable={mode === 'pin' ? round.askable : []}
+        view={round.view}
+        states={quiz.states}
+        revealIso={quiz.revealIso}
+        pinIso={quiz.pinIso}
+        onPick={quiz.pick}
+      />
+
+      {/* HUD */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 p-3">
+        <div className="pointer-events-auto mx-auto flex max-w-5xl items-center gap-3 rounded-2xl bg-[#1f2d4d] p-2 shadow-lg">
+          <div className="rounded-xl bg-white px-3 py-1 text-center">
+            <div className="text-[10px] font-bold tracking-widest text-slate-500">TIME</div>
+            <div className="text-lg font-extrabold tabular-nums text-slate-900">
+              {formatClock(quiz.elapsed)}
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <div className="flex h-3 gap-px overflow-hidden rounded">
+              {Array.from({ length: quiz.total }, (_, i) => {
+                const a = quiz.answers[i]
+                const bg = !a ? 'bg-white' : a.correct ? 'bg-green-400' : 'bg-rose-400'
+                return <div key={i} className={`h-full flex-1 ${bg}`} />
+              })}
+            </div>
+            {timed && (
+              <div className="mt-1 h-2 overflow-hidden rounded bg-white/25">
+                <div
+                  className={`h-full transition-[width] duration-100 ease-linear ${
+                    quiz.remaining > 5 ? 'bg-green-400' : 'bg-yellow-300'
+                  }`}
+                  style={{ width: `${(quiz.remaining / QUESTION_SECONDS) * 100}%` }}
+                />
+              </div>
+            )}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => quiz.setPaused(!quiz.paused)}
+            className="rounded-xl bg-white px-4 py-2 text-lg font-bold text-slate-900"
+            aria-label={quiz.paused ? 'Resume' : 'Pause'}
+          >
+            {quiz.paused ? '▶' : '❚❚'}
+          </button>
+        </div>
+      </div>
+
+      {/* Prompt: flag + name in Pin mode, a text field in Type mode. */}
+      <div className="pointer-events-none absolute inset-x-0 top-24 flex justify-center px-4">
+        {mode === 'pin' ? (
+          <div className="flex items-center gap-3 rounded-full bg-white px-7 py-3 shadow-xl">
+            {target && <span className="text-3xl leading-none">{flagEmoji(target.iso2)}</span>}
+            <span className="text-2xl font-extrabold text-slate-900">{target?.name}</span>
+          </div>
+        ) : (
+          <form
+            className="pointer-events-auto flex w-full max-w-4xl gap-2"
+            onSubmit={(e) => {
+              e.preventDefault()
+              quiz.submitName(draft)
+            }}
+          >
+            <input
+              ref={inputRef}
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder="Type country name"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
+              className="w-full rounded-xl bg-white px-5 py-4 text-xl font-semibold text-slate-900 shadow-xl outline-none"
+            />
+            <button
+              type="button"
+              onClick={quiz.skip}
+              aria-label="Skip"
+              className="rounded-xl bg-white px-5 text-xl font-bold text-slate-900 shadow-xl"
+            >
+              ⏭
+            </button>
+          </form>
+        )}
+      </div>
+
+      {/* Verdict toast */}
+      {quiz.verdict && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-24 flex justify-center">
+          <div
+            className={`rounded-xl px-6 py-3 text-xl font-extrabold text-white shadow-xl ${
+              quiz.verdict === 'correct' ? 'bg-green-500' : 'bg-rose-500'
+            }`}
+          >
+            {quiz.verdict === 'correct' ? '✓ CORRECT!' : `✕ ${target?.name}`}
+          </div>
+        </div>
+      )}
+
+      {quiz.paused && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-slate-900/70">
+          <p className="text-4xl font-extrabold text-white">Paused</p>
+          <div className="w-64 space-y-3">
+            <button
+              type="button"
+              onClick={() => quiz.setPaused(false)}
+              className="w-full rounded-full bg-yellow-300 px-6 py-3 text-lg font-extrabold text-slate-900"
+            >
+              Resume
+            </button>
+            <button
+              type="button"
+              onClick={onExit}
+              className="w-full rounded-full bg-white/90 px-6 py-3 text-lg font-extrabold text-slate-700"
+            >
+              Quit
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
