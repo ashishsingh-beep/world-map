@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "data": "node scripts/build-data.mjs"
+    "data": "node scripts/build-data.mjs",
+    "check:names": "node --experimental-strip-types scripts/check-names.ts"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",

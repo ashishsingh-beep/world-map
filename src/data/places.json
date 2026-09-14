@@ -171,9 +171,7 @@
     {
       "id": "usa-san-francisco",
       "name": "San Francisco",
-      "aliases": [
-        "San Fransisco"
-      ],
+      "aliases": [],
       "type": "port",
       "country": "USA",
       "point": [
@@ -453,7 +451,6 @@
       "id": "cub-havana",
       "name": "Havana",
       "aliases": [
-        "Havanna",
         "La Habana"
       ],
       "type": "capital",
@@ -549,9 +546,7 @@
     {
       "id": "pri-puerto-rico",
       "name": "Puerto Rico",
-      "aliases": [
-        "Porto Rico"
-      ],
+      "aliases": [],
       "type": "territory",
       "country": null,
       "sovereign": "USA",
@@ -1137,9 +1132,7 @@
     {
       "id": "chl-chuquicamata",
       "name": "Chuquicamata",
-      "aliases": [
-        "Chuqicamata"
-      ],
+      "aliases": [],
       "type": "mine",
       "country": "CHL",
       "point": [

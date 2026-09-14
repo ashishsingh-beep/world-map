@@ -28,6 +28,14 @@ Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 
 **No question-count selector.** Every round asks the full country set.
 
+**Typed answers are judged by `src/game/matchName.ts`.** A misspelling that is
+close enough counts as correct and shows the right spelling, but only if it is
+*strictly closer to the target than to every rival* — the other places in the
+round plus all 196 country names. That second bar is what stops "Uruguay"
+passing as "Paraguay" or "Nigeria" as "Niger". Never relax it without running
+`npm run check:names`; aliases should hold genuine alternative names, never
+misspellings, or the correction note never fires.
+
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.
 
@@ -61,7 +69,7 @@ world and asks only its own subset.
 | | |
 |---|---|
 | Modes | Pin (name → tap map), Type (map highlights → type name) |
-| Type input | No autocomplete; case- and accent-insensitive; aliases in build script |
+| Type input | No autocomplete; case- and accent-insensitive; misspellings accepted with a correction (see below) |
 | Timer | 15s per question, or off |
 | Wrong/timeout | Reveal correct country, drop pin, move on |
 | Colours | correct green, wrong pick red, missed grey — all persist for the round |

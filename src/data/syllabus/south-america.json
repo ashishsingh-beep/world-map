@@ -377,7 +377,7 @@
     {
       "id": "chl-chuquicamata",
       "name": "Chuquicamata",
-      "aliases": ["Chuqicamata"],
+      "aliases": [],
       "type": "mine",
       "country": "CHL",
       "point": [-68.9, -22.32],

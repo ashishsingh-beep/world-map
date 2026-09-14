@@ -34,6 +34,7 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
         correct={quiz.correctCount}
         total={quiz.total}
         elapsed={quiz.elapsed}
+        spellingSlips={quiz.spellingSlips}
         onRetry={onRetry}
         onExit={onExit}
       />
@@ -159,17 +160,29 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
         )}
       </div>
 
-      {/* Verdict toast */}
+      {/* Verdict toast. A typed answer that was right but misspelled still
+          counts, and shows the spelling it should have had. */}
       {quiz.verdict && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-24 flex justify-center">
+        <div className="pointer-events-none absolute inset-x-0 bottom-24 flex justify-center px-4">
           <div
-            className={`rounded-xl px-6 py-3 text-xl font-extrabold text-white shadow-xl ${
-              quiz.verdict === 'correct' ? 'bg-green-500' : 'bg-rose-500'
+            className={`rounded-xl px-6 py-3 text-center text-xl font-extrabold shadow-xl ${
+              quiz.verdict !== 'correct'
+                ? 'bg-rose-500 text-white'
+                : quiz.corrected
+                  ? 'bg-amber-400 text-slate-900'
+                  : 'bg-green-500 text-white'
             }`}
           >
-            {quiz.verdict === 'correct'
-              ? '✓ CORRECT!'
-              : `✕ ${q?.name}${quiz.missKm != null ? ` — ${formatMiss(quiz.missKm)} off` : ''}`}
+            {quiz.verdict !== 'correct' ? (
+              `✕ ${q?.name}${quiz.missKm != null ? ` — ${formatMiss(quiz.missKm)} off` : ''}`
+            ) : quiz.corrected ? (
+              <>
+                ✓ CORRECT
+                <span className="ml-2 font-bold">— it’s spelt “{quiz.corrected}”</span>
+              </>
+            ) : (
+              '✓ CORRECT!'
+            )}
           </div>
         </div>
       )}

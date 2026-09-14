@@ -18,11 +18,21 @@ interface Props {
   correct: number
   total: number
   elapsed: number
+  /** Answers that were right but misspelled — counted, never penalised. */
+  spellingSlips?: number
   onRetry: () => void
   onExit: () => void
 }
 
-export function ResultsScreen({ round, correct, total, elapsed, onRetry, onExit }: Props) {
+export function ResultsScreen({
+  round,
+  correct,
+  total,
+  elapsed,
+  spellingSlips = 0,
+  onRetry,
+  onExit,
+}: Props) {
   const ratio = total ? correct / total : 0
   const tier = TIERS.find((t) => ratio >= t.min) ?? TIERS[TIERS.length - 1]
 
@@ -68,6 +78,12 @@ export function ResultsScreen({ round, correct, total, elapsed, onRetry, onExit 
           </div>
           <p className="mt-4 text-center text-sm font-semibold text-slate-700 md:text-left">
             {round.title}
+            {spellingSlips > 0 && (
+              <>
+                {' · '}
+                {spellingSlips} spelt wrong but counted
+              </>
+            )}
           </p>
         </div>
       </div>

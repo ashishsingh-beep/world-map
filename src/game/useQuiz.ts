@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geoContains, geoDistance } from 'd3-geo'
-import { featureByIso, metaOf } from '../data/countries'
+import { allIsos, featureByIso, metaOf } from '../data/countries'
 import { placeOf, type Place } from '../data/places'
+import { judgeName, type Candidate } from './matchName'
 import type { CountryState, MapPoint, ToScreen } from '../map/MapCanvas'
 import type { Round } from './rounds'
 
-/** Case- and accent-insensitive, punctuation-agnostic. No autocomplete anywhere. */
-export function normaliseName(s: string): string {
-  return s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z]/g, '')
-}
+export { normaliseName } from './matchName'
+
+/**
+ * Every country name, as rivals for the spelling judge. Without them "Uruguay"
+ * would read as a slip of "Paraguay" in a round that only asks one of the two.
+ */
+const COUNTRY_VOCABULARY: Candidate[] = allIsos.map((iso) => {
+  const m = metaOf(iso)
+  return { id: iso, name: m.name, aliases: m.aliases ?? [] }
+})
 
 /**
  * Pin: name → tap the map. Type: map highlights it → type the name.
@@ -40,6 +43,8 @@ export interface Answer {
   correct: boolean
   /** How far the tap landed from the answer, for point questions. */
   km?: number
+  /** Set when a typed answer was accepted despite its spelling. */
+  corrected?: string
 }
 
 /**
@@ -98,6 +103,7 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
   const [wrongPick, setWrongPick] = useState<string | null>(null)
   const [tapped, setTapped] = useState<[number, number] | null>(null)
   const [missKm, setMissKm] = useState<number | null>(null)
+  const [corrected, setCorrected] = useState<string | null>(null)
   const [paused, setPaused] = useState(false)
   const [elapsed, setElapsed] = useState(0)
   const [remaining, setRemaining] = useState(QUESTION_SECONDS)
@@ -113,18 +119,20 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
   }, [paused, phase])
 
   const settle = useCallback(
-    (correct: boolean, picked?: string, km?: number) => {
+    (correct: boolean, picked?: string, km?: number, corrected?: string) => {
       if (!current) return
       setVerdict(correct ? 'correct' : 'incorrect')
       setWrongPick(correct ? null : (picked ?? null))
       setMissKm(km ?? null)
-      setAnswers((a) => [...a, { id: current.id, correct, km }])
+      setCorrected(corrected ?? null)
+      setAnswers((a) => [...a, { id: current.id, correct, km, corrected }])
       setPhase('revealing')
       advanceRef.current = window.setTimeout(() => {
         setVerdict(null)
         setWrongPick(null)
         setTapped(null)
         setMissKm(null)
+        setCorrected(null)
         setIndex((i) => {
           const next = i + 1
           if (next >= queue.length) {
@@ -203,10 +211,10 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
   const submitName = useCallback(
     (text: string) => {
       if (phase !== 'asking' || !current) return
-      const accepted = [current.name, ...current.aliases].map(normaliseName)
-      settle(accepted.includes(normaliseName(text)))
+      const { correct, corrected } = judgeName(text, current, [...queue, ...COUNTRY_VOCABULARY])
+      settle(correct, undefined, undefined, corrected ?? undefined)
     },
-    [phase, current, settle]
+    [phase, current, settle, queue]
   )
 
   const skip = useCallback(() => {
@@ -277,6 +285,9 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
     points,
     /** How far the last tap landed from the answer — only set on point questions. */
     missKm,
+    /** The right spelling, when the typed answer was accepted in spite of it. */
+    corrected,
+    spellingSlips: answers.filter((a) => a.corrected).length,
     /** Only non-null during a reveal — the camera never moves while asking. */
     revealIso: revealing && current.iso ? current.iso : null,
     revealPoints:

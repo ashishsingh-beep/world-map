@@ -152,7 +152,7 @@
     {
       "id": "usa-san-francisco",
       "name": "San Francisco",
-      "aliases": ["San Fransisco"],
+      "aliases": [],
       "type": "port",
       "country": "USA",
       "point": [-122.42, 37.77],
@@ -352,7 +352,7 @@
     {
       "id": "cub-havana",
       "name": "Havana",
-      "aliases": ["Havanna", "La Habana"],
+      "aliases": ["La Habana"],
       "type": "capital",
       "country": "CUB",
       "point": [-82.38, 23.13],
@@ -418,7 +418,7 @@
     {
       "id": "pri-puerto-rico",
       "name": "Puerto Rico",
-      "aliases": ["Porto Rico"],
+      "aliases": [],
       "type": "territory",
       "country": null,
       "sovereign": "USA",
