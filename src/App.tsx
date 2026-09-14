@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { ROUNDS, ROUND_ORDER } from './game/rounds'
+import {
+  PLACE_CONTINENTS,
+  PLACE_ROUNDS,
+  ROUNDS,
+  ROUND_ORDER,
+  placeCountriesOf,
+} from './game/rounds'
 import type { Mode } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
@@ -14,7 +20,7 @@ export default function App() {
   const [timed, setTimed] = useState(true)
   const [runKey, setRunKey] = useState(0)
 
-  const round = ROUNDS[roundId]
+  const round = ROUNDS[roundId] ?? PLACE_ROUNDS[roundId]
 
   if (view === 'play') {
     return (
@@ -49,7 +55,10 @@ export default function App() {
 
           <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
             <p className="text-sm font-bold text-slate-500">
-              {round.askable.length} countries · every round asks all of them
+              {round.places
+                ? `${round.places.length} places`
+                : `${round.askable.length} countries`}{' '}
+              · every round asks all of them
             </p>
 
             <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Mode</h2>
@@ -142,6 +151,41 @@ export default function App() {
             )
           })}
         </div>
+
+        {PLACE_CONTINENTS.map((continent) => (
+          <section key={continent} className="mt-10">
+            <h2 className="text-2xl font-extrabold text-slate-900">Places — {continent}</h2>
+            <p className="mt-1 mb-4 text-slate-600">
+              Capitals, cities, ports and key sites inside each country.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                PLACE_ROUNDS[
+                  `places-all-${continent.toLowerCase().replace(/\s+/g, '-')}`
+                ],
+                ...placeCountriesOf(continent).map(
+                  (iso) => PLACE_ROUNDS[`places-${iso.toLowerCase()}`]
+                ),
+              ].map((r) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => {
+                    setRoundId(r.id)
+                    setView('setup')
+                  }}
+                  className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                >
+                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
+                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
+                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+                    {r.places?.length} {r.places?.length === 1 ? 'PLACE' : 'PLACES'}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   )

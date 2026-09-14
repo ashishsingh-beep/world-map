@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
+import { TYPE_LABEL } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
 import { QUESTION_SECONDS, useQuiz, type Mode } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
 import { flagEmoji, formatClock } from '../ui/bits'
 import { ResultsScreen } from './ResultsScreen'
+
+const formatMiss = (km: number) => (km < 10 ? `${km.toFixed(1)} km` : `${Math.round(km)} km`)
 
 interface Props {
   round: Round
@@ -37,7 +40,9 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
     )
   }
 
-  const target = quiz.current ? metaOf(quiz.current) : null
+  const q = quiz.current
+  const isPlaceRound = !!round.places
+  const country = q?.iso ? metaOf(q.iso) : null
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-[#22cdfb]">
@@ -50,6 +55,11 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
         revealIso={quiz.revealIso}
         pinIso={quiz.pinIso}
         onPick={quiz.pick}
+        points={quiz.points}
+        revealPoints={quiz.revealPoints}
+        pinPoint={quiz.pinPoint}
+        markPoint={quiz.markPoint}
+        onPickPoint={isPlaceRound && mode === 'pin' ? quiz.pickPoint : undefined}
         padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />
 
@@ -98,8 +108,15 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
       <div className="pointer-events-none absolute inset-x-0 top-24 flex justify-center px-4">
         {mode === 'pin' ? (
           <div className="flex items-center gap-3 rounded-full bg-white px-7 py-3 shadow-xl">
-            {target && <span className="text-3xl leading-none">{flagEmoji(target.iso2)}</span>}
-            <span className="text-2xl font-extrabold text-slate-900">{target?.name}</span>
+            {!isPlaceRound && country && (
+              <span className="text-3xl leading-none">{flagEmoji(country.iso2)}</span>
+            )}
+            <span className="text-2xl font-extrabold text-slate-900">{q?.name}</span>
+            {q?.place && q.place.type !== 'country' && (
+              <span className="text-sm font-bold tracking-wide text-slate-400 uppercase">
+                {TYPE_LABEL[q.place.type]}
+              </span>
+            )}
           </div>
         ) : (
           <form
@@ -113,7 +130,7 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
               ref={inputRef}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
-              placeholder="Type country name"
+              placeholder={isPlaceRound ? 'Type place name' : 'Type country name'}
               autoComplete="off"
               autoCorrect="off"
               spellCheck={false}
@@ -139,7 +156,9 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
               quiz.verdict === 'correct' ? 'bg-green-500' : 'bg-rose-500'
             }`}
           >
-            {quiz.verdict === 'correct' ? '✓ CORRECT!' : `✕ ${target?.name}`}
+            {quiz.verdict === 'correct'
+              ? '✓ CORRECT!'
+              : `✕ ${q?.name}${quiz.missKm != null ? ` — ${formatMiss(quiz.missKm)} off` : ''}`}
           </div>
         </div>
       )}

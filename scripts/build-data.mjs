@@ -232,7 +232,7 @@ writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2)
  */
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
-  'mine', 'lake', 'cape', 'passage', 'plate', 'zone',
+  'mine', 'zone',
 ])
 /** How far outside its country an onshore place may sit before it's an error. */
 const ONSHORE_SLACK_KM = 25

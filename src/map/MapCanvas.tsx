@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { geoEquirectangular, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
@@ -14,6 +14,9 @@ const MARKER_RADIUS_PX = 9
 /** Padding factor when the map zooms in to reveal a country. */
 const REVEAL_PADDING = 6
 const MAX_REVEAL_SCALE = 14
+/** A point has no size of its own, so its reveal zoom is capped rather than fitted. */
+const POINT_REVEAL_SCALE = 5
+const PLACE_MARKER_PX = 7
 
 /** Screen-space clearance around the fitted geography, so it doesn't butt up
  *  against the viewport edge or hide behind HUD chrome a screen overlays. */
@@ -25,6 +28,16 @@ export interface MapPadding {
 }
 
 const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, left: 24 }
+
+/** A point place drawn on top of the geography (a city, port, mine…). */
+export interface MapPoint {
+  id: string
+  point: [number, number]
+  state: CountryState
+}
+
+/** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
+export type ToScreen = (p: [number, number]) => [number, number] | null
 
 export interface MapCanvasProps {
   /** Geography to draw. For a continent round this is just that continent. */
@@ -40,6 +53,24 @@ export interface MapCanvasProps {
   /** Drop a pin at this country's centroid (the wrong-answer reveal marker). */
   pinIso?: string | null
   onPick?: (iso: string) => void
+  /** Point places drawn above the geography. */
+  points?: MapPoint[]
+  /**
+   * Zoom to frame these lon/lats instead of a country. Pass both the answer and
+   * the player's tap so a near miss and a wild guess are each readable. Null
+   * resets the view.
+   */
+  revealPoints?: [number, number][] | null
+  /** Drop a pin at this lon/lat — used to show where the answer actually was. */
+  pinPoint?: [number, number] | null
+  /** Show where the player tapped, so a near miss is visible next to the answer. */
+  markPoint?: [number, number] | null
+  /**
+   * A tap anywhere on the map. Receives the lon/lat plus a projector, so the
+   * caller can measure the miss in screen pixels at the current zoom without
+   * the map ever being told what the answer is.
+   */
+  onPickPoint?: (lonLat: [number, number], toScreen: ToScreen) => void
   labels?: 'none' | 'all' | 'selected'
   selectedIso?: string | null
   className?: string
@@ -63,6 +94,11 @@ export function MapCanvas({
   revealIso = null,
   pinIso = null,
   onPick,
+  points,
+  revealPoints = null,
+  pinPoint = null,
+  markPoint = null,
+  onPickPoint,
   labels = 'none',
   selectedIso = null,
   className,
@@ -181,6 +217,35 @@ export function MapCanvas({
     if (!svg || !behaviour || !size.width) return
     const sel = select(svg)
 
+    if (revealPoints?.length) {
+      const bases = revealPoints.map((p) => projection(p)).filter(Boolean) as [number, number][]
+      if (!bases.length) return
+      const xs = bases.map((b) => b[0])
+      const ys = bases.map((b) => b[1])
+      const w = Math.max(...xs) - Math.min(...xs)
+      const h = Math.max(...ys) - Math.min(...ys)
+      // Fit whatever has to be visible, but never zoom past the point cap —
+      // a single point has no extent to fit to.
+      const k = Math.max(
+        1,
+        Math.min(
+          POINT_REVEAL_SCALE,
+          size.width / Math.max(w * 1.6, 1),
+          size.height / Math.max(h * 1.6, 1)
+        )
+      )
+      const cx = (Math.max(...xs) + Math.min(...xs)) / 2
+      const cy = (Math.max(...ys) + Math.min(...ys)) / 2
+      sel
+        .transition()
+        .duration(650)
+        .call(
+          behaviour.transform,
+          zoomIdentity.translate(size.width / 2 - cx * k, size.height / 2 - cy * k).scale(k)
+        )
+      return
+    }
+
     if (!revealIso) {
       sel.transition().duration(500).call(behaviour.transform, zoomIdentity)
       return
@@ -200,11 +265,32 @@ export function MapCanvas({
       .translate(size.width / 2 - cx * k, size.height / 2 - cy * k)
       .scale(k)
     sel.transition().duration(650).call(behaviour.transform, next)
-  }, [revealIso, path, size.width, size.height])
+  }, [revealIso, revealPoints, projection, path, size.width, size.height])
 
   const k = transform.k
   const handle = (iso: string) => {
     if (onPick && askSet.has(iso)) onPick(iso)
+  }
+
+  /** Where the pointer went down, so a pan is never mistaken for a tap. */
+  const downAt = useRef<[number, number] | null>(null)
+
+  const handleMapClick = (event: ReactMouseEvent<SVGSVGElement>) => {
+    if (!onPickPoint) return
+    const rect = event.currentTarget.getBoundingClientRect()
+    const sx = event.clientX - rect.left
+    const sy = event.clientY - rect.top
+    const from = downAt.current
+    if (from && Math.hypot(sx - from[0], sy - from[1]) > 5) return
+
+    const base = transform.invert([sx, sy])
+    const lonLat = projection.invert?.(base)
+    if (!lonLat) return
+    const toScreen: ToScreen = (p) => {
+      const b = projection(p)
+      return b ? (transform.apply(b) as [number, number]) : null
+    }
+    onPickPoint(lonLat as [number, number], toScreen)
   }
 
   return (
@@ -215,6 +301,11 @@ export function MapCanvas({
         height={size.height}
         className="block touch-none select-none"
         style={{ background: '#22cdfb', cursor: 'grab' }}
+        onPointerDown={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect()
+          downAt.current = [e.clientX - rect.left, e.clientY - rect.top]
+        }}
+        onClick={handleMapClick}
       >
         <g transform={transform.toString()}>
           {drawn.map((f) => {
@@ -257,6 +348,59 @@ export function MapCanvas({
               />
             )
           })}
+
+          {/* Place markers. Sized in screen pixels so they stay tappable at
+              every zoom, like the micro-state markers above. */}
+          {points?.map((p) => {
+            const base = projection(p.point)
+            if (!base) return null
+            const isTarget = p.state === 'target'
+            return (
+              <circle
+                key={`p-${p.id}`}
+                cx={base[0]}
+                cy={base[1]}
+                r={(isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) / k}
+                fill={p.state === 'idle' ? '#fff' : FILLS[p.state]}
+                fillOpacity={p.state === 'idle' ? 0.55 : 0.95}
+                stroke="#1f2d4d"
+                strokeWidth={isTarget ? 2.5 : 1.5}
+                vectorEffect="non-scaling-stroke"
+                pointerEvents="none"
+              />
+            )
+          })}
+
+          {/* Where the player tapped, drawn next to the answer on reveal. */}
+          {markPoint &&
+            (() => {
+              const base = projection(markPoint)
+              if (!base) return null
+              const r = 6 / k
+              return (
+                <g pointerEvents="none" stroke="#1f2d4d" strokeWidth={2.5} vectorEffect="non-scaling-stroke">
+                  <line x1={base[0] - r} y1={base[1] - r} x2={base[0] + r} y2={base[1] + r} />
+                  <line x1={base[0] - r} y1={base[1] + r} x2={base[0] + r} y2={base[1] - r} />
+                </g>
+              )
+            })()}
+
+          {pinPoint &&
+            (() => {
+              const base = projection(pinPoint)
+              if (!base) return null
+              return (
+                <g transform={`translate(${base[0]} ${base[1]}) scale(${1 / k})`} pointerEvents="none">
+                  <path
+                    d="M0 0 c -7 -9 -11 -13 -11 -19 a 11 11 0 1 1 22 0 c 0 6 -4 10 -11 19 z"
+                    fill="#f43f5e"
+                    stroke="#fff"
+                    strokeWidth={2}
+                  />
+                  <circle cx={0} cy={-19} r={4} fill="#fff" />
+                </g>
+              )
+            })()}
 
           {pinIso && layout[pinIso] && (
             <g

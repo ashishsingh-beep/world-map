@@ -235,26 +235,6 @@
       "continent": "South America"
     },
     {
-      "id": "per-nazca-plate",
-      "name": "Nazca Plate",
-      "aliases": [
-        "Nazca"
-      ],
-      "type": "plate",
-      "country": "PER",
-      "point": [
-        -85,
-        -20
-      ],
-      "offshore": true,
-      "significance": "Tectonic plate subducting off the Peruvian coast",
-      "notes": [
-        "Drives the Andes and the region's earthquakes"
-      ],
-      "tier": 1,
-      "continent": "South America"
-    },
-    {
       "id": "per-phosphate-nitrate",
       "name": "Peru",
       "aliases": [],
@@ -536,7 +516,7 @@
       ],
       "significance": "Driest inhabited place on Earth",
       "notes": [
-        "Northern Chile, in the Atacama"
+        "Northern Chile"
       ],
       "tier": 1,
       "continent": "South America"
@@ -554,44 +534,6 @@
         -22.32
       ],
       "significance": "Copper abundance — largest open-pit copper mine in the world",
-      "notes": [],
-      "tier": 1,
-      "continent": "South America"
-    },
-    {
-      "id": "chl-cape-horn",
-      "name": "Cape Horn",
-      "aliases": [
-        "Cabo de Hornos"
-      ],
-      "type": "cape",
-      "country": "CHL",
-      "point": [
-        -67.29,
-        -55.98
-      ],
-      "offshore": true,
-      "significance": "Southernmost point of South America",
-      "notes": [
-        "On Hornos Island — too small to survive map simplification"
-      ],
-      "tier": 1,
-      "continent": "South America"
-    },
-    {
-      "id": "chl-drake-passage",
-      "name": "Drake Passage",
-      "aliases": [
-        "Drake Strait"
-      ],
-      "type": "passage",
-      "country": null,
-      "point": [
-        -65,
-        -58.5
-      ],
-      "offshore": true,
-      "significance": "Passage between Cape Horn and Antarctica, linking the Atlantic and Pacific",
       "notes": [],
       "tier": 1,
       "continent": "South America"

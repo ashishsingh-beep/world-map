@@ -1,4 +1,5 @@
 import { allIsos, meta, metaOf, type Continent } from '../data/countries'
+import { places as allPlaces, placesOfCountry } from '../data/places'
 
 export type BBox = [[number, number], [number, number]]
 
@@ -10,6 +11,11 @@ export interface Round {
   render: string[]
   /** Countries the quiz asks for. Differs from `render` only for Island Nations. */
   askable: string[]
+  /**
+   * Place ids the quiz asks for. Present only on deep-dive rounds, which ask
+   * about places inside countries rather than the countries themselves.
+   */
+  places?: string[]
   view: BBox
 }
 
@@ -100,3 +106,76 @@ export const ROUND_ORDER = [
   'oceania',
   'south-america',
 ] as const
+
+/**
+ * Deep-dive rounds: the places inside a country, not the country itself.
+ *
+ * The view must contain every askable place, because panning is clamped to the
+ * starting view — a question you cannot scroll to is unanswerable. That is why
+ * the box is fitted to the places as well as the country, and why Chile's round
+ * reaches out to Easter Island.
+ */
+function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
+  let [[w, s], [e, n]] = bounds
+  for (const [lon, lat] of points) {
+    w = Math.min(w, lon)
+    s = Math.min(s, lat)
+    e = Math.max(e, lon)
+    n = Math.max(n, lat)
+  }
+  return [
+    [Math.max(-180, w - pad), Math.max(-90, s - pad)],
+    [Math.min(180, e + pad), Math.min(90, n + pad)],
+  ]
+}
+
+/** Continents that have an authored syllabus, in menu order. */
+export const PLACE_CONTINENTS = [...new Set(allPlaces.map((p) => p.continent))]
+
+function placeRound(iso: string): Round {
+  const m = metaOf(iso)
+  const ps = placesOfCountry(iso)
+  return {
+    id: `places-${iso.toLowerCase()}`,
+    title: m.name,
+    blurb: `Capitals, cities, ports and key sites of ${m.name}.`,
+    render: isosIn(m.continent),
+    askable: [],
+    places: ps.map((p) => p.id),
+    view: fitAround(m.bounds, ps.map((p) => p.point)),
+  }
+}
+
+function continentPlaceRound(continent: string): Round {
+  const ps = allPlaces.filter((p) => p.continent === continent)
+  const isos = isosIn(continent as Continent)
+  return {
+    id: `places-all-${continent.toLowerCase().replace(/\s+/g, '-')}`,
+    title: `All of ${continent}`,
+    blurb: `Every place in the set — ${ps.length} in total.`,
+    render: isos,
+    askable: [],
+    places: ps.map((p) => p.id),
+    view: fitAround(fit(isos), ps.map((p) => p.point)),
+  }
+}
+
+/** Countries that have places of their own, in the order the syllabus lists them. */
+export function placeCountriesOf(continent: string): string[] {
+  const out: string[] = []
+  for (const p of allPlaces) {
+    if (p.continent !== continent || !p.country) continue
+    if (!out.includes(p.country)) out.push(p.country)
+  }
+  return out
+}
+
+export const PLACE_ROUNDS: Record<string, Round> = {}
+for (const continent of PLACE_CONTINENTS) {
+  const round = continentPlaceRound(continent)
+  PLACE_ROUNDS[round.id] = round
+  for (const iso of placeCountriesOf(continent)) {
+    const r = placeRound(iso)
+    PLACE_ROUNDS[r.id] = r
+  }
+}
