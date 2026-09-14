@@ -5,10 +5,6 @@ import {
   ROUNDS,
   ROUND_ORDER,
   allPlacesRoundId,
-  countryRoundId,
-  placeCountriesOf,
-  themeRoundsOf,
-  type Round,
 } from './game/rounds'
 import type { Mode } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
@@ -160,46 +156,34 @@ export default function App() {
           })}
         </div>
 
-        {PLACE_CONTINENTS.map((continent) => {
-          const card = (r: Round) => (
-            <button
-              key={r.id}
-              type="button"
-              onClick={() => {
-                setRoundId(r.id)
-                setView('setup')
-              }}
-              className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
-            >
-              <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-              <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
-              <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                {r.places?.length} {r.places?.length === 1 ? 'PLACE' : 'PLACES'}
-              </div>
-            </button>
-          )
-          return (
-            <section key={continent} className="mt-10">
-              <h2 className="text-2xl font-extrabold text-slate-900">Places — {continent}</h2>
-              <p className="mt-1 mb-4 text-slate-600">
-                Capitals, cities, ports and key sites inside each country.
-              </p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {card(PLACE_ROUNDS[allPlacesRoundId(continent)])}
-                {themeRoundsOf(continent).map(card)}
-              </div>
-
-              <h3 className="mt-6 mb-3 text-sm font-bold tracking-wide text-slate-500 uppercase">
-                By country
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {placeCountriesOf(continent).map((iso) =>
-                  card(PLACE_ROUNDS[countryRoundId(iso)])
-                )}
-              </div>
-            </section>
-          )
-        })}
+        <section className="mt-10">
+          <h2 className="text-2xl font-extrabold text-slate-900">Places</h2>
+          <p className="mt-1 mb-4 text-slate-600">
+            Capitals, cities, ports and key sites — the whole continent in one round.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {PLACE_CONTINENTS.map((continent) => {
+              const r = PLACE_ROUNDS[allPlacesRoundId(continent)]
+              return (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => {
+                    setRoundId(r.id)
+                    setView('setup')
+                  }}
+                  className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                >
+                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
+                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
+                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+                    {r.places?.length} PLACES
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </section>
       </div>
     </div>
   )

@@ -52,22 +52,6 @@ export function placeOf(id: string): Place {
   return p
 }
 
-/** Places to practise for a country: its own facts plus everything inside it. */
-export function placesOfCountry(iso: string): Place[] {
-  return places.filter((p) => p.country === iso || p.sovereign === iso)
-}
-
-/** Countries that have any syllabus places, in the order they appear. */
-export function countriesWithPlaces(continent: string): string[] {
-  const out: string[] = []
-  for (const p of places) {
-    if (p.continent !== continent) continue
-    const iso = p.country ?? p.sovereign
-    if (iso && !out.includes(iso)) out.push(iso)
-  }
-  return out
-}
-
 /** A short human label for the place type, used in prompts. */
 export const TYPE_LABEL: Record<PlaceType, string> = {
   country: 'country',
