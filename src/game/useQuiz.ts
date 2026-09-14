@@ -14,7 +14,12 @@ export function normaliseName(s: string): string {
     .replace(/[^a-z]/g, '')
 }
 
-export type Mode = 'pin' | 'type'
+/**
+ * Pin: name → tap the map. Type: map highlights it → type the name.
+ * Significance: a clue from the notes ("Copper abundance…") → type the name,
+ * with nothing highlighted, because the point is to recall the fact.
+ */
+export type Mode = 'pin' | 'type' | 'significance'
 export type Phase = 'asking' | 'revealing' | 'finished'
 export type Verdict = 'correct' | 'incorrect'
 

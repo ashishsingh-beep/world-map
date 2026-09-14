@@ -1,5 +1,5 @@
 import { allIsos, meta, metaOf, type Continent } from '../data/countries'
-import { places as allPlaces, placesOfCountry } from '../data/places'
+import { places as allPlaces, placesOfCountry, type PlaceType } from '../data/places'
 
 export type BBox = [[number, number], [number, number]]
 
@@ -132,6 +132,10 @@ function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
 /** Continents that have an authored syllabus, in menu order. */
 export const PLACE_CONTINENTS = [...new Set(allPlaces.map((p) => p.continent))]
 
+export const allPlacesRoundId = (continent: string) =>
+  `places-all-${continent.toLowerCase().replace(/\s+/g, '-')}`
+export const countryRoundId = (iso: string) => `places-${iso.toLowerCase()}`
+
 function placeRound(iso: string): Round {
   const m = metaOf(iso)
   const ps = placesOfCountry(iso)
@@ -150,7 +154,7 @@ function continentPlaceRound(continent: string): Round {
   const ps = allPlaces.filter((p) => p.continent === continent)
   const isos = isosIn(continent as Continent)
   return {
-    id: `places-all-${continent.toLowerCase().replace(/\s+/g, '-')}`,
+    id: allPlacesRoundId(continent),
     title: `All of ${continent}`,
     blurb: `Every place in the set — ${ps.length} in total.`,
     render: isos,
@@ -158,6 +162,63 @@ function continentPlaceRound(continent: string): Round {
     places: ps.map((p) => p.id),
     view: fitAround(fit(isos), ps.map((p) => p.point)),
   }
+}
+
+/**
+ * Theme rounds cut the same places a different way — every capital, every
+ * port — which is how mapping revision is actually drilled. Types are grouped
+ * so a theme is never a one-question round.
+ */
+const THEMES: { id: string; name: string; blurb: string; types: PlaceType[] }[] = [
+  { id: 'capitals', name: 'Capitals', blurb: 'Every capital city.', types: ['capital'] },
+  {
+    id: 'cities-ports',
+    name: 'Cities & Ports',
+    blurb: 'Port cities and the cities that matter for other reasons.',
+    types: ['city', 'port'],
+  },
+  {
+    id: 'islands',
+    name: 'Islands & Territories',
+    blurb: 'Islands, island groups and overseas territories.',
+    types: ['island', 'island-group', 'territory'],
+  },
+  {
+    id: 'resources',
+    name: 'Mines & Resources',
+    blurb: 'Mines and resource regions.',
+    types: ['mine', 'zone'],
+  },
+  {
+    id: 'facts',
+    name: 'Country Facts',
+    blurb: 'Landlocked, coastlines, reserves — what each country is known for.',
+    types: ['country'],
+  },
+]
+
+const slug = (s: string) => s.toLowerCase().replace(/\s+/g, '-')
+
+function themeRound(continent: string, theme: (typeof THEMES)[number]): Round | null {
+  const ps = allPlaces.filter(
+    (p) => p.continent === continent && theme.types.includes(p.type)
+  )
+  // A round with a single question is not worth a menu card.
+  if (ps.length < 2) return null
+  const isos = isosIn(continent as Continent)
+  return {
+    id: `places-${slug(continent)}-${theme.id}`,
+    title: theme.name,
+    blurb: theme.blurb,
+    render: isos,
+    askable: [],
+    places: ps.map((p) => p.id),
+    view: fitAround(fit(isos), ps.map((p) => p.point)),
+  }
+}
+
+export function themeRoundsOf(continent: string): Round[] {
+  return THEMES.map((t) => themeRound(continent, t)).filter(Boolean) as Round[]
 }
 
 /** Countries that have places of their own, in the order the syllabus lists them. */
@@ -178,4 +239,5 @@ for (const continent of PLACE_CONTINENTS) {
     const r = placeRound(iso)
     PLACE_ROUNDS[r.id] = r
   }
+  for (const r of themeRoundsOf(continent)) PLACE_ROUNDS[r.id] = r
 }

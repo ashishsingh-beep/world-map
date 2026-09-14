@@ -24,7 +24,7 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
 
   useEffect(() => {
     setDraft('')
-    if (mode === 'type' && quiz.phase === 'asking') inputRef.current?.focus()
+    if (mode !== 'pin' && quiz.phase === 'asking') inputRef.current?.focus()
   }, [quiz.index, quiz.phase, mode])
 
   if (quiz.phase === 'finished') {
@@ -104,8 +104,19 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
         </div>
       </div>
 
-      {/* Prompt: flag + name in Pin mode, a text field in Type mode. */}
-      <div className="pointer-events-none absolute inset-x-0 top-24 flex justify-center px-4">
+      {/* Prompt: flag + name in Pin mode, a text field otherwise. Significance
+          mode adds the clue above the field and highlights nothing. */}
+      <div className="pointer-events-none absolute inset-x-0 top-24 flex flex-col items-center gap-3 px-4">
+        {mode === 'significance' && (
+          <div className="max-w-2xl rounded-2xl bg-white px-6 py-4 text-center shadow-xl">
+            <div className="text-[10px] font-bold tracking-widest text-slate-400">
+              WHICH PLACE IS THIS?
+            </div>
+            <div className="mt-1 text-lg leading-snug font-extrabold text-slate-900">
+              {q?.place?.significance}
+            </div>
+          </div>
+        )}
         {mode === 'pin' ? (
           <div className="flex items-center gap-3 rounded-full bg-white px-7 py-3 shadow-xl">
             {!isPlaceRound && country && (
