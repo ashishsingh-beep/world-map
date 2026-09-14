@@ -1,6 +1,619 @@
 {
   "places": [
     {
+      "id": "can-ottawa",
+      "name": "Ottawa",
+      "aliases": [],
+      "type": "capital",
+      "country": "CAN",
+      "point": [
+        -75.7,
+        45.42
+      ],
+      "significance": "Capital of Canada",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-calgary",
+      "name": "Calgary",
+      "aliases": [],
+      "type": "city",
+      "country": "CAN",
+      "point": [
+        -114.07,
+        51.05
+      ],
+      "significance": "Important centre for crude oil",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-montreal",
+      "name": "Montreal",
+      "aliases": [
+        "Montréal"
+      ],
+      "type": "city",
+      "country": "CAN",
+      "point": [
+        -73.57,
+        45.5
+      ],
+      "significance": "Montreal Protocol — the treaty protecting the ozone layer",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-toronto",
+      "name": "Toronto",
+      "aliases": [],
+      "type": "city",
+      "country": "CAN",
+      "point": [
+        -79.38,
+        43.65
+      ],
+      "significance": "Largest city of Canada",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-vancouver",
+      "name": "Vancouver",
+      "aliases": [],
+      "type": "port",
+      "country": "CAN",
+      "point": [
+        -123.12,
+        49.28
+      ],
+      "significance": "Pacific port of Canada, western end of the Trans-Canadian Railway",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-halifax",
+      "name": "Halifax",
+      "aliases": [],
+      "type": "port",
+      "country": "CAN",
+      "point": [
+        -63.57,
+        44.65
+      ],
+      "significance": "Atlantic port of Canada, eastern end of the Trans-Canadian Railway",
+      "notes": [
+        "Nova Scotia"
+      ],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-st-johns",
+      "name": "St John's",
+      "aliases": [
+        "St John",
+        "St Johns",
+        "Saint Johns",
+        "St John Port"
+      ],
+      "type": "port",
+      "country": "CAN",
+      "point": [
+        -52.71,
+        47.56
+      ],
+      "significance": "Fishing port beside the Grand Banks, where warm and cold currents meet",
+      "notes": [
+        "The meeting of currents is what makes the Grand Banks such rich fishing"
+      ],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-ellesmere",
+      "name": "Ellesmere Island",
+      "aliases": [
+        "Ellesmere"
+      ],
+      "type": "island",
+      "country": "CAN",
+      "point": [
+        -79,
+        79.8
+      ],
+      "significance": "Northernmost of Canada's large Arctic islands, in the Queen Elizabeth group",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "can-baffin",
+      "name": "Baffin Island",
+      "aliases": [
+        "Baffin"
+      ],
+      "type": "island",
+      "country": "CAN",
+      "point": [
+        -68.5,
+        68
+      ],
+      "significance": "Largest island of Canada",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-washington-dc",
+      "name": "Washington DC",
+      "aliases": [
+        "Washington",
+        "Washington D.C."
+      ],
+      "type": "capital",
+      "country": "USA",
+      "point": [
+        -77.04,
+        38.91
+      ],
+      "significance": "Capital of the United States",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-san-francisco",
+      "name": "San Francisco",
+      "aliases": [
+        "San Fransisco"
+      ],
+      "type": "port",
+      "country": "USA",
+      "point": [
+        -122.42,
+        37.77
+      ],
+      "significance": "City of the Golden Gate, and the gateway to Silicon Valley",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-las-vegas",
+      "name": "Las Vegas",
+      "aliases": [],
+      "type": "city",
+      "country": "USA",
+      "point": [
+        -115.14,
+        36.17
+      ],
+      "significance": "The one city among the western group that is not a port",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-los-angeles",
+      "name": "Los Angeles",
+      "aliases": [
+        "LA"
+      ],
+      "type": "port",
+      "country": "USA",
+      "point": [
+        -118.24,
+        34.05
+      ],
+      "significance": "Home of Hollywood",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-san-diego",
+      "name": "San Diego",
+      "aliases": [],
+      "type": "port",
+      "country": "USA",
+      "point": [
+        -117.16,
+        32.72
+      ],
+      "significance": "US port nearest to the Panama Canal",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-detroit",
+      "name": "Detroit",
+      "aliases": [],
+      "type": "city",
+      "country": "USA",
+      "point": [
+        -83.05,
+        42.33
+      ],
+      "significance": "Automobile capital of the United States",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-pittsburgh",
+      "name": "Pittsburgh",
+      "aliases": [],
+      "type": "city",
+      "country": "USA",
+      "point": [
+        -79.99,
+        40.44
+      ],
+      "significance": "Iron and Steel Capital of the World",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-new-york",
+      "name": "New York",
+      "aliases": [
+        "New York City",
+        "NYC"
+      ],
+      "type": "port",
+      "country": "USA",
+      "point": [
+        -74.01,
+        40.71
+      ],
+      "significance": "Largest city and busiest port of the United States",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-miami",
+      "name": "Miami",
+      "aliases": [],
+      "type": "city",
+      "country": "USA",
+      "point": [
+        -80.19,
+        25.76
+      ],
+      "significance": "Satellite launching station",
+      "notes": [
+        "The notes mark Miami; the launch site itself is Cape Canaveral, further up the Florida coast"
+      ],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "usa-hawaii",
+      "name": "Hawaii",
+      "aliases": [],
+      "type": "island-group",
+      "country": "USA",
+      "point": [
+        -155.5,
+        19.6
+      ],
+      "significance": "Pacific island state of the United States",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "mex-mexico-city",
+      "name": "Mexico City",
+      "aliases": [],
+      "type": "capital",
+      "country": "MEX",
+      "point": [
+        -99.13,
+        19.43
+      ],
+      "significance": "Capital of Mexico",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "blz-belmopan",
+      "name": "Belmopan",
+      "aliases": [],
+      "type": "capital",
+      "country": "BLZ",
+      "point": [
+        -88.77,
+        17.25
+      ],
+      "significance": "Capital of Belize",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "gtm-guatemala-city",
+      "name": "Guatemala City",
+      "aliases": [],
+      "type": "capital",
+      "country": "GTM",
+      "point": [
+        -90.51,
+        14.63
+      ],
+      "significance": "Capital of Guatemala",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "slv-san-salvador",
+      "name": "San Salvador",
+      "aliases": [],
+      "type": "capital",
+      "country": "SLV",
+      "point": [
+        -89.19,
+        13.69
+      ],
+      "significance": "Capital of El Salvador",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "hnd-tegucigalpa",
+      "name": "Tegucigalpa",
+      "aliases": [],
+      "type": "capital",
+      "country": "HND",
+      "point": [
+        -87.21,
+        14.07
+      ],
+      "significance": "Capital of Honduras",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "nic-managua",
+      "name": "Managua",
+      "aliases": [],
+      "type": "capital",
+      "country": "NIC",
+      "point": [
+        -86.25,
+        12.14
+      ],
+      "significance": "Capital of Nicaragua",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "cri-san-jose",
+      "name": "San José",
+      "aliases": [
+        "San Jose"
+      ],
+      "type": "capital",
+      "country": "CRI",
+      "point": [
+        -84.09,
+        9.93
+      ],
+      "significance": "Capital of Costa Rica",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "pan-panama-city",
+      "name": "Panama City",
+      "aliases": [],
+      "type": "capital",
+      "country": "PAN",
+      "point": [
+        -79.52,
+        8.98
+      ],
+      "significance": "Capital of Panama",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "pan-panama-canal",
+      "name": "Panama Canal",
+      "aliases": [],
+      "type": "canal",
+      "country": "PAN",
+      "point": [
+        -79.7,
+        9.15
+      ],
+      "significance": "Canal cut through Panama to link the Atlantic and the Pacific",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "cub-havana",
+      "name": "Havana",
+      "aliases": [
+        "Havanna",
+        "La Habana"
+      ],
+      "type": "capital",
+      "country": "CUB",
+      "point": [
+        -82.38,
+        23.13
+      ],
+      "significance": "Capital of Cuba",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "jam-kingston",
+      "name": "Kingston",
+      "aliases": [],
+      "type": "capital",
+      "country": "JAM",
+      "point": [
+        -76.79,
+        17.99
+      ],
+      "significance": "Capital of Jamaica",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "bhs-nassau",
+      "name": "Nassau",
+      "aliases": [],
+      "type": "capital",
+      "country": "BHS",
+      "point": [
+        -77.35,
+        25.06
+      ],
+      "significance": "Capital of the Bahamas",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "hti-port-au-prince",
+      "name": "Port-au-Prince",
+      "aliases": [
+        "Port au Prince"
+      ],
+      "type": "capital",
+      "country": "HTI",
+      "point": [
+        -72.34,
+        18.54
+      ],
+      "significance": "Capital of Haiti",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "dom-santo-domingo",
+      "name": "Santo Domingo",
+      "aliases": [],
+      "type": "capital",
+      "country": "DOM",
+      "point": [
+        -69.93,
+        18.49
+      ],
+      "significance": "Capital of the Dominican Republic",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "tto-port-of-spain",
+      "name": "Port of Spain",
+      "aliases": [
+        "Port-of-Spain"
+      ],
+      "type": "capital",
+      "country": "TTO",
+      "point": [
+        -61.51,
+        10.65
+      ],
+      "significance": "Capital of Trinidad and Tobago",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "pri-puerto-rico",
+      "name": "Puerto Rico",
+      "aliases": [
+        "Porto Rico"
+      ],
+      "type": "territory",
+      "country": null,
+      "sovereign": "USA",
+      "point": [
+        -66.45,
+        18.22
+      ],
+      "significance": "US territory in the West Indies, not a sovereign country",
+      "notes": [
+        "Capital: San Juan"
+      ],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "pri-san-juan",
+      "name": "San Juan",
+      "aliases": [],
+      "type": "capital",
+      "country": null,
+      "sovereign": "USA",
+      "point": [
+        -66.11,
+        18.47
+      ],
+      "significance": "Capital of Puerto Rico",
+      "notes": [],
+      "tier": 2,
+      "continent": "North America"
+    },
+    {
+      "id": "bmu-bermuda",
+      "name": "Bermuda",
+      "aliases": [],
+      "type": "territory",
+      "country": null,
+      "sovereign": "GBR",
+      "point": [
+        -64.75,
+        32.31
+      ],
+      "significance": "UK territory out in the Atlantic, not a sovereign country",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
+      "id": "na-bermuda-triangle",
+      "name": "Bermuda Triangle",
+      "aliases": [],
+      "type": "zone",
+      "country": null,
+      "point": [
+        -70.5,
+        26
+      ],
+      "significance": "Stretch of Atlantic bounded by Miami, Bermuda and Puerto Rico",
+      "notes": [],
+      "tier": 1,
+      "continent": "North America"
+    },
+    {
       "id": "col-bogota",
       "name": "Bogotá",
       "aliases": [
@@ -559,6 +1172,59 @@
     }
   ],
   "groups": [
+    {
+      "id": "na-moto",
+      "name": "Canada's big three",
+      "members": [
+        "can-montreal",
+        "can-toronto",
+        "can-ottawa"
+      ],
+      "mnemonic": "MOTO — Montreal, Toronto, Ottawa"
+    },
+    {
+      "id": "na-us-west-coast",
+      "name": "US western cities",
+      "members": [
+        "usa-san-francisco",
+        "usa-las-vegas",
+        "usa-los-angeles",
+        "usa-san-diego"
+      ],
+      "mnemonic": "San, Las, Los, San Diego from north to south — all are ports except Las Vegas"
+    },
+    {
+      "id": "na-central-america",
+      "name": "Central America",
+      "members": [
+        "BLZ",
+        "GTM",
+        "HND",
+        "SLV",
+        "NIC",
+        "CRI",
+        "PAN"
+      ],
+      "mnemonic": "BG-Hell-NiCoPa — Belize, Guatemala, Honduras, El Salvador, Nicaragua, Costa Rica, Panama"
+    },
+    {
+      "id": "na-trans-canadian",
+      "name": "Trans-Canadian Railway",
+      "members": [
+        "can-halifax",
+        "can-vancouver"
+      ],
+      "mnemonic": "Runs coast to coast, Halifax on the Atlantic to Vancouver on the Pacific"
+    },
+    {
+      "id": "na-west-indies-territories",
+      "name": "West Indies — who owns what",
+      "members": [
+        "pri-puerto-rico",
+        "bmu-bermuda"
+      ],
+      "mnemonic": "Puerto Rico is American, Bermuda is British — every other name on the West Indies list is a sovereign country"
+    },
     {
       "id": "sa-lithium-triangle",
       "name": "Lithium Triangle",

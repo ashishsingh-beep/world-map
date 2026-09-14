@@ -232,10 +232,30 @@ writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2)
  */
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
-  'mine', 'zone',
+  'mine', 'canal', 'zone',
 ])
-/** How far outside its country an onshore place may sit before it's an error. */
+/**
+ * How far outside its country an onshore place may sit before it's an error.
+ * A port sits on the water's edge, and Natural Earth's coastline is generalised,
+ * so Halifax and Miami land a few km offshore of their own country. That slack
+ * is nothing next to a real mistake, which misses by hundreds of km.
+ */
 const ONSHORE_SLACK_KM = 25
+
+/** Distance from a point to the nearest vertex of a feature's geometry. */
+function distanceToFeatureKm(feature, point) {
+  let best = Infinity
+  const walk = (coords) => {
+    if (typeof coords[0] === 'number') {
+      const d = geoDistance(coords, point) * 6371
+      if (d < best) best = d
+      return
+    }
+    for (const c of coords) walk(c)
+  }
+  walk(feature.geometry.coordinates)
+  return best
+}
 
 const SYLLABUS = resolve(OUT, 'syllabus')
 const places = []
@@ -272,10 +292,11 @@ for (const file of syllabusFiles) {
     // The check that catches transposed or mistyped coordinates.
     const feature = p.country ? picked.get(p.country) : null
     if (feature && point && !p.offshore && p.type !== 'country') {
-      if (!geoContains(feature, point)) {
+      const slack = geoContains(feature, point) ? 0 : distanceToFeatureKm(feature, point)
+      if (slack > ONSHORE_SLACK_KM) {
         const km = geoDistance(point, meta[p.country].centroid) * 6371
         errors.push(
-          `${where(p.id)}: point ${point} is outside ${p.country} ` +
+          `${where(p.id)}: point ${point} is ${slack.toFixed(0)}km outside ${p.country} ` +
             `(${km.toFixed(0)}km from its centroid). Fix it, or mark "offshore": true.`
         )
       }

@@ -9,6 +9,7 @@ export type PlaceType =
   | 'island'
   | 'island-group'
   | 'mine'
+  | 'canal'
   | 'zone'
 
 export interface Place {
@@ -62,5 +63,6 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   island: 'island',
   'island-group': 'islands',
   mine: 'mine',
+  canal: 'canal',
   zone: 'region',
 }
