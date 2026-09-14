@@ -34,6 +34,8 @@ export interface MapPoint {
   id: string
   point: [number, number]
   state: CountryState
+  /** Drawn beside the marker when set — used by Learn mode, never in play. */
+  label?: string
 }
 
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
@@ -356,18 +358,33 @@ export function MapCanvas({
             if (!base) return null
             const isTarget = p.state === 'target'
             return (
-              <circle
-                key={`p-${p.id}`}
-                cx={base[0]}
-                cy={base[1]}
-                r={(isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) / k}
-                fill={p.state === 'idle' ? '#fff' : FILLS[p.state]}
-                fillOpacity={p.state === 'idle' ? 0.55 : 0.95}
-                stroke="#1f2d4d"
-                strokeWidth={isTarget ? 2.5 : 1.5}
-                vectorEffect="non-scaling-stroke"
-                pointerEvents="none"
-              />
+              <g key={`p-${p.id}`} pointerEvents="none">
+                <circle
+                  cx={base[0]}
+                  cy={base[1]}
+                  r={(isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) / k}
+                  fill={p.state === 'idle' ? '#fff' : FILLS[p.state]}
+                  fillOpacity={p.state === 'idle' ? 0.55 : 0.95}
+                  stroke="#1f2d4d"
+                  strokeWidth={isTarget ? 2.5 : 1.5}
+                  vectorEffect="non-scaling-stroke"
+                />
+                {p.label && (
+                  <text
+                    x={base[0]}
+                    y={base[1] - (PLACE_MARKER_PX + 6) / k}
+                    textAnchor="middle"
+                    fontSize={(isTarget ? 15 : 11) / k}
+                    fontWeight={800}
+                    fill="#0f172a"
+                    stroke="#fff"
+                    strokeWidth={3 / k}
+                    paintOrder="stroke"
+                  >
+                    {p.label}
+                  </text>
+                )}
+              </g>
             )
           })}
 
