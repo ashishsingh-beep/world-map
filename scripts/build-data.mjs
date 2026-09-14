@@ -12,10 +12,10 @@
  *   src/data/countries.meta.json  - name, iso, continent, centroid, area
  */
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { geoArea, geoCentroid, geoBounds } from 'd3-geo'
+import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -221,9 +221,101 @@ execFileSync(
 
 writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2))
 
+/**
+ * Second input: the hand-authored syllabus files.
+ *
+ * Geometry comes from Natural Earth; meaning ("Pittsburgh = Iron & Steel
+ * Capital of the World") exists only in the study notes, so it is authored by
+ * hand. This pass joins the two and refuses to emit anything it cannot verify
+ * against the country polygons above — a mistyped coordinate is otherwise
+ * invisible until a question points at open ocean.
+ */
+const PLACE_TYPES = new Set([
+  'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
+  'mine', 'lake', 'cape', 'passage', 'plate', 'zone',
+])
+/** How far outside its country an onshore place may sit before it's an error. */
+const ONSHORE_SLACK_KM = 25
+
+const SYLLABUS = resolve(OUT, 'syllabus')
+const places = []
+const errors = []
+const seen = new Set()
+
+const syllabusFiles = existsSync(SYLLABUS)
+  ? readdirSync(SYLLABUS).filter((f) => f.endsWith('.json')).sort()
+  : []
+
+for (const file of syllabusFiles) {
+  const doc = JSON.parse(readFileSync(resolve(SYLLABUS, file), 'utf8'))
+  const where = (id) => `${file}:${id}`
+
+  for (const p of doc.places) {
+    if (seen.has(p.id)) errors.push(`${where(p.id)}: duplicate id`)
+    seen.add(p.id)
+
+    if (!PLACE_TYPES.has(p.type)) errors.push(`${where(p.id)}: unknown type "${p.type}"`)
+    if (!p.significance) errors.push(`${where(p.id)}: missing significance`)
+    for (const iso of [p.country, p.sovereign]) {
+      if (iso && !meta[iso]) errors.push(`${where(p.id)}: unknown ISO "${iso}"`)
+    }
+
+    // A country-level fact borrows the country's own geometry and centroid.
+    let point = p.point
+    if (p.type === 'country') {
+      if (!p.country) errors.push(`${where(p.id)}: country fact needs a country`)
+      point = meta[p.country]?.centroid ?? null
+    } else if (!Array.isArray(point) || point.length !== 2) {
+      errors.push(`${where(p.id)}: missing point`)
+    }
+
+    // The check that catches transposed or mistyped coordinates.
+    const feature = p.country ? picked.get(p.country) : null
+    if (feature && point && !p.offshore && p.type !== 'country') {
+      if (!geoContains(feature, point)) {
+        const km = geoDistance(point, meta[p.country].centroid) * 6371
+        errors.push(
+          `${where(p.id)}: point ${point} is outside ${p.country} ` +
+            `(${km.toFixed(0)}km from its centroid). Fix it, or mark "offshore": true.`
+        )
+      }
+    }
+    if (feature && point && p.offshore && geoContains(feature, point)) {
+      errors.push(`${where(p.id)}: marked offshore but the point is inside ${p.country}`)
+    }
+
+    places.push({ ...p, point, continent: doc.continent })
+  }
+
+  for (const g of doc.groups ?? []) {
+    for (const m of g.members) {
+      if (!meta[m] && !doc.places.some((p) => p.id === m)) {
+        errors.push(`${file}:${g.id}: member "${m}" is neither a country nor a place`)
+      }
+    }
+  }
+}
+
+if (errors.length) {
+  console.error(`\nSyllabus validation failed (${errors.length}):`)
+  for (const e of errors) console.error('  ' + e)
+  process.exit(1)
+}
+
+writeFileSync(
+  resolve(OUT, 'places.json'),
+  JSON.stringify(
+    { places, groups: syllabusFiles.flatMap((f) =>
+      JSON.parse(readFileSync(resolve(SYLLABUS, f), 'utf8')).groups ?? []) },
+    null,
+    2
+  )
+)
+
 const byContinent = {}
 for (const m of Object.values(meta)) {
   byContinent[m.continent] = (byContinent[m.continent] ?? 0) + 1
 }
 console.log('Continents:', byContinent)
 console.log('Wrote', topoOut)
+console.log(`Syllabus: ${places.length} places from ${syllabusFiles.length} file(s), all verified`)

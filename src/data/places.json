@@ -1,0 +1,660 @@
+{
+  "places": [
+    {
+      "id": "col-bogota",
+      "name": "Bogotá",
+      "aliases": [
+        "Bogota"
+      ],
+      "type": "capital",
+      "country": "COL",
+      "point": [
+        -74.07,
+        4.71
+      ],
+      "significance": "Capital of Colombia",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "col-two-oceans",
+      "name": "Colombia",
+      "aliases": [],
+      "type": "country",
+      "country": "COL",
+      "point": [
+        -73.0798,
+        3.8991
+      ],
+      "significance": "Only South American country bordering both the Caribbean (Atlantic) and the Pacific",
+      "notes": [
+        "Connectivity — access to two oceans"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ven-caracas",
+      "name": "Caracas",
+      "aliases": [],
+      "type": "capital",
+      "country": "VEN",
+      "point": [
+        -66.9,
+        10.49
+      ],
+      "significance": "Capital of Venezuela",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ven-maracaibo",
+      "name": "Maracaibo",
+      "aliases": [
+        "Lake Maracaibo"
+      ],
+      "type": "port",
+      "country": "VEN",
+      "point": [
+        -71.64,
+        10.64
+      ],
+      "significance": "Oil port on Lake Maracaibo",
+      "notes": [
+        "Port and lake of the same name"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ven-crude-oil",
+      "name": "Venezuela",
+      "aliases": [],
+      "type": "country",
+      "country": "VEN",
+      "point": [
+        -66.1576,
+        7.1258
+      ],
+      "significance": "Largest proven crude oil reserves in the world",
+      "notes": [
+        "Borders the Caribbean Sea"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "guy-georgetown",
+      "name": "Georgetown",
+      "aliases": [],
+      "type": "capital",
+      "country": "GUY",
+      "point": [
+        -58.16,
+        6.8
+      ],
+      "significance": "Capital of Guyana",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "sur-paramaribo",
+      "name": "Paramaribo",
+      "aliases": [],
+      "type": "capital",
+      "country": "SUR",
+      "point": [
+        -55.17,
+        5.85
+      ],
+      "significance": "Capital of Suriname",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "guf-french-guiana",
+      "name": "French Guiana",
+      "aliases": [
+        "French Guyana"
+      ],
+      "type": "territory",
+      "country": null,
+      "sovereign": "FRA",
+      "point": [
+        -53.13,
+        3.93
+      ],
+      "significance": "Overseas territory of France in South America",
+      "notes": [
+        "Capital: Cayenne"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "guf-cayenne",
+      "name": "Cayenne",
+      "aliases": [],
+      "type": "capital",
+      "country": null,
+      "sovereign": "FRA",
+      "point": [
+        -52.33,
+        4.93
+      ],
+      "significance": "Capital of French Guiana",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "guf-kourou",
+      "name": "Kourou",
+      "aliases": [],
+      "type": "city",
+      "country": null,
+      "sovereign": "FRA",
+      "point": [
+        -52.65,
+        5.16
+      ],
+      "significance": "Space launch station of Europe — \"courier to space\"",
+      "notes": [
+        "Guiana Space Centre, French Guiana"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ecu-quito",
+      "name": "Quito",
+      "aliases": [],
+      "type": "capital",
+      "country": "ECU",
+      "point": [
+        -78.47,
+        -0.18
+      ],
+      "significance": "Capital of Ecuador, sitting almost exactly on the Equator",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ecu-galapagos",
+      "name": "Galápagos Islands",
+      "aliases": [
+        "Galapagos",
+        "Galapagos Island"
+      ],
+      "type": "island-group",
+      "country": "ECU",
+      "point": [
+        -90.97,
+        -0.74
+      ],
+      "significance": "Island group belonging to Ecuador — the \"key to Ecuador\"",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ecu-no-brazil-border",
+      "name": "Ecuador",
+      "aliases": [],
+      "type": "country",
+      "country": "ECU",
+      "point": [
+        -78.7695,
+        -1.4266
+      ],
+      "significance": "One of only two South American countries that do not share a border with Brazil",
+      "notes": [
+        "The other is Chile"
+      ],
+      "tier": 2,
+      "continent": "South America"
+    },
+    {
+      "id": "per-lima",
+      "name": "Lima",
+      "aliases": [],
+      "type": "capital",
+      "country": "PER",
+      "point": [
+        -77.04,
+        -12.05
+      ],
+      "significance": "Capital of Peru",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "per-nazca-plate",
+      "name": "Nazca Plate",
+      "aliases": [
+        "Nazca"
+      ],
+      "type": "plate",
+      "country": "PER",
+      "point": [
+        -85,
+        -20
+      ],
+      "offshore": true,
+      "significance": "Tectonic plate subducting off the Peruvian coast",
+      "notes": [
+        "Drives the Andes and the region's earthquakes"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "per-phosphate-nitrate",
+      "name": "Peru",
+      "aliases": [],
+      "type": "country",
+      "country": "PER",
+      "point": [
+        -74.4164,
+        -9.1087
+      ],
+      "significance": "Abundance of phosphate and nitrate from guano (bird droppings)",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bol-la-paz",
+      "name": "La Paz",
+      "aliases": [],
+      "type": "capital",
+      "country": "BOL",
+      "point": [
+        -68.15,
+        -16.5
+      ],
+      "significance": "Highest-altitude capital city in the world — administrative capital of Bolivia",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bol-sucre",
+      "name": "Sucre",
+      "aliases": [],
+      "type": "capital",
+      "country": "BOL",
+      "point": [
+        -65.26,
+        -19.05
+      ],
+      "significance": "Judicial (constitutional) capital of Bolivia",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bol-landlocked",
+      "name": "Bolivia",
+      "aliases": [],
+      "type": "country",
+      "country": "BOL",
+      "point": [
+        -64.6978,
+        -16.6807
+      ],
+      "significance": "Landlocked country of South America (with Paraguay)",
+      "notes": [
+        "Lost its coast to Chile in the War of the Pacific"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bra-brasilia",
+      "name": "Brasília",
+      "aliases": [
+        "Brasilia"
+      ],
+      "type": "capital",
+      "country": "BRA",
+      "point": [
+        -47.88,
+        -15.79
+      ],
+      "significance": "Capital of Brazil",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bra-carajas",
+      "name": "Carajás",
+      "aliases": [
+        "Carajas",
+        "Carajas Iron Mine"
+      ],
+      "type": "mine",
+      "country": "BRA",
+      "point": [
+        -50.16,
+        -6.07
+      ],
+      "significance": "Largest iron ore mine in the world",
+      "notes": [
+        "Pará state, northern Brazil"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bra-rio-de-janeiro",
+      "name": "Rio de Janeiro",
+      "aliases": [
+        "Rio"
+      ],
+      "type": "port",
+      "country": "BRA",
+      "point": [
+        -43.21,
+        -22.91
+      ],
+      "significance": "Port city with Copacabana Beach — lies above the Tropic of Capricorn",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bra-sao-paulo",
+      "name": "São Paulo",
+      "aliases": [
+        "Sao Paulo"
+      ],
+      "type": "city",
+      "country": "BRA",
+      "point": [
+        -46.63,
+        -23.55
+      ],
+      "significance": "Coffee-farming centre lying on the Tropic of Capricorn — notably NOT a port",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "bra-santos",
+      "name": "Santos",
+      "aliases": [],
+      "type": "port",
+      "country": "BRA",
+      "point": [
+        -46.33,
+        -23.96
+      ],
+      "significance": "Coffee port of Brazil, serving the fazendas — lies below the Tropic of Capricorn",
+      "notes": [
+        "Fazendas = Brazilian coffee estates"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "pry-asuncion",
+      "name": "Asunción",
+      "aliases": [
+        "Asuncion"
+      ],
+      "type": "capital",
+      "country": "PRY",
+      "point": [
+        -57.64,
+        -25.28
+      ],
+      "significance": "Capital of Paraguay",
+      "notes": [
+        "Mnemonic: \"Sun\" in Asunción → Paraguay"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "pry-landlocked",
+      "name": "Paraguay",
+      "aliases": [],
+      "type": "country",
+      "country": "PRY",
+      "point": [
+        -58.4417,
+        -23.2082
+      ],
+      "significance": "Landlocked country of South America (with Bolivia)",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "ury-montevideo",
+      "name": "Montevideo",
+      "aliases": [],
+      "type": "capital",
+      "country": "URY",
+      "point": [
+        -56.19,
+        -34.9
+      ],
+      "significance": "Capital of Uruguay",
+      "notes": [
+        "Mnemonic: \"video\" → Uruguay sits on the seashore"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "arg-buenos-aires",
+      "name": "Buenos Aires",
+      "aliases": [],
+      "type": "capital",
+      "country": "ARG",
+      "point": [
+        -58.38,
+        -34.6
+      ],
+      "significance": "Capital of Argentina",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "arg-falkland-islands",
+      "name": "Falkland Islands",
+      "aliases": [
+        "Falklands",
+        "Malvinas",
+        "Islas Malvinas"
+      ],
+      "type": "island-group",
+      "country": null,
+      "sovereign": "GBR",
+      "point": [
+        -59,
+        -51.75
+      ],
+      "offshore": true,
+      "significance": "UK overseas territory off the coast of Argentina",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "chl-santiago",
+      "name": "Santiago",
+      "aliases": [],
+      "type": "capital",
+      "country": "CHL",
+      "point": [
+        -70.65,
+        -33.44
+      ],
+      "significance": "Capital of Chile",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "chl-easter-island",
+      "name": "Easter Island",
+      "aliases": [
+        "Rapa Nui",
+        "Isla de Pascua"
+      ],
+      "type": "island",
+      "country": "CHL",
+      "point": [
+        -109.35,
+        -27.11
+      ],
+      "significance": "Remote Pacific island belonging to Chile",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "chl-arica",
+      "name": "Arica",
+      "aliases": [],
+      "type": "city",
+      "country": "CHL",
+      "point": [
+        -70.29,
+        -18.48
+      ],
+      "significance": "Driest inhabited place on Earth",
+      "notes": [
+        "Northern Chile, in the Atacama"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "chl-chuquicamata",
+      "name": "Chuquicamata",
+      "aliases": [
+        "Chuqicamata"
+      ],
+      "type": "mine",
+      "country": "CHL",
+      "point": [
+        -68.9,
+        -22.32
+      ],
+      "significance": "Copper abundance — largest open-pit copper mine in the world",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "chl-cape-horn",
+      "name": "Cape Horn",
+      "aliases": [
+        "Cabo de Hornos"
+      ],
+      "type": "cape",
+      "country": "CHL",
+      "point": [
+        -67.29,
+        -55.98
+      ],
+      "offshore": true,
+      "significance": "Southernmost point of South America",
+      "notes": [
+        "On Hornos Island — too small to survive map simplification"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "chl-drake-passage",
+      "name": "Drake Passage",
+      "aliases": [
+        "Drake Strait"
+      ],
+      "type": "passage",
+      "country": null,
+      "point": [
+        -65,
+        -58.5
+      ],
+      "offshore": true,
+      "significance": "Passage between Cape Horn and Antarctica, linking the Atlantic and Pacific",
+      "notes": [],
+      "tier": 1,
+      "continent": "South America"
+    },
+    {
+      "id": "sa-lithium-triangle-zone",
+      "name": "Lithium Triangle",
+      "aliases": [
+        "Lithium Triangle ABC"
+      ],
+      "type": "zone",
+      "country": null,
+      "point": [
+        -67,
+        -23
+      ],
+      "significance": "World's largest lithium reserves, spanning Argentina, Bolivia and Chile",
+      "notes": [
+        "Mnemonic: ABC — Argentina, Bolivia, Chile"
+      ],
+      "tier": 1,
+      "continent": "South America"
+    }
+  ],
+  "groups": [
+    {
+      "id": "sa-lithium-triangle",
+      "name": "Lithium Triangle",
+      "members": [
+        "ARG",
+        "BOL",
+        "CHL"
+      ],
+      "mnemonic": "ABC — Argentina, Bolivia, Chile"
+    },
+    {
+      "id": "sa-landlocked",
+      "name": "Landlocked countries of South America",
+      "members": [
+        "BOL",
+        "PRY"
+      ],
+      "mnemonic": null
+    },
+    {
+      "id": "sa-capricorn-brazil",
+      "name": "Brazilian cities on the Tropic of Capricorn",
+      "members": [
+        "bra-rio-de-janeiro",
+        "bra-sao-paulo",
+        "bra-santos"
+      ],
+      "mnemonic": "Above / on / below the line — Rio, São Paulo, Santos"
+    },
+    {
+      "id": "sa-guianas",
+      "name": "The Guianas",
+      "members": [
+        "GUY",
+        "SUR",
+        "guf-french-guiana"
+      ],
+      "mnemonic": null
+    }
+  ]
+}
