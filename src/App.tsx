@@ -163,21 +163,28 @@ export default function App() {
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {PLACE_CONTINENTS.map((continent) => {
-              const r = PLACE_ROUNDS[allPlacesRoundId(continent)]
+              const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+              const empty = !r.places?.length
               return (
                 <button
                   key={r.id}
                   type="button"
+                  // An empty round would start a quiz with nothing to ask.
+                  disabled={empty}
                   onClick={() => {
                     setRoundId(r.id)
                     setView('setup')
                   }}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                  className={`rounded-2xl border border-slate-200 p-5 text-left shadow-sm transition ${
+                    empty
+                      ? 'cursor-not-allowed bg-slate-100 opacity-70'
+                      : 'bg-white hover:shadow-md'
+                  }`}
                 >
                   <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
                   <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
                   <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                    {r.places?.length} PLACES
+                    {empty ? 'COMING SOON' : `${r.places?.length} PLACES`}
                   </div>
                 </button>
               )

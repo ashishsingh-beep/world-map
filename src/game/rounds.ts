@@ -1,5 +1,5 @@
 import { allIsos, meta, metaOf, type Continent } from '../data/countries'
-import { places as allPlaces } from '../data/places'
+import { places as allPlaces, syllabusContinents } from '../data/places'
 
 export type BBox = [[number, number], [number, number]]
 
@@ -129,19 +129,24 @@ function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
   ]
 }
 
-/** Continents that have an authored syllabus, in menu order. */
-export const PLACE_CONTINENTS = [...new Set(allPlaces.map((p) => p.continent))]
+/**
+ * Continents with a syllabus file, in menu order. A file with no places yet is
+ * still listed — it shows in the menu as a placeholder rather than vanishing.
+ */
+export const PLACE_CONTINENTS = syllabusContinents
 
 export const allPlacesRoundId = (continent: string) =>
   `places-${continent.toLowerCase().replace(/\s+/g, '-')}`
 
-function continentPlaceRound(continent: string): Round {
-  const ps = allPlaces.filter((p) => p.continent === continent)
-  const isos = isosIn(continent as Continent)
+function continentPlaceRound({ name, title }: { name: string; title: string }): Round {
+  const ps = allPlaces.filter((p) => p.continent === name)
+  const isos = isosIn(name as Continent)
   return {
-    id: allPlacesRoundId(continent),
-    title: continent,
-    blurb: `Every place in the set — ${ps.length} in total.`,
+    id: allPlacesRoundId(name),
+    title,
+    blurb: ps.length
+      ? `Every place in the set — ${ps.length} in total.`
+      : 'Nothing added yet — the notes for this one are still to come.',
     render: isos,
     askable: [],
     places: ps.map((p) => p.id),

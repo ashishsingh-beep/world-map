@@ -259,6 +259,9 @@ function distanceToFeatureKm(feature, point) {
 
 const SYLLABUS = resolve(OUT, 'syllabus')
 const places = []
+const groups = []
+/** Declared continents, including ones authored as empty placeholders. */
+const continents = []
 const errors = []
 const seen = new Set()
 
@@ -269,6 +272,12 @@ const syllabusFiles = existsSync(SYLLABUS)
 for (const file of syllabusFiles) {
   const doc = JSON.parse(readFileSync(resolve(SYLLABUS, file), 'utf8'))
   const where = (id) => `${file}:${id}`
+  continents.push({
+    name: doc.continent,
+    title: doc.title ?? doc.continent,
+    count: doc.places.length,
+  })
+  groups.push(...(doc.groups ?? []))
 
   for (const p of doc.places) {
     if (seen.has(p.id)) errors.push(`${where(p.id)}: duplicate id`)
@@ -323,15 +332,7 @@ if (errors.length) {
   process.exit(1)
 }
 
-writeFileSync(
-  resolve(OUT, 'places.json'),
-  JSON.stringify(
-    { places, groups: syllabusFiles.flatMap((f) =>
-      JSON.parse(readFileSync(resolve(SYLLABUS, f), 'utf8')).groups ?? []) },
-    null,
-    2
-  )
-)
+writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))
 
 const byContinent = {}
 for (const m of Object.values(meta)) {
@@ -339,4 +340,9 @@ for (const m of Object.values(meta)) {
 }
 console.log('Continents:', byContinent)
 console.log('Wrote', topoOut)
-console.log(`Syllabus: ${places.length} places from ${syllabusFiles.length} file(s), all verified`)
+console.log(
+  `Syllabus: ${places.length} places from ${syllabusFiles.length} file(s), all verified`
+)
+for (const c of continents) {
+  if (!c.count) console.log(`  ${c.title}: placeholder, no places authored yet`)
+}

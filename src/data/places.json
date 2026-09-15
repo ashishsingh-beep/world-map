@@ -1,4 +1,21 @@
 {
+  "continents": [
+    {
+      "name": "North America",
+      "title": "North America",
+      "count": 38
+    },
+    {
+      "name": "Oceania",
+      "title": "Australia (Oceania)",
+      "count": 0
+    },
+    {
+      "name": "South America",
+      "title": "South America",
+      "count": 33
+    }
+  ],
   "places": [
     {
       "id": "can-ottawa",

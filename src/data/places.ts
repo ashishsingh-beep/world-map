@@ -40,8 +40,20 @@ export interface PlaceGroup {
   mnemonic: string | null
 }
 
-const doc = placesJson as unknown as { places: Place[]; groups: PlaceGroup[] }
+/** A continent with an authored syllabus. `count` is 0 for a placeholder. */
+export interface SyllabusContinent {
+  name: string
+  title: string
+  count: number
+}
 
+const doc = placesJson as unknown as {
+  continents: SyllabusContinent[]
+  places: Place[]
+  groups: PlaceGroup[]
+}
+
+export const syllabusContinents: SyllabusContinent[] = doc.continents
 export const places: Place[] = doc.places
 export const placeGroups: PlaceGroup[] = doc.groups
 
