@@ -133,14 +133,19 @@ function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
  * Continents with a syllabus file, in menu order. A file with no places yet is
  * still listed — it shows in the menu as a placeholder rather than vanishing.
  */
-export const PLACE_CONTINENTS = syllabusContinents
+const SYLLABUS = syllabusContinents
+export const PLACE_CONTINENTS = SYLLABUS.filter((c) => c.section !== 'water')
+/** The Seas & Straits section — water features, drawn with their own notation. */
+export const WATER_CONTINENTS = SYLLABUS.filter((c) => c.section === 'water')
 
 export const allPlacesRoundId = (continent: string) =>
   `places-${continent.toLowerCase().replace(/\s+/g, '-')}`
 
 function continentPlaceRound({ name, title }: { name: string; title: string }): Round {
   const ps = allPlaces.filter((p) => p.continent === name)
-  const isos = isosIn(name as Continent)
+  // Seas and straits span the globe, so their round draws every country.
+  const worldwide = name === 'World'
+  const isos = worldwide ? allIsos : isosIn(name as Continent)
   return {
     id: allPlacesRoundId(name),
     title,
@@ -150,12 +155,18 @@ function continentPlaceRound({ name, title }: { name: string; title: string }): 
     render: isos,
     askable: [],
     places: ps.map((p) => p.id),
-    view: fitAround(fit(isos), ps.map((p) => p.point)),
+    // Antarctic seas and the Arctic sit outside the standard world box, so the
+    // water round stretches it to reach them — an unreachable question is
+    // unanswerable, since panning is clamped to the starting view.
+    view: fitAround(
+      worldwide ? (VIEW_OVERRIDES.world as BBox) : fit(isos),
+      ps.map((p) => p.point)
+    ),
   }
 }
 
 export const PLACE_ROUNDS: Record<string, Round> = {}
-for (const continent of PLACE_CONTINENTS) {
+for (const continent of SYLLABUS) {
   const round = continentPlaceRound(continent)
   PLACE_ROUNDS[round.id] = round
 }

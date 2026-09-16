@@ -3,16 +3,25 @@
     {
       "name": "North America",
       "title": "North America",
+      "section": "places",
       "count": 38
     },
     {
       "name": "Oceania",
       "title": "Australia (Oceania)",
+      "section": "places",
       "count": 0
+    },
+    {
+      "name": "World",
+      "title": "Seas & Straits",
+      "section": "water",
+      "count": 134
     },
     {
       "name": "South America",
       "title": "South America",
+      "section": "places",
       "count": 33
     }
   ],
@@ -30,7 +39,8 @@
       "significance": "Capital of Canada",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-calgary",
@@ -45,7 +55,8 @@
       "significance": "Important centre for crude oil",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-montreal",
@@ -62,7 +73,8 @@
       "significance": "Montreal Protocol — the treaty protecting the ozone layer",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-toronto",
@@ -77,7 +89,8 @@
       "significance": "Largest city of Canada",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-vancouver",
@@ -92,7 +105,8 @@
       "significance": "Pacific port of Canada, western end of the Trans-Canadian Railway",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-halifax",
@@ -109,7 +123,8 @@
         "Nova Scotia"
       ],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-st-johns",
@@ -131,7 +146,8 @@
         "The meeting of currents is what makes the Grand Banks such rich fishing"
       ],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-ellesmere",
@@ -148,7 +164,8 @@
       "significance": "Northernmost of Canada's large Arctic islands, in the Queen Elizabeth group",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "can-baffin",
@@ -165,7 +182,8 @@
       "significance": "Largest island of Canada",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-washington-dc",
@@ -183,7 +201,8 @@
       "significance": "Capital of the United States",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-san-francisco",
@@ -198,7 +217,8 @@
       "significance": "City of the Golden Gate, and the gateway to Silicon Valley",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-las-vegas",
@@ -213,7 +233,8 @@
       "significance": "The one city among the western group that is not a port",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-los-angeles",
@@ -230,7 +251,8 @@
       "significance": "Home of Hollywood",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-san-diego",
@@ -245,7 +267,8 @@
       "significance": "US port nearest to the Panama Canal",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-detroit",
@@ -260,7 +283,8 @@
       "significance": "Automobile capital of the United States",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-pittsburgh",
@@ -275,7 +299,8 @@
       "significance": "Iron and Steel Capital of the World",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-new-york",
@@ -293,7 +318,8 @@
       "significance": "Largest city and busiest port of the United States",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-miami",
@@ -310,7 +336,8 @@
         "The notes mark Miami; the launch site itself is Cape Canaveral, further up the Florida coast"
       ],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "usa-hawaii",
@@ -325,7 +352,8 @@
       "significance": "Pacific island state of the United States",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "mex-mexico-city",
@@ -340,7 +368,8 @@
       "significance": "Capital of Mexico",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "blz-belmopan",
@@ -355,7 +384,8 @@
       "significance": "Capital of Belize",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "gtm-guatemala-city",
@@ -370,7 +400,8 @@
       "significance": "Capital of Guatemala",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "slv-san-salvador",
@@ -385,7 +416,8 @@
       "significance": "Capital of El Salvador",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "hnd-tegucigalpa",
@@ -400,7 +432,8 @@
       "significance": "Capital of Honduras",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "nic-managua",
@@ -415,7 +448,8 @@
       "significance": "Capital of Nicaragua",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "cri-san-jose",
@@ -432,7 +466,8 @@
       "significance": "Capital of Costa Rica",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "pan-panama-city",
@@ -447,7 +482,8 @@
       "significance": "Capital of Panama",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "pan-panama-canal",
@@ -459,10 +495,12 @@
         -79.7,
         9.15
       ],
+      "spanKm": 50,
       "significance": "Canal cut through Panama to link the Atlantic and the Pacific",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "cub-havana",
@@ -479,7 +517,8 @@
       "significance": "Capital of Cuba",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "jam-kingston",
@@ -494,7 +533,8 @@
       "significance": "Capital of Jamaica",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "bhs-nassau",
@@ -509,7 +549,8 @@
       "significance": "Capital of the Bahamas",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "hti-port-au-prince",
@@ -526,7 +567,8 @@
       "significance": "Capital of Haiti",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "dom-santo-domingo",
@@ -541,7 +583,8 @@
       "significance": "Capital of the Dominican Republic",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "tto-port-of-spain",
@@ -558,7 +601,8 @@
       "significance": "Capital of Trinidad and Tobago",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "pri-puerto-rico",
@@ -576,7 +620,8 @@
         "Capital: San Juan"
       ],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "pri-san-juan",
@@ -592,7 +637,8 @@
       "significance": "Capital of Puerto Rico",
       "notes": [],
       "tier": 2,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "bmu-bermuda",
@@ -608,7 +654,8 @@
       "significance": "UK territory out in the Atlantic, not a sovereign country",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "na-bermuda-triangle",
@@ -623,7 +670,3177 @@
       "significance": "Stretch of Atlantic bounded by Miami, Bermuda and Puerto Rico",
       "notes": [],
       "tier": 1,
-      "continent": "North America"
+      "continent": "North America",
+      "section": "places"
+    },
+    {
+      "id": "oc-pacific",
+      "name": "Pacific Ocean",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -160,
+        0
+      ],
+      "spanKm": 6000,
+      "basin": "Ocean",
+      "borders": [
+        "USA",
+        "CHN",
+        "JPN",
+        "AUS",
+        "CHL",
+        "PER"
+      ],
+      "significance": "Largest and deepest ocean, holding the Mariana Trench",
+      "notes": [
+        "Covers about a third of the Earth's surface"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "oc-atlantic",
+      "name": "Atlantic Ocean",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -30,
+        5
+      ],
+      "spanKm": 4000,
+      "basin": "Ocean",
+      "borders": [
+        "USA",
+        "BRA",
+        "GBR",
+        "ZAF",
+        "NGA",
+        "ARG"
+      ],
+      "significance": "Second largest ocean, split by the Mid-Atlantic Ridge",
+      "notes": [
+        "Busiest ocean for trade between Europe and the Americas"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "oc-indian",
+      "name": "Indian Ocean",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        78,
+        -25
+      ],
+      "spanKm": 3500,
+      "basin": "Ocean",
+      "borders": [
+        "IND",
+        "AUS",
+        "ZAF",
+        "IDN",
+        "SOM",
+        "LKA"
+      ],
+      "significance": "Third largest ocean, and the only one named after a country",
+      "notes": [
+        "Its monsoon winds drove the earliest long-distance sea trade"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "oc-arctic",
+      "name": "Arctic Ocean",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        0,
+        82
+      ],
+      "spanKm": 1600,
+      "basin": "Ocean",
+      "borders": [
+        "RUS",
+        "CAN",
+        "USA",
+        "NOR",
+        "DNK"
+      ],
+      "significance": "Smallest and shallowest ocean, ice-covered for much of the year",
+      "notes": [
+        "Melting ice is opening the Northern Sea Route along Russia's coast"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "oc-southern",
+      "name": "Southern Ocean",
+      "aliases": [
+        "Antarctic Ocean"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        20,
+        -62
+      ],
+      "spanKm": 2200,
+      "basin": "Ocean",
+      "borders": [],
+      "significance": "Ring of water around Antarctica, carrying the Antarctic Circumpolar Current",
+      "notes": [
+        "The only ocean that circles the globe unbroken by land"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-mediterranean",
+      "name": "Mediterranean Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        17,
+        35
+      ],
+      "spanKm": 1100,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "ESP",
+        "FRA",
+        "ITA",
+        "GRC",
+        "TUR",
+        "EGY",
+        "LBY",
+        "DZA"
+      ],
+      "significance": "Almost landlocked sea between Europe, Africa and Asia — the cradle of Western trade",
+      "notes": [
+        "Reaches the Atlantic only through the Strait of Gibraltar"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-adriatic",
+      "name": "Adriatic Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        15.5,
+        43
+      ],
+      "spanKm": 300,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA",
+        "HRV",
+        "ALB",
+        "MNE",
+        "SVN",
+        "BIH"
+      ],
+      "significance": "Arm of the Mediterranean between Italy and the Balkans",
+      "notes": [
+        "Venice and Trieste sit at its head"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-aegean",
+      "name": "Aegean Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        25,
+        38.5
+      ],
+      "spanKm": 300,
+      "basin": "Mediterranean",
+      "borders": [
+        "GRC",
+        "TUR"
+      ],
+      "significance": "Island-filled sea between Greece and Turkey",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-ionian",
+      "name": "Ionian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        18.5,
+        38
+      ],
+      "spanKm": 280,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA",
+        "GRC",
+        "ALB"
+      ],
+      "significance": "Deepest part of the Mediterranean, south of the Adriatic",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-tyrrhenian",
+      "name": "Tyrrhenian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        12.2,
+        39.8
+      ],
+      "spanKm": 260,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA"
+      ],
+      "significance": "Sea enclosed by mainland Italy, Sicily, Sardinia and Corsica",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-ligurian",
+      "name": "Ligurian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        8.8,
+        43.5
+      ],
+      "spanKm": 150,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA",
+        "FRA",
+        "MCO"
+      ],
+      "significance": "Sea of the Italian and French Riviera, north of Corsica",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-alboran",
+      "name": "Alboran Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -3.5,
+        36
+      ],
+      "spanKm": 170,
+      "basin": "Mediterranean",
+      "borders": [
+        "ESP",
+        "MAR",
+        "DZA"
+      ],
+      "significance": "Westernmost basin of the Mediterranean, just inside Gibraltar",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-black",
+      "name": "Black Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        34,
+        43.3
+      ],
+      "spanKm": 520,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "TUR",
+        "UKR",
+        "RUS",
+        "GEO",
+        "ROU",
+        "BGR"
+      ],
+      "significance": "Inland sea reaching the Mediterranean only through the Turkish Straits",
+      "notes": [
+        "Its deep water is anoxic — almost lifeless below about 150m"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-azov",
+      "name": "Sea of Azov",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        36.5,
+        46
+      ],
+      "spanKm": 170,
+      "basin": "Black Sea",
+      "borders": [
+        "RUS",
+        "UKR"
+      ],
+      "significance": "Shallowest sea in the world, joined to the Black Sea by the Kerch Strait",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-marmara",
+      "name": "Sea of Marmara",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        28,
+        40.7
+      ],
+      "spanKm": 110,
+      "basin": "Black Sea",
+      "borders": [
+        "TUR"
+      ],
+      "significance": "Small sea wholly inside Turkey, between the Bosporus and the Dardanelles",
+      "notes": [
+        "It is what makes the two Turkish Straits a pair"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-caspian",
+      "name": "Caspian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        50.5,
+        41.5
+      ],
+      "spanKm": 600,
+      "basin": "Landlocked",
+      "borders": [
+        "RUS",
+        "KAZ",
+        "TKM",
+        "IRN",
+        "AZE"
+      ],
+      "significance": "Largest inland water body on Earth, with no outlet to any ocean",
+      "notes": [
+        "Its legal status — sea or lake — decides how its oil is divided"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-baltic",
+      "name": "Baltic Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        19.5,
+        57.5
+      ],
+      "spanKm": 520,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "SWE",
+        "FIN",
+        "EST",
+        "POL",
+        "DEU",
+        "DNK"
+      ],
+      "significance": "Brackish northern European sea reached through the Danish Straits",
+      "notes": [
+        "So little salt that it freezes in hard winters"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-bothnia",
+      "name": "Gulf of Bothnia",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        20.5,
+        62.5
+      ],
+      "spanKm": 330,
+      "basin": "Baltic Sea",
+      "borders": [
+        "SWE",
+        "FIN"
+      ],
+      "significance": "Northern arm of the Baltic between Sweden and Finland",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-finland",
+      "name": "Gulf of Finland",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        26,
+        60
+      ],
+      "spanKm": 190,
+      "basin": "Baltic Sea",
+      "borders": [
+        "FIN",
+        "EST",
+        "RUS"
+      ],
+      "significance": "Eastern arm of the Baltic, giving Russia its St Petersburg outlet",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-north",
+      "name": "North Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        3,
+        56
+      ],
+      "spanKm": 480,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "GBR",
+        "NOR",
+        "DNK",
+        "DEU",
+        "NLD",
+        "BEL"
+      ],
+      "significance": "Shallow shelf sea, Europe's great oil, gas and fishing ground",
+      "notes": [
+        "The Dogger Bank is one of the richest fisheries in Europe"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-norwegian",
+      "name": "Norwegian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        2,
+        68
+      ],
+      "spanKm": 550,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "NOR",
+        "ISL"
+      ],
+      "significance": "Deep sea off Norway kept ice-free by the North Atlantic Drift",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-barents",
+      "name": "Barents Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        40,
+        74
+      ],
+      "spanKm": 650,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "NOR",
+        "RUS"
+      ],
+      "significance": "Arctic sea that stays partly ice-free, giving Russia its Murmansk port",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-greenland",
+      "name": "Greenland Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -5,
+        76
+      ],
+      "spanKm": 450,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "DNK",
+        "NOR"
+      ],
+      "significance": "Between Greenland and Svalbard, a main source of deep Atlantic water",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-white",
+      "name": "White Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        37.5,
+        65.5
+      ],
+      "spanKm": 220,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "RUS"
+      ],
+      "significance": "Inlet of the Barents Sea wholly inside Russia, port of Arkhangelsk",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-kara",
+      "name": "Kara Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        70,
+        74
+      ],
+      "spanKm": 550,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "RUS"
+      ],
+      "significance": "Ice-choked Siberian sea taking the Ob and Yenisei rivers",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-laptev",
+      "name": "Laptev Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        128,
+        75
+      ],
+      "spanKm": 450,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "RUS"
+      ],
+      "significance": "Siberian sea called the birthplace of Arctic sea ice",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-east-siberian",
+      "name": "East Siberian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        163,
+        73
+      ],
+      "spanKm": 450,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "RUS"
+      ],
+      "significance": "Coldest and most ice-covered stretch of the Northern Sea Route",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-chukchi",
+      "name": "Chukchi Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -172,
+        69.5
+      ],
+      "spanKm": 380,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "RUS",
+        "USA"
+      ],
+      "significance": "Arctic sea just north of the Bering Strait, shared by Russia and Alaska",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-beaufort",
+      "name": "Beaufort Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -140,
+        72
+      ],
+      "spanKm": 450,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "USA",
+        "CAN"
+      ],
+      "significance": "Arctic sea north of Alaska and the Yukon, with a disputed sea boundary",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-irish",
+      "name": "Irish Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -5,
+        53.7
+      ],
+      "spanKm": 170,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "GBR",
+        "IRL"
+      ],
+      "significance": "Sea separating Ireland from Great Britain",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-celtic",
+      "name": "Celtic Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -8,
+        50.5
+      ],
+      "spanKm": 230,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "IRL",
+        "GBR",
+        "FRA"
+      ],
+      "significance": "Shelf sea south of Ireland, opening to the Atlantic",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-biscay",
+      "name": "Bay of Biscay",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -4,
+        45
+      ],
+      "spanKm": 330,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "FRA",
+        "ESP"
+      ],
+      "significance": "Notoriously stormy bay off western France and northern Spain",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-caribbean",
+      "name": "Caribbean Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -75,
+        15
+      ],
+      "spanKm": 850,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "VEN",
+        "COL",
+        "PAN",
+        "NIC",
+        "CUB",
+        "JAM"
+      ],
+      "significance": "Sea enclosed by the West Indies and Central America, feeding the Gulf Stream",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-gulf-of-mexico",
+      "name": "Gulf of Mexico",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -90,
+        25
+      ],
+      "spanKm": 650,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "USA",
+        "MEX",
+        "CUB"
+      ],
+      "significance": "Great oil and hurricane basin, where the Gulf Stream is born",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-sargasso",
+      "name": "Sargasso Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -60,
+        29
+      ],
+      "spanKm": 850,
+      "basin": "Atlantic Ocean",
+      "borders": [],
+      "significance": "The only sea with no coastline — bounded entirely by ocean currents",
+      "notes": [
+        "Named for its floating sargassum weed; where eels go to spawn"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-labrador",
+      "name": "Labrador Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -55,
+        58
+      ],
+      "spanKm": 450,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CAN",
+        "DNK"
+      ],
+      "significance": "Between Canada and Greenland, a main site of deep-water formation",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-hudson-bay",
+      "name": "Hudson Bay",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -85,
+        59.5
+      ],
+      "spanKm": 550,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN"
+      ],
+      "significance": "Vast shallow bay biting into Canada, frozen for much of the year",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-baffin-bay",
+      "name": "Baffin Bay",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -68,
+        73
+      ],
+      "spanKm": 450,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN",
+        "DNK"
+      ],
+      "significance": "Between Baffin Island and Greenland, the iceberg nursery of the Atlantic",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-st-lawrence",
+      "name": "Gulf of St Lawrence",
+      "aliases": [
+        "Gulf of Saint Lawrence"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -62,
+        48
+      ],
+      "spanKm": 280,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CAN"
+      ],
+      "significance": "Mouth of the St Lawrence, Canada's gateway to the Great Lakes",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-fundy",
+      "name": "Bay of Fundy",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -65.5,
+        45
+      ],
+      "spanKm": 110,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CAN",
+        "USA"
+      ],
+      "significance": "Highest tidal range in the world, over 15 metres",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-guinea",
+      "name": "Gulf of Guinea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        2,
+        2
+      ],
+      "spanKm": 600,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "NGA",
+        "GHA",
+        "CIV",
+        "CMR",
+        "GAB",
+        "BEN"
+      ],
+      "significance": "West African oil coast, where the Equator meets the Prime Meridian offshore",
+      "notes": [
+        "Piracy here rivals the Horn of Africa"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-arabian",
+      "name": "Arabian Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        64,
+        14
+      ],
+      "spanKm": 850,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND",
+        "PAK",
+        "OMN",
+        "YEM",
+        "SOM",
+        "ARE"
+      ],
+      "significance": "Sea between India and Arabia carrying the Gulf's oil to the world",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-bengal",
+      "name": "Bay of Bengal",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        88,
+        15
+      ],
+      "spanKm": 800,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND",
+        "BGD",
+        "MMR",
+        "LKA",
+        "THA"
+      ],
+      "significance": "Largest bay in the world, and the cyclone alley of South Asia",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-laccadive",
+      "name": "Laccadive Sea",
+      "aliases": [
+        "Lakshadweep Sea"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        75,
+        7.5
+      ],
+      "spanKm": 380,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND",
+        "LKA",
+        "MDV"
+      ],
+      "significance": "Warm sea between southern India, Sri Lanka and the Maldives",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-andaman",
+      "name": "Andaman Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        96.5,
+        11
+      ],
+      "spanKm": 450,
+      "basin": "Indian Ocean",
+      "borders": [
+        "MMR",
+        "THA",
+        "IND",
+        "IDN"
+      ],
+      "significance": "Sea east of the Andaman Islands, opening into the Strait of Malacca",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-red",
+      "name": "Red Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        38,
+        20
+      ],
+      "spanKm": 700,
+      "basin": "Indian Ocean",
+      "borders": [
+        "EGY",
+        "SAU",
+        "SDN",
+        "ERI",
+        "DJI",
+        "YEM"
+      ],
+      "significance": "Suez-to-Bab-el-Mandeb corridor, one of the world's saltiest seas",
+      "notes": [
+        "Sits on a spreading rift — Africa and Arabia are pulling apart"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-aden",
+      "name": "Gulf of Aden",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        47.5,
+        12.3
+      ],
+      "spanKm": 380,
+      "basin": "Indian Ocean",
+      "borders": [
+        "YEM",
+        "SOM",
+        "DJI"
+      ],
+      "significance": "Piracy-prone approach between the Horn of Africa and Arabia",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-persian-gulf",
+      "name": "Persian Gulf",
+      "aliases": [
+        "Arabian Gulf"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        51.5,
+        27
+      ],
+      "spanKm": 420,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IRN",
+        "SAU",
+        "ARE",
+        "QAT",
+        "KWT",
+        "IRQ"
+      ],
+      "significance": "Shallow gulf holding the greatest concentration of oil on Earth",
+      "notes": [
+        "Its single exit is the Strait of Hormuz"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-oman",
+      "name": "Gulf of Oman",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        58.5,
+        24.8
+      ],
+      "spanKm": 280,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IRN",
+        "OMN",
+        "PAK",
+        "ARE"
+      ],
+      "significance": "The Arabian Sea's antechamber, leading to the Strait of Hormuz",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-aqaba",
+      "name": "Gulf of Aqaba",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        34.7,
+        28.8
+      ],
+      "spanKm": 90,
+      "basin": "Red Sea",
+      "borders": [
+        "EGY",
+        "ISR",
+        "JOR",
+        "SAU"
+      ],
+      "significance": "Eastern arm of the Red Sea, Israel's and Jordan's only southern outlet",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-suez-gulf",
+      "name": "Gulf of Suez",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        33,
+        28.8
+      ],
+      "spanKm": 130,
+      "basin": "Red Sea",
+      "borders": [
+        "EGY"
+      ],
+      "significance": "Western arm of the Red Sea, the approach to the Suez Canal",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-kutch",
+      "name": "Gulf of Kutch",
+      "aliases": [
+        "Gulf of Kachchh"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        69.3,
+        22.6
+      ],
+      "spanKm": 90,
+      "basin": "Arabian Sea",
+      "borders": [
+        "IND"
+      ],
+      "significance": "Gujarat inlet holding Kandla and India's largest oil-handling ports",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-khambhat",
+      "name": "Gulf of Khambhat",
+      "aliases": [
+        "Gulf of Cambay"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        72.3,
+        21.3
+      ],
+      "spanKm": 90,
+      "basin": "Arabian Sea",
+      "borders": [
+        "IND"
+      ],
+      "significance": "Funnel-shaped Gujarat gulf with India's highest tidal range",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-mannar",
+      "name": "Gulf of Mannar",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        78.8,
+        8.6
+      ],
+      "spanKm": 110,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND",
+        "LKA"
+      ],
+      "significance": "Biosphere reserve between India and Sri Lanka, south of Rameswaram",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-timor",
+      "name": "Timor Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        128,
+        -11
+      ],
+      "spanKm": 380,
+      "basin": "Indian Ocean",
+      "borders": [
+        "AUS",
+        "TLS",
+        "IDN"
+      ],
+      "significance": "Gas-rich sea between Timor and northern Australia",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-arafura",
+      "name": "Arafura Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        136,
+        -9
+      ],
+      "spanKm": 400,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "AUS",
+        "IDN",
+        "PNG"
+      ],
+      "significance": "Shallow sea between Australia and New Guinea, north of the Gulf of Carpentaria",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-carpentaria",
+      "name": "Gulf of Carpentaria",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        139.5,
+        -14.5
+      ],
+      "spanKm": 300,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "AUS"
+      ],
+      "significance": "Great rectangular gulf cut into northern Australia",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-australian-bight",
+      "name": "Great Australian Bight",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        131,
+        -35.5
+      ],
+      "spanKm": 450,
+      "basin": "Indian Ocean",
+      "borders": [
+        "AUS"
+      ],
+      "significance": "Long open bight along Australia's southern coast",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-south-china",
+      "name": "South China Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        114,
+        13
+      ],
+      "spanKm": 750,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "CHN",
+        "VNM",
+        "PHL",
+        "MYS",
+        "BRN",
+        "TWN"
+      ],
+      "significance": "The world's most contested sea, carrying a third of global shipping",
+      "notes": [
+        "Spratly and Paracel Islands are claimed by several states at once"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-east-china",
+      "name": "East China Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        125,
+        29
+      ],
+      "spanKm": 420,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "CHN",
+        "JPN",
+        "KOR",
+        "TWN"
+      ],
+      "significance": "Sea between China and Japan, home of the disputed Senkaku Islands",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-yellow",
+      "name": "Yellow Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        123.5,
+        35.5
+      ],
+      "spanKm": 330,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "CHN",
+        "KOR",
+        "PRK"
+      ],
+      "significance": "Named for the silt the Yellow River pours into it",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-japan",
+      "name": "Sea of Japan",
+      "aliases": [
+        "East Sea"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        135,
+        40
+      ],
+      "spanKm": 520,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "JPN",
+        "KOR",
+        "PRK",
+        "RUS"
+      ],
+      "significance": "Marginal sea walled off by the Japanese islands; Korea calls it the East Sea",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-okhotsk",
+      "name": "Sea of Okhotsk",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        149.5,
+        53
+      ],
+      "spanKm": 600,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "RUS",
+        "JPN"
+      ],
+      "significance": "Ice-bound Russian sea closed off by Kamchatka and the Kurils",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-bering",
+      "name": "Bering Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -177,
+        58
+      ],
+      "spanKm": 650,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "RUS",
+        "USA"
+      ],
+      "significance": "Sea north of the Aleutians, among the richest fisheries on Earth",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-philippine",
+      "name": "Philippine Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        132,
+        18
+      ],
+      "spanKm": 850,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "PHL",
+        "JPN",
+        "PLW",
+        "TWN"
+      ],
+      "significance": "Holds the Mariana Trench, the deepest point in any ocean",
+      "notes": [
+        "Challenger Deep lies about 11 km down"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-celebes",
+      "name": "Celebes Sea",
+      "aliases": [
+        "Sulawesi Sea"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        122,
+        4
+      ],
+      "spanKm": 320,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "IDN",
+        "PHL",
+        "MYS"
+      ],
+      "significance": "Deep basin between Borneo, Sulawesi and Mindanao",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-sulu",
+      "name": "Sulu Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        120,
+        8.5
+      ],
+      "spanKm": 280,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "PHL",
+        "MYS"
+      ],
+      "significance": "Sea inside the Philippine archipelago, west of the Visayas",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-banda",
+      "name": "Banda Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        127,
+        -5.5
+      ],
+      "spanKm": 350,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "significance": "Deep Indonesian sea of the old Spice Islands",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-java",
+      "name": "Java Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        111,
+        -5.2
+      ],
+      "spanKm": 420,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "significance": "Shallow shelf sea between Java, Sumatra and Borneo",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-flores",
+      "name": "Flores Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        120,
+        -7.5
+      ],
+      "spanKm": 230,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "significance": "Sea north of the Lesser Sunda Islands",
+      "notes": [],
+      "tier": 3,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-molucca",
+      "name": "Molucca Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        125,
+        0
+      ],
+      "spanKm": 230,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "significance": "Narrow sea between Sulawesi and Halmahera, on the Equator",
+      "notes": [],
+      "tier": 3,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-coral",
+      "name": "Coral Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        152,
+        -18
+      ],
+      "spanKm": 750,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "AUS",
+        "PNG",
+        "SLB",
+        "VUT"
+      ],
+      "significance": "Holds the Great Barrier Reef along Australia's north-east coast",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-tasman",
+      "name": "Tasman Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        160,
+        -38
+      ],
+      "spanKm": 650,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "AUS",
+        "NZL"
+      ],
+      "significance": "Stormy sea between Australia and New Zealand — the \"Tasman\"",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-bismarck",
+      "name": "Bismarck Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        148.5,
+        -4
+      ],
+      "spanKm": 230,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "PNG"
+      ],
+      "significance": "Sea north of New Guinea, inside the Bismarck Archipelago",
+      "notes": [],
+      "tier": 3,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-solomon",
+      "name": "Solomon Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        153,
+        -8
+      ],
+      "spanKm": 230,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "PNG",
+        "SLB"
+      ],
+      "significance": "Sea between New Guinea and the Solomon Islands",
+      "notes": [],
+      "tier": 3,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-thailand",
+      "name": "Gulf of Thailand",
+      "aliases": [
+        "Gulf of Siam"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        101.5,
+        9.5
+      ],
+      "spanKm": 320,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "THA",
+        "VNM",
+        "KHM",
+        "MYS"
+      ],
+      "significance": "Shallow gulf enclosed by the Malay and Indochinese peninsulas",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-tonkin",
+      "name": "Gulf of Tonkin",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        107.5,
+        19.5
+      ],
+      "spanKm": 200,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "VNM",
+        "CHN"
+      ],
+      "significance": "Gulf between northern Vietnam and Hainan, with Halong Bay on its shore",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-california",
+      "name": "Gulf of California",
+      "aliases": [
+        "Sea of Cortez"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -112,
+        27.5
+      ],
+      "spanKm": 450,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "MEX"
+      ],
+      "significance": "Long gulf splitting the Baja Peninsula from mainland Mexico",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-gulf-of-alaska",
+      "name": "Gulf of Alaska",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -146,
+        57
+      ],
+      "spanKm": 450,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "USA"
+      ],
+      "significance": "Storm-breeding gulf on Alaska's southern coast",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-ross",
+      "name": "Ross Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        175,
+        -75
+      ],
+      "spanKm": 450,
+      "basin": "Southern Ocean",
+      "borders": [],
+      "significance": "Deep Antarctic bay holding the Ross Ice Shelf, the world's largest",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-weddell",
+      "name": "Weddell Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -45,
+        -72
+      ],
+      "spanKm": 550,
+      "basin": "Southern Ocean",
+      "borders": [],
+      "significance": "Antarctic sea whose pack ice crushed Shackleton's Endurance",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-amundsen",
+      "name": "Amundsen Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -110,
+        -72
+      ],
+      "spanKm": 380,
+      "basin": "Southern Ocean",
+      "borders": [],
+      "significance": "West Antarctic sea whose thinning glaciers drive sea-level rise",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-scotia",
+      "name": "Scotia Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -45,
+        -57
+      ],
+      "spanKm": 450,
+      "basin": "Southern Ocean",
+      "borders": [],
+      "significance": "Sea between South America and Antarctica, ringed by the Scotia Arc",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-gibraltar",
+      "name": "Strait of Gibraltar",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -5.6,
+        35.95
+      ],
+      "spanKm": 40,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "ESP",
+        "MAR",
+        "GBR"
+      ],
+      "connects": "Atlantic Ocean ↔ Mediterranean Sea",
+      "significance": "The Mediterranean's only natural door to the Atlantic, 14 km wide",
+      "notes": [
+        "The Rock of Gibraltar is a British territory on the Spanish side"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-bosporus",
+      "name": "Bosporus",
+      "aliases": [
+        "Strait of Bosphorus",
+        "Bosphorus",
+        "Istanbul Strait"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        29.05,
+        41.1
+      ],
+      "spanKm": 30,
+      "basin": "Black Sea",
+      "borders": [
+        "TUR"
+      ],
+      "connects": "Black Sea ↔ Sea of Marmara",
+      "significance": "Splits Istanbul between Europe and Asia; Russia's grain route west",
+      "notes": [
+        "Governed with the Dardanelles under the Montreux Convention"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-dardanelles",
+      "name": "Dardanelles",
+      "aliases": [
+        "Strait of Dardanelles",
+        "Hellespont"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        26.4,
+        40.2
+      ],
+      "spanKm": 40,
+      "basin": "Black Sea",
+      "borders": [
+        "TUR"
+      ],
+      "connects": "Sea of Marmara ↔ Aegean Sea",
+      "significance": "The second Turkish Strait, and the Gallipoli campaign's prize",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-messina",
+      "name": "Strait of Messina",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        15.57,
+        38.25
+      ],
+      "spanKm": 30,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA"
+      ],
+      "connects": "Tyrrhenian Sea ↔ Ionian Sea",
+      "significance": "Narrow gap between Sicily and mainland Italy — Homer's Scylla and Charybdis",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-otranto",
+      "name": "Strait of Otranto",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        18.8,
+        40.1
+      ],
+      "spanKm": 50,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA",
+        "ALB"
+      ],
+      "connects": "Adriatic Sea ↔ Ionian Sea",
+      "significance": "Closes the mouth of the Adriatic between Italy and Albania",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-sicily",
+      "name": "Strait of Sicily",
+      "aliases": [
+        "Sicilian Channel"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        11.5,
+        37.3
+      ],
+      "spanKm": 90,
+      "basin": "Mediterranean",
+      "borders": [
+        "ITA",
+        "TUN"
+      ],
+      "connects": "Western ↔ Eastern Mediterranean",
+      "significance": "The Mediterranean's own waist, between Sicily and Tunisia",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-bonifacio",
+      "name": "Strait of Bonifacio",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        9.25,
+        41.3
+      ],
+      "spanKm": 30,
+      "basin": "Mediterranean",
+      "borders": [
+        "FRA",
+        "ITA"
+      ],
+      "connects": "Tyrrhenian Sea ↔ western Mediterranean",
+      "significance": "Separates French Corsica from Italian Sardinia",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-dover",
+      "name": "Strait of Dover",
+      "aliases": [
+        "Pas de Calais"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        1.5,
+        51
+      ],
+      "spanKm": 30,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "GBR",
+        "FRA"
+      ],
+      "connects": "English Channel ↔ North Sea",
+      "significance": "Busiest shipping lane in the world; the Channel Tunnel runs beneath it",
+      "notes": [
+        "Only about 33 km wide"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-english-channel",
+      "name": "English Channel",
+      "aliases": [
+        "La Manche"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -1.5,
+        50
+      ],
+      "spanKm": 180,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "GBR",
+        "FRA"
+      ],
+      "connects": "Atlantic Ocean ↔ North Sea",
+      "significance": "The water that has kept Britain an island, narrowing to the Strait of Dover",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-kerch",
+      "name": "Kerch Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        36.6,
+        45.3
+      ],
+      "spanKm": 30,
+      "basin": "Black Sea",
+      "borders": [
+        "RUS",
+        "UKR"
+      ],
+      "connects": "Black Sea ↔ Sea of Azov",
+      "significance": "The only way into the Sea of Azov, between Crimea and Russia",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-skagerrak",
+      "name": "Skagerrak",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        9,
+        57.8
+      ],
+      "spanKm": 130,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "DNK",
+        "NOR",
+        "SWE"
+      ],
+      "connects": "North Sea ↔ Kattegat",
+      "significance": "First step of the Danish Straits, between Denmark and Norway",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-kattegat",
+      "name": "Kattegat",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        11.5,
+        57
+      ],
+      "spanKm": 110,
+      "basin": "Baltic Sea",
+      "borders": [
+        "DNK",
+        "SWE"
+      ],
+      "connects": "Skagerrak ↔ Baltic Sea",
+      "significance": "Second step of the Danish Straits, between Denmark and Sweden",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-oresund",
+      "name": "Øresund",
+      "aliases": [
+        "Oresund",
+        "The Sound"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        12.75,
+        55.85
+      ],
+      "spanKm": 40,
+      "basin": "Baltic Sea",
+      "borders": [
+        "DNK",
+        "SWE"
+      ],
+      "connects": "Kattegat ↔ Baltic Sea",
+      "significance": "Copenhagen's strait, crossed by the Øresund bridge-tunnel to Malmö",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-denmark-strait",
+      "name": "Denmark Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -27,
+        66.5
+      ],
+      "spanKm": 180,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "ISL",
+        "DNK"
+      ],
+      "connects": "Greenland Sea ↔ North Atlantic",
+      "significance": "Between Greenland and Iceland, with the greatest waterfall on Earth beneath it",
+      "notes": [
+        "A submarine cataract of dense cold water, far larger than any on land"
+      ],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-st-georges",
+      "name": "St George's Channel",
+      "aliases": [
+        "Saint Georges Channel"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -6,
+        52
+      ],
+      "spanKm": 80,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "IRL",
+        "GBR"
+      ],
+      "connects": "Irish Sea ↔ Celtic Sea",
+      "significance": "Southern entrance to the Irish Sea, between Ireland and Wales",
+      "notes": [],
+      "tier": 3,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-hormuz",
+      "name": "Strait of Hormuz",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        56.6,
+        26.6
+      ],
+      "spanKm": 45,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IRN",
+        "OMN",
+        "ARE"
+      ],
+      "connects": "Persian Gulf ↔ Gulf of Oman",
+      "significance": "The world's most important oil chokepoint — a fifth of all petroleum passes through",
+      "notes": [
+        "Iran on the north shore, Oman's Musandam exclave on the south"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-bab-el-mandeb",
+      "name": "Bab-el-Mandeb",
+      "aliases": [
+        "Bab el Mandeb",
+        "Strait of Mandeb",
+        "Gate of Tears"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        43.35,
+        12.6
+      ],
+      "spanKm": 35,
+      "basin": "Indian Ocean",
+      "borders": [
+        "YEM",
+        "DJI",
+        "ERI"
+      ],
+      "connects": "Red Sea ↔ Gulf of Aden",
+      "significance": "The southern gate of the Red Sea — no Suez traffic reaches Asia without it",
+      "notes": [
+        "Its name means \"Gate of Tears\""
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-tiran",
+      "name": "Strait of Tiran",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        34.5,
+        27.95
+      ],
+      "spanKm": 25,
+      "basin": "Red Sea",
+      "borders": [
+        "EGY",
+        "SAU"
+      ],
+      "connects": "Gulf of Aqaba ↔ Red Sea",
+      "significance": "Closing it to Israeli shipping helped trigger the 1967 war",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-palk",
+      "name": "Palk Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        79.6,
+        9.8
+      ],
+      "spanKm": 60,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND",
+        "LKA"
+      ],
+      "connects": "Bay of Bengal ↔ Gulf of Mannar",
+      "significance": "Separates India from Sri Lanka; too shallow for large ships",
+      "notes": [
+        "Adam's Bridge (Rama Setu) runs across its southern end"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-ten-degree",
+      "name": "Ten Degree Channel",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        92.7,
+        10
+      ],
+      "spanKm": 60,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND"
+      ],
+      "connects": "Bay of Bengal ↔ Andaman Sea",
+      "significance": "Separates the Andaman Islands from the Nicobar Islands",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-nine-degree",
+      "name": "Nine Degree Channel",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        73.2,
+        9
+      ],
+      "spanKm": 60,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND"
+      ],
+      "connects": "Arabian Sea ↔ Laccadive Sea",
+      "significance": "Splits the Lakshadweep islands from Minicoy",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-eight-degree",
+      "name": "Eight Degree Channel",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        73.2,
+        8
+      ],
+      "spanKm": 60,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IND",
+        "MDV"
+      ],
+      "connects": "Arabian Sea ↔ Laccadive Sea",
+      "significance": "Separates India's Minicoy from the Maldives",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-malacca",
+      "name": "Strait of Malacca",
+      "aliases": [
+        "Malacca Strait",
+        "Straits of Malacca"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        100.4,
+        3
+      ],
+      "spanKm": 130,
+      "basin": "Indian Ocean",
+      "borders": [
+        "MYS",
+        "IDN",
+        "SGP",
+        "THA"
+      ],
+      "connects": "Andaman Sea ↔ South China Sea",
+      "significance": "Shortest sea route between the Indian and Pacific Oceans, and Asia's oil artery",
+      "notes": [
+        "China's dependence on it is called the \"Malacca dilemma\""
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-singapore",
+      "name": "Singapore Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        103.9,
+        1.2
+      ],
+      "spanKm": 30,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "SGP",
+        "MYS",
+        "IDN"
+      ],
+      "connects": "Strait of Malacca ↔ South China Sea",
+      "significance": "The eastern end of the Malacca run, past the port of Singapore",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-sunda",
+      "name": "Sunda Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        105.85,
+        -6
+      ],
+      "spanKm": 40,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "connects": "Java Sea ↔ Indian Ocean",
+      "significance": "Between Java and Sumatra, with Krakatoa standing in the middle",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-lombok",
+      "name": "Lombok Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        115.8,
+        -8.6
+      ],
+      "spanKm": 35,
+      "basin": "Indian Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "connects": "Java Sea ↔ Indian Ocean",
+      "significance": "Deep alternative to Malacca for the largest ships; the Wallace Line runs through it",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-makassar",
+      "name": "Makassar Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        118,
+        -2
+      ],
+      "spanKm": 150,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "IDN"
+      ],
+      "connects": "Celebes Sea ↔ Java Sea",
+      "significance": "Main channel of the Indonesian Throughflow, between Borneo and Sulawesi",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-taiwan",
+      "name": "Taiwan Strait",
+      "aliases": [
+        "Formosa Strait"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        119.5,
+        24.5
+      ],
+      "spanKm": 80,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "CHN",
+        "TWN"
+      ],
+      "connects": "East China Sea ↔ South China Sea",
+      "significance": "The 180 km of water between China and Taiwan",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-luzon",
+      "name": "Luzon Strait",
+      "aliases": [
+        "Bashi Channel"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        121,
+        20.5
+      ],
+      "spanKm": 90,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "TWN",
+        "PHL"
+      ],
+      "connects": "South China Sea ↔ Philippine Sea",
+      "significance": "Deep-water gate between Taiwan and Luzon, watched closely by navies",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-korea",
+      "name": "Korea Strait",
+      "aliases": [
+        "Tsushima Strait"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        129,
+        34.5
+      ],
+      "spanKm": 80,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "KOR",
+        "JPN"
+      ],
+      "connects": "East China Sea ↔ Sea of Japan",
+      "significance": "Between Korea and Japan, with Tsushima island in midstream",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-tsugaru",
+      "name": "Tsugaru Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        140.7,
+        41.55
+      ],
+      "spanKm": 40,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "JPN"
+      ],
+      "connects": "Sea of Japan ↔ Pacific Ocean",
+      "significance": "Separates Honshu from Hokkaido; the Seikan Tunnel runs under it",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-la-perouse",
+      "name": "La Pérouse Strait",
+      "aliases": [
+        "La Perouse Strait",
+        "Soya Strait"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        142,
+        45.75
+      ],
+      "spanKm": 35,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "JPN",
+        "RUS"
+      ],
+      "connects": "Sea of Japan ↔ Sea of Okhotsk",
+      "significance": "Between Hokkaido and Russian Sakhalin",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-bering",
+      "name": "Bering Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -169,
+        65.8
+      ],
+      "spanKm": 45,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "RUS",
+        "USA"
+      ],
+      "connects": "Pacific Ocean ↔ Arctic Ocean",
+      "significance": "The 82 km between Asia and America, and the old land bridge route",
+      "notes": [
+        "The Diomede Islands sit in it, split by the date line"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-mozambique",
+      "name": "Mozambique Channel",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        41,
+        -19
+      ],
+      "spanKm": 400,
+      "basin": "Indian Ocean",
+      "borders": [
+        "MOZ",
+        "MDG"
+      ],
+      "connects": "Indian Ocean ↔ Indian Ocean, around Madagascar",
+      "significance": "Between Mozambique and Madagascar, the route for ships too big for Suez",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-florida",
+      "name": "Strait of Florida",
+      "aliases": [
+        "Straits of Florida"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -80.2,
+        24.3
+      ],
+      "spanKm": 80,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "USA",
+        "CUB",
+        "BHS"
+      ],
+      "connects": "Gulf of Mexico ↔ Atlantic Ocean",
+      "significance": "Where the Gulf Stream leaves the Gulf, between Florida and Cuba",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-yucatan",
+      "name": "Yucatán Channel",
+      "aliases": [
+        "Yucatan Channel"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -85.7,
+        21.6
+      ],
+      "spanKm": 80,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "MEX",
+        "CUB"
+      ],
+      "connects": "Caribbean Sea ↔ Gulf of Mexico",
+      "significance": "The Caribbean's outlet into the Gulf, between Mexico and Cuba",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-windward",
+      "name": "Windward Passage",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -73.8,
+        20
+      ],
+      "spanKm": 50,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CUB",
+        "HTI"
+      ],
+      "connects": "Atlantic Ocean ↔ Caribbean Sea",
+      "significance": "Between Cuba and Haiti, the shipping lane to the Panama Canal",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-mona",
+      "name": "Mona Passage",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -67.9,
+        18.5
+      ],
+      "spanKm": 50,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "DOM",
+        "USA"
+      ],
+      "connects": "Atlantic Ocean ↔ Caribbean Sea",
+      "significance": "Between the Dominican Republic and Puerto Rico",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-davis",
+      "name": "Davis Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -58,
+        65
+      ],
+      "spanKm": 220,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN",
+        "DNK"
+      ],
+      "connects": "Labrador Sea ↔ Baffin Bay",
+      "significance": "Between Baffin Island and Greenland, the old Northwest Passage approach",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-hudson",
+      "name": "Hudson Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -70,
+        61.5
+      ],
+      "spanKm": 180,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN"
+      ],
+      "connects": "Labrador Sea ↔ Hudson Bay",
+      "significance": "The only sea route into Hudson Bay",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-cabot",
+      "name": "Cabot Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -59.5,
+        47.4
+      ],
+      "spanKm": 60,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CAN"
+      ],
+      "connects": "Gulf of St Lawrence ↔ Atlantic Ocean",
+      "significance": "Between Newfoundland and Cape Breton, the main door to the St Lawrence",
+      "notes": [],
+      "tier": 3,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-juan-de-fuca",
+      "name": "Strait of Juan de Fuca",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -124,
+        48.3
+      ],
+      "spanKm": 60,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "USA",
+        "CAN"
+      ],
+      "connects": "Pacific Ocean ↔ Salish Sea",
+      "significance": "The sea border between Washington State and Vancouver Island",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-magellan",
+      "name": "Strait of Magellan",
+      "aliases": [
+        "Straits of Magellan"
+      ],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -71,
+        -53.5
+      ],
+      "spanKm": 120,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CHL"
+      ],
+      "connects": "Atlantic Ocean ↔ Pacific Ocean",
+      "significance": "Sheltered route round South America, the safer alternative to Cape Horn",
+      "notes": [
+        "Lost most of its traffic when the Panama Canal opened"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-drake",
+      "name": "Drake Passage",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -63,
+        -58.5
+      ],
+      "spanKm": 350,
+      "basin": "Southern Ocean",
+      "borders": [
+        "CHL",
+        "ARG"
+      ],
+      "connects": "Atlantic Ocean ↔ Pacific Ocean",
+      "significance": "The roughest water in the world, between Cape Horn and Antarctica",
+      "notes": [
+        "Nothing blocks the current here, which is why the seas build so high"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-beagle",
+      "name": "Beagle Channel",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -68.5,
+        -54.9
+      ],
+      "spanKm": 60,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "CHL",
+        "ARG"
+      ],
+      "connects": "Atlantic Ocean ↔ Pacific Ocean",
+      "significance": "Named for Darwin's ship; nearly brought Chile and Argentina to war in 1978",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-bass",
+      "name": "Bass Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        145.8,
+        -39.5
+      ],
+      "spanKm": 120,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "AUS"
+      ],
+      "connects": "Indian Ocean ↔ Tasman Sea",
+      "significance": "Separates Tasmania from mainland Australia",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-torres",
+      "name": "Torres Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        142.5,
+        -9.8
+      ],
+      "spanKm": 60,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "AUS",
+        "PNG"
+      ],
+      "connects": "Arafura Sea ↔ Coral Sea",
+      "significance": "Shallow, reef-strewn gap between Australia and Papua New Guinea",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "st-cook",
+      "name": "Cook Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        174.5,
+        -41.3
+      ],
+      "spanKm": 40,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "NZL"
+      ],
+      "connects": "Tasman Sea ↔ Pacific Ocean",
+      "significance": "Separates New Zealand's North and South Islands",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "cn-suez",
+      "name": "Suez Canal",
+      "aliases": [],
+      "type": "canal",
+      "country": "EGY",
+      "point": [
+        32.35,
+        30.6
+      ],
+      "spanKm": 60,
+      "basin": "Mediterranean",
+      "borders": [
+        "EGY"
+      ],
+      "connects": "Mediterranean Sea ↔ Red Sea",
+      "significance": "Cuts the Europe–Asia voyage by thousands of miles, avoiding Africa entirely",
+      "notes": [
+        "Opened 1869; blocked by the Ever Given in 2021"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "cn-panama",
+      "name": "Panama Canal",
+      "aliases": [],
+      "type": "canal",
+      "country": "PAN",
+      "point": [
+        -79.7,
+        9.15
+      ],
+      "spanKm": 50,
+      "basin": "Atlantic Ocean",
+      "borders": [
+        "PAN"
+      ],
+      "connects": "Atlantic Ocean ↔ Pacific Ocean",
+      "significance": "Lock canal across Panama, sparing ships the trip round Cape Horn",
+      "notes": [
+        "Opened 1914; handed to Panama in 1999"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "cn-kiel",
+      "name": "Kiel Canal",
+      "aliases": [],
+      "type": "canal",
+      "country": "DEU",
+      "point": [
+        9.5,
+        54.25
+      ],
+      "spanKm": 50,
+      "basin": "Baltic Sea",
+      "borders": [
+        "DEU"
+      ],
+      "connects": "North Sea ↔ Baltic Sea",
+      "significance": "Busiest artificial waterway in the world, cutting off the Danish Straits",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "col-bogota",
@@ -640,7 +3857,8 @@
       "significance": "Capital of Colombia",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "col-two-oceans",
@@ -657,7 +3875,8 @@
         "Connectivity — access to two oceans"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ven-caracas",
@@ -672,7 +3891,8 @@
       "significance": "Capital of Venezuela",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ven-maracaibo",
@@ -691,7 +3911,8 @@
         "Port and lake of the same name"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ven-crude-oil",
@@ -708,7 +3929,8 @@
         "Borders the Caribbean Sea"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "guy-georgetown",
@@ -723,7 +3945,8 @@
       "significance": "Capital of Guyana",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "sur-paramaribo",
@@ -738,7 +3961,8 @@
       "significance": "Capital of Suriname",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "guf-french-guiana",
@@ -758,7 +3982,8 @@
         "Capital: Cayenne"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "guf-cayenne",
@@ -774,7 +3999,8 @@
       "significance": "Capital of French Guiana",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "guf-kourou",
@@ -792,7 +4018,8 @@
         "Guiana Space Centre, French Guiana"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ecu-quito",
@@ -807,7 +4034,8 @@
       "significance": "Capital of Ecuador, sitting almost exactly on the Equator",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ecu-galapagos",
@@ -825,7 +4053,8 @@
       "significance": "Island group belonging to Ecuador — the \"key to Ecuador\"",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ecu-no-brazil-border",
@@ -842,7 +4071,8 @@
         "The other is Chile"
       ],
       "tier": 2,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "per-lima",
@@ -857,7 +4087,8 @@
       "significance": "Capital of Peru",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "per-phosphate-nitrate",
@@ -872,7 +4103,8 @@
       "significance": "Abundance of phosphate and nitrate from guano (bird droppings)",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bol-la-paz",
@@ -887,7 +4119,8 @@
       "significance": "Highest-altitude capital city in the world — administrative capital of Bolivia",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bol-sucre",
@@ -902,7 +4135,8 @@
       "significance": "Judicial (constitutional) capital of Bolivia",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bol-landlocked",
@@ -919,7 +4153,8 @@
         "Lost its coast to Chile in the War of the Pacific"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bra-brasilia",
@@ -936,7 +4171,8 @@
       "significance": "Capital of Brazil",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bra-carajas",
@@ -956,7 +4192,8 @@
         "Pará state, northern Brazil"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bra-rio-de-janeiro",
@@ -973,7 +4210,8 @@
       "significance": "Port city with Copacabana Beach — lies above the Tropic of Capricorn",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bra-sao-paulo",
@@ -990,7 +4228,8 @@
       "significance": "Coffee-farming centre lying on the Tropic of Capricorn — notably NOT a port",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "bra-santos",
@@ -1007,7 +4246,8 @@
         "Fazendas = Brazilian coffee estates"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "pry-asuncion",
@@ -1026,7 +4266,8 @@
         "Mnemonic: \"Sun\" in Asunción → Paraguay"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "pry-landlocked",
@@ -1041,7 +4282,8 @@
       "significance": "Landlocked country of South America (with Bolivia)",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "ury-montevideo",
@@ -1058,7 +4300,8 @@
         "Mnemonic: \"video\" → Uruguay sits on the seashore"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "arg-buenos-aires",
@@ -1073,7 +4316,8 @@
       "significance": "Capital of Argentina",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "arg-falkland-islands",
@@ -1094,7 +4338,8 @@
       "significance": "UK overseas territory off the coast of Argentina",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "chl-santiago",
@@ -1109,7 +4354,8 @@
       "significance": "Capital of Chile",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "chl-easter-island",
@@ -1127,7 +4373,8 @@
       "significance": "Remote Pacific island belonging to Chile",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "chl-arica",
@@ -1144,7 +4391,8 @@
         "Northern Chile"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "chl-chuquicamata",
@@ -1159,7 +4407,8 @@
       "significance": "Copper abundance — largest open-pit copper mine in the world",
       "notes": [],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "sa-lithium-triangle-zone",
@@ -1178,7 +4427,8 @@
         "Mnemonic: ABC — Argentina, Bolivia, Chile"
       ],
       "tier": 1,
-      "continent": "South America"
+      "continent": "South America",
+      "section": "places"
     }
   ],
   "groups": [
@@ -1234,6 +4484,48 @@
         "bmu-bermuda"
       ],
       "mnemonic": "Puerto Rico is American, Bermuda is British — every other name on the West Indies list is a sovereign country"
+    },
+    {
+      "id": "w-oil-chokepoints",
+      "name": "The oil chokepoints",
+      "members": [
+        "st-hormuz",
+        "st-bab-el-mandeb",
+        "st-malacca",
+        "cn-suez",
+        "st-gibraltar",
+        "cn-panama"
+      ],
+      "mnemonic": "Hormuz, Bab-el-Mandeb, Malacca, Suez, Gibraltar, Panama — the six the tanker world worries about"
+    },
+    {
+      "id": "w-turkish-straits",
+      "name": "The Turkish Straits",
+      "members": [
+        "st-bosporus",
+        "st-dardanelles"
+      ],
+      "mnemonic": "Bosporus then Dardanelles — Black Sea, Marmara, Aegean, in that order"
+    },
+    {
+      "id": "w-indian-channels",
+      "name": "India's degree channels",
+      "members": [
+        "st-ten-degree",
+        "st-nine-degree",
+        "st-eight-degree"
+      ],
+      "mnemonic": "Ten splits Andaman from Nicobar; Nine splits Lakshadweep; Eight splits India from the Maldives"
+    },
+    {
+      "id": "w-danish-straits",
+      "name": "The Danish Straits",
+      "members": [
+        "st-skagerrak",
+        "st-kattegat",
+        "st-oresund"
+      ],
+      "mnemonic": "Skagerrak, Kattegat, Øresund — the staircase from the North Sea down into the Baltic"
     },
     {
       "id": "sa-lithium-triangle",

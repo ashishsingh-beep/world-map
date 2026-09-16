@@ -3,7 +3,7 @@ import { geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
 import { placeOf, type Place } from '../data/places'
 import { judgeName, type Candidate } from './matchName'
-import type { CountryState, MapPoint, ToScreen } from '../map/MapCanvas'
+import type { CountryState, MapPoint, MarkerShape, ToScreen } from '../map/MapCanvas'
 import type { Round } from './rounds'
 
 export { normaliseName } from './matchName'
@@ -79,6 +79,12 @@ function buildQuestions(round: Round): Question[] {
     const m = metaOf(iso)
     return { id: iso, name: m.name, aliases: m.aliases ?? [], point: m.centroid, iso, place: null }
   })
+}
+
+/** Sea, strait and canal each get their own notation; everything else is a dot. */
+export function shapeOf(q: { place: Place | null }): MarkerShape {
+  const t = q.place?.type
+  return t === 'sea' || t === 'strait' || t === 'canal' ? t : 'dot'
 }
 
 function shuffle<T>(input: T[]): T[] {
@@ -200,10 +206,25 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
       // this place than to any other in the round, or one tap between Santos
       // and São Paulo would answer both.
       const px = screenDistance(current)
-      const nearest = queue.reduce((best, q) =>
+      const nearestOnScreen = queue.reduce((best, q) =>
         !q.iso && screenDistance(q) < screenDistance(best) ? q : best
       )
-      settle(px <= PIN_TOLERANCE_PX && nearest.id === current.id, undefined, km)
+      const byScreen = px <= PIN_TOLERANCE_PX && nearestOnScreen.id === current.id
+
+      /**
+       * A sea is an area, not a point, so pointing anywhere inside it counts.
+       * Scoring by distance ÷ its own span also settles nesting for free: a tap
+       * in the middle of the Mediterranean scores better against the
+       * Mediterranean than against the Tyrrhenian inside it, and vice versa.
+       */
+      const spanScore = (q: Question) =>
+        q.place?.spanKm
+          ? (geoDistance(lonLat, q.point) * EARTH_RADIUS_KM) / q.place.spanKm
+          : Infinity
+      const nearestBySpan = queue.reduce((best, q) => (spanScore(q) < spanScore(best) ? q : best))
+      const bySpan = spanScore(current) <= 1 && nearestBySpan.id === current.id
+
+      settle(byScreen || bySpan, undefined, km)
     },
     [phase, current, settle, queue]
   )
@@ -251,7 +272,7 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
     // Keyed, because the place being revealed is already in `answers` by then.
     const out = new Map<string, MapPoint>()
     const add = (q: Question | null | undefined, state: CountryState) => {
-      if (q && !q.iso) out.set(q.id, { id: q.id, point: q.point, state })
+      if (q && !q.iso) out.set(q.id, { id: q.id, point: q.point, state, shape: shapeOf(q) })
     }
     for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
     if (phase === 'revealing' && current) {

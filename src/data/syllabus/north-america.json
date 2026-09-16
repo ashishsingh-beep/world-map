@@ -345,6 +345,7 @@
       "type": "canal",
       "country": "PAN",
       "point": [-79.7, 9.15],
+      "spanKm": 50,
       "significance": "Canal cut through Panama to link the Atlantic and the Pacific",
       "notes": [],
       "tier": 1

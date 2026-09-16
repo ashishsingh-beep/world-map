@@ -29,13 +29,29 @@ export interface MapPadding {
 
 const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, left: 24 }
 
-/** A point place drawn on top of the geography (a city, port, mine…). */
+/**
+ * The notation a marker is drawn with. A round circle reads as open water, a
+ * diamond as a narrow gate between two of them, and the two are also coloured
+ * apart — so a sea and a strait are never confused at a glance.
+ */
+export type MarkerShape = 'dot' | 'sea' | 'strait' | 'canal'
+
+/** A point place drawn on top of the geography (a city, port, sea, strait…). */
 export interface MapPoint {
   id: string
   point: [number, number]
   state: CountryState
+  shape?: MarkerShape
   /** Drawn beside the marker when set — used by Learn mode, never in play. */
   label?: string
+}
+
+/** Idle fills, which is where the sea/strait distinction has to carry. */
+const SHAPE_FILLS: Record<MarkerShape, string> = {
+  dot: '#ffffff',
+  sea: '#1d4ed8',
+  strait: '#f97316',
+  canal: '#a855f7',
 }
 
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
@@ -73,6 +89,11 @@ export interface MapCanvasProps {
    * the map ever being told what the answer is.
    */
   onPickPoint?: (lonLat: [number, number], toScreen: ToScreen) => void
+  /**
+   * Micro-state circles. Off for the Seas & Straits round, where a stray ring
+   * of country markers would compete with the sea notation.
+   */
+  countryMarkers?: boolean
   labels?: 'none' | 'all' | 'selected'
   selectedIso?: string | null
   className?: string
@@ -101,6 +122,7 @@ export function MapCanvas({
   pinPoint = null,
   markPoint = null,
   onPickPoint,
+  countryMarkers = true,
   labels = 'none',
   selectedIso = null,
   className,
@@ -329,7 +351,7 @@ export function MapCanvas({
 
           {/* Circle markers so micro-states stay findable and tappable. They
               scale away as you zoom in, because by then the shape is visible. */}
-          {drawn.map((f) => {
+          {(countryMarkers ? drawn : []).map((f) => {
             const iso = f.properties.iso
             const l = layout[iso]
             if (!l || l.px * k >= MARKER_THRESHOLD_PX) return null
@@ -357,22 +379,58 @@ export function MapCanvas({
             const base = projection(p.point)
             if (!base) return null
             const isTarget = p.state === 'target'
+            const shape = p.shape ?? 'dot'
+            const r = (isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) / k
+            const fill = p.state === 'idle' ? SHAPE_FILLS[shape] : FILLS[p.state]
+            const [cx, cy] = base
             return (
               <g key={`p-${p.id}`} pointerEvents="none">
-                <circle
-                  cx={base[0]}
-                  cy={base[1]}
-                  r={(isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) / k}
-                  fill={p.state === 'idle' ? '#fff' : FILLS[p.state]}
-                  fillOpacity={p.state === 'idle' ? 0.55 : 0.95}
-                  stroke="#1f2d4d"
-                  strokeWidth={isTarget ? 2.5 : 1.5}
-                  vectorEffect="non-scaling-stroke"
-                />
+                {shape === 'strait' ? (
+                  // A diamond pinched by two arrowheads: a narrow gate.
+                  <g
+                    fill={fill}
+                    fillOpacity={0.95}
+                    stroke="#1f2d4d"
+                    strokeWidth={isTarget ? 2.5 : 1.5}
+                    vectorEffect="non-scaling-stroke"
+                  >
+                    <path
+                      d={`M ${cx} ${cy - r} L ${cx + r} ${cy} L ${cx} ${cy + r} L ${cx - r} ${cy} Z`}
+                    />
+                    <path
+                      d={`M ${cx - r * 1.9} ${cy} L ${cx - r * 1.05} ${cy}
+                         M ${cx + r * 1.05} ${cy} L ${cx + r * 1.9} ${cy}`}
+                      strokeLinecap="round"
+                    />
+                  </g>
+                ) : shape === 'canal' ? (
+                  <rect
+                    x={cx - r * 0.85}
+                    y={cy - r}
+                    width={r * 1.7}
+                    height={r * 2}
+                    fill={fill}
+                    fillOpacity={0.95}
+                    stroke="#1f2d4d"
+                    strokeWidth={isTarget ? 2.5 : 1.5}
+                    vectorEffect="non-scaling-stroke"
+                  />
+                ) : (
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={r}
+                    fill={fill}
+                    fillOpacity={p.state === 'idle' && shape === 'dot' ? 0.55 : 0.95}
+                    stroke="#1f2d4d"
+                    strokeWidth={isTarget ? 2.5 : 1.5}
+                    vectorEffect="non-scaling-stroke"
+                  />
+                )}
                 {p.label && (
                   <text
-                    x={base[0]}
-                    y={base[1] - (PLACE_MARKER_PX + 6) / k}
+                    x={cx}
+                    y={cy - (PLACE_MARKER_PX + 6) / k}
                     textAnchor="middle"
                     fontSize={(isTarget ? 15 : 11) / k}
                     fontWeight={800}

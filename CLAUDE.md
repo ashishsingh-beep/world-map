@@ -36,6 +36,13 @@ passing as "Paraguay" or "Nigeria" as "Niger". Never relax it without running
 `npm run check:names`; aliases should hold genuine alternative names, never
 misspellings, or the correction note never fires.
 
+**Sea and strait must never look alike.** The Seas & Straits section is built
+around two notations: a sea is a blue circle, a strait an orange diamond pinched
+by two arrowheads (a canal is a purple square). The shape carries the *kind*, the
+fill carries the quiz *state*, and the legend in Learn mode names all three.
+Country micro-state markers are switched off in that round so no stray ring
+competes with the sea notation.
+
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.
 
@@ -46,7 +53,8 @@ The whole app is one map engine plus configuration.
 - `src/map/MapCanvas.tsx` — the engine. Takes `render` (geography to draw),
   `askable` (what's quizzable), and `view` (a bbox). Everything else is
   derived. Continent rounds are not special-cased; they are different arguments.
-- `src/game/rounds.ts` — the 8 rounds as config.
+- `src/game/rounds.ts` — the rounds as config. A syllabus file's `section`
+  decides which menu group it lands in: `places` or `water`.
 - `src/game/useQuiz.ts` — round state machine.
 - `src/screens/` — Play, Results, Learn.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.

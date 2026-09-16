@@ -233,7 +233,11 @@ writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2)
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
   'mine', 'canal', 'zone',
+  // Seas & Straits section
+  'sea', 'strait',
 ])
+/** Water features sit offshore by definition, so containment never applies. */
+const WATER_TYPES = new Set(['sea', 'strait', 'canal'])
 /**
  * How far outside its country an onshore place may sit before it's an error.
  * A port sits on the water's edge, and Natural Earth's coastline is generalised,
@@ -275,6 +279,7 @@ for (const file of syllabusFiles) {
   continents.push({
     name: doc.continent,
     title: doc.title ?? doc.continent,
+    section: doc.section ?? 'places',
     count: doc.places.length,
   })
   groups.push(...(doc.groups ?? []))
@@ -285,8 +290,11 @@ for (const file of syllabusFiles) {
 
     if (!PLACE_TYPES.has(p.type)) errors.push(`${where(p.id)}: unknown type "${p.type}"`)
     if (!p.significance) errors.push(`${where(p.id)}: missing significance`)
-    for (const iso of [p.country, p.sovereign]) {
+    for (const iso of [p.country, p.sovereign, ...(p.borders ?? [])]) {
       if (iso && !meta[iso]) errors.push(`${where(p.id)}: unknown ISO "${iso}"`)
+    }
+    if (WATER_TYPES.has(p.type) && !p.spanKm) {
+      errors.push(`${where(p.id)}: a water feature needs a spanKm hit radius`)
     }
 
     // A country-level fact borrows the country's own geometry and centroid.
@@ -314,7 +322,7 @@ for (const file of syllabusFiles) {
       errors.push(`${where(p.id)}: marked offshore but the point is inside ${p.country}`)
     }
 
-    places.push({ ...p, point, continent: doc.continent })
+    places.push({ ...p, point, continent: doc.continent, section: doc.section ?? 'places' })
   }
 
   for (const g of doc.groups ?? []) {

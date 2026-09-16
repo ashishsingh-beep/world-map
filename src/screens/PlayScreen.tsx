@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
 import { QUESTION_SECONDS, useQuiz, type Mode } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
@@ -43,6 +43,7 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
 
   const q = quiz.current
   const isPlaceRound = !!round.places
+  const isWaterRound = q?.place?.section === 'water'
   const country = q?.iso ? metaOf(q.iso) : null
 
   return (
@@ -60,6 +61,7 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
         revealPoints={quiz.revealPoints}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
+        countryMarkers={!isWaterRound}
         onPickPoint={isPlaceRound && mode === 'pin' ? quiz.pickPoint : undefined}
         padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />
@@ -122,6 +124,9 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
           <div className="flex items-center gap-3 rounded-full bg-white px-7 py-3 shadow-xl">
             {!isPlaceRound && country && (
               <span className="text-3xl leading-none">{flagEmoji(country.iso2)}</span>
+            )}
+            {q?.place && WATER_GLYPH[q.place.type] && (
+              <span className="text-2xl leading-none">{WATER_GLYPH[q.place.type]}</span>
             )}
             <span className="text-2xl font-extrabold text-slate-900">{q?.name}</span>
             {q?.place && q.place.type !== 'country' && (

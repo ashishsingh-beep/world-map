@@ -11,12 +11,16 @@ export type PlaceType =
   | 'mine'
   | 'canal'
   | 'zone'
+  | 'sea'
+  | 'strait'
 
 export interface Place {
   id: string
   name: string
   aliases: string[]
   type: PlaceType
+  /** Which menu section this belongs to. */
+  section: 'places' | 'water'
   /** ISO3 of the country it belongs to, or null for territories and shared features. */
   country: string | null
   /** ISO3 of the governing state, when that differs from `country`. */
@@ -30,6 +34,14 @@ export interface Place {
   notes: string[]
   tier: number
   continent: string
+  /** Countries and territories along it — water features touch several. */
+  borders?: string[]
+  /** What a strait joins, e.g. "Red Sea ↔ Gulf of Aden". */
+  connects?: string
+  /** Ocean basin or region it is filed under. */
+  basin?: string
+  /** Hit radius in km. A sea is answered by pointing anywhere in it. */
+  spanKm?: number
 }
 
 export interface PlaceGroup {
@@ -44,6 +56,7 @@ export interface PlaceGroup {
 export interface SyllabusContinent {
   name: string
   title: string
+  section: 'places' | 'water'
   count: number
 }
 
@@ -77,4 +90,13 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   mine: 'mine',
   canal: 'canal',
   zone: 'region',
+  sea: 'sea',
+  strait: 'strait',
+}
+
+/** The two notations the Seas & Straits section is built around. */
+export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {
+  sea: '🌊',
+  strait: '↔️',
+  canal: '⇅',
 }

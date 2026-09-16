@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {
   PLACE_CONTINENTS,
   PLACE_ROUNDS,
+  WATER_CONTINENTS,
   ROUNDS,
   ROUND_ORDER,
   allPlacesRoundId,
@@ -155,6 +156,39 @@ export default function App() {
             )
           })}
         </div>
+
+        {WATER_CONTINENTS.length > 0 && (
+          <section className="mt-10">
+            <h2 className="text-2xl font-extrabold text-slate-900">Seas &amp; Straits</h2>
+            <p className="mt-1 mb-4 text-slate-600">
+              Oceans, seas, straits and canals worldwide. Seas are drawn as{' '}
+              <span className="font-bold text-blue-700">blue circles</span>, straits as{' '}
+              <span className="font-bold text-orange-500">orange diamonds</span>.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {WATER_CONTINENTS.map((continent) => {
+                const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => {
+                      setRoundId(r.id)
+                      setView('setup')
+                    }}
+                    className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                  >
+                    <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
+                    <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
+                    <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+                      {r.places?.length} FEATURES
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+        )}
 
         <section className="mt-10">
           <h2 className="text-2xl font-extrabold text-slate-900">Places</h2>
