@@ -16,6 +16,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
+import { feature as topojsonFeature } from 'topojson-client'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -337,6 +338,29 @@ for (const file of syllabusFiles) {
 if (errors.length) {
   console.error(`\nSyllabus validation failed (${errors.length}):`)
   for (const e of errors) console.error('  ' + e)
+  process.exit(1)
+}
+
+/**
+ * A sea or strait must sit in water on the map the player actually sees. The
+ * simplified coastline closes narrow channels — Messina, the Dardanelles and
+ * Magellan all swallowed their own marker — so this is checked against the
+ * rendered geometry, not the raw source. Canals are exempt: they cut through
+ * land by definition.
+ */
+const rendered = topojsonFeature(
+  JSON.parse(readFileSync(topoOut, 'utf8')),
+  JSON.parse(readFileSync(topoOut, 'utf8')).objects.countries
+)
+const dryErrors = []
+for (const p of places) {
+  if (p.section !== 'water' || p.type === 'canal') continue
+  const land = rendered.features.find((f) => geoContains(f, p.point))
+  if (land) dryErrors.push(`${p.id}: ${p.name} at ${p.point} sits on land (${land.id})`)
+}
+if (dryErrors.length) {
+  console.error(`\nWater features on land (${dryErrors.length}):`)
+  for (const e of dryErrors) console.error('  ' + e)
   process.exit(1)
 }
 

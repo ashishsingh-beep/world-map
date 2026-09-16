@@ -16,7 +16,7 @@
       "name": "World",
       "title": "Seas & Straits",
       "section": "water",
-      "count": 134
+      "count": 139
     },
     {
       "name": "South America",
@@ -1575,6 +1575,95 @@
       "section": "water"
     },
     {
+      "id": "sea-james-bay",
+      "name": "James Bay",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -80.5,
+        53.3
+      ],
+      "spanKm": 190,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN"
+      ],
+      "significance": "Southern arm of Hudson Bay, reaching down towards Ontario and Quebec",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-boothia",
+      "name": "Gulf of Boothia",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -90.5,
+        70.5
+      ],
+      "spanKm": 170,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN"
+      ],
+      "significance": "Arctic gulf between the Boothia Peninsula and Baffin Island",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-campeche",
+      "name": "Bay of Campeche",
+      "aliases": [
+        "Campeche Bay",
+        "Bahía de Campeche"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -94,
+        19.8
+      ],
+      "spanKm": 200,
+      "basin": "Gulf of Mexico",
+      "borders": [
+        "MEX"
+      ],
+      "significance": "Southern bight of the Gulf of Mexico, and Mexico's main offshore oil field",
+      "notes": [
+        "Cantarell, once one of the largest oil fields in the world, lies here"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-panama-gulf",
+      "name": "Gulf of Panama",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        -79,
+        8.2
+      ],
+      "spanKm": 130,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "PAN"
+      ],
+      "significance": "Pacific-side gulf where the Panama Canal comes out",
+      "notes": [],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
       "id": "sea-st-lawrence",
       "name": "Gulf of St Lawrence",
       "aliases": [
@@ -2676,8 +2765,8 @@
       "type": "strait",
       "country": null,
       "point": [
-        26.4,
-        40.2
+        26.45,
+        40.232
       ],
       "spanKm": 40,
       "basin": "Black Sea",
@@ -2698,8 +2787,8 @@
       "type": "strait",
       "country": null,
       "point": [
-        15.57,
-        38.25
+        15.619,
+        38.282
       ],
       "spanKm": 30,
       "basin": "Mediterranean",
@@ -3565,6 +3654,31 @@
       "section": "water"
     },
     {
+      "id": "st-nares",
+      "name": "Nares Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        -69.5,
+        79.5
+      ],
+      "spanKm": 140,
+      "basin": "Arctic Ocean",
+      "borders": [
+        "CAN",
+        "DNK"
+      ],
+      "connects": "Baffin Bay ↔ Arctic Ocean",
+      "significance": "Northernmost navigable strait, between Ellesmere Island and Greenland",
+      "notes": [
+        "Hans Island in the strait was split between Canada and Denmark in 2022"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
       "id": "st-hudson",
       "name": "Hudson Strait",
       "aliases": [],
@@ -3640,8 +3754,8 @@
       "type": "strait",
       "country": null,
       "point": [
-        -71,
-        -53.5
+        -70.936,
+        -53.532
       ],
       "spanKm": 120,
       "basin": "Atlantic Ocean",

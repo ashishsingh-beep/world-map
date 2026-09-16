@@ -386,21 +386,29 @@ export function MapCanvas({
             return (
               <g key={`p-${p.id}`} pointerEvents="none">
                 {shape === 'strait' ? (
-                  // A diamond pinched by two arrowheads: a narrow gate.
-                  <g
-                    fill={fill}
-                    fillOpacity={0.95}
-                    stroke="#1f2d4d"
-                    strokeWidth={isTarget ? 2.5 : 1.5}
-                    vectorEffect="non-scaling-stroke"
-                  >
+                  // A diamond pinched by two bars: a narrow gate between waters.
+                  <g vectorEffect="non-scaling-stroke">
                     <path
-                      d={`M ${cx} ${cy - r} L ${cx + r} ${cy} L ${cx} ${cy + r} L ${cx - r} ${cy} Z`}
+                      d={`M ${cx} ${cy - r * 1.25} L ${cx + r * 1.25} ${cy}
+                          L ${cx} ${cy + r * 1.25} L ${cx - r * 1.25} ${cy} Z`}
+                      fill={fill}
+                      fillOpacity={0.95}
+                      stroke="#1f2d4d"
+                      strokeWidth={isTarget ? 2 : 1}
+                      vectorEffect="non-scaling-stroke"
                     />
+                    {/* Bars take the marker's own colour, not the outline's —
+                        in navy they out-weigh the diamond and the glyph reads
+                        black instead of orange. fill="none" or the two bars
+                        fill the space between them. */}
                     <path
-                      d={`M ${cx - r * 1.9} ${cy} L ${cx - r * 1.05} ${cy}
-                         M ${cx + r * 1.05} ${cy} L ${cx + r * 1.9} ${cy}`}
+                      d={`M ${cx - r * 2.1} ${cy} L ${cx - r * 1.3} ${cy}
+                         M ${cx + r * 1.3} ${cy} L ${cx + r * 2.1} ${cy}`}
+                      fill="none"
+                      stroke={fill}
+                      strokeWidth={isTarget ? 4 : 3}
                       strokeLinecap="round"
+                      vectorEffect="non-scaling-stroke"
                     />
                   </g>
                 ) : shape === 'canal' ? (
