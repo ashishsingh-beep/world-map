@@ -218,11 +218,16 @@ export function MapCanvas({
         [size.width, size.height],
       ])
       .on('start', () => {
+        // The inline style covers the svg itself; the class covers its
+        // children, which would otherwise keep their own pointer cursor
+        // through a pan that started on top of them.
         svg.style.cursor = 'grabbing'
+        svg.classList.add('is-panning')
       })
       .on('zoom', (event) => setTransform(event.transform))
       .on('end', () => {
         svg.style.cursor = 'grab'
+        svg.classList.remove('is-panning')
       })
     select(svg).call(behaviour).on('dblclick.zoom', null)
     zoomRef.current = behaviour
@@ -384,7 +389,14 @@ export function MapCanvas({
             const fill = p.state === 'idle' ? SHAPE_FILLS[shape] : FILLS[p.state]
             const [cx, cy] = base
             return (
-              <g key={`p-${p.id}`} pointerEvents="none">
+              // Hit-testable only when a tap does something, so the cursor can
+              // say so. The click itself still bubbles to the svg, which owns
+              // the nearest-marker logic.
+              <g
+                key={`p-${p.id}`}
+                pointerEvents={onPickPoint ? 'visiblePainted' : 'none'}
+                className={onPickPoint ? 'cursor-pointer' : undefined}
+              >
                 {shape === 'strait' ? (
                   // A diamond pinched by two bars: a narrow gate between waters.
                   <g vectorEffect="non-scaling-stroke">
