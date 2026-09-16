@@ -5,31 +5,73 @@ import { MapCanvas, type MapPoint } from '../map/MapCanvas'
 import { shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
 
+/** The three water notations, doubling as the legend and its filter. */
+const WATER_KINDS = [
+  { type: 'sea' as const, label: 'Seas' },
+  { type: 'strait' as const, label: 'Straits' },
+  { type: 'canal' as const, label: 'Canals' },
+]
+
+function KindSwatch({ type }: { type: (typeof WATER_KINDS)[number]['type'] }) {
+  if (type === 'strait') {
+    return (
+      <svg width="18" height="14" viewBox="-9 -7 18 14" aria-hidden>
+        <path d="M0 -5.5 L5.5 0 L0 5.5 L-5.5 0 Z" fill="#f97316" stroke="#1f2d4d" strokeWidth="1" />
+        <path d="M-8.5 0 L-6 0 M6 0 L8.5 0" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
+      </svg>
+    )
+  }
+  if (type === 'canal') {
+    return (
+      <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+        <rect x="-4" y="-5.5" width="8" height="11" fill="#a855f7" stroke="#1f2d4d" strokeWidth="1" />
+      </svg>
+    )
+  }
+  return (
+    <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+      <circle r="5.5" fill="#1d4ed8" stroke="#1f2d4d" strokeWidth="1" />
+    </svg>
+  )
+}
+
 /**
  * Learn mode: no timer, no scoring. Click a country to reveal its name, or a
  * place to reveal what the notes say about it — this is the revise-before-you-
- * practise screen, so nothing is ever hidden.
+ * practise screen. Everything is labelled, and the three water
+ * notations can be filtered so a world of them stays readable.
  */
 export function LearnScreen({ round, onExit }: { round: Round; onExit: () => void }) {
   const [showAll, setShowAll] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
+  /** Which notations are drawn. All of them at once is unreadable worldwide. */
+  const [shown, setShown] = useState({ sea: true, strait: true, canal: true })
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
   const isPlaceRound = roundPlaces.length > 0
-  const place = isPlaceRound && selected ? roundPlaces.find((p) => p.id === selected) : null
   const hasWater = roundPlaces.some((p) => p.type === 'sea' || p.type === 'strait')
   const isWaterRound = roundPlaces[0]?.section === 'water'
 
+  const visible = useMemo(
+    () =>
+      roundPlaces.filter((p) =>
+        p.type === 'sea' || p.type === 'strait' || p.type === 'canal' ? shown[p.type] : true
+      ),
+    [roundPlaces, shown]
+  )
+  // A card for something no longer on the map would be stranded.
+  const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
+
   const points: MapPoint[] = useMemo(
     () =>
-      roundPlaces.map((p) => ({
+      visible.map((p) => ({
         id: p.id,
         point: p.point,
         state: selected === p.id ? 'target' : 'idle',
         shape: shapeOf({ place: p }),
         label: showAll || selected === p.id ? p.name : undefined,
       })),
-    [roundPlaces, selected, showAll]
+    [visible, selected, showAll]
   )
 
   /** Mnemonics attached to the place itself or to the country it sits in. */
@@ -59,7 +101,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 // Select whatever the tap landed nearest to, so small markers
                 // stay reachable without pixel-hunting.
                 let best: { id: string; px: number } | null = null
-                for (const p of roundPlaces) {
+                for (const p of visible) {
                   const a = toScreen(_lonLat)
                   const b = toScreen(p.point)
                   if (!a || !b) continue
@@ -80,26 +122,31 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
 
       {hasWater && (
         <div className="pointer-events-none absolute inset-x-0 top-20 flex justify-center px-4">
-          <div className="flex items-center gap-4 rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-slate-700 shadow-lg">
-            <span className="flex items-center gap-1.5">
-              <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
-                <circle r="5.5" fill="#1d4ed8" stroke="#1f2d4d" strokeWidth="1.5" />
-              </svg>
-              SEA
-            </span>
-            <span className="flex items-center gap-1.5">
-              <svg width="18" height="14" viewBox="-9 -7 18 14" aria-hidden>
-                <path d="M0 -5.5 L5.5 0 L0 5.5 L-5.5 0 Z" fill="#f97316" stroke="#1f2d4d" strokeWidth="1.5" />
-                <path d="M-8.5 0 L-6 0 M6 0 L8.5 0" stroke="#1f2d4d" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              STRAIT
-            </span>
-            <span className="flex items-center gap-1.5">
-              <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
-                <rect x="-4" y="-5.5" width="8" height="11" fill="#a855f7" stroke="#1f2d4d" strokeWidth="1.5" />
-              </svg>
-              CANAL
-            </span>
+          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+            {WATER_KINDS.map(({ type, label }) => {
+              const n = roundPlaces.filter((p) => p.type === type).length
+              if (!n) return null
+              return (
+                <label
+                  key={type}
+                  className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                    shown[type] ? 'text-slate-700' : 'text-slate-400'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={shown[type]}
+                    onChange={(e) => setShown((s) => ({ ...s, [type]: e.target.checked }))}
+                    className="h-3.5 w-3.5 accent-blue-600"
+                  />
+                  <span className={shown[type] ? '' : 'opacity-40'}>
+                    <KindSwatch type={type} />
+                  </span>
+                  {label}
+                  <span className="font-semibold text-slate-400">{n}</span>
+                </label>
+              )
+            })}
           </div>
         </div>
       )}
