@@ -10,7 +10,8 @@ import {
 import type { Mode } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
-import { Button } from './ui/bits'
+import { placeOf } from './data/places'
+import { Button, KindSwatch, WATER_KINDS, type WaterKind } from './ui/bits'
 
 type View = 'home' | 'setup' | 'play' | 'learn'
 
@@ -20,14 +21,31 @@ export default function App() {
   const [mode, setMode] = useState<Mode>('pin')
   const [timed, setTimed] = useState(true)
   const [runKey, setRunKey] = useState(0)
+  const [kinds, setKinds] = useState<Record<WaterKind, boolean>>({
+    sea: true,
+    strait: true,
+    canal: true,
+  })
 
   const round = ROUNDS[roundId] ?? PLACE_ROUNDS[roundId]
+
+  const roundPlaces = round.places?.map(placeOf) ?? []
+  const isWaterRound = roundPlaces[0]?.section === 'water'
+
+  /**
+   * Which notations to practise. Not a question-count selector — the round
+   * still asks every one of whatever is ticked; this only decides which set.
+   */
+  const asked = isWaterRound
+    ? roundPlaces.filter((p) => kinds[p.type as WaterKind] ?? true)
+    : roundPlaces
+  const playRound = isWaterRound ? { ...round, places: asked.map((p) => p.id) } : round
 
   if (view === 'play') {
     return (
       <PlayScreen
         key={runKey}
-        round={round}
+        round={playRound}
         // Country rounds carry no significance data to ask about.
         mode={!round.places && mode === 'significance' ? 'type' : mode}
         timed={timed}
@@ -58,10 +76,45 @@ export default function App() {
           <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
             <p className="text-sm font-bold text-slate-500">
               {round.places
-                ? `${round.places.length} places`
+                ? `${asked.length} ${isWaterRound ? 'features' : 'places'}`
                 : `${round.askable.length} countries`}{' '}
               · every round asks all of them
             </p>
+
+            {isWaterRound && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {WATER_KINDS.map(({ type, label }) => {
+                    const n = roundPlaces.filter((p) => p.type === type).length
+                    if (!n) return null
+                    const on = kinds[type]
+                    // Never let the last one be unticked — a round with nothing
+                    // to ask is not a round.
+                    const last = on && asked.length === n
+                    return (
+                      <label
+                        key={type}
+                        className={`flex items-center justify-center gap-2 rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                          on ? 'border-blue-600' : 'border-transparent'
+                        } ${last ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={on}
+                          disabled={last}
+                          onChange={(e) => setKinds((k) => ({ ...k, [type]: e.target.checked }))}
+                          className="h-4 w-4 accent-blue-600"
+                        />
+                        <KindSwatch type={type} />
+                        <span className="text-sm font-extrabold text-slate-900">{label}</span>
+                        <span className="text-xs font-bold text-slate-400">{n}</span>
+                      </label>
+                    )
+                  })}
+                </div>
+              </>
+            )}
 
             <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Mode</h2>
             <div className={`grid gap-3 ${round.places ? 'grid-cols-3' : 'grid-cols-2'}`}>

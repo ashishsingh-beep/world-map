@@ -14,6 +14,39 @@ export function formatClock(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
+/** The three water notations, used by the Learn legend and the setup filter. */
+export const WATER_KINDS = [
+  { type: 'sea' as const, label: 'Seas' },
+  { type: 'strait' as const, label: 'Straits' },
+  { type: 'canal' as const, label: 'Canals' },
+]
+
+export type WaterKind = (typeof WATER_KINDS)[number]['type']
+
+/** The marker as it is drawn on the map, so legend and map never drift apart. */
+export function KindSwatch({ type }: { type: WaterKind }) {
+  if (type === 'strait') {
+    return (
+      <svg width="18" height="14" viewBox="-9 -7 18 14" aria-hidden>
+        <path d="M0 -5.5 L5.5 0 L0 5.5 L-5.5 0 Z" fill="#f97316" stroke="#1f2d4d" strokeWidth="1" />
+        <path d="M-8.5 0 L-6 0 M6 0 L8.5 0" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
+      </svg>
+    )
+  }
+  if (type === 'canal') {
+    return (
+      <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+        <rect x="-4" y="-5.5" width="8" height="11" fill="#a855f7" stroke="#1f2d4d" strokeWidth="1" />
+      </svg>
+    )
+  }
+  return (
+    <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+      <circle r="5.5" fill="#1d4ed8" stroke="#1f2d4d" strokeWidth="1" />
+    </svg>
+  )
+}
+
 export function Button({
   children,
   onClick,

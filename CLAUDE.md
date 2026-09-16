@@ -26,7 +26,10 @@ is used.
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 `scripts/build-data.mjs`.
 
-**No question-count selector.** Every round asks the full country set.
+**No question-count selector.** Every round asks its full set. The Seas &
+Straits round lets you choose which notations to practise — seas, straits,
+canals, or any combination — but that picks *which set*, not how many of it,
+and the last remaining one cannot be unticked.
 
 **Typed answers are judged by `src/game/matchName.ts`.** A misspelling that is
 close enough counts as correct and shows the right spelling, but only if it is
