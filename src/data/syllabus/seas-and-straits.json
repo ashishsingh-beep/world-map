@@ -35,6 +35,12 @@
       "mnemonic": "BBRF, said as \"B-barf\" (the ice) — Bothnia, Baltic, Riga, Finland"
     },
     {
+      "id": "w-mba-chain",
+      "name": "Inland from the Aegean",
+      "members": ["sea-marmara", "sea-black", "sea-azov"],
+      "mnemonic": "MBA \u2014 Marmara, Black, Azov, the three seas in that order as you head inland, each behind its own gate: Dardanelles, Bosporus, Kerch"
+    },
+    {
       "id": "w-italy-greece-seas",
       "name": "The seas either side of Italy and Greece",
       "members": ["sea-adriatic", "sea-tyrrhenian", "sea-aegean", "sea-ionian"],
