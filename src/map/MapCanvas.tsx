@@ -3,7 +3,7 @@ import { geoEquirectangular, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
-import { featureByIso, metaOf, type CountryFeature } from '../data/countries'
+import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -195,6 +195,8 @@ export function MapCanvas({
     if (!size.width) return out
     for (const f of drawn) {
       const iso = f.properties.iso
+      // Context geography has no meta entry, and no marker or label either.
+      if (!meta[iso]) continue
       const [x, y] = projection(metaOf(iso).centroid) ?? [NaN, NaN]
       if (!Number.isFinite(x)) continue
       const b = path.bounds(f)

@@ -40,7 +40,20 @@ export const features: CountryFeature[] = collection.features
 
 export const featureByIso = new Map(features.map((f) => [f.properties.iso, f]))
 
-export const allIsos = features.map((f) => f.properties.iso)
+/**
+ * The quiz set: exactly the 196, taken from the metadata rather than the
+ * geometry. The map carries more shapes than that — Greenland is drawn for
+ * context — and anything without a meta entry must never become a question.
+ */
+export const allIsos = Object.keys(meta)
+
+/** Geography drawn purely as context, never asked about. */
+export const renderOnlyIsos = features
+  .map((f) => f.properties.iso)
+  .filter((iso) => !meta[iso])
+
+/** Everything the map draws: the quizzable set plus its context. */
+export const renderIsos = [...allIsos, ...renderOnlyIsos]
 
 export function metaOf(iso: string): CountryMeta {
   const m = meta[iso]

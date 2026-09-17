@@ -1,6 +1,6 @@
 import { MapCanvas } from '../map/MapCanvas'
 import type { Round } from '../game/rounds'
-import { allIsos } from '../data/countries'
+import { renderIsos } from '../data/countries'
 import { Button, formatClock } from '../ui/bits'
 
 /** Score tiers. Our own ladder, not the reference site's. */
@@ -40,7 +40,7 @@ export function ResultsScreen({
     <div className="relative h-dvh w-full overflow-hidden bg-[#22cdfb]">
       <div className="absolute inset-0 opacity-30">
         <MapCanvas
-          render={allIsos}
+          render={renderIsos}
           askable={[]}
           view={[
             [-180, -58],

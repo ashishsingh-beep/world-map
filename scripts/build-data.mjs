@@ -54,6 +54,15 @@ const EXTRA = ['VAT', 'PSE', 'TWN', ...(INCLUDE_KOSOVO ? ['XKX'] : [])]
 const WANTED = new Set([...UN_MEMBERS, ...EXTRA])
 const EXPECTED_COUNT = 196 + (INCLUDE_KOSOVO ? 1 : 0)
 
+/**
+ * Drawn but never asked about. Greenland is Danish, not a UN member, so it is
+ * not one of the 196 — but leaving it out puts a hole in the North Atlantic
+ * and strands the Denmark Strait, Baffin Bay and the Nares Strait with nothing
+ * to sit beside. These get geometry only: no meta entry, so nothing downstream
+ * can turn them into a question.
+ */
+const RENDER_ONLY = ['GRL']
+
 /** Display names where Natural Earth's ADMIN string isn't what a player expects. */
 const NAME_OVERRIDES = {
   BHS: 'Bahamas',
@@ -132,8 +141,14 @@ assertIndiaPointOfView(raw.features)
 const isoOf = (p) => (/^[A-Z]{3}$/.test(p.ISO_A3) ? p.ISO_A3 : p.ADM0_A3)
 
 const picked = new Map()
+const renderOnly = new Map()
 for (const f of raw.features) {
   const iso = isoOf(f.properties)
+  if (RENDER_ONLY.includes(iso)) {
+    const prev = renderOnly.get(iso)
+    if (!prev || geoArea(f) > geoArea(prev)) renderOnly.set(iso, f)
+    continue
+  }
   if (!WANTED.has(iso)) continue
   // Natural Earth can carry more than one feature per admin-0 unit; keep the
   // largest so we never lose the mainland to an outlying scrap.
@@ -200,6 +215,13 @@ for (const [iso, f] of picked) {
     geometry: f.geometry,
   })
 }
+
+for (const iso of RENDER_ONLY) {
+  const f = renderOnly.get(iso)
+  if (!f) throw new Error(`Render-only geography missing from source: ${iso}`)
+  features.push({ type: 'Feature', id: iso, properties: { iso }, geometry: f.geometry })
+}
+console.log(`Render-only geography: ${RENDER_ONLY.join(', ')}`)
 
 mkdirSync(OUT, { recursive: true })
 mkdirSync(CACHE, { recursive: true })

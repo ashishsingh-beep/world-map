@@ -22,6 +22,13 @@ part of India. Never swap in the ISO/default Natural Earth file. `npm run data`
 asserts India's northern extent is ~37°N and fails loudly if the wrong source
 is used.
 
+**Greenland is drawn, never asked.** It is Danish, not a UN member, so it is
+outside the 196 — but leaving it out put a hole in the North Atlantic beside
+the Denmark Strait and Baffin Bay. `RENDER_ONLY` in the build gives it geometry
+with no meta entry, and `allIsos` comes from the metadata rather than the
+geometry so nothing can turn it into a question. Use `renderIsos` to draw,
+`allIsos` to ask; a round's `render` carries the context, its `askable` does not.
+
 **Kosovo** does not exist separately in that dataset (its territory is inside
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 `scripts/build-data.mjs`.

@@ -1,4 +1,4 @@
-import { allIsos, meta, metaOf, type Continent } from '../data/countries'
+import { allIsos, meta, metaOf, renderOnlyIsos, type Continent } from '../data/countries'
 import { places as allPlaces, syllabusContinents } from '../data/places'
 
 export type BBox = [[number, number], [number, number]]
@@ -71,7 +71,9 @@ function round(
     id,
     title,
     blurb,
-    render: opts.render ?? isos,
+    // Context geography is always drawn and never askable, so it rides along
+    // with `render` while `askable` stays the quiz set.
+    render: [...(opts.render ?? isos), ...renderOnlyIsos],
     askable: isos,
     view: VIEW_OVERRIDES[id] ?? opts.view ?? fit(isos),
   }
@@ -152,7 +154,7 @@ function continentPlaceRound({ name, title }: { name: string; title: string }): 
     blurb: ps.length
       ? `Every place in the set — ${ps.length} in total.`
       : 'Nothing added yet — the notes for this one are still to come.',
-    render: isos,
+    render: [...isos, ...renderOnlyIsos],
     askable: [],
     places: ps.map((p) => p.id),
     // Antarctic seas and the Arctic sit outside the standard world box, so the

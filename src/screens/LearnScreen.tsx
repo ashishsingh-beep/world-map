@@ -61,7 +61,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
       <MapCanvas
         className="absolute inset-0"
         render={round.render}
-        askable={isPlaceRound ? [] : round.render}
+        // `askable`, not `render`: the latter now carries context geography
+        // like Greenland, which has no name to reveal.
+        askable={isPlaceRound ? [] : round.askable}
         view={round.view}
         states={{}}
         onPick={setSelected}
