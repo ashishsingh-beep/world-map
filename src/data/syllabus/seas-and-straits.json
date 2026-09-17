@@ -298,6 +298,20 @@
       "tier": 2
     },
     {
+      "id": "sea-riga",
+      "name": "Gulf of Riga",
+      "aliases": ["Riga Bay"],
+      "type": "sea",
+      "country": null,
+      "point": [23.6, 57.8],
+      "spanKm": 100,
+      "basin": "Baltic Sea",
+      "borders": ["LVA", "EST"],
+      "significance": "Baltic inlet between Latvia and Estonia, sheltered by the island of Saaremaa",
+      "notes": ["Riga, Latvia's capital, stands at its head"],
+      "tier": 2
+    },
+    {
       "id": "sea-north",
       "name": "North Sea",
       "aliases": [],

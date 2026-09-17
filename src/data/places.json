@@ -16,7 +16,7 @@
       "name": "World",
       "title": "Seas & Straits",
       "section": "water",
-      "count": 134
+      "count": 135
     },
     {
       "name": "South America",
@@ -1146,6 +1146,32 @@
       ],
       "significance": "Eastern arm of the Baltic, giving Russia its St Petersburg outlet",
       "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "sea-riga",
+      "name": "Gulf of Riga",
+      "aliases": [
+        "Riga Bay"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        23.6,
+        57.8
+      ],
+      "spanKm": 100,
+      "basin": "Baltic Sea",
+      "borders": [
+        "LVA",
+        "EST"
+      ],
+      "significance": "Baltic inlet between Latvia and Estonia, sheltered by the island of Saaremaa",
+      "notes": [
+        "Riga, Latvia's capital, stands at its head"
+      ],
       "tier": 2,
       "continent": "World",
       "section": "water"
