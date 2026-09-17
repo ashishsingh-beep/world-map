@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, placeGroups, placeOf } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH, groupsFor, placeOf } from '../data/places'
 import { MapCanvas, type MapPoint } from '../map/MapCanvas'
 import { shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
 import { KindSwatch, WATER_KINDS } from '../ui/bits'
+import { TrickDiagram } from '../ui/TrickDiagram'
+import { TricksSheet } from '../ui/TricksSheet'
 
 /**
  * Learn mode: no timer, no scoring. Click a country to reveal its name, or a
@@ -17,6 +19,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
   const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
+  const [tricks, setTricks] = useState(false)
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
   const isPlaceRound = roundPlaces.length > 0
@@ -45,16 +48,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     [visible, selected, showAll]
   )
 
-  /** Mnemonics attached to the place itself or to the country it sits in. */
-  const mnemonics = place
-    ? placeGroups
-        .filter(
-          (g) =>
-            g.mnemonic &&
-            (g.members.includes(place.id) || (place.country && g.members.includes(place.country)))
-        )
-        .map((g) => `${g.name}: ${g.mnemonic}`)
-    : []
+  /** Tricks attached to the place itself or to the country it sits in. */
+  const mnemonics = place ? groupsFor([place]).filter((g) => g.mnemonic) : []
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-[#22cdfb]">
@@ -134,14 +129,23 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           />
           Show all names
         </label>
-        <button
-          type="button"
-          onClick={onExit}
-          aria-label="Close"
-          className="pointer-events-auto rounded-xl bg-white px-4 py-3 text-lg font-bold text-slate-900 shadow-lg"
-        >
-          ✕
-        </button>
+        <div className="pointer-events-auto flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setTricks(true)}
+            className="cursor-pointer rounded-xl bg-yellow-300 px-4 py-3 font-extrabold text-slate-900 shadow-lg"
+          >
+            Tricks
+          </button>
+          <button
+            type="button"
+            onClick={onExit}
+            aria-label="Close"
+            className="cursor-pointer rounded-xl bg-white px-4 py-3 text-lg font-bold text-slate-900 shadow-lg"
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       {place && (
@@ -191,16 +195,32 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               </ul>
             )}
 
-            {mnemonics.map((m) => (
-              <p
-                key={m}
-                className="mt-3 rounded-xl bg-yellow-50 px-3 py-2 text-sm font-bold text-slate-700"
-              >
-                {m}
-              </p>
+            {mnemonics.map((g) => (
+              <div key={g.id} className="mt-3 rounded-xl bg-yellow-50 px-3 py-2">
+                {/* A spatial trick is drawn rather than described; the
+                    mnemonic then reads as the drawing's caption. */}
+                {g.visual && (
+                  // Capped: the card is anchored to the bottom of the map and
+                  // a full-width diagram would climb over the geography.
+                  <div className="mb-1 max-w-md">
+                    <TrickDiagram visual={g.visual} />
+                  </div>
+                )}
+                <p className="text-sm font-bold text-slate-700">
+                  {g.name}: {g.mnemonic}
+                </p>
+              </div>
             ))}
           </div>
         </div>
+      )}
+
+      {tricks && (
+        <TricksSheet
+          subject={roundPlaces}
+          isos={isPlaceRound ? [] : round.askable}
+          onClose={() => setTricks(false)}
+        />
       )}
     </div>
   )

@@ -4463,7 +4463,9 @@
         "can-toronto",
         "can-ottawa"
       ],
-      "mnemonic": "MOTO — Montreal, Toronto, Ottawa"
+      "mnemonic": "MOTO — Montreal, Toronto, Ottawa",
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "na-us-west-coast",
@@ -4474,7 +4476,9 @@
         "usa-los-angeles",
         "usa-san-diego"
       ],
-      "mnemonic": "San, Las, Los, San Diego from north to south — all are ports except Las Vegas"
+      "mnemonic": "San, Las, Los, San Diego from north to south — all are ports except Las Vegas",
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "na-central-america",
@@ -4488,7 +4492,9 @@
         "CRI",
         "PAN"
       ],
-      "mnemonic": "BG-Hell-NiCoPa — Belize, Guatemala, Honduras, El Salvador, Nicaragua, Costa Rica, Panama"
+      "mnemonic": "BG-Hell-NiCoPa — Belize, Guatemala, Honduras, El Salvador, Nicaragua, Costa Rica, Panama",
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "na-trans-canadian",
@@ -4497,7 +4503,9 @@
         "can-halifax",
         "can-vancouver"
       ],
-      "mnemonic": "Runs coast to coast, Halifax on the Atlantic to Vancouver on the Pacific"
+      "mnemonic": "Runs coast to coast, Halifax on the Atlantic to Vancouver on the Pacific",
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "na-west-indies-territories",
@@ -4506,7 +4514,9 @@
         "pri-puerto-rico",
         "bmu-bermuda"
       ],
-      "mnemonic": "Puerto Rico is American, Bermuda is British — every other name on the West Indies list is a sovereign country"
+      "mnemonic": "Puerto Rico is American, Bermuda is British — every other name on the West Indies list is a sovereign country",
+      "continent": "North America",
+      "section": "places"
     },
     {
       "id": "w-oil-chokepoints",
@@ -4519,7 +4529,9 @@
         "st-gibraltar",
         "cn-panama"
       ],
-      "mnemonic": "Hormuz, Bab-el-Mandeb, Malacca, Suez, Gibraltar, Panama — the six the tanker world worries about"
+      "mnemonic": "Hormuz, Bab-el-Mandeb, Malacca, Suez, Gibraltar, Panama — the six the tanker world worries about",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-turkish-straits",
@@ -4528,7 +4540,9 @@
         "st-bosporus",
         "st-dardanelles"
       ],
-      "mnemonic": "Bosporus then Dardanelles — Black Sea, Marmara, Aegean, in that order"
+      "mnemonic": "Bosporus then Dardanelles — Black Sea, Marmara, Aegean, in that order",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-indian-channels",
@@ -4538,7 +4552,9 @@
         "st-nine-degree",
         "st-eight-degree"
       ],
-      "mnemonic": "Ten splits Andaman from Nicobar; Nine splits Lakshadweep; Eight splits India from the Maldives"
+      "mnemonic": "Ten splits Andaman from Nicobar; Nine splits Lakshadweep; Eight splits India from the Maldives",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-danish-straits",
@@ -4548,7 +4564,9 @@
         "st-kattegat",
         "st-oresund"
       ],
-      "mnemonic": "Skagerrak, Kattegat, Øresund — the staircase from the North Sea down into the Baltic"
+      "mnemonic": "Skagerrak, Kattegat, Øresund — the staircase from the North Sea down into the Baltic",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-baltic-arms",
@@ -4559,7 +4577,9 @@
         "sea-riga",
         "sea-finland"
       ],
-      "mnemonic": "BBRF, said as \"B-barf\" (the ice) — Bothnia, Baltic, Riga, Finland"
+      "mnemonic": "BBRF, said as \"B-barf\" (the ice) — Bothnia, Baltic, Riga, Finland",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-mba-chain",
@@ -4569,7 +4589,9 @@
         "sea-black",
         "sea-azov"
       ],
-      "mnemonic": "MBA — Marmara, Black, Azov, the three seas in that order as you head inland, each behind its own gate: Dardanelles, Bosporus, Kerch"
+      "mnemonic": "MBA — Marmara, Black, Azov, the three seas in that order as you head inland, each behind its own gate: Dardanelles, Bosporus, Kerch",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-black-sea-states",
@@ -4577,7 +4599,9 @@
       "members": [
         "sea-black"
       ],
-      "mnemonic": "T-BURGR — Turkey, Bulgaria, Ukraine, Romania, Georgia, Russia, the six that touch it"
+      "mnemonic": "T-BURGR — Turkey, Bulgaria, Ukraine, Romania, Georgia, Russia, the six that touch it",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-caspian-states",
@@ -4585,7 +4609,9 @@
       "members": [
         "sea-caspian"
       ],
-      "mnemonic": "TARIK — Turkmenistan, Azerbaijan, Russia, Iran, Kazakhstan, the five that touch it"
+      "mnemonic": "TARIK — Turkmenistan, Azerbaijan, Russia, Iran, Kazakhstan, the five that touch it",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "w-italy-greece-seas",
@@ -4596,7 +4622,10 @@
         "sea-aegean",
         "sea-ionian"
       ],
-      "mnemonic": "Rule a line down Italy and another down Greece, both running northwest to southeast. Left of each line the sea starts with A — Adriatic beside Italy, Aegean beside Greece. Right of each line it ends in -ian — Tyrrhenian beside Italy, Ionian beside Greece."
+      "visual": "italy-greece-seas",
+      "mnemonic": "Rule a line down each peninsula, northwest to southeast — left of it the sea starts with A, right of it it ends in -ian",
+      "continent": "World",
+      "section": "water"
     },
     {
       "id": "sa-lithium-triangle",
@@ -4606,7 +4635,9 @@
         "BOL",
         "CHL"
       ],
-      "mnemonic": "ABC — Argentina, Bolivia, Chile"
+      "mnemonic": "ABC — Argentina, Bolivia, Chile",
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "sa-landlocked",
@@ -4615,7 +4646,9 @@
         "BOL",
         "PRY"
       ],
-      "mnemonic": null
+      "mnemonic": null,
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "sa-capricorn-brazil",
@@ -4625,7 +4658,9 @@
         "bra-sao-paulo",
         "bra-santos"
       ],
-      "mnemonic": "Above / on / below the line — Rio, São Paulo, Santos"
+      "mnemonic": "Above / on / below the line — Rio, São Paulo, Santos",
+      "continent": "South America",
+      "section": "places"
     },
     {
       "id": "sa-guianas",
@@ -4635,7 +4670,9 @@
         "SUR",
         "guf-french-guiana"
       ],
-      "mnemonic": null
+      "mnemonic": null,
+      "continent": "South America",
+      "section": "places"
     }
   ]
 }

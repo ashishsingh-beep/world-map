@@ -269,6 +269,13 @@ const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal'])
  */
 const ONSHORE_SLACK_KM = 25
 
+/**
+ * Diagram keys a group may claim. The same set is the registry in
+ * `src/ui/TrickDiagram.tsx` — add to both, or a group asks for a drawing that
+ * does not exist and silently falls back to its caption.
+ */
+const GROUP_VISUALS = new Set(['italy-greece-seas'])
+
 /** Distance from a point to the nearest vertex of a feature's geometry. */
 function distanceToFeatureKm(feature, point) {
   let best = Infinity
@@ -305,7 +312,15 @@ for (const file of syllabusFiles) {
     section: doc.section ?? 'places',
     count: doc.places.length,
   })
-  groups.push(...(doc.groups ?? []))
+  // Groups carry their syllabus's continent so the Tricks page can put the
+  // round's own tricks first, ahead of ones it merely overlaps.
+  groups.push(
+    ...(doc.groups ?? []).map((g) => ({
+      ...g,
+      continent: doc.continent,
+      section: doc.section ?? 'places',
+    }))
+  )
 
   for (const p of doc.places) {
     if (seen.has(p.id)) errors.push(`${where(p.id)}: duplicate id`)
@@ -349,6 +364,9 @@ for (const file of syllabusFiles) {
   }
 
   for (const g of doc.groups ?? []) {
+    if (g.visual && !GROUP_VISUALS.has(g.visual)) {
+      errors.push(`${file}:${g.id}: unknown visual "${g.visual}"`)
+    }
     for (const m of g.members) {
       if (!meta[m] && !doc.places.some((p) => p.id === m)) {
         errors.push(`${file}:${g.id}: member "${m}" is neither a country nor a place`)

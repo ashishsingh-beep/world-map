@@ -77,6 +77,21 @@ The whole app is one map engine plus configuration.
 `render` and `askable` are separate because Island Nations draws the whole
 world and asks only its own subset.
 
+**Mnemonics live in one place: the `groups` array of a syllabus file.** A group
+names its members — place ids, country ISO3s, or both — and the mnemonic then
+surfaces wherever a member does: on that place's Learn card, and on the Tricks
+page (`src/ui/TricksSheet.tsx`, opened from Learn mode), which lists every
+mnemonic in the app with the current round's own syllabus first. Never hardcode
+a mnemonic in a component.
+
+A trick about *where* things are cannot be written as a sentence. Such a group
+sets `visual`, a key into `TRICK_DIAGRAMS` in `src/ui/TrickDiagram.tsx`, and its
+`mnemonic` becomes the drawing's caption. Diagrams project the real Natural
+Earth geometry and the real authored points — never a freehand sketch — so a
+line drawn "west of Greece" is west of Greece. `GROUP_VISUALS` in
+`scripts/build-data.mjs` holds the same key set: add to both, or the build
+fails.
+
 ## Traps already hit
 
 - **d3-geo polygon winding.** `fitExtent` with a Polygon reads spherical

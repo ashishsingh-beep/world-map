@@ -56,7 +56,8 @@
       "id": "w-italy-greece-seas",
       "name": "The seas either side of Italy and Greece",
       "members": ["sea-adriatic", "sea-tyrrhenian", "sea-aegean", "sea-ionian"],
-      "mnemonic": "Rule a line down Italy and another down Greece, both running northwest to southeast. Left of each line the sea starts with A — Adriatic beside Italy, Aegean beside Greece. Right of each line it ends in -ian — Tyrrhenian beside Italy, Ionian beside Greece."
+      "visual": "italy-greece-seas",
+      "mnemonic": "Rule a line down each peninsula, northwest to southeast — left of it the sea starts with A, right of it it ends in -ian"
     }
   ],
   "places": [

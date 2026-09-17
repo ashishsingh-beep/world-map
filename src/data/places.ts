@@ -51,6 +51,15 @@ export interface PlaceGroup {
   /** Country ISO3s and/or place ids. */
   members: string[]
   mnemonic: string | null
+  /** The syllabus the trick was authored in. */
+  continent: string
+  section: 'places' | 'water'
+  /**
+   * Key into `TRICK_DIAGRAMS` in `src/ui/TrickDiagram.tsx`. Set when the trick
+   * is spatial and a drawing says it better than a sentence; the mnemonic then
+   * reads as the diagram's caption. The build checks the key is a known one.
+   */
+  visual?: string
 }
 
 /** A continent with an authored syllabus. `count` is 0 for a placeholder. */
@@ -102,4 +111,19 @@ export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {
   sea: '🌊',
   strait: '↔️',
   canal: '⇅',
+}
+
+/**
+ * The tricks that apply to a set of places — a group counts if it names one of
+ * them, or the country one of them sits in (the mnemonic for Canada's big three
+ * belongs on Montreal's card as much as on Canada's).
+ */
+export function groupsFor(subject: Place[], isos: string[] = []): PlaceGroup[] {
+  const ids = new Set<string>(isos)
+  for (const p of subject) {
+    ids.add(p.id)
+    if (p.country) ids.add(p.country)
+    if (p.sovereign) ids.add(p.sovereign)
+  }
+  return placeGroups.filter((g) => g.members.some((m) => ids.has(m)))
 }
