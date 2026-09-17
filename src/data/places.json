@@ -677,7 +677,7 @@
       "id": "oc-pacific",
       "name": "Pacific Ocean",
       "aliases": [],
-      "type": "sea",
+      "type": "ocean",
       "country": null,
       "point": [
         -160,
@@ -705,7 +705,7 @@
       "id": "oc-atlantic",
       "name": "Atlantic Ocean",
       "aliases": [],
-      "type": "sea",
+      "type": "ocean",
       "country": null,
       "point": [
         -30,
@@ -733,7 +733,7 @@
       "id": "oc-indian",
       "name": "Indian Ocean",
       "aliases": [],
-      "type": "sea",
+      "type": "ocean",
       "country": null,
       "point": [
         78,
@@ -761,7 +761,7 @@
       "id": "oc-arctic",
       "name": "Arctic Ocean",
       "aliases": [],
-      "type": "sea",
+      "type": "ocean",
       "country": null,
       "point": [
         0,
@@ -790,7 +790,7 @@
       "aliases": [
         "Antarctic Ocean"
       ],
-      "type": "sea",
+      "type": "ocean",
       "country": null,
       "point": [
         20,

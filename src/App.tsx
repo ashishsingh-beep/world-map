@@ -22,6 +22,7 @@ export default function App() {
   const [timed, setTimed] = useState(true)
   const [runKey, setRunKey] = useState(0)
   const [kinds, setKinds] = useState<Record<WaterKind, boolean>>({
+    ocean: true,
     sea: true,
     strait: true,
     canal: true,
@@ -84,7 +85,7 @@ export default function App() {
             {isWaterRound && (
               <>
                 <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {WATER_KINDS.map(({ type, label }) => {
                     const n = roundPlaces.filter((p) => p.type === type).length
                     if (!n) return null
@@ -214,7 +215,8 @@ export default function App() {
           <section className="mt-10">
             <h2 className="text-2xl font-extrabold text-slate-900">Seas &amp; Straits</h2>
             <p className="mt-1 mb-4 text-slate-600">
-              Oceans, seas, straits and canals worldwide. Seas are drawn as{' '}
+              Oceans, seas, straits and canals worldwide. Oceans are drawn as{' '}
+              <span className="font-bold text-teal-600">large teal rings</span>, seas as{' '}
               <span className="font-bold text-blue-700">blue circles</span>, straits as{' '}
               <span className="font-bold text-orange-500">orange diamonds</span>.
             </p>

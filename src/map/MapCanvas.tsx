@@ -34,7 +34,7 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
  * diamond as a narrow gate between two of them, and the two are also coloured
  * apart — so a sea and a strait are never confused at a glance.
  */
-export type MarkerShape = 'dot' | 'sea' | 'strait' | 'canal'
+export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal'
 
 /** A point place drawn on top of the geography (a city, port, sea, strait…). */
 export interface MapPoint {
@@ -49,9 +49,19 @@ export interface MapPoint {
 /** Idle fills, which is where the sea/strait distinction has to carry. */
 const SHAPE_FILLS: Record<MarkerShape, string> = {
   dot: '#ffffff',
+  ocean: '#0d9488',
   sea: '#1d4ed8',
   strait: '#f97316',
   canal: '#a855f7',
+}
+
+/** An ocean outranks the seas inside it, so its marker is drawn larger. */
+const SHAPE_SCALE: Record<MarkerShape, number> = {
+  dot: 1,
+  ocean: 1.7,
+  sea: 1,
+  strait: 1,
+  canal: 1,
 }
 
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
@@ -387,7 +397,7 @@ export function MapCanvas({
             if (!base) return null
             const isTarget = p.state === 'target'
             const shape = p.shape ?? 'dot'
-            const r = (isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) / k
+            const r = ((isTarget ? PLACE_MARKER_PX + 3 : PLACE_MARKER_PX) * SHAPE_SCALE[shape]) / k
             const fill = p.state === 'idle' ? SHAPE_FILLS[shape] : FILLS[p.state]
             const [cx, cy] = base
             return (
@@ -438,21 +448,34 @@ export function MapCanvas({
                     vectorEffect="non-scaling-stroke"
                   />
                 ) : (
-                  <circle
-                    cx={cx}
-                    cy={cy}
-                    r={r}
-                    fill={fill}
-                    fillOpacity={p.state === 'idle' && shape === 'dot' ? 0.55 : 0.95}
-                    stroke="#1f2d4d"
-                    strokeWidth={isTarget ? 2.5 : 1.5}
-                    vectorEffect="non-scaling-stroke"
-                  />
+                  <>
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={r}
+                      fill={fill}
+                      fillOpacity={p.state === 'idle' && shape === 'dot' ? 0.55 : 0.95}
+                      stroke="#1f2d4d"
+                      strokeWidth={isTarget ? 2.5 : 1.5}
+                      vectorEffect="non-scaling-stroke"
+                    />
+                    {shape === 'ocean' && (
+                      <circle
+                        cx={cx}
+                        cy={cy}
+                        r={r * 0.45}
+                        fill="none"
+                        stroke="#fff"
+                        strokeWidth={1.5}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    )}
+                  </>
                 )}
                 {p.label && (
                   <text
                     x={cx}
-                    y={cy - (PLACE_MARKER_PX + 6) / k}
+                    y={cy - (PLACE_MARKER_PX * SHAPE_SCALE[shape] + 6) / k}
                     textAnchor="middle"
                     fontSize={(isTarget ? 15 : 11) / k}
                     fontWeight={800}

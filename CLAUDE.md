@@ -47,11 +47,16 @@ passing as "Paraguay" or "Nigeria" as "Niger". Never relax it without running
 misspellings, or the correction note never fires.
 
 **Sea and strait must never look alike.** The Seas & Straits section is built
-around two notations: a sea is a blue circle, a strait an orange diamond pinched
-by two arrowheads (a canal is a purple square). The shape carries the *kind*, the
-fill carries the quiz *state*, and the legend in Learn mode names all three.
-Country micro-state markers are switched off in that round so no stray ring
-competes with the sea notation.
+around four notations: a sea is a blue circle, a strait an orange diamond pinched
+by two arrowheads, a canal a purple square, and an ocean a teal circle with a
+white inner ring, drawn 1.7x larger (`SHAPE_SCALE` in `MapCanvas`) because an
+ocean contains the seas inside it. The shape carries the *kind*, the fill carries
+the quiz *state*, and the legend in Learn mode names all four. A sea and an ocean
+are both circles, so the ocean must keep both its own colour *and* its extra
+size — one alone is not enough to tell them apart at world scale. `KindSwatch` in
+`src/ui/bits.tsx` redraws each marker for the legend and the setup picker, so
+change both or they drift apart. Country micro-state markers are switched off in
+that round so no stray ring competes with the sea notation.
 
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.

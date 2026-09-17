@@ -11,6 +11,7 @@ export type PlaceType =
   | 'mine'
   | 'canal'
   | 'zone'
+  | 'ocean'
   | 'sea'
   | 'strait'
 
@@ -90,12 +91,14 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   mine: 'mine',
   canal: 'canal',
   zone: 'region',
+  ocean: 'ocean',
   sea: 'sea',
   strait: 'strait',
 }
 
 /** The two notations the Seas & Straits section is built around. */
 export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {
+  ocean: '🌏',
   sea: '🌊',
   strait: '↔️',
   canal: '⇅',

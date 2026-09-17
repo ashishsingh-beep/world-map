@@ -14,8 +14,9 @@ export function formatClock(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-/** The three water notations, used by the Learn legend and the setup filter. */
+/** The water notations, used by the Learn legend and the setup filter. */
 export const WATER_KINDS = [
+  { type: 'ocean' as const, label: 'Oceans' },
   { type: 'sea' as const, label: 'Seas' },
   { type: 'strait' as const, label: 'Straits' },
   { type: 'canal' as const, label: 'Canals' },
@@ -37,6 +38,14 @@ export function KindSwatch({ type }: { type: WaterKind }) {
     return (
       <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
         <rect x="-4" y="-5.5" width="8" height="11" fill="#a855f7" stroke="#1f2d4d" strokeWidth="1" />
+      </svg>
+    )
+  }
+  if (type === 'ocean') {
+    return (
+      <svg width="18" height="18" viewBox="-9 -9 18 18" aria-hidden>
+        <circle r="8" fill="#0d9488" stroke="#1f2d4d" strokeWidth="1" />
+        <circle r="3.6" fill="none" stroke="#fff" strokeWidth="1.5" />
       </svg>
     )
   }

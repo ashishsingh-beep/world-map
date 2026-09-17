@@ -9,25 +9,25 @@ import { KindSwatch, WATER_KINDS } from '../ui/bits'
 /**
  * Learn mode: no timer, no scoring. Click a country to reveal its name, or a
  * place to reveal what the notes say about it — this is the revise-before-you-
- * practise screen. Everything is labelled, and the three water
- * notations can be filtered so a world of them stays readable.
+ * practise screen. Everything is labelled, and each water
+ * notation can be filtered so a world of them stays readable.
  */
 export function LearnScreen({ round, onExit }: { round: Round; onExit: () => void }) {
   const [showAll, setShowAll] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
-  const [shown, setShown] = useState({ sea: true, strait: true, canal: true })
+  const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
   const isPlaceRound = roundPlaces.length > 0
-  const hasWater = roundPlaces.some((p) => p.type === 'sea' || p.type === 'strait')
+  const isWaterKind = (t: string): t is keyof typeof shown =>
+    t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal'
+  const hasWater = roundPlaces.some((p) => isWaterKind(p.type))
   const isWaterRound = roundPlaces[0]?.section === 'water'
 
   const visible = useMemo(
     () =>
-      roundPlaces.filter((p) =>
-        p.type === 'sea' || p.type === 'strait' || p.type === 'canal' ? shown[p.type] : true
-      ),
+      roundPlaces.filter((p) => (isWaterKind(p.type) ? shown[p.type] : true)),
     [roundPlaces, shown]
   )
   // A card for something no longer on the map would be stranded.

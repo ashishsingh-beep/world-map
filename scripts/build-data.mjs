@@ -257,10 +257,10 @@ const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
   'mine', 'canal', 'zone',
   // Seas & Straits section
-  'sea', 'strait',
+  'ocean', 'sea', 'strait',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
-const WATER_TYPES = new Set(['sea', 'strait', 'canal'])
+const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal'])
 /**
  * How far outside its country an onshore place may sit before it's an error.
  * A port sits on the water's edge, and Natural Earth's coastline is generalised,
