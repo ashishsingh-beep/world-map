@@ -27,6 +27,18 @@
       "name": "The Danish Straits",
       "members": ["st-skagerrak", "st-kattegat", "st-oresund"],
       "mnemonic": "Skagerrak, Kattegat, Øresund — the staircase from the North Sea down into the Baltic"
+    },
+    {
+      "id": "w-baltic-arms",
+      "name": "The Baltic waters",
+      "members": ["sea-bothnia", "sea-baltic", "sea-riga", "sea-finland"],
+      "mnemonic": "BBRF, said as \"B-barf\" (the ice) — Bothnia, Baltic, Riga, Finland"
+    },
+    {
+      "id": "w-italy-greece-seas",
+      "name": "The seas either side of Italy and Greece",
+      "members": ["sea-adriatic", "sea-tyrrhenian", "sea-aegean", "sea-ionian"],
+      "mnemonic": "Rule a line down Italy and another down Greece, both running northwest to southeast. Left of each line the sea starts with A — Adriatic beside Italy, Aegean beside Greece. Right of each line it ends in -ian — Tyrrhenian beside Italy, Ionian beside Greece."
     }
   ],
   "places": [
