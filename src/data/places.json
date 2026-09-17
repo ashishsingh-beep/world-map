@@ -16,7 +16,7 @@
       "name": "World",
       "title": "Seas & Straits",
       "section": "water",
-      "count": 139
+      "count": 134
     },
     {
       "name": "South America",
@@ -3585,52 +3585,6 @@
       "section": "water"
     },
     {
-      "id": "st-windward",
-      "name": "Windward Passage",
-      "aliases": [],
-      "type": "strait",
-      "country": null,
-      "point": [
-        -73.8,
-        20
-      ],
-      "spanKm": 50,
-      "basin": "Atlantic Ocean",
-      "borders": [
-        "CUB",
-        "HTI"
-      ],
-      "connects": "Atlantic Ocean ↔ Caribbean Sea",
-      "significance": "Between Cuba and Haiti, the shipping lane to the Panama Canal",
-      "notes": [],
-      "tier": 1,
-      "continent": "World",
-      "section": "water"
-    },
-    {
-      "id": "st-mona",
-      "name": "Mona Passage",
-      "aliases": [],
-      "type": "strait",
-      "country": null,
-      "point": [
-        -67.9,
-        18.5
-      ],
-      "spanKm": 50,
-      "basin": "Atlantic Ocean",
-      "borders": [
-        "DOM",
-        "USA"
-      ],
-      "connects": "Atlantic Ocean ↔ Caribbean Sea",
-      "significance": "Between the Dominican Republic and Puerto Rico",
-      "notes": [],
-      "tier": 2,
-      "continent": "World",
-      "section": "water"
-    },
-    {
       "id": "st-davis",
       "name": "Davis Strait",
       "aliases": [],
@@ -3701,28 +3655,6 @@
       "section": "water"
     },
     {
-      "id": "st-cabot",
-      "name": "Cabot Strait",
-      "aliases": [],
-      "type": "strait",
-      "country": null,
-      "point": [
-        -59.5,
-        47.4
-      ],
-      "spanKm": 60,
-      "basin": "Atlantic Ocean",
-      "borders": [
-        "CAN"
-      ],
-      "connects": "Gulf of St Lawrence ↔ Atlantic Ocean",
-      "significance": "Between Newfoundland and Cape Breton, the main door to the St Lawrence",
-      "notes": [],
-      "tier": 3,
-      "continent": "World",
-      "section": "water"
-    },
-    {
       "id": "st-juan-de-fuca",
       "name": "Strait of Juan de Fuca",
       "aliases": [],
@@ -3742,32 +3674,6 @@
       "significance": "The sea border between Washington State and Vancouver Island",
       "notes": [],
       "tier": 2,
-      "continent": "World",
-      "section": "water"
-    },
-    {
-      "id": "st-magellan",
-      "name": "Strait of Magellan",
-      "aliases": [
-        "Straits of Magellan"
-      ],
-      "type": "strait",
-      "country": null,
-      "point": [
-        -70.936,
-        -53.532
-      ],
-      "spanKm": 120,
-      "basin": "Atlantic Ocean",
-      "borders": [
-        "CHL"
-      ],
-      "connects": "Atlantic Ocean ↔ Pacific Ocean",
-      "significance": "Sheltered route round South America, the safer alternative to Cape Horn",
-      "notes": [
-        "Lost most of its traffic when the Panama Canal opened"
-      ],
-      "tier": 1,
       "continent": "World",
       "section": "water"
     },
@@ -3793,29 +3699,6 @@
         "Nothing blocks the current here, which is why the seas build so high"
       ],
       "tier": 1,
-      "continent": "World",
-      "section": "water"
-    },
-    {
-      "id": "st-beagle",
-      "name": "Beagle Channel",
-      "aliases": [],
-      "type": "strait",
-      "country": null,
-      "point": [
-        -68.5,
-        -54.9
-      ],
-      "spanKm": 60,
-      "basin": "Atlantic Ocean",
-      "borders": [
-        "CHL",
-        "ARG"
-      ],
-      "connects": "Atlantic Ocean ↔ Pacific Ocean",
-      "significance": "Named for Darwin's ship; nearly brought Chile and Argentina to war in 1978",
-      "notes": [],
-      "tier": 2,
       "continent": "World",
       "section": "water"
     },
