@@ -4572,6 +4572,22 @@
       "mnemonic": "MBA — Marmara, Black, Azov, the three seas in that order as you head inland, each behind its own gate: Dardanelles, Bosporus, Kerch"
     },
     {
+      "id": "w-black-sea-states",
+      "name": "Countries on the Black Sea",
+      "members": [
+        "sea-black"
+      ],
+      "mnemonic": "T-BURGR — Turkey, Bulgaria, Ukraine, Romania, Georgia, Russia, the six that touch it"
+    },
+    {
+      "id": "w-caspian-states",
+      "name": "Countries on the Caspian Sea",
+      "members": [
+        "sea-caspian"
+      ],
+      "mnemonic": "TARIK — Turkmenistan, Azerbaijan, Russia, Iran, Kazakhstan, the five that touch it"
+    },
+    {
       "id": "w-italy-greece-seas",
       "name": "The seas either side of Italy and Greece",
       "members": [
