@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
 import { TYPE_LABEL, WATER_GLYPH } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
-import { QUESTION_SECONDS, useQuiz, type Mode } from '../game/useQuiz'
+import { QUESTION_SECONDS, useQuiz, type Mode, type QuizSnapshot } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
 import { flagEmoji, formatClock } from '../ui/bits'
 import { ResultsScreen } from './ResultsScreen'
@@ -13,12 +13,16 @@ interface Props {
   round: Round
   mode: Mode
   timed: boolean
+  /** A round interrupted by a refresh, to carry on from. */
+  initial?: QuizSnapshot | null
+  /** Called with the round's state after each question, and null once it ends. */
+  onProgress?: (snapshot: QuizSnapshot | null) => void
   onExit: () => void
   onRetry: () => void
 }
 
-export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
-  const quiz = useQuiz({ round, mode, timed })
+export function PlayScreen({ round, mode, timed, initial, onProgress, onExit, onRetry }: Props) {
+  const quiz = useQuiz({ round, mode, timed, initial })
   const [draft, setDraft] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -26,6 +30,18 @@ export function PlayScreen({ round, mode, timed, onExit, onRetry }: Props) {
     setDraft('')
     if (mode !== 'pin' && quiz.phase === 'asking') inputRef.current?.focus()
   }, [quiz.index, quiz.phase, mode])
+
+  // Saved once per question, not on the clock: `elapsed` ticks ten times a
+  // second and writing that often would be absurd. Read through a ref for the
+  // same reason — it must not be what triggers the save.
+  const { answers, index, queueIds, phase } = quiz
+  const elapsedRef = useRef(quiz.elapsed)
+  elapsedRef.current = quiz.elapsed
+  const finished = phase === 'finished'
+  useEffect(() => {
+    if (!onProgress) return
+    onProgress(finished ? null : { ids: queueIds, index, answers, elapsed: elapsedRef.current })
+  }, [onProgress, finished, queueIds, index, answers])
 
   if (quiz.phase === 'finished') {
     return (

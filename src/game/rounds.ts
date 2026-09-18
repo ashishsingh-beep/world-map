@@ -172,3 +172,11 @@ for (const continent of SYLLABUS) {
   const round = continentPlaceRound(continent)
   PLACE_ROUNDS[round.id] = round
 }
+
+/**
+ * A round by id, or null. Null rather than a throw because ids now come from
+ * the URL, where anyone can type one that does not exist.
+ */
+export function roundById(id: string): Round | null {
+  return ROUNDS[id] ?? PLACE_ROUNDS[id] ?? null
+}

@@ -72,10 +72,27 @@ The whole app is one map engine plus configuration.
   decides which menu group it lands in: `places` or `water`.
 - `src/game/useQuiz.ts` — round state machine.
 - `src/screens/` — Play, Results, Learn.
+- `src/app/route.ts` — the URL hash, which is where the current screen lives.
+- `src/app/storage.ts` — everything else that survives a refresh.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 
 `render` and `askable` are separate because Island Nations draws the whole
 world and asks only its own subset.
+
+**A refresh must never cost you anything.** Which screen you are on is the URL
+hash (`#/europe/learn`), not component state — and the hash rather than the path,
+because this deploys as static files with no server to rewrite `/europe/learn`
+back to `index.html`. Settings and a round in progress go to `localStorage`.
+Every read of it is defended and re-validated: it throws outright in some
+private-browsing modes, and whatever is already stored may come from an older
+build. A saved round resumes only when its questions are exactly the ones the
+round would ask now, so unticking a notation or editing a syllabus retires the
+save rather than resuming a round that no longer exists. `useQuiz` takes that
+save as `initial` and hands back a `snapshot`; it never touches storage itself.
+
+Because the hash is user-editable, anything reachable by URL must survive being
+asked for out of order: `roundById` returns null rather than throwing, and a
+round with nothing to ask refuses to start.
 
 **Mnemonics live in one place: the `groups` array of a syllabus file.** A group
 names its members — place ids, country ISO3s, or both — and the mnemonic then

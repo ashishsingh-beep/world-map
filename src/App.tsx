@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   PLACE_CONTINENTS,
   PLACE_ROUNDS,
@@ -6,29 +6,43 @@ import {
   ROUNDS,
   ROUND_ORDER,
   allPlacesRoundId,
+  roundById,
 } from './game/rounds'
-import type { Mode } from './game/useQuiz'
+import type { Mode, QuizSnapshot } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
 import { placeOf } from './data/places'
 import { Button, KindSwatch, WATER_KINDS, type WaterKind } from './ui/bits'
-
-type View = 'home' | 'setup' | 'play' | 'learn'
+import { HOME, useRoute } from './app/route'
+import {
+  clearRound,
+  fits,
+  loadPrefs,
+  loadRound,
+  savePrefs,
+  saveRound,
+  type SavedRound,
+} from './app/storage'
 
 export default function App() {
-  const [view, setView] = useState<View>('home')
-  const [roundId, setRoundId] = useState<string>('world')
-  const [mode, setMode] = useState<Mode>('pin')
-  const [timed, setTimed] = useState(true)
-  const [runKey, setRunKey] = useState(0)
-  const [kinds, setKinds] = useState<Record<WaterKind, boolean>>({
-    ocean: true,
-    sea: true,
-    strait: true,
-    canal: true,
-  })
+  const [route, navigate] = useRoute()
+  const [prefs, setPrefs] = useState(loadPrefs)
+  const { mode, timed, kinds } = prefs
+  const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
+  const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
+  const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
+    setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
+  useEffect(() => savePrefs(prefs), [prefs])
 
-  const round = ROUNDS[roundId] ?? PLACE_ROUNDS[roundId]
+  const [runKey, setRunKey] = useState(0)
+  /** The round in progress, read once at start-up so a refresh can resume it. */
+  const [saved, setSaved] = useState<SavedRound | null>(loadRound)
+  /** Null once the player has chosen to begin again rather than carry on. */
+  const [resuming, setResuming] = useState<SavedRound | null>(saved)
+
+  const roundId = route.roundId
+  // `useRoute` only ever yields a round that exists, so this cannot be null.
+  const round = roundById(roundId)!
 
   const roundPlaces = round.places?.map(placeOf) ?? []
   const isWaterRound = roundPlaces[0]?.section === 'water'
@@ -41,33 +55,72 @@ export default function App() {
     ? roundPlaces.filter((p) => kinds[p.type as WaterKind] ?? true)
     : roundPlaces
   const playRound = isWaterRound ? { ...round, places: asked.map((p) => p.id) } : round
+  const askIds = playRound.places ?? playRound.askable
 
-  if (view === 'play') {
+  /** A save is only offered when it is still this exact round's questions. */
+  const resumable = fits(saved, roundId, askIds) ? saved : null
+  const playMode = !round.places && mode === 'significance' ? 'type' : mode
+
+  const onProgress = useCallback(
+    (snapshot: QuizSnapshot | null) => {
+      if (!snapshot) {
+        clearRound()
+        setSaved(null)
+        return
+      }
+      const next = { ...snapshot, roundId, mode: playMode, timed, savedAt: Date.now() }
+      saveRound(next)
+      setSaved(next)
+    },
+    [roundId, playMode, timed]
+  )
+
+  // A placeholder continent has nothing to ask. The menu disables its card, but
+  // the URL is editable, so the round itself has to refuse rather than open a
+  // quiz with no questions in it.
+  const empty = askIds.length === 0
+  useEffect(() => {
+    if (route.view === 'play' && empty) navigate({ view: 'setup', roundId }, true)
+  }, [route.view, empty, roundId, navigate])
+
+  const begin = (from: SavedRound | null) => {
+    if (!from) clearRound()
+    setResuming(from)
+    setRunKey((k) => k + 1)
+    navigate({ view: 'play', roundId })
+  }
+
+  if (route.view === 'play' && empty) return null
+
+  if (route.view === 'play') {
     return (
       <PlayScreen
-        key={runKey}
+        key={`${roundId}:${runKey}`}
         round={playRound}
         // Country rounds carry no significance data to ask about.
-        mode={!round.places && mode === 'significance' ? 'type' : mode}
+        mode={playMode}
         timed={timed}
-        onExit={() => setView('home')}
-        onRetry={() => setRunKey((k) => k + 1)}
+        // Only on a refresh into a live round, or an explicit Resume.
+        initial={fits(resuming, roundId, askIds) ? resuming : null}
+        onProgress={onProgress}
+        onExit={() => navigate(HOME)}
+        onRetry={() => begin(null)}
       />
     )
   }
 
-  if (view === 'learn') {
-    return <LearnScreen round={round} onExit={() => setView('setup')} />
+  if (route.view === 'learn') {
+    return <LearnScreen round={round} onExit={() => navigate({ view: 'setup', roundId })} />
   }
 
-  if (view === 'setup') {
+  if (route.view === 'setup') {
     return (
       <div className="min-h-dvh bg-slate-50 px-5 py-8">
         <div className="mx-auto max-w-2xl">
           <button
             type="button"
-            onClick={() => setView('home')}
-            className="mb-4 text-sm font-bold text-slate-500"
+            onClick={() => navigate(HOME)}
+            className="mb-4 cursor-pointer text-sm font-bold text-slate-500"
           >
             ← All games
           </button>
@@ -165,15 +218,17 @@ export default function App() {
             </div>
 
             <div className="mt-6 space-y-3">
-              <Button
-                onClick={() => {
-                  setRunKey((k) => k + 1)
-                  setView('play')
-                }}
-              >
-                START →
-              </Button>
-              <Button variant="ghost" onClick={() => setView('learn')}>
+              {resumable && (
+                <Button onClick={() => begin(resumable)}>
+                  RESUME · {resumable.index} of {resumable.ids.length} DONE
+                </Button>
+              )}
+              {!empty && (
+                <Button variant={resumable ? 'ghost' : 'primary'} onClick={() => begin(null)}>
+                  {resumable ? 'START AGAIN' : 'START →'}
+                </Button>
+              )}
+              <Button variant="ghost" onClick={() => navigate({ view: 'learn', roundId })}>
                 LEARN
               </Button>
             </div>
@@ -195,10 +250,7 @@ export default function App() {
               <button
                 key={id}
                 type="button"
-                onClick={() => {
-                  setRoundId(id)
-                  setView('setup')
-                }}
+                onClick={() => navigate({ view: 'setup', roundId: id })}
                 className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
               >
                 <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
@@ -227,10 +279,7 @@ export default function App() {
                   <button
                     key={r.id}
                     type="button"
-                    onClick={() => {
-                      setRoundId(r.id)
-                      setView('setup')
-                    }}
+                    onClick={() => navigate({ view: 'setup', roundId: r.id })}
                     className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
                   >
                     <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
@@ -260,10 +309,7 @@ export default function App() {
                   type="button"
                   // An empty round would start a quiz with nothing to ask.
                   disabled={empty}
-                  onClick={() => {
-                    setRoundId(r.id)
-                    setView('setup')
-                  }}
+                  onClick={() => navigate({ view: 'setup', roundId: r.id })}
                   className={`rounded-2xl border border-slate-200 p-5 text-left shadow-sm transition ${
                     empty
                       ? 'cursor-not-allowed bg-slate-100 opacity-70'

@@ -36,6 +36,21 @@ export interface QuizOptions {
   round: Round
   mode: Mode
   timed: boolean
+  /**
+   * A round to pick back up rather than start. Ignored unless its questions are
+   * exactly the ones this round would ask, so a stale save cannot resume into
+   * a round that has since changed.
+   */
+  initial?: QuizSnapshot | null
+}
+
+/** Everything needed to rebuild a round in progress, and nothing more. */
+export interface QuizSnapshot {
+  /** The shuffled order, so resuming does not reshuffle the questions. */
+  ids: string[]
+  index: number
+  answers: Answer[]
+  elapsed: number
 }
 
 export interface Answer {
@@ -97,21 +112,49 @@ function shuffle<T>(input: T[]): T[] {
 }
 
 /**
+ * A saved round rebuilt, or a fresh shuffle when the save no longer fits. The
+ * check is by question, not by count: a save whose ids are not exactly this
+ * round's is from a different round, whatever it claims.
+ */
+function resume(round: Round, initial: QuizSnapshot | null) {
+  const built = buildQuestions(round)
+  const fresh = { queue: shuffle(built), index: 0, answers: [] as Answer[], elapsed: 0 }
+  if (!initial || initial.ids.length !== built.length) return fresh
+
+  const byId = new Map(built.map((q) => [q.id, q]))
+  const queue: Question[] = []
+  for (const id of initial.ids) {
+    const q = byId.get(id)
+    if (!q) return fresh
+    queue.push(q)
+  }
+  if (initial.index < 0 || initial.index >= queue.length) return fresh
+  return {
+    queue,
+    index: initial.index,
+    answers: initial.answers,
+    elapsed: initial.elapsed,
+  }
+}
+
+/**
  * Round state machine. Every round asks its full set — there is no
  * question-count selector by design.
  */
-export function useQuiz({ round, mode, timed }: QuizOptions) {
-  const [queue] = useState(() => shuffle(buildQuestions(round)))
-  const [index, setIndex] = useState(0)
+export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
+  // Resolved once, so a re-render can never reshuffle a round mid-flight.
+  const [start] = useState(() => resume(round, initial))
+  const [queue] = useState(start.queue)
+  const [index, setIndex] = useState(start.index)
   const [phase, setPhase] = useState<Phase>('asking')
   const [verdict, setVerdict] = useState<Verdict | null>(null)
-  const [answers, setAnswers] = useState<Answer[]>([])
+  const [answers, setAnswers] = useState<Answer[]>(start.answers)
   const [wrongPick, setWrongPick] = useState<string | null>(null)
   const [tapped, setTapped] = useState<[number, number] | null>(null)
   const [missKm, setMissKm] = useState<number | null>(null)
   const [corrected, setCorrected] = useState<string | null>(null)
   const [paused, setPaused] = useState(false)
-  const [elapsed, setElapsed] = useState(0)
+  const [elapsed, setElapsed] = useState(start.elapsed)
   const [remaining, setRemaining] = useState(QUESTION_SECONDS)
 
   const current = queue[index] ?? null
@@ -286,9 +329,13 @@ export function useQuiz({ round, mode, timed }: QuizOptions) {
   const revealing = phase === 'revealing' && current
   const isPointAnswer = !!current && !current.iso
 
+  /** Stable, so saving can key off "a question was answered" and nothing else. */
+  const queueIds = useMemo(() => queue.map((q) => q.id), [queue])
+
   return {
     current,
     index,
+    queueIds,
     total: queue.length,
     phase,
     verdict,
