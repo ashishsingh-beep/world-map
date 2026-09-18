@@ -29,6 +29,12 @@
       "mnemonic": "Skagerrak, Kattegat, Øresund — the staircase from the North Sea down into the Baltic"
     },
     {
+      "id": "w-atlantic-stack",
+      "name": "Up the Atlantic coast of Europe",
+      "members": ["sea-alboran", "sea-biscay", "sea-celtic"],
+      "mnemonic": "ABC \u2014 Alboran, Biscay, Celtic, a stack read bottom to top: Alboran at Gibraltar, Biscay off France, Celtic below Ireland"
+    },
+    {
       "id": "w-baltic-arms",
       "name": "The Baltic waters",
       "members": ["sea-bothnia", "sea-baltic", "sea-riga", "sea-finland"],

@@ -4569,6 +4569,18 @@
       "section": "water"
     },
     {
+      "id": "w-atlantic-stack",
+      "name": "Up the Atlantic coast of Europe",
+      "members": [
+        "sea-alboran",
+        "sea-biscay",
+        "sea-celtic"
+      ],
+      "mnemonic": "ABC — Alboran, Biscay, Celtic, a stack read bottom to top: Alboran at Gibraltar, Biscay off France, Celtic below Ireland",
+      "continent": "World",
+      "section": "water"
+    },
+    {
       "id": "w-baltic-arms",
       "name": "The Baltic waters",
       "members": [
