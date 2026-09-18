@@ -34,27 +34,27 @@ export function TricksSheet({
 
   return (
     <div className="absolute inset-0 z-20 flex justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
-      <div className="flex max-h-full w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-          <h2 className="text-2xl font-extrabold text-slate-900">Tricks</h2>
+      <div className="flex max-h-full w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+          <h2 className="text-xl font-extrabold text-slate-900">Tricks</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close tricks"
-            className="cursor-pointer rounded-xl bg-slate-100 px-4 py-2 text-lg font-bold text-slate-700 hover:bg-slate-200"
+            className="cursor-pointer rounded-lg bg-slate-100 px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-200"
           >
             ✕
           </button>
         </div>
 
-        <div className="overflow-y-auto px-5 py-4">
+        <div className="overflow-y-auto px-4 py-3">
           {here.map((g) => (
             <Trick key={g.id} group={g} />
           ))}
 
           {elsewhere.length > 0 && (
             <>
-              <h3 className="mt-6 mb-1 text-xs font-bold tracking-widest text-slate-400 uppercase">
+              <h3 className="mt-5 mb-1 text-[0.65rem] font-bold tracking-widest text-slate-400 uppercase">
                 From other rounds
               </h3>
               {elsewhere.map((g) => (
@@ -70,14 +70,14 @@ export function TricksSheet({
 
 function Trick({ group }: { group: PlaceGroup }) {
   return (
-    <div className="mt-3 rounded-xl bg-yellow-50 px-4 py-3 first:mt-0">
-      <div className="text-xs font-bold tracking-wide text-slate-500 uppercase">{group.name}</div>
+    <div className="mt-2 rounded-xl bg-yellow-50 px-3 py-2 first:mt-0">
+      <div className="text-[0.65rem] font-bold tracking-wide text-slate-500 uppercase">{group.name}</div>
       {group.visual && (
         <div className="mt-2">
           <TrickDiagram visual={group.visual} />
         </div>
       )}
-      <p className="mt-1 font-bold text-slate-800">{group.mnemonic}</p>
+      <p className="mt-0.5 text-sm font-bold text-slate-800">{group.mnemonic}</p>
     </div>
   )
 }

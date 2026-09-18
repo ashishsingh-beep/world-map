@@ -51,7 +51,13 @@ function frame(box: [[number, number], [number, number]]) {
 const A_SIDE = '#1d4ed8'
 const IAN_SIDE = '#be185d'
 
-function ItalyGreeceSeas() {
+/**
+ * Type is sized in viewBox units, so a diagram shrunk into the Learn card would
+ * scale its own labels away. `compact` sizes them up to compensate, which keeps
+ * one drawing readable at both sizes rather than needing two.
+ */
+function ItalyGreeceSeas({ compact = false }: { compact?: boolean }) {
+  const t = compact ? 1.35 : 1
   const box: [[number, number], [number, number]] = [
     [6, 33.5],
     [29.5, 47.5],
@@ -105,8 +111,8 @@ function ItalyGreeceSeas() {
             x2={x2}
             y2={y2}
             stroke="#0f172a"
-            strokeWidth={2.5}
-            strokeDasharray="7 5"
+            strokeWidth={2.5 * t}
+            strokeDasharray={`${7 * t} ${5 * t}`}
             strokeLinecap="round"
           />
         )
@@ -117,41 +123,44 @@ function ItalyGreeceSeas() {
         const [x, y] = at(place.point)
         return (
           <g key={id}>
-            <circle cx={x} cy={y} r={4} fill={colour} stroke="#fff" strokeWidth={1.5} />
+            <circle cx={x} cy={y} r={4 * t} fill={colour} stroke="#fff" strokeWidth={1.5 * t} />
             <text
-              x={x + (anchor === 'start' ? 9 : -9)}
-              y={y + 4}
+              x={x + (anchor === 'start' ? 9 : -9) * t}
+              y={y + 4 * t}
               textAnchor={anchor}
-              fontSize={17}
+              fontSize={17 * t}
               fontWeight={800}
               fill={colour}
               stroke="#fff"
-              strokeWidth={3.5}
+              strokeWidth={3.5 * t}
               paintOrder="stroke"
             >
-              {place.name}
+              {/* SVG clips to its viewport, so at 1.35x the full names run off
+                  the edge. The drawing is entirely about seas; the word adds
+                  nothing here. */}
+              {compact ? place.name.replace(/ Sea$/, '') : place.name}
             </text>
           </g>
         )
       })}
 
       {/* Which side is which, said once rather than per sea. */}
-      <text x={W - 14} y={27} textAnchor="end" fontSize={16} fontWeight={800} fill={A_SIDE}>
+      <text x={W - 14} y={11 + 16 * t} textAnchor="end" fontSize={16 * t} fontWeight={800} fill={A_SIDE}>
         left of the line → starts with A
       </text>
-      <text x={14} y={H - 14} fontSize={16} fontWeight={800} fill={IAN_SIDE}>
+      <text x={14} y={H - 14} fontSize={16 * t} fontWeight={800} fill={IAN_SIDE}>
         right of the line → ends in -ian
       </text>
     </svg>
   )
 }
 
-export const TRICK_DIAGRAMS: Record<string, () => React.JSX.Element> = {
+export const TRICK_DIAGRAMS: Record<string, (p: { compact?: boolean }) => React.JSX.Element> = {
   'italy-greece-seas': ItalyGreeceSeas,
 }
 
 /** The diagram for a group, or null when the trick is fine as a sentence. */
-export function TrickDiagram({ visual }: { visual?: string }) {
+export function TrickDiagram({ visual, compact }: { visual?: string; compact?: boolean }) {
   const Diagram = visual ? TRICK_DIAGRAMS[visual] : undefined
-  return Diagram ? <Diagram /> : null
+  return Diagram ? <Diagram compact={compact} /> : null
 }

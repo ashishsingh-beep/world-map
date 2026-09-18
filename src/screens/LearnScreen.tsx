@@ -88,7 +88,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         selectedIso={isPlaceRound ? null : selected}
         // Constant, not conditional on `place`: refitting when a card opens
         // would make the whole map jump on every selection.
-        padding={{ top: 88, right: 32, bottom: isPlaceRound ? 200 : 32, left: 32 }}
+        padding={{ top: 88, right: 32, bottom: isPlaceRound ? 170 : 32, left: 32 }}
       />
 
       {hasWater && (
@@ -153,9 +153,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
 
       {place && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4">
-          <div className="pointer-events-auto w-full max-w-2xl rounded-2xl bg-white p-5 shadow-xl">
+          <div className="pointer-events-auto w-full max-w-lg rounded-2xl bg-white p-4 shadow-xl">
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="text-2xl font-extrabold text-slate-900">
+              <span className="text-lg font-extrabold text-slate-900">
                 {WATER_GLYPH[place.type] ? `${WATER_GLYPH[place.type]} ` : ''}
                 {place.name}
               </span>
@@ -165,33 +165,33 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               {/* Skipped when the place *is* the country, or the line just
                   repeats the name back. */}
               {place.type !== 'country' && (place.country || place.sovereign) && (
-                <span className="text-sm font-semibold text-slate-500">
+                <span className="text-xs font-semibold text-slate-500">
                   {metaOf((place.country ?? place.sovereign)!).name}
                 </span>
               )}
             </div>
 
-            <p className="mt-2 text-lg leading-snug font-bold text-slate-800">
+            <p className="mt-1.5 text-sm leading-snug font-bold text-slate-800">
               {place.significance}
             </p>
 
             {place.connects && (
-              <p className="mt-2 text-sm font-bold text-slate-700">
+              <p className="mt-1.5 text-xs font-bold text-slate-700">
                 <span className="text-slate-400">CONNECTS </span>
                 {place.connects}
               </p>
             )}
             {place.borders && place.borders.length > 0 && (
-              <p className="mt-1 text-sm text-slate-600">
+              <p className="mt-1 text-xs text-slate-600">
                 <span className="font-bold text-slate-400">ALONG </span>
                 {place.borders.map((iso) => metaOf(iso).name).join(', ')}
               </p>
             )}
 
             {place.notes.length > 0 && (
-              <ul className="mt-2 space-y-1">
+              <ul className="mt-1.5 space-y-0.5">
                 {place.notes.map((n) => (
-                  <li key={n} className="text-sm text-slate-600">
+                  <li key={n} className="text-xs text-slate-600">
                     · {n}
                   </li>
                 ))}
@@ -199,17 +199,17 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
             )}
 
             {mnemonics.map((g) => (
-              <div key={g.id} className="mt-3 rounded-xl bg-yellow-50 px-3 py-2">
+              <div key={g.id} className="mt-2 rounded-xl bg-yellow-50 px-3 py-2">
                 {/* A spatial trick is drawn rather than described; the
                     mnemonic then reads as the drawing's caption. */}
                 {g.visual && (
                   // Capped: the card is anchored to the bottom of the map and
                   // a full-width diagram would climb over the geography.
-                  <div className="mb-1 max-w-md">
-                    <TrickDiagram visual={g.visual} />
+                  <div className="mb-1 max-w-[17rem]">
+                    <TrickDiagram visual={g.visual} compact />
                   </div>
                 )}
-                <p className="text-sm font-bold text-slate-700">
+                <p className="text-xs font-bold text-slate-700">
                   {g.name}: {g.mnemonic}
                 </p>
               </div>
