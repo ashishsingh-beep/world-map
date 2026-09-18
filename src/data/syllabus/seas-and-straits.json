@@ -1551,8 +1551,26 @@
       "borders": ["YEM", "DJI", "ERI"],
       "connects": "Red Sea ↔ Gulf of Aden",
       "significance": "The southern gate of the Red Sea — no Suez traffic reaches Asia without it",
-      "notes": ["Its name means \"Gate of Tears\""],
+      "notes": [
+        "Its name means \"Gate of Tears\"",
+        "Perim Island sits in the middle of it, splitting it into two channels"
+      ],
       "tier": 1
+    },
+    {
+      "id": "isl-perim",
+      "name": "Perim Island",
+      "aliases": ["Perim", "Mayyun", "Mayun"],
+      "type": "island",
+      "country": "YEM",
+      "point": [43.42, 12.65],
+      "basin": "Indian Ocean",
+      "significance": "Yemeni island sitting in the middle of Bab-el-Mandeb, splitting the strait in two",
+      "notes": [
+        "The wide western channel, Dact-el-Mayun, carries the shipping; the narrow eastern one, Bab Iskender, runs between Perim and Yemen",
+        "Volcanic, with a natural harbour \u2014 Britain held it from 1857 to 1967 to watch the gate"
+      ],
+      "tier": 2
     },
     {
       "id": "st-tiran",

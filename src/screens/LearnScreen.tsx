@@ -18,20 +18,31 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const [showAll, setShowAll] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
-  const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
+  const [shown, setShown] = useState({
+    ocean: true,
+    sea: true,
+    strait: true,
+    canal: true,
+    island: true,
+  })
   const [tricks, setTricks] = useState(false)
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
   const isPlaceRound = roundPlaces.length > 0
   const isWaterKind = (t: string): t is keyof typeof shown =>
-    t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal'
-  const hasWater = roundPlaces.some((p) => isWaterKind(p.type))
+    t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'island'
   const isWaterRound = roundPlaces[0]?.section === 'water'
+  // The notation filter belongs to the Seas & Straits section. A Places round
+  // holds the odd island or canal too, but one chip you cannot usefully untick
+  // is clutter, not a legend.
+  const hasWater = isWaterRound && roundPlaces.some((p) => isWaterKind(p.type))
 
   const visible = useMemo(
     () =>
-      roundPlaces.filter((p) => (isWaterKind(p.type) ? shown[p.type] : true)),
-    [roundPlaces, shown]
+      roundPlaces.filter((p) =>
+        isWaterRound && isWaterKind(p.type) ? shown[p.type] : true
+      ),
+    [roundPlaces, shown, isWaterRound]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null

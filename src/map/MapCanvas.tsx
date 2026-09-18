@@ -34,7 +34,7 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
  * diamond as a narrow gate between two of them, and the two are also coloured
  * apart — so a sea and a strait are never confused at a glance.
  */
-export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal'
+export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal' | 'island'
 
 /** A point place drawn on top of the geography (a city, port, sea, strait…). */
 export interface MapPoint {
@@ -52,6 +52,9 @@ const SHAPE_FILLS: Record<MarkerShape, string> = {
   ocean: '#0d9488',
   sea: '#1d4ed8',
   strait: '#f97316',
+  // Brown, well away from the strait's orange — an island is land, and the
+  // triangle is the only shape here with a flat base.
+  island: '#92400e',
   canal: '#a855f7',
 }
 
@@ -61,6 +64,7 @@ const SHAPE_SCALE: Record<MarkerShape, number> = {
   ocean: 1.7,
   sea: 1,
   strait: 1,
+  island: 1.15,
   canal: 1,
 }
 
@@ -435,6 +439,20 @@ export function MapCanvas({
                       vectorEffect="non-scaling-stroke"
                     />
                   </g>
+                ) : shape === 'island' ? (
+                  // Vertices at -90°, 30° and 150°, so the marker's point is
+                  // the triangle's centroid rather than its base.
+                  <path
+                    d={`M ${cx} ${cy - r * 1.15}
+                        L ${cx + r} ${cy + r * 0.66}
+                        L ${cx - r} ${cy + r * 0.66} Z`}
+                    fill={fill}
+                    fillOpacity={0.95}
+                    stroke="#1f2d4d"
+                    strokeWidth={isTarget ? 2.5 : 1.5}
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
                 ) : shape === 'canal' ? (
                   <rect
                     x={cx - r * 0.85}

@@ -47,16 +47,28 @@ passing as "Paraguay" or "Nigeria" as "Niger". Never relax it without running
 misspellings, or the correction note never fires.
 
 **Sea and strait must never look alike.** The Seas & Straits section is built
-around four notations: a sea is a blue circle, a strait an orange diamond pinched
-by two arrowheads, a canal a purple square, and an ocean a teal circle with a
-white inner ring, drawn 1.7x larger (`SHAPE_SCALE` in `MapCanvas`) because an
-ocean contains the seas inside it. The shape carries the *kind*, the fill carries
-the quiz *state*, and the legend in Learn mode names all four. A sea and an ocean
-are both circles, so the ocean must keep both its own colour *and* its extra
-size — one alone is not enough to tell them apart at world scale. `KindSwatch` in
-`src/ui/bits.tsx` redraws each marker for the legend and the setup picker, so
-change both or they drift apart. Country micro-state markers are switched off in
-that round so no stray ring competes with the sea notation.
+around five notations: a sea is a blue circle, a strait an orange diamond pinched
+by two arrowheads, a canal a purple square, an island a brown triangle, and an
+ocean a teal circle with a white inner ring, drawn 1.7x larger (`SHAPE_SCALE` in
+`MapCanvas`) because an ocean contains the seas inside it. The shape carries the
+*kind*, the fill carries the quiz *state*, and the legend in Learn mode names
+them all. A sea and an ocean are both circles, so the ocean must keep both its
+own colour *and* its extra size — one alone is not enough to tell them apart at
+world scale. `KindSwatch` in `src/ui/bits.tsx` redraws each marker for the legend
+and the setup picker, so change both or they drift apart. Country micro-state
+markers are switched off in that round so no stray ring competes with the sea
+notation.
+
+The notation *filter* — the legend chips in Learn, the Practise picker in
+setup — is scoped to the water section. A Places round holds the odd island or
+canal too, and a lone chip you cannot usefully untick is clutter, not a legend.
+
+**Some features have no geometry to stand on.** Perim Island splits Bab-el-Mandeb
+but is too small for the 1:10m dataset, so nothing is drawn within 21km of it; it
+exists only as a marker. Natural Earth's *raw* Yemen polygon does reach over that
+point even though the quantized one does not, so it is authored without
+`offshore` — that flag is judged against the raw geometry, the map you see is the
+quantized one, and the two disagree at this scale.
 
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.
