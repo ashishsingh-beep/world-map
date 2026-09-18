@@ -105,13 +105,12 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   strait: 'strait',
 }
 
-/** Card-heading glyphs for the notations the Seas & Straits section uses. */
+/** The two notations the Seas & Straits section is built around. */
 export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {
   ocean: '🌏',
   sea: '🌊',
   strait: '↔️',
   canal: '⇅',
-  island: '🏝️',
 }
 
 /**

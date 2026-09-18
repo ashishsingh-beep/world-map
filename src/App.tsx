@@ -26,7 +26,6 @@ export default function App() {
     sea: true,
     strait: true,
     canal: true,
-    island: true,
   })
 
   const round = ROUNDS[roundId] ?? PLACE_ROUNDS[roundId]
@@ -86,7 +85,7 @@ export default function App() {
             {isWaterRound && (
               <>
                 <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {WATER_KINDS.map(({ type, label }) => {
                     const n = roundPlaces.filter((p) => p.type === type).length
                     if (!n) return null
