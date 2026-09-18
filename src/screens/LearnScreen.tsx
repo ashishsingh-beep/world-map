@@ -60,7 +60,10 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         // like Greenland, which has no name to reveal.
         askable={isPlaceRound ? [] : round.askable}
         view={round.view}
-        states={{}}
+        // Practice paints the country it is asking about; Learn paints the one
+        // you tapped, so the name arrives with the shape that goes with it.
+        // Place rounds are excluded: there `selected` is a place id, not an ISO.
+        states={isPlaceRound || !selected ? {} : { [selected]: 'target' }}
         onPick={setSelected}
         points={isPlaceRound ? points : undefined}
         onPickPoint={

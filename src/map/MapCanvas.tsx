@@ -554,6 +554,11 @@ export function MapCanvas({
                   fontSize={(isSelected ? 15 : 10) / k}
                   fontWeight={700}
                   fill={isSelected ? '#0f172a' : '#64748b'}
+                  // The selected country is painted under its own name, so the
+                  // label needs a halo to stay readable on the fill.
+                  stroke={isSelected ? '#fff' : undefined}
+                  strokeWidth={isSelected ? 3.5 / k : undefined}
+                  paintOrder="stroke"
                 >
                   {metaOf(iso).name}
                 </text>
