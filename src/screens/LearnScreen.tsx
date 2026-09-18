@@ -65,6 +65,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         // Place rounds are excluded: there `selected` is a place id, not an ISO.
         states={isPlaceRound || !selected ? {} : { [selected]: 'target' }}
         onPick={setSelected}
+        // A tap on open sea, or on geography this round does not ask about,
+        // clears the highlight. Place rounds already do this in `onPickPoint`.
+        onDeselect={isPlaceRound ? undefined : () => setSelected(null)}
         points={isPlaceRound ? points : undefined}
         onPickPoint={
           isPlaceRound

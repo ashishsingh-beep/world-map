@@ -81,6 +81,13 @@ export interface MapCanvasProps {
   /** Drop a pin at this country's centroid (the wrong-answer reveal marker). */
   pinIso?: string | null
   onPick?: (iso: string) => void
+  /**
+   * A tap that landed on nothing selectable. Opt-in: Learn clears its selection
+   * this way, while a quiz must ignore a tap on open water rather than react
+   * to it. Country rounds only — place rounds already decide this themselves in
+   * `onPickPoint`, which knows how near the nearest marker was.
+   */
+  onDeselect?: () => void
   /** Point places drawn above the geography. */
   points?: MapPoint[]
   /**
@@ -127,6 +134,7 @@ export function MapCanvas({
   revealIso = null,
   pinIso = null,
   onPick,
+  onDeselect,
   points,
   revealPoints = null,
   pinPoint = null,
@@ -309,20 +317,41 @@ export function MapCanvas({
   }, [revealIso, revealPoints, projection, path, size.width, size.height])
 
   const k = transform.k
-  const handle = (iso: string) => {
-    if (onPick && askSet.has(iso)) onPick(iso)
-  }
 
   /** Where the pointer went down, so a pan is never mistaken for a tap. */
   const downAt = useRef<[number, number] | null>(null)
+  /** Set by a country's own handler, read by the background one below. */
+  const hitCountry = useRef(false)
+
+  /** The tap position, or null when the pointer travelled — that was a pan. */
+  const tapAt = (event: ReactMouseEvent): [number, number] | null => {
+    const rect = svgRef.current?.getBoundingClientRect()
+    if (!rect) return null
+    const at: [number, number] = [event.clientX - rect.left, event.clientY - rect.top]
+    const from = downAt.current
+    return from && Math.hypot(at[0] - from[0], at[1] - from[1]) > 5 ? null : at
+  }
+
+  const handle = (iso: string, event: ReactMouseEvent) => {
+    if (!tapAt(event)) return
+    if (onPick && askSet.has(iso)) {
+      hitCountry.current = true
+      onPick(iso)
+    }
+  }
 
   const handleMapClick = (event: ReactMouseEvent<SVGSVGElement>) => {
-    if (!onPickPoint) return
-    const rect = event.currentTarget.getBoundingClientRect()
-    const sx = event.clientX - rect.left
-    const sy = event.clientY - rect.top
-    const from = downAt.current
-    if (from && Math.hypot(sx - from[0], sy - from[1]) > 5) return
+    // Country paths sit under the svg, so their handler has already run.
+    const onCountry = hitCountry.current
+    hitCountry.current = false
+
+    const at = tapAt(event)
+    if (!at) return
+    if (!onPickPoint) {
+      if (!onCountry) onDeselect?.()
+      return
+    }
+    const [sx, sy] = at
 
     const base = transform.invert([sx, sy])
     const lonLat = projection.invert?.(base)
@@ -361,7 +390,7 @@ export function MapCanvas({
                 strokeWidth={0.6}
                 vectorEffect="non-scaling-stroke"
                 className={askSet.has(iso) ? 'cursor-pointer' : undefined}
-                onClick={() => handle(iso)}
+                onClick={(e) => handle(iso, e)}
               />
             )
           })}
@@ -385,7 +414,7 @@ export function MapCanvas({
                 strokeWidth={1.2}
                 vectorEffect="non-scaling-stroke"
                 className={askSet.has(iso) ? 'cursor-pointer' : undefined}
-                onClick={() => handle(iso)}
+                onClick={(e) => handle(iso, e)}
               />
             )
           })}
