@@ -16,7 +16,7 @@
       "name": "World",
       "title": "Seas & Straits",
       "section": "water",
-      "count": 135
+      "count": 136
     },
     {
       "name": "South America",
@@ -3838,6 +3838,30 @@
       "significance": "Lock canal across Panama, sparing ships the trip round Cape Horn",
       "notes": [
         "Opened 1914; handed to Panama in 1999"
+      ],
+      "tier": 1,
+      "continent": "World",
+      "section": "water"
+    },
+    {
+      "id": "pn-crimea",
+      "name": "Crimean Peninsula",
+      "aliases": [
+        "Crimea"
+      ],
+      "type": "peninsula",
+      "country": "UKR",
+      "point": [
+        34.2,
+        45.3
+      ],
+      "spanKm": 130,
+      "basin": "Black Sea",
+      "significance": "Diamond of land dividing the Black Sea from the Sea of Azov, tied to the mainland only by the narrow Perekop Isthmus",
+      "notes": [
+        "The Kerch Strait separates its eastern tip from Russia",
+        "Sevastopol on its southwest coast is the Black Sea Fleet's home port",
+        "Russia annexed it in 2014; the UN General Assembly and most states do not recognise that, and this map's dataset still draws it as Ukraine"
       ],
       "tier": 1,
       "continent": "World",

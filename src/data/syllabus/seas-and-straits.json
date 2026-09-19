@@ -1999,6 +1999,23 @@
       "tier": 1
     },
     {
+      "id": "pn-crimea",
+      "name": "Crimean Peninsula",
+      "aliases": ["Crimea"],
+      "type": "peninsula",
+      "country": "UKR",
+      "point": [34.2, 45.3],
+      "spanKm": 130,
+      "basin": "Black Sea",
+      "significance": "Diamond of land dividing the Black Sea from the Sea of Azov, tied to the mainland only by the narrow Perekop Isthmus",
+      "notes": [
+        "The Kerch Strait separates its eastern tip from Russia",
+        "Sevastopol on its southwest coast is the Black Sea Fleet's home port",
+        "Russia annexed it in 2014; the UN General Assembly and most states do not recognise that, and this map's dataset still draws it as Ukraine"
+      ],
+      "tier": 1
+    },
+    {
       "id": "cn-kiel",
       "name": "Kiel Canal",
       "aliases": [],

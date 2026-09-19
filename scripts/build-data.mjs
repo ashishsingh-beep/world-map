@@ -256,8 +256,9 @@ writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2)
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
   'mine', 'canal', 'zone',
-  // Seas & Straits section
-  'ocean', 'sea', 'strait',
+  // Seas & Straits section. A peninsula is the one landform in it — the shape
+  // of the water is the reason it is there.
+  'ocean', 'sea', 'strait', 'peninsula',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal'])
@@ -385,16 +386,20 @@ if (errors.length) {
  * A sea or strait must sit in water on the map the player actually sees. The
  * simplified coastline closes narrow channels — Messina, the Dardanelles and
  * Magellan all swallowed their own marker — so this is checked against the
- * rendered geometry, not the raw source. Canals are exempt: they cut through
- * land by definition.
+ * rendered geometry, not the raw source.
+ *
+ * Two types in this section are exempt, being on land on purpose: a canal cuts
+ * through it, a peninsula is it. Both are still held to the onshore check
+ * above, which is the one that matters for them.
  */
+const ON_LAND_TYPES = new Set(['canal', 'peninsula'])
 const rendered = topojsonFeature(
   JSON.parse(readFileSync(topoOut, 'utf8')),
   JSON.parse(readFileSync(topoOut, 'utf8')).objects.countries
 )
 const dryErrors = []
 for (const p of places) {
-  if (p.section !== 'water' || p.type === 'canal') continue
+  if (p.section !== 'water' || ON_LAND_TYPES.has(p.type)) continue
   const land = rendered.features.find((f) => geoContains(f, p.point))
   if (land) dryErrors.push(`${p.id}: ${p.name} at ${p.point} sits on land (${land.id})`)
 }

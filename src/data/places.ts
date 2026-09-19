@@ -14,6 +14,7 @@ export type PlaceType =
   | 'ocean'
   | 'sea'
   | 'strait'
+  | 'peninsula'
 
 export interface Place {
   id: string
@@ -103,6 +104,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   ocean: 'ocean',
   sea: 'sea',
   strait: 'strait',
+  peninsula: 'peninsula',
 }
 
 /** The two notations the Seas & Straits section is built around. */

@@ -58,6 +58,14 @@ size — one alone is not enough to tell them apart at world scale. `KindSwatch`
 change both or they drift apart. Country micro-state markers are switched off in
 that round so no stray ring competes with the sea notation.
 
+The section carries one landform, the Crimean Peninsula, because the shape of
+the water there is the reason the Kerch Strait and the Sea of Azov exist. It is
+a brown triangle — the only flat-based shape in the set, since it is the only
+thing in the section that is land. It is deliberately *not* a fifth filter chip:
+the picker groups a category worth hiding, and one feature is not that. It is
+also exempt from the water-on-land build check, as canals are; the onshore check
+is the one that guards it.
+
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.
 
