@@ -28,7 +28,34 @@ build stops Indian territory at 35.5°N, carves out a separate "Kashmir" and
 hands Pakistan "Azad Kashmir" — using it would redraw Kashmir on our own map.
 States come from an Indian district source instead (`INDIA_URL`), dissolved to
 36 states, and the build asserts Ladakh reaches ~37°N before writing
-`india.topo.json`. States are drawn for context and are never questions.
+`india.topo.json`. Only their *inner* lines are drawn, and they are drawn for
+context: a state is never a question.
+
+**The Indian map's land comes from one source, not two.** India, Pakistan,
+China and the rest of the frame are all the India-POV country file, welded in a
+single mapshaper job into `india-frame.topo.json`: `india`, a dissolved `land`
+for the surround, and `divides` for where the neighbours part from each other.
+The surround is filled and never stroked — an outline there would run a second
+line beside India's own, through the one border this project cannot afford to
+draw twice.
+
+India was drawn from the district source for a while, on the reasoning that its
+border was the trustworthy one. It cost a day: one source's India against
+another's Pakistan leaves hairline slivers of sea along every land border —
+measurably a *gap*, not an overlap, so erasing cannot close it and snapping only
+narrowed it — plus jagged ribbons wherever the two coastlines disagree. Only one
+dataset can say where the land stops, and the India-POV file already puts PoK
+and Aksai Chin inside India, which is the whole reason this project insists on
+it. The district source stays for the one thing Natural Earth has no India point
+of view of at all.
+
+Two settings there are load-bearing. The state lines are taken **before** the
+clip to India, because clipping one source's coast against another's leaves a
+thread of slivers whose shared edges come back as a state line a few kilometres
+inland. And India is simplified by an **absolute interval** (500m), not a
+percentage: a percentage thins every ring by the same proportion, which turns
+the Andaman and Nicobar Islands into needles, and at 3km it erases Lakshadweep
+— 36 islets, most under a square kilometre — from the map entirely.
 
 **Greenland and Antarctica are drawn, never asked.** It is Danish, not a UN member, so it is
 outside the 196 — but leaving it out put a hole in the North Atlantic beside
@@ -147,7 +174,8 @@ The whole app is one map engine plus configuration.
 - `src/screens/` — Play, Results, Learn.
 - `src/app/route.ts` — the URL hash, which is where the current screen lives.
 - `src/app/storage.ts` — everything else that survives a refresh.
-- `src/data/india.ts` — India's states, for the Indian map.
+- `src/data/india.ts` — the Indian map's land: India, the surround, the
+  neighbours' dividing lines, and India's own state lines.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 
 `render` and `askable` are separate because Island Nations draws the whole

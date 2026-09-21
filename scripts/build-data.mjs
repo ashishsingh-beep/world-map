@@ -315,6 +315,71 @@ writeFileSync(
     })),
   })
 )
+/**
+ * The Indian map's land: India and the neighbours that frame it, all from the
+ * same Natural Earth India point-of-view file the world map already uses.
+ *
+ * India was drawn from the district source here for a while, on the reasoning
+ * that its border was the trustworthy one. But the two sources do not trace the
+ * same line, and one source's India against another's Pakistan left hairline
+ * slivers of sea along every land border, plus jagged ribbons in the Sundarbans
+ * where the two coastlines disagree. No amount of snapping or erasing fixes
+ * that: only one dataset can define where the land stops. Natural Earth's is
+ * the India point-of-view build — PoK, Gilgit-Baltistan and Aksai Chin are
+ * already inside India in it, which is the whole reason this project insists on
+ * that file — so India and its neighbours share every arc and nothing shows
+ * through. The district source stays for what Natural Earth has no India POV
+ * of at all: the state lines inside.
+ */
+const NEIGHBOURS = ['PAK', 'CHN', 'NPL', 'BTN', 'BGD', 'AFG', 'MMR', 'LKA']
+
+const frameIn = resolve(CACHE, 'india-frame-raw.geojson')
+writeFileSync(
+  frameIn,
+  JSON.stringify({
+    type: 'FeatureCollection',
+    features: features
+      .filter((f) => f.id === 'IND' || NEIGHBOURS.includes(f.id))
+      .map((f) => ({ type: 'Feature', properties: { iso: f.id }, geometry: f.geometry })),
+  })
+)
+
+/**
+ * Three layers. `india` is the country. `land` is the surround, dissolved: it
+ * is filled and never stroked, because a neighbour's outline drawn against
+ * India would run a second line beside India's own, through the one border
+ * this project cannot afford to draw twice. `divides` is the neighbours' shared
+ * edges alone, so Pakistan still parts from Afghanistan.
+ *
+ * Simplified by an absolute interval rather than a percentage: a percentage
+ * thins every ring by the same proportion, which leaves the Andaman and Nicobar
+ * Islands as needles — and at 3km it erases Lakshadweep from the map, all 36
+ * islets of it, most of them under a square kilometre.
+ */
+const indiaFrameOut = resolve(OUT, 'india-frame.topo.json')
+const indiaClip = resolve(CACHE, 'india-clip.geojson')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [
+    frameIn,
+    '-simplify', 'interval=500', 'keep-shapes',
+    '-filter', 'iso === "IND"', '+', 'name=india',
+    '-filter', 'iso !== "IND"', 'target=1', '+', 'name=nb',
+    '-dissolve', 'target=nb', '+', 'name=land',
+    '-innerlines', 'target=nb', '+', 'name=divides',
+    '-o', 'format=topojson', 'quantization=1e5', 'target=india,land,divides', indiaFrameOut,
+    // The same India, as GeoJSON, to clip the states to. Written from this job
+    // so the states stop exactly where the drawn coastline does.
+    '-o', 'format=geojson', 'target=india', indiaClip,
+  ],
+  { stdio: 'inherit' }
+)
+
+/**
+ * The states, clipped to that same India so the two agree at the edge. Only
+ * `statelines` is drawn — the internal boundaries, with nothing along the coast
+ * or the national border, which India's own outline draws once and properly.
+ */
 const indiaOut = resolve(OUT, 'india.topo.json')
 execFileSync(
   resolve(ROOT, 'node_modules/.bin/mapshaper'),
@@ -322,17 +387,22 @@ execFileSync(
     indiaDistricts,
     // Districts are only the delivery format; the map wants states.
     '-dissolve', 'state',
-    '-simplify', '8%', 'keep-shapes',
+    '-simplify', 'interval=500', 'keep-shapes',
     '-clean',
     '-rename-layers', 'states',
-    '-o', 'format=topojson', 'quantization=1e5', 'id-field=state', indiaOut,
+    // Inner lines before the clip, not after: clipping one source's coastline
+    // against another's leaves a thread of slivers along the shore, and every
+    // sliver shares an edge with the state behind it, so the coast comes back
+    // as a state line a few kilometres inland.
+    '-innerlines', 'target=states', '+', 'name=statelines',
+    '-clip', indiaClip, 'target=states',
+    '-o', 'format=topojson', 'quantization=1e5', 'id-field=state', 'target=states,statelines', indiaOut,
   ],
   { stdio: 'inherit' }
 )
-const stateCount = Object.keys(
-  JSON.parse(readFileSync(indiaOut, 'utf8')).objects.states.geometries
-).length
-console.log(`India states: ${stateCount}`)
+const stateCount = JSON.parse(readFileSync(indiaOut, 'utf8')).objects.states.geometries.length
+
+console.log(`India states: ${stateCount}, framed by the land of ${NEIGHBOURS.length} neighbours`)
 
 /**
  * Second input: the hand-authored syllabus files.

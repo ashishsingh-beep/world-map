@@ -51,6 +51,16 @@ function fit(isos: string[], pad = 3): BBox {
  * exactly what the reference site does, and it makes the micro-states
  * unplayable. Russia keeps its real geometry and simply runs off the canvas.
  */
+/**
+ * The Indian map's frame: the whole of India with the neighbours that surround
+ * it. Fixed rather than fitted, so every Indian round — mountains now, rivers
+ * and the rest later — opens on the same recognisable map.
+ */
+const INDIA_VIEW: BBox = [
+  [66, 5],
+  [98, 38],
+]
+
 const VIEW_OVERRIDES: Partial<Record<string, BBox>> = {
   world: [
     [-180, -58],
@@ -163,9 +173,11 @@ function continentPlaceRound({
   const worldwide = name === 'World'
   // The Himalaya runs through five countries, so its round draws the whole
   // neighbourhood and lets the state outlines do the locating.
+  // The Indian map is India plus only the neighbours that frame it — enough
+  // context for the mountains, rivers and coasts to sit against, and no more.
   const isos =
     atlas === 'india'
-      ? ['IND', 'PAK', 'NPL', 'BTN', 'CHN', 'BGD', 'AFG', 'MMR', 'LKA', 'TJK']
+      ? ['IND', 'PAK', 'NPL', 'BTN', 'CHN', 'BGD', 'AFG', 'MMR', 'LKA']
       : worldwide
         ? allIsos
         : isosIn(name as Continent)
@@ -182,19 +194,15 @@ function continentPlaceRound({
     // Antarctic seas and the Arctic sit outside the standard world box, so the
     // water round stretches it to reach them — an unreachable question is
     // unanswerable, since panning is clamped to the starting view.
-    // The Indian map frames the mountains themselves, not the ten countries
-    // drawn behind them: fitting to the render list would put the Himalaya in
-    // a corner of a box stretching from Sri Lanka to Tajikistan.
+    /**
+     * The Indian map always frames the whole country, whatever the round is
+     * about: Kanyakumari to Ladakh, with the neighbours that touch it. Fitting
+     * to the round's own features instead would give the mountains a
+     * Himalaya-shaped letterbox and leave nowhere for the rivers to go.
+     */
     view:
       atlas === 'india'
-        ? fitAround(
-            [
-              [72, 26],
-              [96, 37],
-            ],
-            ps.flatMap((p) => (p.line ?? [p.point]) as [number, number][]),
-            1.5
-          )
+        ? INDIA_VIEW
         : fitAround(
             worldwide ? (VIEW_OVERRIDES.world as BBox) : fit(isos),
             ps.map((p) => p.point)

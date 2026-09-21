@@ -5,7 +5,7 @@ import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } f
 import 'd3-transition'
 import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
 import { areaOf } from '../data/marine'
-import { states as indiaStates } from '../data/india'
+import { indiaDivides, indiaLand, indiaOutline, stateLines } from '../data/india'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -212,9 +212,18 @@ export function MapCanvas({
 
   const askSet = useMemo(() => new Set(askable ?? render), [askable, render])
 
+  /**
+   * On the Indian map, India itself is drawn from its own state source rather
+   * than from the world country layer. The two disagree through Kashmir, and
+   * drawing both laid a second line beside the first right where the border
+   * matters most. Neighbours still come from the country layer.
+   */
   const drawn = useMemo(
-    () => render.map((iso) => featureByIso.get(iso)).filter(Boolean) as CountryFeature[],
-    [render]
+    () =>
+      (atlas === 'india' ? [] : render)
+        .map((iso) => featureByIso.get(iso))
+        .filter(Boolean) as CountryFeature[],
+    [render, atlas]
   )
 
   /**
@@ -461,19 +470,73 @@ export function MapCanvas({
             )
           })}
 
-          {atlas === 'india' &&
-            indiaStates.map((f, i) => (
-              <path
-                key={`s-${f.id ?? i}`}
-                d={path(f as never) ?? undefined}
-                fill="none"
-                stroke="#1f2d4d"
-                strokeOpacity={0.4}
-                strokeWidth={0.5}
-                vectorEffect="non-scaling-stroke"
-                pointerEvents="none"
-              />
-            ))}
+          {atlas === 'india' && (
+            <>
+              {/* The surround, filled and never stroked. It is one dissolved
+                  shape rather than eight countries because a neighbour's
+                  outline drawn against India would run a second line beside
+                  India's own, through exactly the border this project cares
+                  most about. The countries part from each other below. */}
+              {indiaLand.map((f, i) => (
+                <path
+                  key={`nl-${i}`}
+                  d={path(f as never) ?? undefined}
+                  // A solid muted land, not the idle fill at low opacity: over
+                  // the sea that reads as teal, not as a quieter country.
+                  fill="#eceedb"
+                  stroke="none"
+                  pointerEvents="none"
+                />
+              ))}
+              {indiaDivides.map((f, i) => (
+                <path
+                  key={`nd-${i}`}
+                  d={path(f as never) ?? undefined}
+                  fill="none"
+                  stroke="#1f2d4d"
+                  strokeOpacity={0.55}
+                  strokeWidth={0.6}
+                  vectorEffect="non-scaling-stroke"
+                  pointerEvents="none"
+                />
+              ))}
+              {/* India's land, from its own source: one boundary through
+                  Kashmir, solid, with Gilgit-Baltistan and Aksai Chin inside
+                  it. Filled before the state lines are drawn over it. */}
+              {indiaOutline.map((f, i) => (
+                <path
+                  key={`io-${i}`}
+                  d={path(f as never) ?? undefined}
+                  fill={FILLS.idle}
+                  stroke="none"
+                  pointerEvents="none"
+                />
+              ))}
+              {stateLines.map((f, i) => (
+                <path
+                  key={`s-${i}`}
+                  d={path(f as never) ?? undefined}
+                  fill="none"
+                  stroke="#1f2d4d"
+                  strokeOpacity={0.35}
+                  strokeWidth={0.5}
+                  vectorEffect="non-scaling-stroke"
+                  pointerEvents="none"
+                />
+              ))}
+              {indiaOutline.map((f, i) => (
+                <path
+                  key={`ib-${i}`}
+                  d={path(f as never) ?? undefined}
+                  fill="none"
+                  stroke="#1f2d4d"
+                  strokeWidth={1.4}
+                  vectorEffect="non-scaling-stroke"
+                  pointerEvents="none"
+                />
+              ))}
+            </>
+          )}
 
           {/* Ranges: a band along the ridgeline, under the peaks standing on
               them. Width is in screen pixels, so a band stays a band at every
