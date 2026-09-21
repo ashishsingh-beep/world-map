@@ -453,6 +453,42 @@
       "tier": 1
     },
     {
+      "id": "na-baja-california",
+      "name": "Baja California Peninsula",
+      "aliases": ["Baja California", "Baja"],
+      "type": "peninsula",
+      "country": "MEX",
+      "point": [-113.5, 27.5],
+      "spanKm": 420,
+      "significance": "Long finger of Mexico down the Pacific, cut off from the mainland by the Gulf of California",
+      "notes": ["The Gulf of California is also called the Sea of Cortés"],
+      "tier": 1
+    },
+    {
+      "id": "na-yucatan",
+      "name": "Yucatan Peninsula",
+      "aliases": ["Yucat\u00e1n", "Yucatan"],
+      "type": "peninsula",
+      "country": "MEX",
+      "point": [-89.0, 19.7],
+      "spanKm": 300,
+      "significance": "Block of land between the Gulf of Mexico and the Caribbean, shared by Mexico, Belize and Guatemala",
+      "notes": ["Chicxulub crater, from the asteroid that ended the dinosaurs, lies under its northwest coast"],
+      "tier": 1
+    },
+    {
+      "id": "na-ungava",
+      "name": "Ungava Peninsula",
+      "aliases": ["Ungava"],
+      "type": "peninsula",
+      "country": "CAN",
+      "point": [-73.5, 60.5],
+      "spanKm": 320,
+      "significance": "Northern tip of Quebec, between Hudson Bay and Ungava Bay",
+      "notes": ["Hudson Strait runs along its north, joining Hudson Bay to the Atlantic"],
+      "tier": 2
+    },
+    {
       "id": "na-bermuda-triangle",
       "name": "Bermuda Triangle",
       "aliases": [],

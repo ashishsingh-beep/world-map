@@ -11,6 +11,7 @@ export type PlaceType =
   | 'mine'
   | 'canal'
   | 'zone'
+  | 'peninsula'
   | 'ocean'
   | 'sea'
   | 'strait'
@@ -106,6 +107,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   mine: 'mine',
   canal: 'canal',
   zone: 'region',
+  peninsula: 'peninsula',
   ocean: 'ocean',
   sea: 'sea',
   strait: 'strait',

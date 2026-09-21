@@ -332,6 +332,16 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
   /** Stable, so saving can key off "a question was answered" and nothing else. */
   const queueIds = useMemo(() => queue.map((q) => q.id), [queue])
 
+  /**
+   * Every answer in the round, for the typed input's suggestions. The round's
+   * own set and not all 196 countries: a name this round never asks for is not
+   * a thing the player could mean.
+   */
+  const vocabulary = useMemo(
+    () => queue.map((q) => q.name).sort((a, b) => a.localeCompare(b)),
+    [queue]
+  )
+
   return {
     current,
     index,
@@ -351,6 +361,7 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     skip,
     states,
     points,
+    vocabulary,
     /** How far the last tap landed from the answer — only set on point questions. */
     missKm,
     /** The right spelling, when the typed answer was accepted in spite of it. */

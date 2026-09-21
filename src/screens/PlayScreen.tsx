@@ -1,13 +1,27 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
 import { TYPE_LABEL, WATER_GLYPH } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
-import { QUESTION_SECONDS, useQuiz, type Mode, type QuizSnapshot } from '../game/useQuiz'
+import {
+  QUESTION_SECONDS,
+  normaliseName,
+  useQuiz,
+  type Mode,
+  type QuizSnapshot,
+} from '../game/useQuiz'
 import type { Round } from '../game/rounds'
 import { flagEmoji, formatClock } from '../ui/bits'
 import { ResultsScreen } from './ResultsScreen'
 
 const formatMiss = (km: number) => (km < 10 ? `${km.toFixed(1)} km` : `${Math.round(km)} km`)
+
+/**
+ * Suggestions start only once enough has been typed to be a recall rather than
+ * a browse: three letters into a 135-question round still leaves you needing to
+ * know the name. They fix spelling, they are not meant to be multiple choice.
+ */
+const SUGGEST_AFTER = 3
+const SUGGEST_LIMIT = 6
 
 interface Props {
   round: Round
@@ -24,12 +38,36 @@ interface Props {
 export function PlayScreen({ round, mode, timed, initial, onProgress, onExit, onRetry }: Props) {
   const quiz = useQuiz({ round, mode, timed, initial })
   const [draft, setDraft] = useState('')
+  /** Which suggestion the arrow keys are on; -1 means Enter submits what was typed. */
+  const [active, setActive] = useState(-1)
+  /** Escape hides the list without clearing the field, until the next keystroke. */
+  const [dismissed, setDismissed] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setDraft('')
+    setActive(-1)
+    setDismissed(false)
     if (mode !== 'pin' && quiz.phase === 'asking') inputRef.current?.focus()
   }, [quiz.index, quiz.phase, mode])
+
+  const { vocabulary } = quiz
+  const suggestions = useMemo(() => {
+    const typed = normaliseName(draft)
+    if (typed.length < SUGGEST_AFTER) return []
+    const starts: string[] = []
+    const contains: string[] = []
+    for (const name of vocabulary) {
+      const n = normaliseName(name)
+      if (n.startsWith(typed)) starts.push(name)
+      else if (n.includes(typed)) contains.push(name)
+    }
+    // An exact match needs no suggesting — the field already holds the answer.
+    if (starts.length === 1 && !contains.length && normaliseName(starts[0]) === typed) return []
+    return [...starts, ...contains].slice(0, SUGGEST_LIMIT)
+  }, [draft, vocabulary])
+
+  const showing = !dismissed && quiz.phase === 'asking' ? suggestions : []
 
   // Saved once per question, not on the clock: `elapsed` ticks ten times a
   // second and writing that often would be absurd. Read through a ref for the
@@ -156,19 +194,73 @@ export function PlayScreen({ round, mode, timed, initial, onProgress, onExit, on
             className="pointer-events-auto flex w-full max-w-4xl gap-2"
             onSubmit={(e) => {
               e.preventDefault()
+              // Only what was typed. Picking a suggestion is Enter *on* it,
+              // handled below, so a fully typed answer is never swapped out.
               quiz.submitName(draft)
             }}
           >
-            <input
-              ref={inputRef}
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              placeholder={isPlaceRound ? 'Type place name' : 'Type country name'}
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck={false}
-              className="w-full rounded-xl bg-white px-5 py-4 text-xl font-semibold text-slate-900 shadow-xl outline-none"
-            />
+            <div className="relative flex-1">
+              <input
+                ref={inputRef}
+                value={draft}
+                onChange={(e) => {
+                  setDraft(e.target.value)
+                  setActive(-1)
+                  setDismissed(false)
+                }}
+                onKeyDown={(e) => {
+                  if (!showing.length) return
+                  if (e.key === 'ArrowDown') {
+                    e.preventDefault()
+                    setActive((i) => (i + 1) % showing.length)
+                  } else if (e.key === 'ArrowUp') {
+                    e.preventDefault()
+                    setActive((i) => (i <= 0 ? showing.length : i) - 1)
+                  } else if (e.key === 'Escape') {
+                    e.preventDefault()
+                    setDismissed(true)
+                    setActive(-1)
+                  } else if (e.key === 'Enter' && active >= 0) {
+                    e.preventDefault()
+                    quiz.submitName(showing[active])
+                  }
+                }}
+                placeholder={isPlaceRound ? 'Type place name' : 'Type country name'}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                role="combobox"
+                aria-expanded={showing.length > 0}
+                aria-controls="answer-suggestions"
+                aria-autocomplete="list"
+                className="w-full rounded-xl bg-white px-5 py-4 text-xl font-semibold text-slate-900 shadow-xl outline-none"
+              />
+              {showing.length > 0 && (
+                <ul
+                  id="answer-suggestions"
+                  className="absolute inset-x-0 top-full z-10 mt-2 overflow-hidden rounded-xl bg-white shadow-xl"
+                >
+                  {showing.map((name, i) => (
+                    <li key={name}>
+                      <button
+                        type="button"
+                        // mousedown, not click: a click would blur the field
+                        // first and the question would advance without focus.
+                        onMouseDown={(e) => {
+                          e.preventDefault()
+                          quiz.submitName(name)
+                        }}
+                        className={`block w-full cursor-pointer px-5 py-3 text-left text-lg font-semibold ${
+                          i === active ? 'bg-blue-600 text-white' : 'text-slate-900 hover:bg-slate-100'
+                        }`}
+                      >
+                        {name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             <button
               type="button"
               onClick={quiz.skip}

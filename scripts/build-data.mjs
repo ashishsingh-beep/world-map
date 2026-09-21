@@ -255,7 +255,7 @@ writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2)
  */
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
-  'mine', 'canal', 'zone',
+  'mine', 'canal', 'zone', 'peninsula',
   // Seas & Straits section
   'ocean', 'sea', 'strait',
 ])

@@ -38,6 +38,17 @@ Straits round lets you choose which notations to practise — seas, straits,
 canals, or any combination — but that picks *which set*, not how many of it,
 and the last remaining one cannot be unticked.
 
+**The typed input suggests, but only after three characters.** The list is the
+round's own answers, never all 196 names, and it is there to fix spelling — not
+to turn recall into multiple choice, which is what it becomes if it opens on one
+or two letters. Enter submits what was *typed*; picking a suggestion is Enter
+while one is highlighted, or a click, so a fully typed answer is never silently
+swapped for a suggestion. An exact match closes the list, having nothing to add.
+
+Suggestions do not replace the judge below. Someone who types the whole name and
+fat-fingers it never opened the list, and that answer still has to be marked
+fairly.
+
 **Typed answers are judged by `src/game/matchName.ts`.** A misspelling that is
 close enough counts as correct and shows the right spelling, but only if it is
 *strictly closer to the target than to every rival* — the other places in the
@@ -124,7 +135,7 @@ fails.
 | | |
 |---|---|
 | Modes | Pin (name → tap map), Type (map highlights → type name) |
-| Type input | No autocomplete; case- and accent-insensitive; misspellings accepted with a correction (see below) |
+| Type input | Suggestions after 3 characters; case- and accent-insensitive; misspellings still accepted with a correction (see below) |
 | Timer | 15s per question, or off |
 | Wrong/timeout | Reveal correct country, drop pin, move on |
 | Colours | correct green, wrong pick red, missed grey — all persist for the round |
