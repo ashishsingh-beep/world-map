@@ -77,7 +77,7 @@ const EXPECTED_COUNT = 196 + (INCLUDE_KOSOVO ? 1 : 0)
  * to sit beside. These get geometry only: no meta entry, so nothing downstream
  * can turn them into a question.
  */
-const RENDER_ONLY = ['GRL']
+const RENDER_ONLY = ['GRL', 'ATA']
 
 /** Display names where Natural Earth's ADMIN string isn't what a player expects. */
 const NAME_OVERRIDES = {
@@ -415,9 +415,19 @@ for (const file of syllabusFiles) {
         const r = REGION_OF[meta[iso]?.continent]
         if (r) found.add(r)
       }
-      for (const r of p.region ?? []) {
-        if (REGIONS.has(r)) found.add(r)
-        else errors.push(`${where(p.id)}: unknown region "${r}"`)
+      /**
+       * An authored `region` replaces what the coastline implies rather than
+       * adding to it. Russia is filed as European — right for the country
+       * rounds — so every sea on its Siberian and Pacific coast inherited
+       * "europe", and the Sea of Japan cannot be corrected by adding to a set
+       * it should never have been in.
+       */
+      if (p.region) {
+        found.clear()
+        for (const r of p.region) {
+          if (REGIONS.has(r)) found.add(r)
+          else errors.push(`${where(p.id)}: unknown region "${r}"`)
+        }
       }
       regions = [...found]
     }
@@ -546,6 +556,33 @@ const builtMarine = topojsonFeature(
   JSON.parse(readFileSync(marineOut, 'utf8')),
   JSON.parse(readFileSync(marineOut, 'utf8')).objects.marine
 )
+/**
+ * Natural Earth's marine layer is mostly real extents, but a few entries are
+ * label-placement stubs: its "Scotia Sea" is a 50km sliver standing in for a
+ * 900km sea. Drawn, such a stub is invisible and unclickable, and judged, it
+ * marks every honest tap wrong — worse than the point it replaced. Anything
+ * under a fifth of the authored span is one; the smallest real extent here is
+ * a third, so the gap is wide.
+ */
+const STUB_RATIO = 0.2
+const stubs = []
+for (const f of builtMarine.features) {
+  const p = places.find((x) => x.id === (f.id ?? f.properties?.id))
+  if (!p?.spanKm) continue
+  const km = Math.sqrt((geoArea(f) * 6371 * 6371) / Math.PI)
+  if (km / p.spanKm < STUB_RATIO) {
+    stubs.push(
+      `${p.id}: ${p.name}'s polygon is ${km.toFixed(0)}km across against a ${p.spanKm}km span — ` +
+        'a label stub, not an extent. Give it "marine": [] and let it stay a marker.'
+    )
+  }
+}
+if (stubs.length) {
+  console.error(`\nMarine label stubs (${stubs.length}):`)
+  for (const e of stubs) console.error('  ' + e)
+  process.exit(1)
+}
+
 const strayLabels = []
 for (const f of builtMarine.features) {
   const p = places.find((x) => x.id === (f.id ?? f.properties?.id))

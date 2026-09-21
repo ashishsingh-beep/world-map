@@ -91,21 +91,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         onPickPoint={
           isPlaceRound
             ? (lonLat, toScreen) => {
-                // A tap inside a sea picks that sea, and the smallest one wins
-                // so the Tyrrhenian beats the Mediterranean around it.
-                let inside: { id: string; area: number } | null = null
-                for (const p of visible) {
-                  const f = areaOf(p.id)
-                  if (!f || !geoContains(f, lonLat)) continue
-                  const size = geoArea(f)
-                  if (!inside || size < inside.area) inside = { id: p.id, area: size }
-                }
-                if (inside) {
-                  setSelected(inside.id)
-                  return
-                }
-                // Otherwise whatever the tap landed nearest to, so small markers
-                // stay reachable without pixel-hunting.
+                // Markers first. Every strait sits inside some sea and the
+                // Scotia Sea inside the Southern Ocean, so letting the area win
+                // would make a marker in open water impossible to click.
                 let best: { id: string; px: number } | null = null
                 for (const p of visible) {
                   if (areaOf(p.id)) continue
@@ -115,7 +103,20 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   const px = Math.hypot(a[0] - b[0], a[1] - b[1])
                   if (!best || px < best.px) best = { id: p.id, px }
                 }
-                setSelected(best && best.px <= 40 ? best.id : null)
+                if (best && best.px <= 40) {
+                  setSelected(best.id)
+                  return
+                }
+                // Otherwise the sea the tap landed in, smallest first so the
+                // Tyrrhenian beats the Mediterranean around it.
+                let inside: { id: string; area: number } | null = null
+                for (const p of visible) {
+                  const f = areaOf(p.id)
+                  if (!f || !geoContains(f, lonLat)) continue
+                  const size = geoArea(f)
+                  if (!inside || size < inside.area) inside = { id: p.id, area: size }
+                }
+                setSelected(inside ? inside.id : null)
               }
             : undefined
         }

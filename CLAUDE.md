@@ -22,12 +22,15 @@ part of India. Never swap in the ISO/default Natural Earth file. `npm run data`
 asserts India's northern extent is ~37°N and fails loudly if the wrong source
 is used.
 
-**Greenland is drawn, never asked.** It is Danish, not a UN member, so it is
+**Greenland and Antarctica are drawn, never asked.** It is Danish, not a UN member, so it is
 outside the 196 — but leaving it out put a hole in the North Atlantic beside
 the Denmark Strait and Baffin Bay. `RENDER_ONLY` in the build gives it geometry
 with no meta entry, and `allIsos` comes from the metadata rather than the
 geometry so nothing can turn it into a question. Use `renderIsos` to draw,
 `allIsos` to ask; a round's `render` carries the context, its `askable` does not.
+Antarctica is there for the same reason: without it the Scotia Sea, the Drake
+Passage and the Ross, Weddell and Amundsen Seas float in featureless blue with
+nothing to locate them against.
 
 **Kosovo** does not exist separately in that dataset (its territory is inside
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
@@ -42,9 +45,15 @@ Regions are three, not six continents: Africa rides with Asia and Oceania with
 the Pacific side of it. The build derives them in `REGION_OF` from the countries
 along each feature, so a boundary sea belongs to both regions it touches — the
 Mediterranean is European and Asian, the Bering Strait American and Asian — and
-the counts deliberately do not add up to the total. The few with no bordering
-country say so with an explicit `region` in the syllabus; the Antarctic seas
-name none, and appear only under All. Region and notations narrow *practice*
+the counts deliberately do not add up to the total.
+
+An authored `region` in the syllabus **replaces** what the coastline implies
+rather than adding to it, because some of it needs overruling. Russia is filed
+as European, which is right for the country rounds and wrong for every sea on
+its Siberian and Pacific coast: the Sea of Japan, the Laptev and the Sea of
+Okhotsk all inherited "europe" and had to be told otherwise. The White and
+Barents Seas keep it, being genuinely European Arctic. The Antarctic seas name
+no region and appear only under All. Region and notations narrow *practice*
 only: Learn always draws the whole set, with its own legend chips.
 
 **The typed input suggests, but only after three characters.** The list is the
@@ -83,8 +92,16 @@ The area's fill carries the quiz *state*, as a country's does. The authored
 point survives as the label's anchor and nothing else; the build fails if it
 falls outside its own sea. `KindSwatch` in `src/ui/bits.tsx` redraws the legend,
 so change both or they drift apart — it shows a patch for oceans and seas now,
-not a pin. Two seas have no polygon in the layer (the Celtic Sea, the Gulf of
-Panama) and fall back to their point; they declare that with `"marine": []`.
+not a pin. Three seas have no usable polygon and fall back to their point, declaring it
+with `"marine": []`: the Celtic Sea and the Gulf of Panama are absent from the
+layer, and Natural Earth's "Scotia Sea" is a 50km label stub standing in for a
+900km sea. The build measures every polygon against its authored `spanKm` and
+refuses one under a fifth of it — drawn, a stub is invisible and unclickable;
+judged, it marks every honest tap wrong.
+
+In Learn a marker beats a containing area, never the other way round: every
+strait sits inside some sea, so letting the area win would make them all
+unclickable.
 Country micro-state markers are switched off in that round so no stray ring
 competes with the sea notation.
 

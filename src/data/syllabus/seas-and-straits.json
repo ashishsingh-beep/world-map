@@ -113,6 +113,7 @@
     },
     {
       "id": "oc-arctic",
+      "region": ["america", "europe", "asia"],
       "name": "Arctic Ocean",
       "aliases": [],
       "type": "ocean",
@@ -422,6 +423,7 @@
     },
     {
       "id": "sea-kara",
+      "region": ["asia"],
       "name": "Kara Sea",
       "aliases": [],
       "type": "sea",
@@ -436,6 +438,7 @@
     },
     {
       "id": "sea-laptev",
+      "region": ["asia"],
       "name": "Laptev Sea",
       "aliases": [],
       "type": "sea",
@@ -450,6 +453,7 @@
     },
     {
       "id": "sea-east-siberian",
+      "region": ["asia"],
       "name": "East Siberian Sea",
       "aliases": [],
       "type": "sea",
@@ -464,6 +468,7 @@
     },
     {
       "id": "sea-chukchi",
+      "region": ["asia", "america"],
       "name": "Chukchi Sea",
       "aliases": [],
       "type": "sea",
@@ -1003,6 +1008,7 @@
     },
     {
       "id": "sea-japan",
+      "region": ["asia"],
       "name": "Sea of Japan",
       "aliases": ["East Sea"],
       "type": "sea",
@@ -1017,6 +1023,7 @@
     },
     {
       "id": "sea-okhotsk",
+      "region": ["asia"],
       "name": "Sea of Okhotsk",
       "aliases": [],
       "type": "sea",
@@ -1031,6 +1038,7 @@
     },
     {
       "id": "sea-bering",
+      "region": ["asia", "america"],
       "name": "Bering Sea",
       "aliases": [],
       "type": "sea",
@@ -1299,12 +1307,12 @@
     },
     {
       "id": "sea-scotia",
-      "region": ["america"],
+      "marine": [],
       "name": "Scotia Sea",
       "aliases": [],
       "type": "sea",
       "country": null,
-      "point": [-54.6, -61.2],
+      "point": [-45.0, -57.0],
       "spanKm": 450,
       "basin": "Southern Ocean",
       "borders": [],
@@ -1782,6 +1790,7 @@
     },
     {
       "id": "st-la-perouse",
+      "region": ["asia"],
       "name": "La Pérouse Strait",
       "aliases": ["La Perouse Strait", "Soya Strait"],
       "type": "strait",
@@ -1797,6 +1806,7 @@
     },
     {
       "id": "st-bering",
+      "region": ["asia", "america"],
       "name": "Bering Strait",
       "aliases": [],
       "type": "strait",

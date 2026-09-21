@@ -844,6 +844,11 @@
     },
     {
       "id": "oc-arctic",
+      "region": [
+        "america",
+        "europe",
+        "asia"
+      ],
       "name": "Arctic Ocean",
       "aliases": [],
       "type": "ocean",
@@ -869,8 +874,9 @@
       "continent": "World",
       "section": "water",
       "regions": [
+        "america",
         "europe",
-        "america"
+        "asia"
       ]
     },
     {
@@ -1448,6 +1454,9 @@
     },
     {
       "id": "sea-kara",
+      "region": [
+        "asia"
+      ],
       "name": "Kara Sea",
       "aliases": [],
       "type": "sea",
@@ -1467,11 +1476,14 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe"
+        "asia"
       ]
     },
     {
       "id": "sea-laptev",
+      "region": [
+        "asia"
+      ],
       "name": "Laptev Sea",
       "aliases": [],
       "type": "sea",
@@ -1491,11 +1503,14 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe"
+        "asia"
       ]
     },
     {
       "id": "sea-east-siberian",
+      "region": [
+        "asia"
+      ],
       "name": "East Siberian Sea",
       "aliases": [],
       "type": "sea",
@@ -1515,11 +1530,15 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe"
+        "asia"
       ]
     },
     {
       "id": "sea-chukchi",
+      "region": [
+        "asia",
+        "america"
+      ],
       "name": "Chukchi Sea",
       "aliases": [],
       "type": "sea",
@@ -1540,7 +1559,7 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe",
+        "asia",
         "america"
       ]
     },
@@ -2537,6 +2556,9 @@
     },
     {
       "id": "sea-japan",
+      "region": [
+        "asia"
+      ],
       "name": "Sea of Japan",
       "aliases": [
         "East Sea"
@@ -2561,12 +2583,14 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "asia",
-        "europe"
+        "asia"
       ]
     },
     {
       "id": "sea-okhotsk",
+      "region": [
+        "asia"
+      ],
       "name": "Sea of Okhotsk",
       "aliases": [],
       "type": "sea",
@@ -2587,12 +2611,15 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe",
         "asia"
       ]
     },
     {
       "id": "sea-bering",
+      "region": [
+        "asia",
+        "america"
+      ],
       "name": "Bering Sea",
       "aliases": [],
       "type": "sea",
@@ -2613,7 +2640,7 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe",
+        "asia",
         "america"
       ]
     },
@@ -3065,16 +3092,14 @@
     },
     {
       "id": "sea-scotia",
-      "region": [
-        "america"
-      ],
+      "marine": [],
       "name": "Scotia Sea",
       "aliases": [],
       "type": "sea",
       "country": null,
       "point": [
-        -54.6,
-        -61.2
+        -45,
+        -57
       ],
       "spanKm": 450,
       "basin": "Southern Ocean",
@@ -3084,9 +3109,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
-      "regions": [
-        "america"
-      ]
+      "regions": []
     },
     {
       "id": "st-gibraltar",
@@ -3946,6 +3969,9 @@
     },
     {
       "id": "st-la-perouse",
+      "region": [
+        "asia"
+      ],
       "name": "La Pérouse Strait",
       "aliases": [
         "La Perouse Strait",
@@ -3970,12 +3996,15 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "asia",
-        "europe"
+        "asia"
       ]
     },
     {
       "id": "st-bering",
+      "region": [
+        "asia",
+        "america"
+      ],
       "name": "Bering Strait",
       "aliases": [],
       "type": "strait",
@@ -3999,7 +4028,7 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "europe",
+        "asia",
         "america"
       ]
     },
