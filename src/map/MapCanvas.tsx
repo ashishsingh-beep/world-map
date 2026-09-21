@@ -34,7 +34,7 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
  * diamond as a narrow gate between two of them, and the two are also coloured
  * apart — so a sea and a strait are never confused at a glance.
  */
-export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal' | 'peninsula'
+export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal'
 
 /** A point place drawn on top of the geography (a city, port, sea, strait…). */
 export interface MapPoint {
@@ -52,9 +52,6 @@ const SHAPE_FILLS: Record<MarkerShape, string> = {
   ocean: '#0d9488',
   sea: '#1d4ed8',
   strait: '#f97316',
-  // Brown, and the only flat-based shape in the set: this one is land, and
-  // nothing else on this map is.
-  peninsula: '#92400e',
   canal: '#a855f7',
 }
 
@@ -64,7 +61,6 @@ const SHAPE_SCALE: Record<MarkerShape, number> = {
   ocean: 1.7,
   sea: 1,
   strait: 1,
-  peninsula: 1,
   canal: 1,
 }
 
@@ -468,17 +464,6 @@ export function MapCanvas({
                       vectorEffect="non-scaling-stroke"
                     />
                   </g>
-                ) : shape === 'peninsula' ? (
-                  <path
-                    d={`M ${cx} ${cy - r * 1.15} L ${cx + r * 1.2} ${cy + r * 0.85}
-                        L ${cx - r * 1.2} ${cy + r * 0.85} Z`}
-                    fill={fill}
-                    fillOpacity={0.95}
-                    stroke="#1f2d4d"
-                    strokeWidth={isTarget ? 2.5 : 1.5}
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
                 ) : shape === 'canal' ? (
                   <rect
                     x={cx - r * 0.85}

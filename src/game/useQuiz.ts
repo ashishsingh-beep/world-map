@@ -96,13 +96,10 @@ function buildQuestions(round: Round): Question[] {
   })
 }
 
-/** Ocean, sea, strait, canal and peninsula each get their own notation;
- *  everything else is a dot. */
+/** Sea, strait and canal each get their own notation; everything else is a dot. */
 export function shapeOf(q: { place: Place | null }): MarkerShape {
   const t = q.place?.type
-  return t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'peninsula'
-    ? t
-    : 'dot'
+  return t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' ? t : 'dot'
 }
 
 function shuffle<T>(input: T[]): T[] {

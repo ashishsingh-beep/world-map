@@ -187,7 +187,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
             {place.borders && place.borders.length > 0 && (
               <p className="mt-1 text-xs text-slate-600">
                 <span className="font-bold text-slate-400">ALONG </span>
-                {place.borders.map((iso) => metaOf(iso).name).join(', ')}
+                {place.borders.map((iso) => place.borderAs?.[iso] ?? metaOf(iso).name).join(', ')}
               </p>
             )}
 

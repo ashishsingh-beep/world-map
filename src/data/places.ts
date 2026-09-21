@@ -14,7 +14,6 @@ export type PlaceType =
   | 'ocean'
   | 'sea'
   | 'strait'
-  | 'peninsula'
 
 export interface Place {
   id: string
@@ -38,6 +37,12 @@ export interface Place {
   continent: string
   /** Countries and territories along it — water features touch several. */
   borders?: string[]
+  /**
+   * How to name one of those countries on this feature's card, where the bare
+   * name loses the point: the Kerch Strait's Ukrainian side is Crimea, and
+   * "Ukraine" alone does not say so.
+   */
+  borderAs?: Record<string, string>
   /** What a strait joins, e.g. "Red Sea ↔ Gulf of Aden". */
   connects?: string
   /** Ocean basin or region it is filed under. */
@@ -104,7 +109,6 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   ocean: 'ocean',
   sea: 'sea',
   strait: 'strait',
-  peninsula: 'peninsula',
 }
 
 /** The two notations the Seas & Straits section is built around. */
