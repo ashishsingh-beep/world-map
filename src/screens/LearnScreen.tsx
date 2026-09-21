@@ -6,7 +6,7 @@ import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/Map
 import { areaOf } from '../data/marine'
 import { shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { KindSwatch, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, KindSwatch, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 
@@ -29,6 +29,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal'
   const hasWater = roundPlaces.some((p) => isWaterKind(p.type))
   const isWaterRound = roundPlaces[0]?.section === 'water'
+  // Which belts this round actually draws, so the legend never names one that
+  // is not on the map.
+  const belts = BELTS.filter((b) => roundPlaces.some((p) => p.belt === b.id && p.line))
 
   const visible = useMemo(
     () =>
@@ -80,6 +83,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           line: p.line as [number, number][],
           state: selected === p.id ? 'target' : 'idle',
           label: showAll || selected === p.id ? p.name.toUpperCase() : undefined,
+          belt: p.belt,
         })),
     [visible, selected, showAll]
   )
@@ -160,6 +164,22 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         // would make the whole map jump on every selection.
         padding={{ top: 88, right: 32, bottom: isPlaceRound ? 170 : 32, left: 32 }}
       />
+
+      {belts.length > 0 && (
+        <div className="pointer-events-none absolute inset-x-0 top-20 flex justify-center px-4">
+          <div className="flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-3 py-1.5 shadow-lg">
+            {belts.map((b) => (
+              <span
+                key={b.id}
+                className="flex items-center gap-1.5 px-1.5 text-xs font-bold text-slate-700"
+              >
+                <BeltSwatch belt={b.id} />
+                {b.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {hasWater && (
         <div className="pointer-events-none absolute inset-x-0 top-20 flex justify-center px-4">

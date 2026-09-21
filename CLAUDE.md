@@ -150,6 +150,22 @@ ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
 range emits no marker and no second label. A peak is a brown triangle.
 
+**The belt is the colour.** Four parallel ranges in one brown were a single
+smear, so `BELT_BAND` in `MapCanvas` gives each belt a band colour and a label
+ink: Trans brown, Greater sky blue, Lesser purple, Shiwalik green. `BeltSwatch`
+in `src/ui/bits.tsx` draws the Learn legend from the same values — change one
+and change the other, or the legend stops describing the map. A quiz state still
+overrides the belt colour, because in a round the fill has to mean right, wrong
+or missed.
+
+The band is wide enough that a belt's peaks sit inside their own band, and faint
+enough (0.38) that where two belts overlap both still read. Widening it is not
+the way to reach a peak that is nowhere near its crest: when Bandarpunch and
+Kedarnath sat 70-90km off the Greater Himalaya, the ridgeline through Garhwal
+was wrong — it cut the corner from Lahaul to Nanda Devi — and the fix was to
+trace it through them. The furthest any peak now sits from its belt is
+Rakaposhi's 26km, which is where Rakaposhi actually is.
+
 Those ridgelines are **hand-traced**, and they are the only geometry in this
 project not taken from a published dataset. That is not laziness: Natural Earth
 has `HIMALAYAS` as one coarse blob, plus Karakoram and Shiwalik, and carries

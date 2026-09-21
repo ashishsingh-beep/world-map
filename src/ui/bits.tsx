@@ -1,3 +1,4 @@
+import { BELT_BAND, type Belt } from '../map/MapCanvas'
 import type { ReactNode } from 'react'
 
 /** ISO-2 → regional indicator pair, e.g. "IN" → 🇮🇳. */
@@ -37,6 +38,35 @@ export const WATER_REGIONS = [
 ]
 
 export type WaterRegion = (typeof WATER_REGIONS)[number]['id']
+
+/**
+ * The Himalayan belts, for the Learn legend. Four parallel ranges drawn in one
+ * colour were a single smear; the colour is what tells them apart before a
+ * label is read, and this list is what says which colour is which.
+ */
+export const BELTS = [
+  { id: 'trans' as const, label: 'Trans' },
+  { id: 'greater' as const, label: 'Greater' },
+  { id: 'lesser' as const, label: 'Lesser' },
+  { id: 'outer' as const, label: 'Shiwalik' },
+]
+
+/** The band as the map draws it, colour and translucency both. */
+export function BeltSwatch({ belt }: { belt: Belt }) {
+  return (
+    <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden>
+      <rect
+        x="0"
+        y="2"
+        width="18"
+        height="8"
+        rx="4"
+        fill={BELT_BAND[belt].band}
+        fillOpacity={0.38}
+      />
+    </svg>
+  )
+}
 
 /** The marker as it is drawn on the map, so legend and map never drift apart. */
 export function KindSwatch({ type }: { type: WaterKind }) {

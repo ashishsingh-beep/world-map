@@ -364,7 +364,9 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     const out = new Map<string, MapBand>()
     const add = (q: Question | null | undefined, state: CountryState) => {
       const line = q?.place?.line
-      if (q && line) out.set(q.id, { id: q.id, line: line as [number, number][], state })
+      if (q && line) {
+        out.set(q.id, { id: q.id, line: line as [number, number][], state, belt: q.place?.belt })
+      }
     }
     for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
     if (phase === 'revealing' && current) {

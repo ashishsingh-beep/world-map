@@ -48,6 +48,24 @@ export interface MapBand {
   line: [number, number][]
   state: CountryState
   label?: string
+  /** Which Himalayan belt it belongs to, which is what colours it. */
+  belt?: Belt
+}
+
+/**
+ * The belts, coloured apart. Four parallel ranges drawn in one brown were a
+ * single smear; the colour is what says Trans from Greater from Lesser from
+ * Shiwalik at a glance, before any label is read. `BeltSwatch` in
+ * `src/ui/bits.tsx` draws the legend from these same values — change one and
+ * change the other, or the legend stops describing the map.
+ */
+export type Belt = 'trans' | 'greater' | 'lesser' | 'outer'
+
+export const BELT_BAND: Record<Belt, { band: string; ink: string }> = {
+  trans: { band: '#b98a5c', ink: '#7c4a16' },
+  greater: { band: '#5ec2f0', ink: '#075985' },
+  lesser: { band: '#b49ae8', ink: '#5b21b6' },
+  outer: { band: '#8fcc63', ink: '#3f6212' },
 }
 
 /** A sea or ocean drawn as its real extent rather than as a marker. */
@@ -540,20 +558,24 @@ export function MapCanvas({
 
           {/* Ranges: a band along the ridgeline, under the peaks standing on
               them. Width is in screen pixels, so a band stays a band at every
-              zoom rather than swelling into a blob. */}
+              zoom rather than swelling into a blob — wide enough that the peaks
+              of a belt sit inside their own band (Rakaposhi, the furthest off
+              its crest, is 26km out), and faint enough that where two belts
+              overlap both still read. */}
           {bands?.map((b) => {
             const d = path({ type: 'LineString', coordinates: b.line } as never)
             if (!d) return null
             const idle = b.state === 'idle'
+            const belt = BELT_BAND[b.belt ?? 'greater']
             return (
               <g key={`b-${b.id}`} pointerEvents="none">
                 <path id={`band-${b.id}`} d={d} fill="none" stroke="none" />
                 <path
                   d={d}
                   fill="none"
-                  stroke={idle ? '#c2410c' : FILLS[b.state]}
-                  strokeOpacity={idle ? 0.3 : 0.75}
-                  strokeWidth={14 / k}
+                  stroke={idle ? belt.band : FILLS[b.state]}
+                  strokeOpacity={idle ? 0.38 : 0.75}
+                  strokeWidth={22 / k}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -561,7 +583,7 @@ export function MapCanvas({
                   <text
                     fontSize={11 / k}
                     fontWeight={800}
-                    fill="#7c2d12"
+                    fill={belt.ink}
                     stroke="#fff"
                     strokeWidth={3 / k}
                     paintOrder="stroke"
