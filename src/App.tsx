@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
+  INDIA_CONTINENTS,
   PLACE_CONTINENTS,
   PLACE_ROUNDS,
   WATER_CONTINENTS,
@@ -20,7 +21,7 @@ import {
   type WaterKind,
   type WaterRegion,
 } from './ui/bits'
-import { HOME, useRoute } from './app/route'
+import { HOME, useRoute, type Atlas } from './app/route'
 import {
   clearRound,
   fits,
@@ -115,7 +116,9 @@ export default function App() {
         // Only on a refresh into a live round, or an explicit Resume.
         initial={fits(resuming, roundId, askIds) ? resuming : null}
         onProgress={onProgress}
-        onExit={() => navigate(HOME)}
+        onExit={() =>
+          navigate({ view: 'atlas', roundId, atlas: round.atlas === 'india' ? 'india' : 'world' })
+        }
         onRetry={() => begin(null)}
       />
     )
@@ -131,10 +134,12 @@ export default function App() {
         <div className="mx-auto max-w-2xl">
           <button
             type="button"
-            onClick={() => navigate(HOME)}
+            onClick={() =>
+              navigate({ view: 'atlas', roundId, atlas: round.atlas === 'india' ? 'india' : 'world' })
+            }
             className="mb-4 cursor-pointer text-sm font-bold text-slate-500"
           >
-            ← All games
+            ← Back
           </button>
           <h1 className="text-4xl font-extrabold text-slate-900">{round.title}</h1>
           <p className="mt-1 mb-6 text-slate-600">{round.blurb}</p>
@@ -279,10 +284,97 @@ export default function App() {
     )
   }
 
+  if (route.view === 'home') {
+    const atlases: { id: Atlas; title: string; blurb: string; count: string }[] = [
+      {
+        id: 'world',
+        title: 'World Map',
+        blurb: 'Countries, capitals and ports, and the seas and straits between them.',
+        count: `${ROUND_ORDER.length} country rounds · ${PLACE_CONTINENTS.length + WATER_CONTINENTS.length} more`,
+      },
+      {
+        id: 'india',
+        title: 'India Map',
+        blurb: 'The subcontinent in detail, state by state. Mountains first.',
+        count: `${INDIA_CONTINENTS.length} section${INDIA_CONTINENTS.length === 1 ? '' : 's'}`,
+      },
+    ]
+    return (
+      <div className="min-h-dvh bg-slate-50 px-5 py-10">
+        <div className="mx-auto max-w-3xl">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Map Practice</h1>
+          <p className="mt-1 mb-8 text-slate-600">Pick a map.</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {atlases.map((a) => (
+              <button
+                key={a.id}
+                type="button"
+                onClick={() => navigate({ view: 'atlas', roundId, atlas: a.id })}
+                className="cursor-pointer rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition hover:shadow-md"
+              >
+                <div className="text-2xl font-extrabold text-slate-900">{a.title}</div>
+                <div className="mt-1 text-sm text-slate-600">{a.blurb}</div>
+                <div className="mt-4 text-xs font-bold tracking-wide text-slate-400 uppercase">
+                  {a.count}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (route.atlas === 'india') {
+    return (
+      <div className="min-h-dvh bg-slate-50 px-5 py-10">
+        <div className="mx-auto max-w-3xl">
+          <button
+            type="button"
+            onClick={() => navigate(HOME)}
+            className="mb-4 cursor-pointer text-sm font-bold text-slate-500"
+          >
+            ← Both maps
+          </button>
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">India Map</h1>
+          <p className="mt-1 mb-8 text-slate-600">
+            Drawn with India's own borders: Gilgit-Baltistan and Aksai Chin are part of Ladakh.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {INDIA_CONTINENTS.map((continent) => {
+              const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+              return (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => navigate({ view: 'setup', roundId: r.id })}
+                  className="cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                >
+                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
+                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
+                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+                    {r.places?.length} FEATURES
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-dvh bg-slate-50 px-5 py-10">
       <div className="mx-auto max-w-3xl">
-        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Country Map Games</h1>
+        <button
+          type="button"
+          onClick={() => navigate(HOME)}
+          className="mb-4 cursor-pointer text-sm font-bold text-slate-500"
+        >
+          ← Both maps
+        </button>
+        <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">World Map</h1>
         <p className="mt-1 mb-8 text-slate-600">Find countries on the map.</p>
         <div className="grid gap-4 sm:grid-cols-2">
           {ROUND_ORDER.map((id) => {

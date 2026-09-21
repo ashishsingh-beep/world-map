@@ -1,31 +1,1133 @@
 {
   "continents": [
     {
+      "name": "Himalaya",
+      "title": "Himalayan Ranges & Peaks",
+      "section": "mountains",
+      "atlas": "india",
+      "count": 34
+    },
+    {
       "name": "North America",
       "title": "North America",
       "section": "places",
+      "atlas": "world",
       "count": 41
     },
     {
       "name": "Oceania",
       "title": "Australia (Oceania)",
       "section": "places",
+      "atlas": "world",
       "count": 0
     },
     {
       "name": "World",
       "title": "Seas & Straits",
       "section": "water",
+      "atlas": "world",
       "count": 135
     },
     {
       "name": "South America",
       "title": "South America",
       "section": "places",
+      "atlas": "world",
       "count": 33
     }
   ],
   "places": [
+    {
+      "id": "rg-karakoram",
+      "name": "Karakoram Range",
+      "aliases": [
+        "Karakoram"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND",
+        "PAK",
+        "CHN"
+      ],
+      "belt": "trans",
+      "line": [
+        [
+          74.4,
+          36.4
+        ],
+        [
+          75.4,
+          36.2
+        ],
+        [
+          76.5,
+          35.9
+        ],
+        [
+          77.5,
+          35.4
+        ],
+        [
+          78.6,
+          34.9
+        ],
+        [
+          79.5,
+          34.5
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Northernmost of the Trans-Himalayan ranges, and the only one outside the polar regions with glaciers this long",
+      "notes": [
+        "K2, the world's second-highest peak, stands on it",
+        "Siachen, the world's highest battlefield, lies on its Indian flank"
+      ],
+      "tier": 1,
+      "point": [
+        77.5,
+        35.4
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-ladakh",
+      "name": "Ladakh Range",
+      "aliases": [
+        "Ladakh"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND",
+        "CHN"
+      ],
+      "belt": "trans",
+      "line": [
+        [
+          76.2,
+          34.8
+        ],
+        [
+          77.2,
+          34.4
+        ],
+        [
+          78.2,
+          34
+        ],
+        [
+          79.2,
+          33.6
+        ],
+        [
+          80,
+          33.3
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Runs between the Indus and the Shyok, north of Leh, with no major peak above 6,000m",
+      "notes": [
+        "The Indus cuts along its southern foot"
+      ],
+      "tier": 1,
+      "point": [
+        78.2,
+        34
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-zaskar",
+      "name": "Zaskar Range",
+      "aliases": [
+        "Zanskar",
+        "Zaskar"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND"
+      ],
+      "belt": "trans",
+      "line": [
+        [
+          76,
+          34
+        ],
+        [
+          76.9,
+          33.5
+        ],
+        [
+          77.9,
+          33
+        ],
+        [
+          78.9,
+          32.5
+        ],
+        [
+          79.7,
+          32.1
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Separates Ladakh from the Kashmir valley, dividing the Indus basin from the Ganga's headwaters",
+      "notes": [
+        "Its passes carry the old routes from Lahaul into Zanskar"
+      ],
+      "tier": 1,
+      "point": [
+        77.9,
+        33
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-kailash",
+      "name": "Kailash Range",
+      "aliases": [
+        "Kailas"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "CHN"
+      ],
+      "belt": "trans",
+      "line": [
+        [
+          80.3,
+          31.6
+        ],
+        [
+          81.3,
+          31.1
+        ],
+        [
+          82.3,
+          30.7
+        ],
+        [
+          83.3,
+          30.3
+        ],
+        [
+          84.2,
+          30
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Trans-Himalayan range in Tibet holding Mount Kailash and the sources of four great rivers",
+      "notes": [
+        "The Indus, Sutlej, Brahmaputra and Karnali all rise around it"
+      ],
+      "tier": 1,
+      "point": [
+        82.3,
+        30.7
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-greater-himalaya",
+      "name": "Greater Himalaya",
+      "aliases": [
+        "Himadri",
+        "Inner Himalaya",
+        "Great Himalaya"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND",
+        "PAK",
+        "NPL",
+        "BTN",
+        "CHN"
+      ],
+      "belt": "greater",
+      "line": [
+        [
+          74.6,
+          35.2
+        ],
+        [
+          76.4,
+          34.1
+        ],
+        [
+          78.4,
+          32.6
+        ],
+        [
+          79.9,
+          30.9
+        ],
+        [
+          81.4,
+          30.2
+        ],
+        [
+          83.4,
+          29
+        ],
+        [
+          85.5,
+          28.3
+        ],
+        [
+          87.5,
+          27.8
+        ],
+        [
+          89.5,
+          27.9
+        ],
+        [
+          91.5,
+          28.1
+        ],
+        [
+          93.5,
+          28.8
+        ],
+        [
+          95.1,
+          29.6
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "The innermost and highest range, an unbroken 2,400km wall from Nanga Parbat to Namcha Barwa",
+      "notes": [
+        "Carries every peak above 8,000m in the system",
+        "Its average height is about 6,000m"
+      ],
+      "tier": 1,
+      "point": [
+        85.5,
+        28.3
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-pir-panjal",
+      "name": "Pir Panjal",
+      "aliases": [
+        "Pir Panjal Range"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND"
+      ],
+      "belt": "lesser",
+      "line": [
+        [
+          73.7,
+          33.9
+        ],
+        [
+          74.7,
+          33.5
+        ],
+        [
+          75.6,
+          33
+        ],
+        [
+          76.4,
+          32.6
+        ],
+        [
+          77.2,
+          32.2
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Longest range of the Lesser Himalaya, walling off the Kashmir valley from the plains",
+      "notes": [
+        "The Banihal Pass and the Jawahar Tunnel cross it"
+      ],
+      "tier": 1,
+      "point": [
+        75.6,
+        33
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-dhauladhar",
+      "name": "Dhauladhar",
+      "aliases": [
+        "Dhaula Dhar",
+        "Dhauladhar Range"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND"
+      ],
+      "belt": "lesser",
+      "line": [
+        [
+          75.8,
+          32.5
+        ],
+        [
+          76.5,
+          32.2
+        ],
+        [
+          77.2,
+          31.9
+        ],
+        [
+          78,
+          31.6
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Rises abruptly from the Kangra valley in Himachal, the range Dharamshala sits under",
+      "notes": [],
+      "tier": 1,
+      "point": [
+        77.2,
+        31.9
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-nagtibba",
+      "name": "Nag Tibba",
+      "aliases": [
+        "Nagtibba"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND"
+      ],
+      "belt": "lesser",
+      "line": [
+        [
+          77.9,
+          30.8
+        ],
+        [
+          78.4,
+          30.6
+        ],
+        [
+          78.9,
+          30.5
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Lesser Himalayan range of Uttarakhand, north of Mussoorie",
+      "notes": [],
+      "tier": 1,
+      "point": [
+        78.4,
+        30.6
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-mussoorie",
+      "name": "Mussoorie Range",
+      "aliases": [
+        "Mussoorie"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND"
+      ],
+      "belt": "lesser",
+      "line": [
+        [
+          77.9,
+          30.5
+        ],
+        [
+          78.5,
+          30.4
+        ],
+        [
+          79.1,
+          30.2
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Lesser Himalayan range above Dehradun, carrying the hill stations of Garhwal",
+      "notes": [],
+      "tier": 1,
+      "point": [
+        78.5,
+        30.4
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-kumaon",
+      "name": "Kumaon Range",
+      "aliases": [
+        "Kumaun"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND"
+      ],
+      "belt": "lesser",
+      "line": [
+        [
+          79.2,
+          30
+        ],
+        [
+          79.8,
+          29.8
+        ],
+        [
+          80.4,
+          29.6
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Lesser Himalayan range of eastern Uttarakhand, above the Nainital lakes",
+      "notes": [],
+      "tier": 1,
+      "point": [
+        79.8,
+        29.8
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-mahabharat",
+      "name": "Mahabharat Range",
+      "aliases": [
+        "Mahabharat Lekh"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "NPL"
+      ],
+      "belt": "lesser",
+      "line": [
+        [
+          80.6,
+          29.2
+        ],
+        [
+          82.4,
+          28.4
+        ],
+        [
+          84.3,
+          27.7
+        ],
+        [
+          86.2,
+          27.1
+        ],
+        [
+          87.8,
+          26.8
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "Nepal's stretch of the Lesser Himalaya, running the length of the country south of the Great Himalaya",
+      "notes": [
+        "The Kathmandu valley lies between it and the Greater Himalaya"
+      ],
+      "tier": 1,
+      "point": [
+        84.3,
+        27.7
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "rg-shiwalik",
+      "name": "Shiwalik Range",
+      "aliases": [
+        "Siwalik",
+        "Shivalik",
+        "Outer Himalaya"
+      ],
+      "type": "range",
+      "country": null,
+      "borders": [
+        "IND",
+        "PAK",
+        "NPL",
+        "BTN"
+      ],
+      "belt": "outer",
+      "line": [
+        [
+          74.3,
+          32.9
+        ],
+        [
+          76.3,
+          31.6
+        ],
+        [
+          78.4,
+          30.5
+        ],
+        [
+          80.4,
+          29.3
+        ],
+        [
+          82.9,
+          28.1
+        ],
+        [
+          85.4,
+          27.3
+        ],
+        [
+          87.5,
+          26.8
+        ],
+        [
+          89.5,
+          26.8
+        ],
+        [
+          92,
+          27
+        ]
+      ],
+      "spanKm": 60,
+      "significance": "The outermost and youngest Himalayan range, built from the debris the mountains shed onto the plains",
+      "notes": [
+        "The flat-floored duns — Dehradun among them — lie between it and the Lesser Himalaya"
+      ],
+      "tier": 1,
+      "point": [
+        82.9,
+        28.1
+      ],
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-rakaposhi",
+      "name": "Rakaposhi",
+      "aliases": [],
+      "type": "peak",
+      "country": "IND",
+      "belt": "trans",
+      "point": [
+        74.49,
+        36.14
+      ],
+      "elevationM": 7788,
+      "spanKm": 40,
+      "significance": "Guards the Hunza valley in the Karakoram, rising 6,000m in one unbroken slope",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-k2",
+      "name": "K2",
+      "aliases": [
+        "Godwin Austen",
+        "Godwin-Austen",
+        "Mount Godwin Austen"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "trans",
+      "point": [
+        76.51,
+        35.88
+      ],
+      "elevationM": 8611,
+      "spanKm": 40,
+      "significance": "Second-highest mountain on Earth and the hardest of the 8,000ers to climb",
+      "notes": [
+        "Also called Godwin Austen, after the surveyor"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-gasherbrum",
+      "name": "Gasherbrum I",
+      "aliases": [
+        "Gasherbrum",
+        "Hidden Peak"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "trans",
+      "point": [
+        76.7,
+        35.72
+      ],
+      "elevationM": 8080,
+      "spanKm": 40,
+      "significance": "Eleventh-highest peak in the world, in the Karakoram's Baltoro group",
+      "notes": [
+        "Also called Hidden Peak"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-nanga-parbat",
+      "name": "Nanga Parbat",
+      "aliases": [
+        "Nanga Parbhat"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        74.59,
+        35.24
+      ],
+      "elevationM": 8126,
+      "spanKm": 40,
+      "significance": "Western anchor of the Greater Himalaya, where the range begins",
+      "notes": [
+        "The Indus turns south around its foot"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-bandarpunch",
+      "name": "Bandarpunch",
+      "aliases": [
+        "Bandar Punch"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        78.58,
+        31.01
+      ],
+      "elevationM": 6316,
+      "spanKm": 40,
+      "significance": "Garhwal peak at the head of the Yamuna's glacier",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-kedarnath",
+      "name": "Kedarnath Peak",
+      "aliases": [
+        "Kedarnath"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        79.07,
+        30.8
+      ],
+      "elevationM": 6940,
+      "spanKm": 40,
+      "significance": "Garhwal peak above the Kedarnath shrine and the Chorabari glacier",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-kamet",
+      "name": "Kamet",
+      "aliases": [],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        79.6,
+        30.92
+      ],
+      "elevationM": 7756,
+      "spanKm": 40,
+      "significance": "Second-highest peak wholly in Uttarakhand, near the Tibet border",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-badrinath",
+      "name": "Badrinath Peak",
+      "aliases": [
+        "Badrinath",
+        "Chaukhamba"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        79.3,
+        30.73
+      ],
+      "elevationM": 7138,
+      "spanKm": 40,
+      "significance": "Garhwal peak above the Badrinath shrine",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-nanda-devi",
+      "name": "Nanda Devi",
+      "aliases": [],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        79.97,
+        30.38
+      ],
+      "elevationM": 7817,
+      "spanKm": 40,
+      "significance": "Highest peak entirely within India, ringed by a wall of mountains",
+      "notes": [
+        "Its inner sanctuary was closed to climbers for decades"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-trishul",
+      "name": "Trishul",
+      "aliases": [],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        79.78,
+        30.3
+      ],
+      "elevationM": 7120,
+      "spanKm": 40,
+      "significance": "Three-peaked Garhwal massif on the rim of the Nanda Devi sanctuary",
+      "notes": [
+        "First peak over 7,000m ever climbed, in 1907"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-dhaulagiri",
+      "name": "Dhaulagiri",
+      "aliases": [],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        83.49,
+        28.7
+      ],
+      "elevationM": 8167,
+      "spanKm": 40,
+      "significance": "Seventh-highest in the world, facing Annapurna across the Kali Gandaki",
+      "notes": [
+        "The gorge between the two is among the deepest on Earth"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-annapurna",
+      "name": "Annapurna",
+      "aliases": [],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        83.82,
+        28.6
+      ],
+      "elevationM": 8091,
+      "spanKm": 40,
+      "significance": "Tenth-highest in the world and the first 8,000er ever climbed, in 1950",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-manaslu",
+      "name": "Manaslu",
+      "aliases": [],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        84.56,
+        28.55
+      ],
+      "elevationM": 8163,
+      "spanKm": 40,
+      "significance": "Eighth-highest in the world, in the Gorkha Himal",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-shishapangma",
+      "name": "Shishapangma",
+      "aliases": [
+        "Gosainthan"
+      ],
+      "type": "peak",
+      "country": "CHN",
+      "belt": "greater",
+      "point": [
+        85.78,
+        28.35
+      ],
+      "elevationM": 8027,
+      "spanKm": 40,
+      "significance": "Lowest of the fourteen 8,000ers and the only one entirely in Tibet",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-gauri-shankar",
+      "name": "Gauri Shankar",
+      "aliases": [
+        "Gaurishankar"
+      ],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        86.34,
+        27.95
+      ],
+      "elevationM": 7134,
+      "spanKm": 40,
+      "significance": "Sacred twin-summited peak on the Nepal-Tibet border",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-cho-oyu",
+      "name": "Cho Oyu",
+      "aliases": [],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        86.66,
+        28.09
+      ],
+      "elevationM": 8188,
+      "spanKm": 40,
+      "significance": "Sixth-highest in the world, west of Everest on the Tibet border",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-everest",
+      "name": "Mount Everest",
+      "aliases": [
+        "Everest",
+        "Sagarmatha",
+        "Chomolungma"
+      ],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        86.925,
+        27.988
+      ],
+      "elevationM": 8848,
+      "spanKm": 40,
+      "significance": "Highest mountain on Earth, on the Nepal-Tibet border",
+      "notes": [
+        "Sagarmatha in Nepali, Chomolungma in Tibetan"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-lhotse",
+      "name": "Lhotse",
+      "aliases": [],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        86.93,
+        27.96
+      ],
+      "elevationM": 8516,
+      "spanKm": 40,
+      "significance": "Fourth-highest in the world, joined to Everest by the South Col",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-makalu",
+      "name": "Makalu",
+      "aliases": [],
+      "type": "peak",
+      "country": "NPL",
+      "belt": "greater",
+      "point": [
+        87.09,
+        27.89
+      ],
+      "elevationM": 8485,
+      "spanKm": 40,
+      "significance": "Fifth-highest in the world, a near-perfect four-sided pyramid",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-kangchenjunga",
+      "name": "Kangchenjunga",
+      "aliases": [
+        "Kanchenjunga",
+        "Kangchendzonga"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        88.15,
+        27.7
+      ],
+      "elevationM": 8586,
+      "spanKm": 40,
+      "significance": "Third-highest in the world and the highest in India, on the Sikkim border",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-kangto",
+      "name": "Kangto",
+      "aliases": [
+        "Kangtö"
+      ],
+      "type": "peak",
+      "country": "IND",
+      "belt": "greater",
+      "point": [
+        92.52,
+        27.86
+      ],
+      "elevationM": 7060,
+      "spanKm": 40,
+      "significance": "Highest peak of Arunachal Pradesh, on the Tibet border",
+      "notes": [],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
+    {
+      "id": "pk-namcha-barwa",
+      "name": "Namcha Barwa",
+      "aliases": [],
+      "type": "peak",
+      "country": "CHN",
+      "belt": "greater",
+      "point": [
+        95.06,
+        29.63
+      ],
+      "elevationM": 7782,
+      "spanKm": 40,
+      "significance": "Eastern anchor of the Greater Himalaya, where the Brahmaputra turns south",
+      "notes": [
+        "The Tsangpo gorge wraps around it"
+      ],
+      "tier": 1,
+      "continent": "Himalaya",
+      "section": "mountains",
+      "atlas": "india"
+    },
     {
       "id": "can-ottawa",
       "name": "Ottawa",
@@ -40,7 +1142,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-calgary",
@@ -56,7 +1159,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-montreal",
@@ -74,7 +1178,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-toronto",
@@ -90,7 +1195,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-vancouver",
@@ -106,7 +1212,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-halifax",
@@ -124,7 +1231,8 @@
       ],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-st-johns",
@@ -147,7 +1255,8 @@
       ],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-ellesmere",
@@ -165,7 +1274,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "can-baffin",
@@ -183,7 +1293,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-washington-dc",
@@ -202,7 +1313,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-san-francisco",
@@ -218,7 +1330,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-las-vegas",
@@ -234,7 +1347,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-los-angeles",
@@ -252,7 +1366,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-san-diego",
@@ -268,7 +1383,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-detroit",
@@ -284,7 +1400,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-pittsburgh",
@@ -300,7 +1417,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-new-york",
@@ -319,7 +1437,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-miami",
@@ -337,7 +1456,8 @@
       ],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "usa-hawaii",
@@ -353,7 +1473,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "mex-mexico-city",
@@ -369,7 +1490,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "blz-belmopan",
@@ -385,7 +1507,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "gtm-guatemala-city",
@@ -401,7 +1524,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "slv-san-salvador",
@@ -417,7 +1541,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "hnd-tegucigalpa",
@@ -433,7 +1558,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "nic-managua",
@@ -449,7 +1575,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "cri-san-jose",
@@ -467,7 +1594,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "pan-panama-city",
@@ -483,7 +1611,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "pan-panama-canal",
@@ -500,7 +1629,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "cub-havana",
@@ -518,7 +1648,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "jam-kingston",
@@ -534,7 +1665,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bhs-nassau",
@@ -550,7 +1682,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "hti-port-au-prince",
@@ -568,7 +1701,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "dom-santo-domingo",
@@ -584,7 +1718,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "tto-port-of-spain",
@@ -602,7 +1737,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "pri-puerto-rico",
@@ -621,7 +1757,8 @@
       ],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "pri-san-juan",
@@ -638,7 +1775,8 @@
       "notes": [],
       "tier": 2,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bmu-bermuda",
@@ -655,7 +1793,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "na-baja-california",
@@ -677,7 +1816,8 @@
       ],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "na-yucatan",
@@ -699,7 +1839,8 @@
       ],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "na-ungava",
@@ -720,7 +1861,8 @@
       ],
       "tier": 2,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "na-bermuda-triangle",
@@ -736,7 +1878,8 @@
       "notes": [],
       "tier": 1,
       "continent": "North America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "oc-pacific",
@@ -769,6 +1912,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america",
         "asia"
@@ -805,6 +1949,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america",
         "europe",
@@ -838,6 +1983,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -873,6 +2019,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america",
         "europe",
@@ -901,6 +2048,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": []
     },
     {
@@ -932,6 +2080,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe",
         "asia"
@@ -964,6 +2113,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -989,6 +2139,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe",
         "asia"
@@ -1016,6 +2167,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1040,6 +2192,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1066,6 +2219,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1092,6 +2246,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe",
         "asia"
@@ -1124,6 +2279,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia",
         "europe"
@@ -1150,6 +2306,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1176,6 +2333,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -1206,6 +2364,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe",
         "asia"
@@ -1238,6 +2397,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1263,6 +2423,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1289,6 +2450,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1318,6 +2480,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1349,6 +2512,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1374,6 +2538,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1399,6 +2564,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1424,6 +2590,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1448,6 +2615,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1475,6 +2643,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -1502,6 +2671,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -1529,6 +2699,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -1558,6 +2729,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia",
         "america"
@@ -1584,6 +2756,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1609,6 +2782,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1636,6 +2810,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1661,6 +2836,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -1690,6 +2866,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1716,6 +2893,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1743,6 +2921,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1771,6 +2950,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1795,6 +2975,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1823,6 +3004,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1847,6 +3029,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1871,6 +3054,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1903,6 +3087,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1928,6 +3113,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1957,6 +3143,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -1982,6 +3169,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -2013,6 +3201,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2042,6 +3231,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2070,6 +3260,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2098,6 +3289,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2125,6 +3317,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2156,6 +3349,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2182,6 +3376,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2215,6 +3410,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2242,6 +3438,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2269,6 +3466,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2293,6 +3491,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2319,6 +3518,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2345,6 +3545,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2370,6 +3571,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2396,6 +3598,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2422,6 +3625,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2446,6 +3650,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2470,6 +3675,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2501,6 +3707,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2528,6 +3735,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2554,6 +3762,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2586,6 +3795,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2614,6 +3824,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2643,6 +3854,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia",
         "america"
@@ -2673,6 +3885,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2701,6 +3914,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2726,6 +3940,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2750,6 +3965,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2774,6 +3990,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2798,6 +4015,7 @@
       "tier": 3,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2822,6 +4040,7 @@
       "tier": 3,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2849,6 +4068,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2874,6 +4094,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2898,6 +4119,7 @@
       "tier": 3,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2923,6 +4145,7 @@
       "tier": 3,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2952,6 +4175,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -2977,6 +4201,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3006,6 +4231,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -3030,6 +4256,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -3052,6 +4279,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": []
     },
     {
@@ -3072,6 +4300,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": []
     },
     {
@@ -3092,6 +4321,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": []
     },
     {
@@ -3113,6 +4343,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": []
     },
     {
@@ -3140,6 +4371,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe",
         "asia"
@@ -3172,6 +4404,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3200,6 +4433,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3225,6 +4459,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3251,6 +4486,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3279,6 +4515,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe",
         "asia"
@@ -3306,6 +4543,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3336,6 +4574,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3364,6 +4603,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3393,6 +4633,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3420,6 +4661,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3446,6 +4688,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3475,6 +4718,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3503,6 +4747,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3531,6 +4776,7 @@
       "tier": 3,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -3560,6 +4806,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3593,6 +4840,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3619,6 +4867,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3647,6 +4896,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3672,6 +4922,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3697,6 +4948,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3723,6 +4975,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3756,6 +5009,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3783,6 +5037,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3808,6 +5063,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3833,6 +5089,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3858,6 +5115,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3886,6 +5144,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3914,6 +5173,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3942,6 +5202,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3967,6 +5228,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -3999,6 +5261,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -4031,6 +5294,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia",
         "america"
@@ -4058,6 +5322,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -4087,6 +5352,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4115,6 +5381,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4144,6 +5411,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4175,6 +5443,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4200,6 +5469,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4226,6 +5496,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4254,6 +5525,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4279,6 +5551,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -4305,6 +5578,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -4330,6 +5604,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -4357,6 +5632,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "asia"
       ]
@@ -4384,6 +5660,7 @@
       "tier": 1,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "america"
       ]
@@ -4409,6 +5686,7 @@
       "tier": 2,
       "continent": "World",
       "section": "water",
+      "atlas": "world",
       "regions": [
         "europe"
       ]
@@ -4429,7 +5707,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "col-two-oceans",
@@ -4447,7 +5726,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ven-caracas",
@@ -4463,7 +5743,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ven-maracaibo",
@@ -4483,7 +5764,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ven-crude-oil",
@@ -4501,7 +5783,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "guy-georgetown",
@@ -4517,7 +5800,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "sur-paramaribo",
@@ -4533,7 +5817,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "guf-french-guiana",
@@ -4554,7 +5839,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "guf-cayenne",
@@ -4571,7 +5857,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "guf-kourou",
@@ -4590,7 +5877,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ecu-quito",
@@ -4606,7 +5894,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ecu-galapagos",
@@ -4625,7 +5914,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ecu-no-brazil-border",
@@ -4643,7 +5933,8 @@
       ],
       "tier": 2,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "per-lima",
@@ -4659,7 +5950,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "per-phosphate-nitrate",
@@ -4675,7 +5967,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bol-la-paz",
@@ -4691,7 +5984,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bol-sucre",
@@ -4707,7 +6001,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bol-landlocked",
@@ -4725,7 +6020,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bra-brasilia",
@@ -4743,7 +6039,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bra-carajas",
@@ -4764,7 +6061,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bra-rio-de-janeiro",
@@ -4782,7 +6080,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bra-sao-paulo",
@@ -4800,7 +6099,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "bra-santos",
@@ -4818,7 +6118,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "pry-asuncion",
@@ -4838,7 +6139,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "pry-landlocked",
@@ -4854,7 +6156,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "ury-montevideo",
@@ -4872,7 +6175,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "arg-buenos-aires",
@@ -4888,7 +6192,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "arg-falkland-islands",
@@ -4910,7 +6215,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "chl-santiago",
@@ -4926,7 +6232,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "chl-easter-island",
@@ -4945,7 +6252,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "chl-arica",
@@ -4963,7 +6271,8 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "chl-chuquicamata",
@@ -4979,7 +6288,8 @@
       "notes": [],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     },
     {
       "id": "sa-lithium-triangle-zone",
@@ -4999,10 +6309,35 @@
       ],
       "tier": 1,
       "continent": "South America",
-      "section": "places"
+      "section": "places",
+      "atlas": "world"
     }
   ],
   "groups": [
+    {
+      "id": "hm-belts",
+      "name": "The four parallel belts",
+      "members": [
+        "rg-karakoram",
+        "rg-greater-himalaya",
+        "rg-pir-panjal",
+        "rg-shiwalik"
+      ],
+      "mnemonic": "North to south: Trans-Himalaya, Greater, Lesser, Outer (Shiwalik) — oldest and highest inland, youngest and lowest at the plains",
+      "continent": "Himalaya",
+      "section": "mountains"
+    },
+    {
+      "id": "hm-anchors",
+      "name": "The two ends of the Greater Himalaya",
+      "members": [
+        "pk-nanga-parbat",
+        "pk-namcha-barwa"
+      ],
+      "mnemonic": "Nanga Parbat in the west, Namcha Barwa in the east — the Indus turns south around one, the Brahmaputra around the other",
+      "continent": "Himalaya",
+      "section": "mountains"
+    },
     {
       "id": "na-moto",
       "name": "Canada's big three",

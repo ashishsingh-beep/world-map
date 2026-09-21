@@ -35,6 +35,20 @@ const RAW = resolve(CACHE, 'ne_10m_admin_0_countries_ind.geojson')
 const MARINE_URL =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_marine_polys.geojson'
 const MARINE_RAW = resolve(CACHE, 'ne_10m_geography_marine_polys.geojson')
+/**
+ * Third Natural Earth-adjacent source: India's states, for the Indian map.
+ *
+ * Natural Earth publishes no India point-of-view admin-1 file — only the ISO
+ * build, whose Indian states stop at 35.5N, which carves out a separate
+ * "Kashmir" and hands Pakistan "Azad Kashmir". Using it would break the first
+ * non-negotiable in this file. This source is district-level and Indian, and
+ * its Ladakh reaches 37.1N; the build asserts that, exactly as it does for the
+ * country file, so a swap to a neutral-POV source fails loudly.
+ */
+const INDIA_URL =
+  'https://raw.githubusercontent.com/udit-001/india-maps-data/main/geojson/india.geojson'
+const INDIA_RAW = resolve(CACHE, 'india-districts.geojson')
+
 /** The types that are areas. Everything else in the section is a marker. */
 const AREA_TYPES = new Set(['ocean', 'sea'])
 
@@ -133,6 +147,10 @@ function download() {
   if (!existsSync(MARINE_RAW)) {
     console.log('Downloading Natural Earth marine polygons…')
     execFileSync('curl', ['-sSL', '-o', MARINE_RAW, MARINE_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(INDIA_RAW)) {
+    console.log('Downloading India districts (India POV)…')
+    execFileSync('curl', ['-sSL', '-o', INDIA_RAW, INDIA_URL], { stdio: 'inherit' })
   }
 }
 
@@ -266,6 +284,57 @@ execFileSync(
 writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2))
 
 /**
+ * India's states, dissolved from the district source and checked for point of
+ * view before anything else is done with them. Ladakh must reach ~37N; a
+ * neutral-POV file stops at 35.5 and would quietly redraw Kashmir.
+ */
+const indiaRaw = JSON.parse(readFileSync(INDIA_RAW, 'utf8'))
+const ladakh = {
+  type: 'FeatureCollection',
+  features: indiaRaw.features.filter((f) => f.properties.st_nm === 'Ladakh'),
+}
+if (!ladakh.features.length) throw new Error('India source has no Ladakh — check INDIA_URL')
+const ladakhNorth = geoBounds(ladakh)[1][1]
+if (ladakhNorth < 36.5) {
+  throw new Error(
+    `Ladakh's northern extent is ${ladakhNorth.toFixed(2)}°N — expected ~37°N. ` +
+      'This is NOT an India point-of-view source. Check INDIA_URL.'
+  )
+}
+console.log(`India POV verified: Ladakh reaches ${ladakhNorth.toFixed(2)}°N`)
+
+const indiaDistricts = resolve(CACHE, 'india-districts-named.geojson')
+writeFileSync(
+  indiaDistricts,
+  JSON.stringify({
+    type: 'FeatureCollection',
+    features: indiaRaw.features.map((f) => ({
+      type: 'Feature',
+      properties: { state: f.properties.st_nm },
+      geometry: f.geometry,
+    })),
+  })
+)
+const indiaOut = resolve(OUT, 'india.topo.json')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [
+    indiaDistricts,
+    // Districts are only the delivery format; the map wants states.
+    '-dissolve', 'state',
+    '-simplify', '8%', 'keep-shapes',
+    '-clean',
+    '-rename-layers', 'states',
+    '-o', 'format=topojson', 'quantization=1e5', 'id-field=state', indiaOut,
+  ],
+  { stdio: 'inherit' }
+)
+const stateCount = Object.keys(
+  JSON.parse(readFileSync(indiaOut, 'utf8')).objects.states.geometries
+).length
+console.log(`India states: ${stateCount}`)
+
+/**
  * Second input: the hand-authored syllabus files.
  *
  * Geometry comes from Natural Earth; meaning ("Pittsburgh = Iron & Steel
@@ -277,6 +346,8 @@ writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2)
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
   'mine', 'canal', 'zone', 'peninsula',
+  // Indian map: the mountains section
+  'peak', 'range',
   // Seas & Straits section
   'ocean', 'sea', 'strait',
 ])
@@ -352,6 +423,7 @@ for (const file of syllabusFiles) {
     name: doc.continent,
     title: doc.title ?? doc.continent,
     section: doc.section ?? 'places',
+    atlas: doc.atlas ?? 'world',
     count: doc.places.length,
   })
   // Groups carry their syllabus's continent so the Tricks page can put the
@@ -382,6 +454,19 @@ for (const file of syllabusFiles) {
       errors.push(`${where(p.id)}: a water feature needs a spanKm hit radius`)
     }
 
+    /**
+     * A range is a line, not a place. Its point is the middle of that line and
+     * exists only to anchor the label — the same job the authored point does
+     * for a sea now that seas are drawn as regions.
+     */
+    if (p.type === 'range') {
+      if (!Array.isArray(p.line) || p.line.length < 2) {
+        errors.push(`${where(p.id)}: a range needs a line of at least two points`)
+      } else {
+        p.point = p.line[Math.floor(p.line.length / 2)]
+      }
+    }
+
     // A country-level fact borrows the country's own geometry and centroid.
     let point = p.point
     if (p.type === 'country') {
@@ -393,7 +478,7 @@ for (const file of syllabusFiles) {
 
     // The check that catches transposed or mistyped coordinates.
     const feature = p.country ? picked.get(p.country) : null
-    if (feature && point && !p.offshore && p.type !== 'country') {
+    if (feature && point && !p.offshore && p.type !== 'country' && p.type !== 'range') {
       const slack = geoContains(feature, point) ? 0 : distanceToFeatureKm(feature, point)
       if (slack > ONSHORE_SLACK_KM) {
         const km = geoDistance(point, meta[p.country].centroid) * 6371
@@ -432,7 +517,14 @@ for (const file of syllabusFiles) {
       regions = [...found]
     }
 
-    places.push({ ...p, point, continent: doc.continent, section, ...(regions && { regions }) })
+    places.push({
+      ...p,
+      point,
+      continent: doc.continent,
+      section,
+      atlas: doc.atlas ?? 'world',
+      ...(regions && { regions }),
+    })
   }
 
   for (const g of doc.groups ?? []) {

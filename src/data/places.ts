@@ -12,6 +12,8 @@ export type PlaceType =
   | 'canal'
   | 'zone'
   | 'peninsula'
+  | 'peak'
+  | 'range'
   | 'ocean'
   | 'sea'
   | 'strait'
@@ -22,7 +24,7 @@ export interface Place {
   aliases: string[]
   type: PlaceType
   /** Which menu section this belongs to. */
-  section: 'places' | 'water'
+  section: 'places' | 'water' | 'mountains'
   /** ISO3 of the country it belongs to, or null for territories and shared features. */
   country: string | null
   /** ISO3 of the governing state, when that differs from `country`. */
@@ -53,6 +55,18 @@ export interface Place {
    * the countries along it. Several when it is a boundary sea.
    */
   regions?: string[]
+  /** Which map this belongs to: the world atlas or the Indian one. */
+  atlas: 'world' | 'india'
+  /**
+   * A range's ridgeline, west to east. Hand-traced: no published dataset
+   * carries the Zaskar, the Pir Panjal or the Mahabharat. The `point` the
+   * build derives from it is the label's anchor and nothing else.
+   */
+  line?: [number, number][]
+  /** Metres, for a peak. */
+  elevationM?: number
+  /** Which Himalayan belt a peak or range sits in. */
+  belt?: 'trans' | 'greater' | 'lesser' | 'outer'
   /** Hit radius in km. A sea is answered by pointing anywhere in it. */
   spanKm?: number
 }
@@ -78,7 +92,8 @@ export interface PlaceGroup {
 export interface SyllabusContinent {
   name: string
   title: string
-  section: 'places' | 'water'
+  section: 'places' | 'water' | 'mountains'
+  atlas: 'world' | 'india'
   count: number
 }
 
@@ -113,6 +128,8 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   canal: 'canal',
   zone: 'region',
   peninsula: 'peninsula',
+  peak: 'peak',
+  range: 'range',
   ocean: 'ocean',
   sea: 'sea',
   strait: 'strait',
@@ -139,4 +156,34 @@ export function groupsFor(subject: Place[], isos: string[] = []): PlaceGroup[] {
     if (p.sovereign) ids.add(p.sovereign)
   }
   return placeGroups.filter((g) => g.members.some((m) => ids.has(m)))
+}
+
+const EARTH_RADIUS_KM = 6371
+
+/**
+ * How far a lon/lat is from a ridgeline, in kilometres — the range equivalent
+ * of "inside this sea". Measured to the nearest segment rather than to the
+ * nearest vertex, or a tap halfway along a long straight stretch would read as
+ * far off.
+ */
+export function distanceToLineKm(line: [number, number][], at: [number, number]): number {
+  let best = Infinity
+  for (let i = 0; i < line.length - 1; i++) {
+    const [ax, ay] = line[i]
+    const [bx, by] = line[i + 1]
+    // Flat-earth within a segment: these are tens of kilometres apart, and the
+    // cosine keeps longitude honest at Himalayan latitudes.
+    const k = Math.cos((((ay + by) / 2) * Math.PI) / 180)
+    const vx = (bx - ax) * k
+    const vy = by - ay
+    const wx = (at[0] - ax) * k
+    const wy = at[1] - ay
+    const len2 = vx * vx + vy * vy
+    const t = len2 ? Math.max(0, Math.min(1, (wx * vx + wy * vy) / len2)) : 0
+    const dx = wx - t * vx
+    const dy = wy - t * vy
+    const deg = Math.sqrt(dx * dx + dy * dy)
+    best = Math.min(best, (deg * Math.PI * EARTH_RADIUS_KM) / 180)
+  }
+  return best
 }

@@ -14,11 +14,20 @@ import { roundById } from '../game/rounds'
  *   #/europe/learn         Learn mode
  *   #/europe/play          a round in progress
  */
-export type View = 'home' | 'setup' | 'learn' | 'play'
+export type View = 'home' | 'atlas' | 'setup' | 'learn' | 'play'
+
+/**
+ * The two maps. `#/world-map` and `#/india-map` rather than `#/world`, which is
+ * already a round: the World Map country quiz.
+ */
+export const ATLASES = { 'world-map': 'world', 'india-map': 'india' } as const
+export type Atlas = (typeof ATLASES)[keyof typeof ATLASES]
 
 export interface Route {
   view: View
   roundId: string
+  /** Only on the 'atlas' view: which map's menu is open. */
+  atlas?: Atlas
 }
 
 export const HOME: Route = { view: 'home', roundId: 'world' }
@@ -26,13 +35,17 @@ export const HOME: Route = { view: 'home', roundId: 'world' }
 /** Always returns a route that exists — a hand-edited hash cannot crash the app. */
 export function parseHash(hash: string): Route {
   const [id, screen] = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
-  if (!id || !roundById(id)) return HOME
+  if (!id) return HOME
+  const atlas = ATLASES[id as keyof typeof ATLASES]
+  if (atlas) return { view: 'atlas', roundId: HOME.roundId, atlas }
+  if (!roundById(id)) return HOME
   if (screen === 'learn' || screen === 'play') return { view: screen, roundId: id }
   return { view: 'setup', roundId: id }
 }
 
 export function toHash(route: Route): string {
   if (route.view === 'home') return '#/'
+  if (route.view === 'atlas') return route.atlas === 'india' ? '#/india-map' : '#/world-map'
   if (route.view === 'setup') return `#/${route.roundId}`
   return `#/${route.roundId}/${route.view}`
 }
@@ -45,7 +58,9 @@ export function useRoute(): [Route, (next: Route, replace?: boolean) => void] {
   const apply = useCallback((hash: string) => {
     setRoute((prev) => {
       const next = parseHash(hash)
-      return prev.view === next.view && prev.roundId === next.roundId ? prev : next
+      return prev.view === next.view && prev.roundId === next.roundId && prev.atlas === next.atlas
+        ? prev
+        : next
     })
   }, [])
 

@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { geoArea, geoContains } from 'd3-geo'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, groupsFor, placeOf } from '../data/places'
-import { MapCanvas, type MapArea, type MapPoint } from '../map/MapCanvas'
+import { TYPE_LABEL, WATER_GLYPH, distanceToLineKm, groupsFor, placeOf } from '../data/places'
+import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/marine'
 import { shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
@@ -40,16 +40,20 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
 
   const points: MapPoint[] = useMemo(
     () =>
-      visible.map((p) => ({
-        id: p.id,
-        point: p.point,
-        state: selected === p.id ? 'target' : 'idle',
-        shape: shapeOf({ place: p }),
-        label: showAll || selected === p.id ? p.name : undefined,
-        // An ocean or sea is drawn as its own extent; the point only carries
-        // the label. Everything else is still a marker.
-        marker: !areaOf(p.id),
-      })),
+      visible
+        // A range is a band and the band carries its own name along it; a
+        // second label at the midpoint would just repeat itself.
+        .filter((p) => !p.line)
+        .map((p) => ({
+          id: p.id,
+          point: p.point,
+          state: selected === p.id ? 'target' : 'idle',
+          shape: shapeOf({ place: p }),
+          label: showAll || selected === p.id ? p.name : undefined,
+          // An ocean or sea is drawn as its own extent; the point only carries
+          // the label. Everything else is still a marker.
+          marker: !areaOf(p.id),
+        })),
     [visible, selected, showAll]
   )
 
@@ -64,6 +68,20 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         .filter((p) => areaOf(p.id) && (p.type !== 'ocean' || selected === p.id))
         .map((p) => ({ id: p.id, state: selected === p.id ? 'target' : 'idle' })),
     [visible, selected]
+  )
+
+  /** Ranges, always drawn: a band is the notation, not a reveal. */
+  const bands: MapBand[] = useMemo(
+    () =>
+      visible
+        .filter((p) => p.line)
+        .map((p) => ({
+          id: p.id,
+          line: p.line as [number, number][],
+          state: selected === p.id ? 'target' : 'idle',
+          label: showAll || selected === p.id ? p.name.toUpperCase() : undefined,
+        })),
+    [visible, selected, showAll]
   )
 
   /** Tricks attached to the place itself or to the country it sits in. */
@@ -88,6 +106,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         onDeselect={isPlaceRound ? undefined : () => setSelected(null)}
         points={isPlaceRound ? points : undefined}
         areas={isPlaceRound ? areas : undefined}
+        bands={isPlaceRound ? bands : undefined}
+        atlas={round.atlas}
         onPickPoint={
           isPlaceRound
             ? (lonLat, toScreen) => {
@@ -105,6 +125,19 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 }
                 if (best && best.px <= 40) {
                   setSelected(best.id)
+                  return
+                }
+                // Then the nearest ridgeline within its own tolerance.
+                let ridge: { id: string; km: number } | null = null
+                for (const p of visible) {
+                  if (!p.line) continue
+                  const km = distanceToLineKm(p.line as [number, number][], lonLat)
+                  if (km <= (p.spanKm ?? 60) && (!ridge || km < ridge.km)) {
+                    ridge = { id: p.id, km }
+                  }
+                }
+                if (ridge) {
+                  setSelected(ridge.id)
                   return
                 }
                 // Otherwise the sea the tap landed in, smallest first so the

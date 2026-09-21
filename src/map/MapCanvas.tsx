@@ -5,6 +5,7 @@ import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } f
 import 'd3-transition'
 import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
 import { areaOf } from '../data/marine'
+import { states as indiaStates } from '../data/india'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -35,7 +36,19 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
  * diamond as a narrow gate between two of them, and the two are also coloured
  * apart — so a sea and a strait are never confused at a glance.
  */
-export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal'
+export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal' | 'peak'
+
+/**
+ * A mountain range, drawn as a band along its ridgeline. Ranges are the one
+ * thing here that is neither a point nor a polygon: a line with width, which is
+ * how an atlas draws them and how the notes teach them.
+ */
+export interface MapBand {
+  id: string
+  line: [number, number][]
+  state: CountryState
+  label?: string
+}
 
 /** A sea or ocean drawn as its real extent rather than as a marker. */
 export interface MapArea {
@@ -66,6 +79,8 @@ const SHAPE_FILLS: Record<MarkerShape, string> = {
   sea: '#1d4ed8',
   strait: '#f97316',
   canal: '#a855f7',
+  // A peak is a brown triangle: the shape of the thing itself.
+  peak: '#78350f',
 }
 
 /** An ocean outranks the seas inside it, so its marker is drawn larger. */
@@ -75,6 +90,7 @@ const SHAPE_SCALE: Record<MarkerShape, number> = {
   sea: 1,
   strait: 1,
   canal: 1,
+  peak: 1.15,
 }
 
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
@@ -109,6 +125,13 @@ export interface MapCanvasProps {
    * are patches, a pin for the chokepoints that really are points.
    */
   areas?: MapArea[]
+  /** Mountain ranges, drawn as bands along their ridgelines. */
+  bands?: MapBand[]
+  /**
+   * Which atlas to draw. 'india' adds the state and union-territory outlines
+   * over the country geography; they are context, never questions.
+   */
+  atlas?: 'world' | 'india'
   /**
    * Zoom to frame these lon/lats instead of a country. Pass both the answer and
    * the player's tap so a near miss and a wild guess are each readable. Null
@@ -156,6 +179,8 @@ export function MapCanvas({
   onDeselect,
   points,
   areas,
+  bands,
+  atlas = 'world',
   revealPoints = null,
   pinPoint = null,
   markPoint = null,
@@ -436,6 +461,58 @@ export function MapCanvas({
             )
           })}
 
+          {atlas === 'india' &&
+            indiaStates.map((f, i) => (
+              <path
+                key={`s-${f.id ?? i}`}
+                d={path(f as never) ?? undefined}
+                fill="none"
+                stroke="#1f2d4d"
+                strokeOpacity={0.4}
+                strokeWidth={0.5}
+                vectorEffect="non-scaling-stroke"
+                pointerEvents="none"
+              />
+            ))}
+
+          {/* Ranges: a band along the ridgeline, under the peaks standing on
+              them. Width is in screen pixels, so a band stays a band at every
+              zoom rather than swelling into a blob. */}
+          {bands?.map((b) => {
+            const d = path({ type: 'LineString', coordinates: b.line } as never)
+            if (!d) return null
+            const idle = b.state === 'idle'
+            return (
+              <g key={`b-${b.id}`} pointerEvents="none">
+                <path id={`band-${b.id}`} d={d} fill="none" stroke="none" />
+                <path
+                  d={d}
+                  fill="none"
+                  stroke={idle ? '#c2410c' : FILLS[b.state]}
+                  strokeOpacity={idle ? 0.3 : 0.75}
+                  strokeWidth={14 / k}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {b.label && (
+                  <text
+                    fontSize={11 / k}
+                    fontWeight={800}
+                    fill="#7c2d12"
+                    stroke="#fff"
+                    strokeWidth={3 / k}
+                    paintOrder="stroke"
+                    letterSpacing={`${2 / k}`}
+                  >
+                    <textPath href={`#band-${b.id}`} startOffset="50%" textAnchor="middle">
+                      {b.label}
+                    </textPath>
+                  </text>
+                )}
+              </g>
+            )
+          })}
+
           {/* Circle markers so micro-states stay findable and tappable. They
               scale away as you zoom in, because by then the shape is visible. */}
           {(countryMarkers ? drawn : []).map((f) => {
@@ -505,6 +582,17 @@ export function MapCanvas({
                       vectorEffect="non-scaling-stroke"
                     />
                   </g>
+                ) : shape === 'peak' ? (
+                  <path
+                    d={`M ${cx} ${cy - r * 1.3} L ${cx + r * 1.15} ${cy + r * 0.9}
+                        L ${cx - r * 1.15} ${cy + r * 0.9} Z`}
+                    fill={fill}
+                    fillOpacity={0.95}
+                    stroke="#1f2d4d"
+                    strokeWidth={isTarget ? 2.5 : 1.2}
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
                 ) : shape === 'canal' ? (
                   <rect
                     x={cx - r * 0.85}

@@ -22,6 +22,14 @@ part of India. Never swap in the ISO/default Natural Earth file. `npm run data`
 asserts India's northern extent is ~37°N and fails loudly if the wrong source
 is used.
 
+The Indian map's **state** outlines have the same rule and a harder problem:
+Natural Earth publishes no India point-of-view admin-1 file at all. Its ISO
+build stops Indian territory at 35.5°N, carves out a separate "Kashmir" and
+hands Pakistan "Azad Kashmir" — using it would redraw Kashmir on our own map.
+States come from an Indian district source instead (`INDIA_URL`), dissolved to
+36 states, and the build asserts Ladakh reaches ~37°N before writing
+`india.topo.json`. States are drawn for context and are never questions.
+
 **Greenland and Antarctica are drawn, never asked.** It is Danish, not a UN member, so it is
 outside the 196 — but leaving it out put a hole in the North Atlantic beside
 the Denmark Strait and Baffin Bay. `RENDER_ONLY` in the build gives it geometry
@@ -109,6 +117,20 @@ unclickable.
 Country micro-state markers are switched off in that round so no stray ring
 competes with the sea notation.
 
+**A range is a line with width.** The Himalayan ranges are the one thing here
+that is neither a point nor a polygon, so they are drawn as a band along a
+ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
+the range's own `spanKm`). The band carries its own name along its path, so a
+range emits no marker and no second label. A peak is a brown triangle.
+
+Those ridgelines are **hand-traced**, and they are the only geometry in this
+project not taken from a published dataset. That is not laziness: Natural Earth
+has `HIMALAYAS` as one coarse blob, plus Karakoram and Shiwalik, and carries
+nothing at all for the Zaskar, the Ladakh Range, the Pir Panjal, the Dhauladhar,
+the Mahabharat, Nag Tibba, Mussoorie or Kumaon — which is most of what the notes
+teach. They live in the syllabus as `line`, and the build derives each range's
+label anchor from the middle of it.
+
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.
 
@@ -125,10 +147,18 @@ The whole app is one map engine plus configuration.
 - `src/screens/` — Play, Results, Learn.
 - `src/app/route.ts` — the URL hash, which is where the current screen lives.
 - `src/app/storage.ts` — everything else that survives a refresh.
+- `src/data/india.ts` — India's states, for the Indian map.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 
 `render` and `askable` are separate because Island Nations draws the whole
 world and asks only its own subset.
+
+**There are two atlases.** The home screen picks between the World Map, which
+holds everything built so far, and the India Map, which starts with the
+Himalaya. A syllabus declares which one it belongs to with `atlas`, a round
+carries it, and `MapCanvas` draws the state outlines when it is `india`. The
+hashes are `#/world-map` and `#/india-map` — not `#/world`, which is already the
+World Map country round.
 
 **A refresh must never cost you anything.** Which screen you are on is the URL
 hash (`#/europe/learn`), not component state — and the hash rather than the path,

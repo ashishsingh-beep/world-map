@@ -2,9 +2,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
 import { areaOf } from '../data/marine'
-import { placeOf, type Place } from '../data/places'
+import { distanceToLineKm, placeOf, type Place } from '../data/places'
 import { judgeName, type Candidate } from './matchName'
-import type { CountryState, MapArea, MapPoint, MarkerShape, ToScreen } from '../map/MapCanvas'
+import type {
+  CountryState,
+  MapArea,
+  MapBand,
+  MapPoint,
+  MarkerShape,
+  ToScreen,
+} from '../map/MapCanvas'
 import type { Round } from './rounds'
 
 export { normaliseName } from './matchName'
@@ -100,7 +107,9 @@ function buildQuestions(round: Round): Question[] {
 /** Sea, strait and canal each get their own notation; everything else is a dot. */
 export function shapeOf(q: { place: Place | null }): MarkerShape {
   const t = q.place?.type
-  return t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' ? t : 'dot'
+  return t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'peak'
+    ? t
+    : 'dot'
 }
 
 function shuffle<T>(input: T[]): T[] {
@@ -252,6 +261,16 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
         settle(geoContains(area, lonLat), undefined, km)
         return
       }
+      /**
+       * A range is a line, so it is answered by tapping near the ridgeline
+       * anywhere along it — not near the midpoint the label happens to sit on.
+       */
+      const line = current.place?.line
+      if (line) {
+        const off = distanceToLineKm(line as [number, number][], lonLat)
+        settle(off <= (current.place?.spanKm ?? 60), undefined, off)
+        return
+      }
       const at = toScreen(lonLat)
       const screenDistance = (q: Question) => {
         const b = at && toScreen(q.point)
@@ -328,9 +347,24 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     const out = new Map<string, MapPoint>()
     const add = (q: Question | null | undefined, state: CountryState) => {
       // A place with an extent is drawn as that extent, never also as a pin.
-      if (q && !q.iso && !areaOf(q.id)) {
+      if (q && !q.iso && !areaOf(q.id) && !q.place?.line) {
         out.set(q.id, { id: q.id, point: q.point, state, shape: shapeOf(q) })
       }
+    }
+    for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
+    if (phase === 'revealing' && current) {
+      add(current, verdict === 'correct' ? 'correct' : 'missed')
+    }
+    if (mode === 'type' && phase === 'asking' && current) add(current, 'target')
+    return [...out.values()]
+  }, [answers, phase, current, verdict, mode, byId])
+
+  /** The same states as `points`, for the ranges drawn as bands instead. */
+  const bands = useMemo(() => {
+    const out = new Map<string, MapBand>()
+    const add = (q: Question | null | undefined, state: CountryState) => {
+      const line = q?.place?.line
+      if (q && line) out.set(q.id, { id: q.id, line: line as [number, number][], state })
     }
     for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
     if (phase === 'revealing' && current) {
@@ -365,6 +399,8 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
    * 68°W, which as a box is the rest of the planet.
    */
   const areaFrame = (): [number, number][] | null => {
+    const line = current?.place?.line
+    if (line) return line as [number, number][]
     if (!currentArea) return null
     const [[w, s], [e, n]] = geoBounds(currentArea)
     return w > e ? null : [[w, s], [e, n]]
@@ -403,6 +439,7 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     states,
     points,
     areas,
+    bands,
     vocabulary,
     /** How far the last tap landed from the answer — only set on point questions. */
     missKm,
@@ -422,7 +459,7 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     // No pin on a sea: the painted region already says where it was, and a pin
     // in the middle of it would only re-assert the point this replaced.
     pinPoint:
-      revealing && verdict === 'incorrect' && isPointAnswer && !currentArea
+      revealing && verdict === 'incorrect' && isPointAnswer && !currentArea && !current.place?.line
         ? current.point
         : null,
     markPoint: revealing && verdict === 'incorrect' ? tapped : null,

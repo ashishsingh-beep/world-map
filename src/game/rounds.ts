@@ -16,6 +16,8 @@ export interface Round {
    * about places inside countries rather than the countries themselves.
    */
   places?: string[]
+  /** Which atlas the round is drawn on: the world map or the Indian one. */
+  atlas?: 'world' | 'india'
   view: BBox
 }
 
@@ -136,21 +138,41 @@ function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
  * still listed — it shows in the menu as a placeholder rather than vanishing.
  */
 const SYLLABUS = syllabusContinents
-export const PLACE_CONTINENTS = SYLLABUS.filter((c) => c.section !== 'water')
+export const PLACE_CONTINENTS = SYLLABUS.filter(
+  (c) => c.section !== 'water' && c.section !== 'mountains'
+)
+/** The Indian map's sections — mountains for now, more to come. */
+export const INDIA_CONTINENTS = SYLLABUS.filter((c) => c.atlas === 'india')
 /** The Seas & Straits section — water features, drawn with their own notation. */
 export const WATER_CONTINENTS = SYLLABUS.filter((c) => c.section === 'water')
 
 export const allPlacesRoundId = (continent: string) =>
   `places-${continent.toLowerCase().replace(/\s+/g, '-')}`
 
-function continentPlaceRound({ name, title }: { name: string; title: string }): Round {
+function continentPlaceRound({
+  name,
+  title,
+  atlas,
+}: {
+  name: string
+  title: string
+  atlas?: 'world' | 'india'
+}): Round {
   const ps = allPlaces.filter((p) => p.continent === name)
   // Seas and straits span the globe, so their round draws every country.
   const worldwide = name === 'World'
-  const isos = worldwide ? allIsos : isosIn(name as Continent)
+  // The Himalaya runs through five countries, so its round draws the whole
+  // neighbourhood and lets the state outlines do the locating.
+  const isos =
+    atlas === 'india'
+      ? ['IND', 'PAK', 'NPL', 'BTN', 'CHN', 'BGD', 'AFG', 'MMR', 'LKA', 'TJK']
+      : worldwide
+        ? allIsos
+        : isosIn(name as Continent)
   return {
     id: allPlacesRoundId(name),
     title,
+    atlas,
     blurb: ps.length
       ? `Every place in the set — ${ps.length} in total.`
       : 'Nothing added yet — the notes for this one are still to come.',
@@ -160,10 +182,23 @@ function continentPlaceRound({ name, title }: { name: string; title: string }): 
     // Antarctic seas and the Arctic sit outside the standard world box, so the
     // water round stretches it to reach them — an unreachable question is
     // unanswerable, since panning is clamped to the starting view.
-    view: fitAround(
-      worldwide ? (VIEW_OVERRIDES.world as BBox) : fit(isos),
-      ps.map((p) => p.point)
-    ),
+    // The Indian map frames the mountains themselves, not the ten countries
+    // drawn behind them: fitting to the render list would put the Himalaya in
+    // a corner of a box stretching from Sri Lanka to Tajikistan.
+    view:
+      atlas === 'india'
+        ? fitAround(
+            [
+              [72, 26],
+              [96, 37],
+            ],
+            ps.flatMap((p) => (p.line ?? [p.point]) as [number, number][]),
+            1.5
+          )
+        : fitAround(
+            worldwide ? (VIEW_OVERRIDES.world as BBox) : fit(isos),
+            ps.map((p) => p.point)
+          ),
   }
 }
 
