@@ -308,10 +308,10 @@ export default function App() {
           <section className="mt-10">
             <h2 className="text-2xl font-extrabold text-slate-900">Seas &amp; Straits</h2>
             <p className="mt-1 mb-4 text-slate-600">
-              Oceans, seas, straits and canals worldwide. Oceans are drawn as{' '}
-              <span className="font-bold text-teal-600">large teal rings</span>, seas as{' '}
-              <span className="font-bold text-blue-700">blue circles</span>, straits as{' '}
-              <span className="font-bold text-orange-500">orange diamonds</span>.
+              Oceans, seas, straits and canals worldwide. Oceans and seas are drawn as{' '}
+              <span className="font-bold text-sky-700">their real extent</span>, straits as{' '}
+              <span className="font-bold text-orange-500">orange diamonds</span>, canals as{' '}
+              <span className="font-bold text-purple-500">purple squares</span>.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {WATER_CONTINENTS.map((continent) => {

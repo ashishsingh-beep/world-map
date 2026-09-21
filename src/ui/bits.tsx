@@ -55,19 +55,23 @@ export function KindSwatch({ type }: { type: WaterKind }) {
       </svg>
     )
   }
-  if (type === 'ocean') {
-    return (
-      <svg width="18" height="18" viewBox="-9 -9 18 18" aria-hidden>
-        <circle r="8" fill="#0d9488" stroke="#1f2d4d" strokeWidth="1" />
-        <circle r="3.6" fill="none" stroke="#fff" strokeWidth="1.5" />
-      </svg>
-    )
-  }
-  return (
-    <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
-      <circle r="5.5" fill="#1d4ed8" stroke="#1f2d4d" strokeWidth="1" />
+  // Oceans and seas are drawn as their real extent now, so the legend shows a
+  // patch rather than a pin. The two share a notation; their labels tell them
+  // apart, and an ocean's patch is wider because an ocean is.
+  const patch = (w: number) => (
+    <svg width={w} height="14" viewBox={`0 0 ${w} 14`} aria-hidden>
+      <path
+        d={`M 2 9 Q ${w * 0.25} 3 ${w * 0.5} 6 Q ${w * 0.78} 9 ${w - 2} 4
+            L ${w - 2} 11 L 2 12 Z`}
+        fill="#0369a1"
+        fillOpacity="0.35"
+        stroke="#0369a1"
+        strokeOpacity="0.7"
+        strokeWidth="1"
+      />
     </svg>
   )
+  return patch(type === 'ocean' ? 20 : 15)
 }
 
 export function Button({

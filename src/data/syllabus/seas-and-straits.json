@@ -69,6 +69,7 @@
   "places": [
     {
       "id": "oc-pacific",
+      "marine": ["North Pacific Ocean", "South Pacific Ocean"],
       "name": "Pacific Ocean",
       "aliases": [],
       "type": "ocean",
@@ -83,6 +84,7 @@
     },
     {
       "id": "oc-atlantic",
+      "marine": ["North Atlantic Ocean", "South Atlantic Ocean"],
       "name": "Atlantic Ocean",
       "aliases": [],
       "type": "ocean",
@@ -115,7 +117,7 @@
       "aliases": [],
       "type": "ocean",
       "country": null,
-      "point": [0.0, 82.0],
+      "point": [-172.0, 85.0],
       "spanKm": 1600,
       "basin": "Ocean",
       "borders": ["RUS", "CAN", "USA", "NOR", "DNK"],
@@ -504,6 +506,7 @@
     },
     {
       "id": "sea-celtic",
+      "marine": [],
       "name": "Celtic Sea",
       "aliases": [],
       "type": "sea",
@@ -645,6 +648,7 @@
     },
     {
       "id": "sea-campeche",
+      "marine": ["Bahía de Campeche"],
       "name": "Bay of Campeche",
       "aliases": ["Campeche Bay", "Bahía de Campeche"],
       "type": "sea",
@@ -659,6 +663,7 @@
     },
     {
       "id": "sea-panama-gulf",
+      "marine": [],
       "name": "Gulf of Panama",
       "aliases": [],
       "type": "sea",
@@ -673,6 +678,7 @@
     },
     {
       "id": "sea-st-lawrence",
+      "marine": ["Gulf of Saint Lawrence"],
       "name": "Gulf of St Lawrence",
       "aliases": ["Gulf of Saint Lawrence"],
       "type": "sea",
@@ -1221,6 +1227,7 @@
     },
     {
       "id": "sea-california",
+      "marine": ["Golfo de California"],
       "name": "Gulf of California",
       "aliases": ["Sea of Cortez"],
       "type": "sea",
@@ -1239,7 +1246,7 @@
       "aliases": [],
       "type": "sea",
       "country": null,
-      "point": [-146.0, 57.0],
+      "point": [-149.6, 58.0],
       "spanKm": 450,
       "basin": "Pacific Ocean",
       "borders": ["USA"],
@@ -1268,7 +1275,7 @@
       "aliases": [],
       "type": "sea",
       "country": null,
-      "point": [-45.0, -72.0],
+      "point": [-45.0, -76.7],
       "spanKm": 550,
       "basin": "Southern Ocean",
       "borders": [],
@@ -1282,7 +1289,7 @@
       "aliases": [],
       "type": "sea",
       "country": null,
-      "point": [-110.0, -72.0],
+      "point": [-106.3, -74.1],
       "spanKm": 380,
       "basin": "Southern Ocean",
       "borders": [],
@@ -1297,7 +1304,7 @@
       "aliases": [],
       "type": "sea",
       "country": null,
-      "point": [-45.0, -57.0],
+      "point": [-54.6, -61.2],
       "spanKm": 450,
       "basin": "Southern Ocean",
       "borders": [],

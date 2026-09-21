@@ -66,17 +66,27 @@ passing as "Paraguay" or "Nigeria" as "Niger". Never relax it without running
 `npm run check:names`; aliases should hold genuine alternative names, never
 misspellings, or the correction note never fires.
 
-**Sea and strait must never look alike.** The Seas & Straits section is built
-around four notations: a sea is a blue circle, a strait an orange diamond pinched
-by two arrowheads, a canal a purple square, and an ocean a teal circle with a
-white inner ring, drawn 1.7x larger (`SHAPE_SCALE` in `MapCanvas`) because an
-ocean contains the seas inside it. The shape carries the *kind*, the fill carries
-the quiz *state*, and the legend in Learn mode names all four. A sea and an ocean
-are both circles, so the ocean must keep both its own colour *and* its extra
-size — one alone is not enough to tell them apart at world scale. `KindSwatch` in
-`src/ui/bits.tsx` redraws each marker for the legend and the setup picker, so
-change both or they drift apart. Country micro-state markers are switched off in
-that round so no stray ring competes with the sea notation.
+**An area is an area; a point is a point.** An ocean or a sea is a patch, so it
+is drawn as its real extent (`src/data/marine.ts`, from Natural Earth's marine
+layer) and judged by `geoContains` — exactly like a country. A strait or a canal
+genuinely is a chokepoint, so it stays a marker: a strait is an orange diamond
+pinched by two arrowheads, a canal a purple square. That split *is* the notation,
+and it is a far bigger difference than two coloured circles ever were.
+
+Judging a sea by distance from a point was wrong, not merely ugly: the Arabian
+Sea's radius was 850km and the sea is 1,200km across, so a tap off Karachi was
+marked outside it. Containment has no rival check — the smallest-wins tiebreak
+the circles needed is gone, because Natural Earth carves the named seas as
+disjoint regions rather than nesting them.
+
+The area's fill carries the quiz *state*, as a country's does. The authored
+point survives as the label's anchor and nothing else; the build fails if it
+falls outside its own sea. `KindSwatch` in `src/ui/bits.tsx` redraws the legend,
+so change both or they drift apart — it shows a patch for oceans and seas now,
+not a pin. Two seas have no polygon in the layer (the Celtic Sea, the Gulf of
+Panama) and fall back to their point; they declare that with `"marine": []`.
+Country micro-state markers are switched off in that round so no stray ring
+competes with the sea notation.
 
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
 the camera gives the answer away.

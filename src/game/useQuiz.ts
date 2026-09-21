@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { geoContains, geoDistance } from 'd3-geo'
+import { geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
+import { areaOf } from '../data/marine'
 import { placeOf, type Place } from '../data/places'
 import { judgeName, type Candidate } from './matchName'
-import type { CountryState, MapPoint, MarkerShape, ToScreen } from '../map/MapCanvas'
+import type { CountryState, MapArea, MapPoint, MarkerShape, ToScreen } from '../map/MapCanvas'
 import type { Round } from './rounds'
 
 export { normaliseName } from './matchName'
@@ -240,6 +241,17 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
         settle(!!f && geoContains(f, lonLat), undefined, km)
         return
       }
+      /**
+       * A sea is judged by its own extent, exactly like a country. No rival
+       * check: the Aegean is inside the Mediterranean, and a tap there is a
+       * perfectly good answer to "where is the Mediterranean" — marking it
+       * wrong while painting the Mediterranean over the tap would be absurd.
+       */
+      const area = areaOf(current.id)
+      if (area) {
+        settle(geoContains(area, lonLat), undefined, km)
+        return
+      }
       const at = toScreen(lonLat)
       const screenDistance = (q: Question) => {
         const b = at && toScreen(q.point)
@@ -315,7 +327,24 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     // Keyed, because the place being revealed is already in `answers` by then.
     const out = new Map<string, MapPoint>()
     const add = (q: Question | null | undefined, state: CountryState) => {
-      if (q && !q.iso) out.set(q.id, { id: q.id, point: q.point, state, shape: shapeOf(q) })
+      // A place with an extent is drawn as that extent, never also as a pin.
+      if (q && !q.iso && !areaOf(q.id)) {
+        out.set(q.id, { id: q.id, point: q.point, state, shape: shapeOf(q) })
+      }
+    }
+    for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
+    if (phase === 'revealing' && current) {
+      add(current, verdict === 'correct' ? 'correct' : 'missed')
+    }
+    if (mode === 'type' && phase === 'asking' && current) add(current, 'target')
+    return [...out.values()]
+  }, [answers, phase, current, verdict, mode, byId])
+
+  /** The same states as `points`, for the places drawn as regions instead. */
+  const areas = useMemo(() => {
+    const out = new Map<string, MapArea>()
+    const add = (q: Question | null | undefined, state: CountryState) => {
+      if (q && !q.iso && areaOf(q.id)) out.set(q.id, { id: q.id, state })
     }
     for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
     if (phase === 'revealing' && current) {
@@ -328,6 +357,18 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
   const correctCount = answers.filter((a) => a.correct).length
   const revealing = phase === 'revealing' && current
   const isPointAnswer = !!current && !current.iso
+  const currentArea = current ? areaOf(current.id) : null
+
+  /**
+   * A sea reveals by framing the whole sea, not the label's point. Skipped for
+   * anything whose bounds wrap the antimeridian — the Pacific's run 128°E to
+   * 68°W, which as a box is the rest of the planet.
+   */
+  const areaFrame = (): [number, number][] | null => {
+    if (!currentArea) return null
+    const [[w, s], [e, n]] = geoBounds(currentArea)
+    return w > e ? null : [[w, s], [e, n]]
+  }
 
   /** Stable, so saving can key off "a question was answered" and nothing else. */
   const queueIds = useMemo(() => queue.map((q) => q.id), [queue])
@@ -361,6 +402,7 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     skip,
     states,
     points,
+    areas,
     vocabulary,
     /** How far the last tap landed from the answer — only set on point questions. */
     missKm,
@@ -371,12 +413,18 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     revealIso: revealing && current.iso ? current.iso : null,
     revealPoints:
       revealing && isPointAnswer
-        ? tapped && verdict === 'incorrect'
-          ? [current.point, tapped]
-          : [current.point]
+        ? [
+            ...(areaFrame() ?? [current.point]),
+            ...(tapped && verdict === 'incorrect' ? [tapped] : []),
+          ]
         : null,
     pinIso: revealing && verdict === 'incorrect' && current.iso ? current.iso : null,
-    pinPoint: revealing && verdict === 'incorrect' && isPointAnswer ? current.point : null,
+    // No pin on a sea: the painted region already says where it was, and a pin
+    // in the middle of it would only re-assert the point this replaced.
+    pinPoint:
+      revealing && verdict === 'incorrect' && isPointAnswer && !currentArea
+        ? current.point
+        : null,
     markPoint: revealing && verdict === 'incorrect' ? tapped : null,
   }
 }

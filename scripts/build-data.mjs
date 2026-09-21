@@ -25,6 +25,22 @@ const OUT = resolve(ROOT, 'src/data')
 const SRC_URL =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries_ind.geojson'
 const RAW = resolve(CACHE, 'ne_10m_admin_0_countries_ind.geojson')
+/**
+ * Second Natural Earth layer: named marine polygons. An ocean or a sea is a
+ * patch, not a pin — "within 850km of a point" marks a tap off Somalia as
+ * outside the Arabian Sea — so those two types get their real extent and are
+ * both drawn and judged by it. Straits and canals stay points, because a
+ * chokepoint genuinely is one.
+ */
+const MARINE_URL =
+  'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_marine_polys.geojson'
+const MARINE_RAW = resolve(CACHE, 'ne_10m_geography_marine_polys.geojson')
+/** The types that are areas. Everything else in the section is a marker. */
+const AREA_TYPES = new Set(['ocean', 'sea'])
+
+/** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
+const loose = (s) =>
+  s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '')
 
 /** The 197 entries: 193 UN members + 2 UN observers + Taiwan + Kosovo. */
 const UN_MEMBERS = `
@@ -109,10 +125,15 @@ const CONTINENT_OVERRIDES = {
 }
 
 function download() {
-  if (existsSync(RAW)) return
   mkdirSync(CACHE, { recursive: true })
-  console.log('Downloading Natural Earth (India POV)…')
-  execFileSync('curl', ['-sSL', '-o', RAW, SRC_URL], { stdio: 'inherit' })
+  if (!existsSync(RAW)) {
+    console.log('Downloading Natural Earth (India POV)…')
+    execFileSync('curl', ['-sSL', '-o', RAW, SRC_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(MARINE_RAW)) {
+    console.log('Downloading Natural Earth marine polygons…')
+    execFileSync('curl', ['-sSL', '-o', MARINE_RAW, MARINE_URL], { stdio: 'inherit' })
+  }
 }
 
 function assertIndiaPointOfView(features) {
@@ -442,6 +463,99 @@ for (const p of places) {
 if (dryErrors.length) {
   console.error(`\nWater features on land (${dryErrors.length}):`)
   for (const e of dryErrors) console.error('  ' + e)
+  process.exit(1)
+}
+
+/**
+ * The marine layer, cut down to the oceans and seas the syllabus actually uses
+ * and keyed by place id. A place says which Natural Earth polygons are its own
+ * with `marine`; without one, its own name is the key. `"marine": []` means
+ * "checked, there is no polygon for this" — the Celtic Sea and the Gulf of
+ * Panama are absent from the layer — and those fall back to their point.
+ */
+const marineRaw = JSON.parse(readFileSync(MARINE_RAW, 'utf8'))
+const marineByName = new Map()
+for (const f of marineRaw.features) {
+  const name = f.properties.name
+  if (name) marineByName.set(loose(name), f)
+}
+
+const marineFeatures = []
+const noPolygon = []
+for (const p of places) {
+  if (!AREA_TYPES.has(p.type)) continue
+  const wanted = p.marine ?? [p.name]
+  const parts = []
+  for (const name of wanted) {
+    const f = marineByName.get(loose(name))
+    if (!f) {
+      errors.push(`${p.id}: no marine polygon named "${name}"`)
+      continue
+    }
+    const g = f.geometry
+    parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
+  }
+  if (!parts.length) {
+    noPolygon.push(p.name)
+    continue
+  }
+  marineFeatures.push({
+    type: 'Feature',
+    id: p.id,
+    properties: { id: p.id },
+    geometry: { type: 'MultiPolygon', coordinates: parts },
+  })
+}
+if (errors.length) {
+  console.error(`\nMarine layer (${errors.length}):`)
+  for (const e of errors) console.error('  ' + e)
+  process.exit(1)
+}
+
+const marineFiltered = resolve(CACHE, 'marine.geojson')
+writeFileSync(
+  marineFiltered,
+  JSON.stringify({ type: 'FeatureCollection', features: marineFeatures })
+)
+const marineOut = resolve(OUT, 'marine.topo.json')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [
+    marineFiltered,
+    // Lighter than it looks: 2% turned the Arabian Sea into a triangle. A sea's
+    // outline is never traced for its coastline, but it does have to look like
+    // the sea it is.
+    '-simplify', '25%', 'keep-shapes',
+    '-clean',
+    '-rename-layers', 'marine',
+    '-o', 'format=topojson', 'quantization=1e4', 'id-field=id', marineOut,
+  ],
+  { stdio: 'inherit' }
+)
+console.log(
+  `Marine polygons: ${marineFeatures.length} of ${places.filter((p) => AREA_TYPES.has(p.type)).length}` +
+    (noPolygon.length ? ` — no polygon for ${noPolygon.join(', ')}` : '')
+)
+
+/**
+ * The authored point still carries the label, so it has to sit inside the sea
+ * it names. Checked against the simplified geometry, because that is what the
+ * app draws and judges with — the same reasoning as the water-on-land check.
+ */
+const builtMarine = topojsonFeature(
+  JSON.parse(readFileSync(marineOut, 'utf8')),
+  JSON.parse(readFileSync(marineOut, 'utf8')).objects.marine
+)
+const strayLabels = []
+for (const f of builtMarine.features) {
+  const p = places.find((x) => x.id === (f.id ?? f.properties?.id))
+  if (!p || geoContains(f, p.point)) continue
+  const c = geoCentroid(f).map((n) => Number(n.toFixed(1)))
+  strayLabels.push(`${p.id}: ${p.name}'s point ${JSON.stringify(p.point)} is outside its own polygon — try [${c}]`)
+}
+if (strayLabels.length) {
+  console.error(`\nLabels outside their sea (${strayLabels.length}):`)
+  for (const e of strayLabels) console.error('  ' + e)
   process.exit(1)
 }
 

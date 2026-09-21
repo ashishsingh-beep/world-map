@@ -112,6 +112,7 @@ export function PlayScreen({ round, mode, timed, initial, onProgress, onExit, on
         pinIso={quiz.pinIso}
         onPick={quiz.pick}
         points={quiz.points}
+        areas={quiz.areas}
         revealPoints={quiz.revealPoints}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}

@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
+import { geoArea, geoContains } from 'd3-geo'
 import { metaOf } from '../data/countries'
 import { TYPE_LABEL, WATER_GLYPH, groupsFor, placeOf } from '../data/places'
-import { MapCanvas, type MapPoint } from '../map/MapCanvas'
+import { MapCanvas, type MapArea, type MapPoint } from '../map/MapCanvas'
+import { areaOf } from '../data/marine'
 import { shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
 import { KindSwatch, WATER_KINDS } from '../ui/bits'
@@ -44,8 +46,24 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         state: selected === p.id ? 'target' : 'idle',
         shape: shapeOf({ place: p }),
         label: showAll || selected === p.id ? p.name : undefined,
+        // An ocean or sea is drawn as its own extent; the point only carries
+        // the label. Everything else is still a marker.
+        marker: !areaOf(p.id),
       })),
     [visible, selected, showAll]
+  )
+
+  /**
+   * Every sea on screen at once, so the map reads as patches of named water.
+   * Oceans only when picked: their polygons are most of the planet, and drawn
+   * faintly they just wash the map out.
+   */
+  const areas: MapArea[] = useMemo(
+    () =>
+      visible
+        .filter((p) => areaOf(p.id) && (p.type !== 'ocean' || selected === p.id))
+        .map((p) => ({ id: p.id, state: selected === p.id ? 'target' : 'idle' })),
+    [visible, selected]
   )
 
   /** Tricks attached to the place itself or to the country it sits in. */
@@ -69,14 +87,29 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         // clears the highlight. Place rounds already do this in `onPickPoint`.
         onDeselect={isPlaceRound ? undefined : () => setSelected(null)}
         points={isPlaceRound ? points : undefined}
+        areas={isPlaceRound ? areas : undefined}
         onPickPoint={
           isPlaceRound
-            ? (_lonLat, toScreen) => {
-                // Select whatever the tap landed nearest to, so small markers
+            ? (lonLat, toScreen) => {
+                // A tap inside a sea picks that sea, and the smallest one wins
+                // so the Tyrrhenian beats the Mediterranean around it.
+                let inside: { id: string; area: number } | null = null
+                for (const p of visible) {
+                  const f = areaOf(p.id)
+                  if (!f || !geoContains(f, lonLat)) continue
+                  const size = geoArea(f)
+                  if (!inside || size < inside.area) inside = { id: p.id, area: size }
+                }
+                if (inside) {
+                  setSelected(inside.id)
+                  return
+                }
+                // Otherwise whatever the tap landed nearest to, so small markers
                 // stay reachable without pixel-hunting.
                 let best: { id: string; px: number } | null = null
                 for (const p of visible) {
-                  const a = toScreen(_lonLat)
+                  if (areaOf(p.id)) continue
+                  const a = toScreen(lonLat)
                   const b = toScreen(p.point)
                   if (!a || !b) continue
                   const px = Math.hypot(a[0] - b[0], a[1] - b[1])

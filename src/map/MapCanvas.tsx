@@ -4,6 +4,7 @@ import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
 import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
+import { areaOf } from '../data/marine'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -36,6 +37,12 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
  */
 export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal'
 
+/** A sea or ocean drawn as its real extent rather than as a marker. */
+export interface MapArea {
+  id: string
+  state: CountryState
+}
+
 /** A point place drawn on top of the geography (a city, port, sea, strait…). */
 export interface MapPoint {
   id: string
@@ -44,6 +51,12 @@ export interface MapPoint {
   shape?: MarkerShape
   /** Drawn beside the marker when set — used by Learn mode, never in play. */
   label?: string
+  /**
+   * False for a place drawn as an area: the polygon is the notation, and a pin
+   * in the middle of it would only say the sea is there and not there. The
+   * label still sits at the authored point, which is chosen to read well.
+   */
+  marker?: boolean
 }
 
 /** Idle fills, which is where the sea/strait distinction has to carry. */
@@ -91,6 +104,12 @@ export interface MapCanvasProps {
   /** Point places drawn above the geography. */
   points?: MapPoint[]
   /**
+   * Sea and ocean extents, drawn under the land so coastlines still read. An
+   * area and a marker are the two notations now: a patch for the things that
+   * are patches, a pin for the chokepoints that really are points.
+   */
+  areas?: MapArea[]
+  /**
    * Zoom to frame these lon/lats instead of a country. Pass both the answer and
    * the player's tap so a near miss and a wild guess are each readable. Null
    * resets the view.
@@ -136,6 +155,7 @@ export function MapCanvas({
   onPick,
   onDeselect,
   points,
+  areas,
   revealPoints = null,
   pinPoint = null,
   markPoint = null,
@@ -378,6 +398,27 @@ export function MapCanvas({
         onClick={handleMapClick}
       >
         <g transform={transform.toString()}>
+          {/* Under the land: a sea's polygon runs up to the coast and beyond it
+              in places, and the coastline has to stay the thing you read. */}
+          {areas?.map((a) => {
+            const f = areaOf(a.id)
+            if (!f) return null
+            const idle = a.state === 'idle'
+            return (
+              <path
+                key={`a-${a.id}`}
+                d={path(f) ?? undefined}
+                fill={idle ? '#0369a1' : FILLS[a.state]}
+                fillOpacity={idle ? 0.18 : 0.75}
+                stroke={idle ? '#0369a1' : FILLS[a.state]}
+                strokeOpacity={idle ? 0.35 : 0.9}
+                strokeWidth={idle ? 0.8 : 1.6}
+                vectorEffect="non-scaling-stroke"
+                pointerEvents="none"
+              />
+            )
+          })}
+
           {drawn.map((f) => {
             const iso = f.properties.iso
             const state = states[iso] ?? 'idle'
@@ -438,7 +479,7 @@ export function MapCanvas({
                 pointerEvents={onPickPoint ? 'visiblePainted' : 'none'}
                 className={onPickPoint ? 'cursor-pointer' : undefined}
               >
-                {shape === 'strait' ? (
+                {p.marker === false ? null : shape === 'strait' ? (
                   // A diamond pinched by two bars: a narrow gate between waters.
                   <g vectorEffect="non-scaling-stroke">
                     <path
@@ -504,7 +545,7 @@ export function MapCanvas({
                 {p.label && (
                   <text
                     x={cx}
-                    y={cy - (PLACE_MARKER_PX * SHAPE_SCALE[shape] + 6) / k}
+                    y={cy - (p.marker === false ? -5 : PLACE_MARKER_PX * SHAPE_SCALE[shape] + 6) / k}
                     textAnchor="middle"
                     fontSize={(isTarget ? 15 : 11) / k}
                     fontWeight={800}
