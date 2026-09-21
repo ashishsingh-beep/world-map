@@ -583,6 +583,7 @@
     },
     {
       "id": "sea-labrador",
+      "region": ["america"],
       "name": "Labrador Sea",
       "aliases": [],
       "type": "sea",
@@ -611,6 +612,7 @@
     },
     {
       "id": "sea-baffin-bay",
+      "region": ["america"],
       "name": "Baffin Bay",
       "aliases": [],
       "type": "sea",
@@ -1868,6 +1870,7 @@
     },
     {
       "id": "st-davis",
+      "region": ["america"],
       "name": "Davis Strait",
       "aliases": [],
       "type": "strait",
@@ -1883,6 +1886,7 @@
     },
     {
       "id": "st-nares",
+      "region": ["america"],
       "name": "Nares Strait",
       "aliases": [],
       "type": "strait",

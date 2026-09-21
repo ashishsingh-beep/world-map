@@ -48,12 +48,16 @@ Mediterranean is European and Asian, the Bering Strait American and Asian — an
 the counts deliberately do not add up to the total.
 
 An authored `region` in the syllabus **replaces** what the coastline implies
-rather than adding to it, because some of it needs overruling. Russia is filed
-as European, which is right for the country rounds and wrong for every sea on
-its Siberian and Pacific coast: the Sea of Japan, the Laptev and the Sea of
-Okhotsk all inherited "europe" and had to be told otherwise. The White and
-Barents Seas keep it, being genuinely European Arctic. The Antarctic seas name
-no region and appear only under All. Region and notations narrow *practice*
+rather than adding to it, because the coastline lies in two ways and both need
+overruling. A country can span regions: Russia is filed as European, right for
+the country rounds and wrong for every sea on its Siberian and Pacific coast, so
+the Sea of Japan, the Laptev and the Sea of Okhotsk had to be told otherwise.
+And a country can be listed for a coast on the far side of the world: Baffin Bay
+borders Denmark only because Greenland is Danish, which dragged it, the Labrador
+Sea and the Davis and Nares Straits into Europe. The White and Barents Seas keep
+Europe, being genuinely European Arctic, as do the Baltic and the Danish Straits,
+which are Denmark proper. The Antarctic seas name no region and appear only
+under All. Region and notations narrow *practice*
 only: Learn always draws the whole set, with its own legend chips.
 
 **The typed input suggests, but only after three characters.** The list is the

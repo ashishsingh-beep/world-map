@@ -1749,6 +1749,9 @@
     },
     {
       "id": "sea-labrador",
+      "region": [
+        "america"
+      ],
       "name": "Labrador Sea",
       "aliases": [],
       "type": "sea",
@@ -1769,8 +1772,7 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "america",
-        "europe"
+        "america"
       ]
     },
     {
@@ -1799,6 +1801,9 @@
     },
     {
       "id": "sea-baffin-bay",
+      "region": [
+        "america"
+      ],
       "name": "Baffin Bay",
       "aliases": [],
       "type": "sea",
@@ -1819,8 +1824,7 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "america",
-        "europe"
+        "america"
       ]
     },
     {
@@ -4117,6 +4121,9 @@
     },
     {
       "id": "st-davis",
+      "region": [
+        "america"
+      ],
       "name": "Davis Strait",
       "aliases": [],
       "type": "strait",
@@ -4138,12 +4145,14 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "america",
-        "europe"
+        "america"
       ]
     },
     {
       "id": "st-nares",
+      "region": [
+        "america"
+      ],
       "name": "Nares Strait",
       "aliases": [],
       "type": "strait",
@@ -4167,8 +4176,7 @@
       "continent": "World",
       "section": "water",
       "regions": [
-        "america",
-        "europe"
+        "america"
       ]
     },
     {
