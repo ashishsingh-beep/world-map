@@ -48,6 +48,11 @@ export interface Place {
   connects?: string
   /** Ocean basin or region it is filed under. */
   basin?: string
+  /**
+   * Practice regions this water feature belongs to, derived by the build from
+   * the countries along it. Several when it is a boundary sea.
+   */
+  regions?: string[]
   /** Hit radius in km. A sea is answered by pointing anywhere in it. */
   spanKm?: number
 }

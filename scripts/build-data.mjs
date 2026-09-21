@@ -261,6 +261,27 @@ const PLACE_TYPES = new Set([
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal'])
+
+/**
+ * Practice regions for the Seas & Straits round, derived from the countries
+ * along each feature. Three, not six continents: Africa rides with Asia and
+ * Oceania with the Pacific side of it, which is how the notes group them.
+ *
+ * A feature belongs to every region it touches — the Mediterranean is European
+ * and Asian, the Bering Strait American and Asian — because a boundary sea is
+ * exactly the one you want to meet from either side. The handful with no
+ * bordering country at all (the Antarctic seas, the Sargasso) say so with an
+ * explicit `region` instead.
+ */
+const REGION_OF = {
+  'North America': 'america',
+  'South America': 'america',
+  Europe: 'europe',
+  Asia: 'asia',
+  Africa: 'asia',
+  Oceania: 'asia',
+}
+const REGIONS = new Set(Object.values(REGION_OF))
 /**
  * How far outside its country an onshore place may sit before it's an error.
  * A port sits on the water's edge, and Natural Earth's coastline is generalised,
@@ -365,7 +386,22 @@ for (const file of syllabusFiles) {
       errors.push(`${where(p.id)}: marked offshore but the point is inside ${p.country}`)
     }
 
-    places.push({ ...p, point, continent: doc.continent, section: doc.section ?? 'places' })
+    const section = doc.section ?? 'places'
+    let regions
+    if (section === 'water') {
+      const found = new Set()
+      for (const iso of p.borders ?? []) {
+        const r = REGION_OF[meta[iso]?.continent]
+        if (r) found.add(r)
+      }
+      for (const r of p.region ?? []) {
+        if (REGIONS.has(r)) found.add(r)
+        else errors.push(`${where(p.id)}: unknown region "${r}"`)
+      }
+      regions = [...found]
+    }
+
+    places.push({ ...p, point, continent: doc.continent, section, ...(regions && { regions }) })
   }
 
   for (const g of doc.groups ?? []) {

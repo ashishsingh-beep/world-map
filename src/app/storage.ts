@@ -1,5 +1,5 @@
 import type { Mode, QuizSnapshot } from '../game/useQuiz'
-import type { WaterKind } from '../ui/bits'
+import type { WaterKind, WaterRegion } from '../ui/bits'
 
 /**
  * What survives a refresh, beyond the screen you were on (that lives in the URL
@@ -19,12 +19,14 @@ export interface Prefs {
   mode: Mode
   timed: boolean
   kinds: Record<WaterKind, boolean>
+  region: WaterRegion
 }
 
 export const DEFAULT_PREFS: Prefs = {
   mode: 'pin',
   timed: true,
   kinds: { ocean: true, sea: true, strait: true, canal: true },
+  region: 'all',
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -62,6 +64,7 @@ function drop(key: string): void {
 
 const MODES: Mode[] = ['pin', 'type', 'significance']
 const KINDS: WaterKind[] = ['ocean', 'sea', 'strait', 'canal']
+const REGIONS: WaterRegion[] = ['all', 'america', 'europe', 'asia']
 
 export function loadPrefs(): Prefs {
   const raw = read(PREFS_KEY) as Partial<Prefs> | null
@@ -77,6 +80,9 @@ export function loadPrefs(): Prefs {
     mode: MODES.includes(raw.mode as Mode) ? (raw.mode as Mode) : DEFAULT_PREFS.mode,
     timed: typeof raw.timed === 'boolean' ? raw.timed : DEFAULT_PREFS.timed,
     kinds,
+    region: REGIONS.includes(raw.region as WaterRegion)
+      ? (raw.region as WaterRegion)
+      : DEFAULT_PREFS.region,
   }
 }
 

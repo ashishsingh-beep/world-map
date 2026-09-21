@@ -764,7 +764,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america",
+        "asia"
+      ]
     },
     {
       "id": "oc-atlantic",
@@ -792,7 +796,12 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america",
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "oc-indian",
@@ -820,7 +829,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "oc-arctic",
@@ -847,7 +859,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "america"
+      ]
     },
     {
       "id": "oc-southern",
@@ -870,7 +886,8 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": []
     },
     {
       "id": "sea-mediterranean",
@@ -900,7 +917,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "sea-adriatic",
@@ -928,7 +949,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-aegean",
@@ -950,7 +974,11 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "sea-ionian",
@@ -973,7 +1001,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-tyrrhenian",
@@ -994,7 +1025,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-ligurian",
@@ -1017,7 +1051,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-alboran",
@@ -1040,7 +1077,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "sea-black",
@@ -1068,7 +1109,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia",
+        "europe"
+      ]
     },
     {
       "id": "sea-azov",
@@ -1090,7 +1135,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-marmara",
@@ -1113,7 +1161,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-caspian",
@@ -1140,7 +1191,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "sea-baltic",
@@ -1168,7 +1223,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-bothnia",
@@ -1190,7 +1248,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-finland",
@@ -1213,7 +1274,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-riga",
@@ -1239,7 +1303,10 @@
       ],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-north",
@@ -1267,7 +1334,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-norwegian",
@@ -1289,7 +1359,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-barents",
@@ -1311,7 +1384,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-greenland",
@@ -1333,7 +1409,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-white",
@@ -1354,7 +1433,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-kara",
@@ -1375,7 +1457,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-laptev",
@@ -1396,7 +1481,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-east-siberian",
@@ -1417,7 +1505,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-chukchi",
@@ -1439,7 +1530,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "america"
+      ]
     },
     {
       "id": "sea-beaufort",
@@ -1461,7 +1556,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-irish",
@@ -1483,7 +1581,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-celtic",
@@ -1506,7 +1607,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-biscay",
@@ -1528,7 +1632,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "sea-caribbean",
@@ -1554,7 +1661,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-gulf-of-mexico",
@@ -1577,10 +1687,16 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-sargasso",
+      "region": [
+        "america"
+      ],
       "name": "Sargasso Sea",
       "aliases": [],
       "type": "sea",
@@ -1598,7 +1714,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-labrador",
@@ -1620,7 +1739,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america",
+        "europe"
+      ]
     },
     {
       "id": "sea-hudson-bay",
@@ -1641,7 +1764,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-baffin-bay",
@@ -1663,7 +1789,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america",
+        "europe"
+      ]
     },
     {
       "id": "sea-james-bay",
@@ -1684,7 +1814,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-boothia",
@@ -1705,7 +1838,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-campeche",
@@ -1731,7 +1867,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-panama-gulf",
@@ -1752,7 +1891,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-st-lawrence",
@@ -1775,7 +1917,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-fundy",
@@ -1797,7 +1942,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-guinea",
@@ -1825,7 +1973,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-arabian",
@@ -1851,7 +2002,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-bengal",
@@ -1876,7 +2030,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-laccadive",
@@ -1901,7 +2058,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-andaman",
@@ -1925,7 +2085,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-red",
@@ -1953,7 +2116,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-aden",
@@ -1976,7 +2142,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-persian-gulf",
@@ -2006,7 +2175,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-oman",
@@ -2030,7 +2202,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-aqaba",
@@ -2054,7 +2229,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-suez-gulf",
@@ -2075,7 +2253,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-kutch",
@@ -2098,7 +2279,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-khambhat",
@@ -2121,7 +2305,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-mannar",
@@ -2143,7 +2330,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-timor",
@@ -2166,7 +2356,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-arafura",
@@ -2189,7 +2382,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-carpentaria",
@@ -2210,7 +2406,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-australian-bight",
@@ -2231,7 +2430,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-south-china",
@@ -2259,7 +2461,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-east-china",
@@ -2283,7 +2488,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-yellow",
@@ -2306,7 +2514,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-japan",
@@ -2332,7 +2543,11 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia",
+        "europe"
+      ]
     },
     {
       "id": "sea-okhotsk",
@@ -2354,7 +2569,11 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "sea-bering",
@@ -2376,7 +2595,11 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "america"
+      ]
     },
     {
       "id": "sea-philippine",
@@ -2402,7 +2625,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-celebes",
@@ -2427,7 +2653,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-sulu",
@@ -2449,7 +2678,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-banda",
@@ -2470,7 +2702,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-java",
@@ -2491,7 +2726,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-flores",
@@ -2512,7 +2750,10 @@
       "notes": [],
       "tier": 3,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-molucca",
@@ -2533,7 +2774,10 @@
       "notes": [],
       "tier": 3,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-coral",
@@ -2557,7 +2801,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-tasman",
@@ -2579,7 +2826,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-bismarck",
@@ -2600,7 +2850,10 @@
       "notes": [],
       "tier": 3,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-solomon",
@@ -2622,7 +2875,10 @@
       "notes": [],
       "tier": 3,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-thailand",
@@ -2648,7 +2904,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-tonkin",
@@ -2670,7 +2929,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "sea-california",
@@ -2693,7 +2955,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-gulf-of-alaska",
@@ -2714,7 +2979,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "sea-ross",
@@ -2733,7 +3001,8 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": []
     },
     {
       "id": "sea-weddell",
@@ -2752,7 +3021,8 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": []
     },
     {
       "id": "sea-amundsen",
@@ -2771,10 +3041,14 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": []
     },
     {
       "id": "sea-scotia",
+      "region": [
+        "america"
+      ],
       "name": "Scotia Sea",
       "aliases": [],
       "type": "sea",
@@ -2790,7 +3064,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "st-gibraltar",
@@ -2816,7 +3093,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "st-bosporus",
@@ -2844,7 +3125,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-dardanelles",
@@ -2869,7 +3153,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-messina",
@@ -2891,7 +3178,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-otranto",
@@ -2914,7 +3204,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-sicily",
@@ -2939,7 +3232,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "asia"
+      ]
     },
     {
       "id": "st-bonifacio",
@@ -2962,7 +3259,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-dover",
@@ -2989,7 +3289,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-english-channel",
@@ -3014,7 +3317,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-kerch",
@@ -3040,7 +3346,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-skagerrak",
@@ -3064,7 +3373,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-kattegat",
@@ -3087,7 +3399,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-oresund",
@@ -3113,7 +3428,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-denmark-strait",
@@ -3138,7 +3456,10 @@
       ],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-st-georges",
@@ -3163,7 +3484,10 @@
       "notes": [],
       "tier": 3,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "st-hormuz",
@@ -3189,7 +3513,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-bab-el-mandeb",
@@ -3219,7 +3546,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-tiran",
@@ -3242,7 +3572,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-palk",
@@ -3267,7 +3600,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-ten-degree",
@@ -3289,7 +3625,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-nine-degree",
@@ -3311,7 +3650,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-eight-degree",
@@ -3334,7 +3676,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-malacca",
@@ -3364,7 +3709,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-singapore",
@@ -3388,7 +3736,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-sunda",
@@ -3410,7 +3761,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-lombok",
@@ -3432,7 +3786,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-makassar",
@@ -3454,7 +3811,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-taiwan",
@@ -3479,7 +3839,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-luzon",
@@ -3504,7 +3867,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-korea",
@@ -3529,7 +3895,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-tsugaru",
@@ -3551,7 +3920,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-la-perouse",
@@ -3577,7 +3949,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia",
+        "europe"
+      ]
     },
     {
       "id": "st-bering",
@@ -3602,7 +3978,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe",
+        "america"
+      ]
     },
     {
       "id": "st-mozambique",
@@ -3625,7 +4005,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-florida",
@@ -3651,7 +4034,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "st-yucatan",
@@ -3676,7 +4062,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "st-davis",
@@ -3699,7 +4088,11 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america",
+        "europe"
+      ]
     },
     {
       "id": "st-nares",
@@ -3724,7 +4117,11 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america",
+        "europe"
+      ]
     },
     {
       "id": "st-hudson",
@@ -3746,7 +4143,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "st-juan-de-fuca",
@@ -3769,7 +4169,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "st-drake",
@@ -3794,7 +4197,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "st-bass",
@@ -3816,7 +4222,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-torres",
@@ -3839,7 +4248,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "st-cook",
@@ -3861,7 +4273,10 @@
       "notes": [],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "cn-suez",
@@ -3885,7 +4300,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "asia"
+      ]
     },
     {
       "id": "cn-panama",
@@ -3909,7 +4327,10 @@
       ],
       "tier": 1,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "america"
+      ]
     },
     {
       "id": "cn-kiel",
@@ -3931,7 +4352,10 @@
       "notes": [],
       "tier": 2,
       "continent": "World",
-      "section": "water"
+      "section": "water",
+      "regions": [
+        "europe"
+      ]
     },
     {
       "id": "col-bogota",

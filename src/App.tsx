@@ -12,7 +12,14 @@ import type { Mode, QuizSnapshot } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
 import { placeOf } from './data/places'
-import { Button, KindSwatch, WATER_KINDS, type WaterKind } from './ui/bits'
+import {
+  Button,
+  KindSwatch,
+  WATER_KINDS,
+  WATER_REGIONS,
+  type WaterKind,
+  type WaterRegion,
+} from './ui/bits'
 import { HOME, useRoute } from './app/route'
 import {
   clearRound,
@@ -27,11 +34,12 @@ import {
 export default function App() {
   const [route, navigate] = useRoute()
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, kinds } = prefs
+  const { mode, timed, kinds, region } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
+  const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
   useEffect(() => savePrefs(prefs), [prefs])
 
   const [runKey, setRunKey] = useState(0)
@@ -48,12 +56,16 @@ export default function App() {
   const isWaterRound = roundPlaces[0]?.section === 'water'
 
   /**
-   * Which notations to practise. Not a question-count selector — the round
-   * still asks every one of whatever is ticked; this only decides which set.
+   * Which part of the water set to practise: a region, then the notations
+   * within it. Still not a question-count selector — the round asks every one
+   * of whatever is left; these only decide which set.
    */
-  const asked = isWaterRound
-    ? roundPlaces.filter((p) => kinds[p.type as WaterKind] ?? true)
+  const inRegion = isWaterRound
+    ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : roundPlaces
+  const asked = isWaterRound
+    ? inRegion.filter((p) => kinds[p.type as WaterKind] ?? true)
+    : inRegion
   const playRound = isWaterRound ? { ...round, places: asked.map((p) => p.id) } : round
   const askIds = playRound.places ?? playRound.askable
 
@@ -137,10 +149,39 @@ export default function App() {
 
             {isWaterRound && (
               <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Region</h2>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {WATER_REGIONS.map(({ id, label }) => {
+                    const n =
+                      id === 'all'
+                        ? roundPlaces.length
+                        : roundPlaces.filter((p) => p.regions?.includes(id)).length
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => setRegion(id)}
+                        className={`cursor-pointer rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                          region === id ? 'border-blue-600' : 'border-transparent'
+                        }`}
+                      >
+                        <div className="font-extrabold text-slate-900">{label}</div>
+                        <div className="text-xs font-semibold text-slate-500">{n}</div>
+                      </button>
+                    )
+                  })}
+                </div>
+                <p className="mt-2 text-xs font-semibold text-slate-500">
+                  Africa and Oceania ride with Asia. A boundary sea counts in both regions it
+                  touches, so these do not add up.
+                </p>
+
                 <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {WATER_KINDS.map(({ type, label }) => {
-                    const n = roundPlaces.filter((p) => p.type === type).length
+                    // Counted within the chosen region, so "the last one" means
+                    // the last that still has anything to ask here.
+                    const n = inRegion.filter((p) => p.type === type).length
                     if (!n) return null
                     const on = kinds[type]
                     // Never let the last one be unticked — a round with nothing

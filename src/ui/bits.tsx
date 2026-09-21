@@ -24,6 +24,20 @@ export const WATER_KINDS = [
 
 export type WaterKind = (typeof WATER_KINDS)[number]['type']
 
+/**
+ * Practice regions. Three plus All, not six continents: Africa rides with Asia
+ * and Oceania with the Pacific side of it. A boundary sea counts in both of the
+ * regions it touches, so these do not add up to the total.
+ */
+export const WATER_REGIONS = [
+  { id: 'all' as const, label: 'All' },
+  { id: 'america' as const, label: 'Americas' },
+  { id: 'europe' as const, label: 'Europe' },
+  { id: 'asia' as const, label: 'Asia' },
+]
+
+export type WaterRegion = (typeof WATER_REGIONS)[number]['id']
+
 /** The marker as it is drawn on the map, so legend and map never drift apart. */
 export function KindSwatch({ type }: { type: WaterKind }) {
   if (type === 'strait') {

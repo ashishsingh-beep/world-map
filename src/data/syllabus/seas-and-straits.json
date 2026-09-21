@@ -560,6 +560,7 @@
     },
     {
       "id": "sea-sargasso",
+      "region": ["america"],
       "name": "Sargasso Sea",
       "aliases": [],
       "type": "sea",
@@ -1291,6 +1292,7 @@
     },
     {
       "id": "sea-scotia",
+      "region": ["america"],
       "name": "Scotia Sea",
       "aliases": [],
       "type": "sea",

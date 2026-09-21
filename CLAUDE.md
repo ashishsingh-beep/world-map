@@ -34,9 +34,18 @@ Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 `scripts/build-data.mjs`.
 
 **No question-count selector.** Every round asks its full set. The Seas &
-Straits round lets you choose which notations to practise — seas, straits,
-canals, or any combination — but that picks *which set*, not how many of it,
-and the last remaining one cannot be unticked.
+Straits round narrows twice — a region (All, Americas, Europe, Asia), then the
+notations within it — but both pick *which set*, not how many of it, and the
+last notation with anything left in the chosen region cannot be unticked.
+
+Regions are three, not six continents: Africa rides with Asia and Oceania with
+the Pacific side of it. The build derives them in `REGION_OF` from the countries
+along each feature, so a boundary sea belongs to both regions it touches — the
+Mediterranean is European and Asian, the Bering Strait American and Asian — and
+the counts deliberately do not add up to the total. The few with no bordering
+country say so with an explicit `region` in the syllabus; the Antarctic seas
+name none, and appear only under All. Region and notations narrow *practice*
+only: Learn always draws the whole set, with its own legend chips.
 
 **The typed input suggests, but only after three characters.** The list is the
 round's own answers, never all 196 names, and it is there to fix spelling — not
