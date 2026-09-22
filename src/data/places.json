@@ -2390,6 +2390,10 @@
       "borders": [
         "TUR"
       ],
+      "region": [
+        "europe",
+        "asia"
+      ],
       "significance": "Small sea wholly inside Turkey, between the Bosporus and the Dardanelles",
       "notes": [
         "It is what makes the two Turkish Straits a pair"
@@ -2399,6 +2403,7 @@
       "section": "water",
       "atlas": "world",
       "regions": [
+        "europe",
         "asia"
       ]
     },
@@ -4460,6 +4465,10 @@
       "borders": [
         "TUR"
       ],
+      "region": [
+        "europe",
+        "asia"
+      ],
       "connects": "Black Sea ↔ Sea of Marmara",
       "significance": "Splits Istanbul between Europe and Asia; Russia's grain route west",
       "notes": [
@@ -4470,6 +4479,7 @@
       "section": "water",
       "atlas": "world",
       "regions": [
+        "europe",
         "asia"
       ]
     },
@@ -4491,6 +4501,10 @@
       "borders": [
         "TUR"
       ],
+      "region": [
+        "europe",
+        "asia"
+      ],
       "connects": "Sea of Marmara ↔ Aegean Sea",
       "significance": "The second Turkish Strait, and the Gallipoli campaign's prize",
       "notes": [],
@@ -4499,6 +4513,7 @@
       "section": "water",
       "atlas": "world",
       "regions": [
+        "europe",
         "asia"
       ]
     },

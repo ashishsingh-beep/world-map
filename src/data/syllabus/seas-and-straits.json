@@ -277,6 +277,7 @@
       "spanKm": 110,
       "basin": "Black Sea",
       "borders": ["TUR"],
+      "region": ["europe", "asia"],
       "significance": "Small sea wholly inside Turkey, between the Bosporus and the Dardanelles",
       "notes": ["It is what makes the two Turkish Straits a pair"],
       "tier": 1
@@ -1348,6 +1349,7 @@
       "spanKm": 30,
       "basin": "Black Sea",
       "borders": ["TUR"],
+      "region": ["europe", "asia"],
       "connects": "Black Sea ↔ Sea of Marmara",
       "significance": "Splits Istanbul between Europe and Asia; Russia's grain route west",
       "notes": ["Governed with the Dardanelles under the Montreux Convention"],
@@ -1363,6 +1365,7 @@
       "spanKm": 40,
       "basin": "Black Sea",
       "borders": ["TUR"],
+      "region": ["europe", "asia"],
       "connects": "Sea of Marmara ↔ Aegean Sea",
       "significance": "The second Turkish Strait, and the Gallipoli campaign's prize",
       "notes": [],

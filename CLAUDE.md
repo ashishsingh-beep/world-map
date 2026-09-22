@@ -89,7 +89,10 @@ the country rounds and wrong for every sea on its Siberian and Pacific coast, so
 the Sea of Japan, the Laptev and the Sea of Okhotsk had to be told otherwise.
 And a country can be listed for a coast on the far side of the world: Baffin Bay
 borders Denmark only because Greenland is Danish, which dragged it, the Labrador
-Sea and the Davis and Nares Straits into Europe. The White and Barents Seas keep
+Sea and the Davis and Nares Straits into Europe. A country can also *be* the
+boundary: Turkey owns both shores of the Sea of Marmara and of the Bosporus and
+the Dardanelles, so the one country they border decided all three were Asian
+alone — the Bosporus, which is the line between the continents, included. The White and Barents Seas keep
 Europe, being genuinely European Arctic, as do the Baltic and the Danish Straits,
 which are Denmark proper. The Antarctic seas name no region and appear only
 under All. Region and notations narrow *practice*
