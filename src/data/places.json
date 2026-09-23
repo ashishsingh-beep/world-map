@@ -6481,44 +6481,6 @@
       "section": "places"
     },
     {
-      "id": "w-oil-chokepoints",
-      "name": "The oil chokepoints",
-      "members": [
-        "st-hormuz",
-        "st-bab-el-mandeb",
-        "st-malacca",
-        "cn-suez",
-        "st-gibraltar",
-        "cn-panama"
-      ],
-      "mnemonic": "Hormuz, Bab-el-Mandeb, Malacca, Suez, Gibraltar, Panama — the six the tanker world worries about",
-      "continent": "World",
-      "section": "water"
-    },
-    {
-      "id": "w-turkish-straits",
-      "name": "The Turkish Straits",
-      "members": [
-        "st-bosporus",
-        "st-dardanelles"
-      ],
-      "mnemonic": "Bosporus then Dardanelles — Black Sea, Marmara, Aegean, in that order",
-      "continent": "World",
-      "section": "water"
-    },
-    {
-      "id": "w-indian-channels",
-      "name": "India's degree channels",
-      "members": [
-        "st-ten-degree",
-        "st-nine-degree",
-        "st-eight-degree"
-      ],
-      "mnemonic": "Ten splits Andaman from Nicobar; Nine splits Lakshadweep; Eight splits India from the Maldives",
-      "continent": "World",
-      "section": "water"
-    },
-    {
       "id": "w-danish-straits",
       "name": "The Danish Straits",
       "members": [
