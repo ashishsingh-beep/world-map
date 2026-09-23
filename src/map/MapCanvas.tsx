@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { geoEquirectangular, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
@@ -254,6 +254,18 @@ export function MapCanvas({
     if (!size.width || !size.height) return p
     const [[w, s], [e, n]] = view
     /**
+     * A view may cross the antimeridian, written as an east past 180 — Oceania
+     * runs 110°E to 210°E. Turn the globe so that view's own middle meridian
+     * is the middle of the map. Without it d3 cuts the Pacific down the 180th:
+     * Samoa, Tonga and Kiribati come out at the far left of the map while
+     * Australia sits at the far right, and the fitted box is 356° wide, so the
+     * whole round is drawn at world scale.
+     *
+     * Only when the view asks for it. Every other round keeps a rotation of
+     * zero, and so keeps the map it has always drawn.
+     */
+    if (e > 180 || w < -180) p.rotate([-(w + e) / 2, 0])
+    /**
      * Fit to the four corners as points, NOT to a Polygon. d3-geo reads
      * polygons with spherical winding rules: a clockwise ring means "the whole
      * globe except this box", which silently fits the entire planet and
@@ -279,6 +291,35 @@ export function MapCanvas({
 
   const path = useMemo(() => geoPath(projection), [projection])
 
+  /**
+   * How big a country looks on screen, measured as its largest single piece.
+   *
+   * Not the bounds of the whole feature: Fiji, New Zealand, Russia and the USA
+   * straddle the antimeridian, and a feature with parts on both sides has
+   * bounds as wide as the map. Fiji came out 1,336px across on the world map —
+   * so it never fell under the marker threshold, and the one country that most
+   * needs a ring to be findable was the one that never got one.
+   *
+   * The largest piece is the honest answer to "is this visible without help?"
+   * anyway: the USA does not need a marker because the lower 48 are big, not
+   * because Guam and Maine are far apart.
+   */
+  const biggestPartPx = useCallback(
+    (f: CountryFeature) => {
+      const parts =
+        f.geometry.type === 'MultiPolygon'
+          ? f.geometry.coordinates.map((coordinates) => ({ type: 'Polygon' as const, coordinates }))
+          : [f.geometry]
+      let px = 0
+      for (const part of parts) {
+        const b = path.bounds(part as never)
+        px = Math.max(px, b[1][0] - b[0][0], b[1][1] - b[0][1])
+      }
+      return px
+    },
+    [path]
+  )
+
   /** Base (unzoomed) screen geometry per country: where it sits and how big. */
   const layout = useMemo(() => {
     const out: Record<string, { cx: number; cy: number; px: number }> = {}
@@ -289,15 +330,10 @@ export function MapCanvas({
       if (!meta[iso]) continue
       const [x, y] = projection(metaOf(iso).centroid) ?? [NaN, NaN]
       if (!Number.isFinite(x)) continue
-      const b = path.bounds(f)
-      out[iso] = {
-        cx: x,
-        cy: y,
-        px: Math.max(b[1][0] - b[0][0], b[1][1] - b[0][1]),
-      }
+      out[iso] = { cx: x, cy: y, px: biggestPartPx(f) }
     }
     return out
-  }, [drawn, projection, path, size.width])
+  }, [drawn, projection, biggestPartPx, size.width])
 
   // Pan and zoom by hand, same as the reference.
   useEffect(() => {

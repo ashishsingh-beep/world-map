@@ -245,7 +245,17 @@ fails.
 - **`vectorEffect="non-scaling-stroke"`** already holds stroke width constant on
   screen. Do not also divide by the zoom scale, or borders vanish when zoomed.
 - **Antimeridian.** Russia, USA, Fiji, NZ and Kiribati have wrapping bounds
-  (west > east). Any new bbox maths must handle that.
+  (west > east). Any new bbox maths must handle that. It has bitten twice.
+  Fitting Oceania to its members gave a 356°-wide box — Tonga at -176, Tuvalu
+  at 179 — so the round drew at world scale with Australia against one edge and
+  Samoa, Tonga and Kiribati against the other. Its view is hand-set instead and
+  crosses the antimeridian, written as an east past 180 (110°E to 210°E);
+  `MapCanvas` turns the globe to that view's middle meridian, and only when a
+  view asks for it, so every other round keeps the map it always drew. And a
+  country's on-screen size is measured from its **largest piece**, not its
+  whole bounds: a feature with parts either side of the line has bounds as wide
+  as the map, which put Fiji at 1,336px on the world map and so denied a marker
+  ring to the one country that most needed one.
 
 ## Game rules
 

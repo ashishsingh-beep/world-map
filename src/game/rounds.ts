@@ -70,6 +70,20 @@ const VIEW_OVERRIDES: Partial<Record<string, BBox>> = {
     [-26, 33],
     [46, 72],
   ],
+  /**
+   * Oceania crosses the antimeridian, so its east is past 180 and `MapCanvas`
+   * turns the globe to suit. Fitting to its members cannot express that: Tonga
+   * and Samoa are at -176 and -172, Tuvalu at 179, so a plain min/max frame
+   * runs -176 to 180 — the whole planet — and the round drew Australia hard
+   * against one edge with Samoa, Tonga and Kiribati against the other.
+   *
+   * 110°E reaches past Australia's west coast, 210°E (that is, 150°W) past
+   * Kiribati's Line Islands, and -50° past the bottom of New Zealand.
+   */
+  oceania: [
+    [110, -50],
+    [210, 22],
+  ],
 }
 
 function round(
@@ -102,7 +116,11 @@ export const ROUNDS: Record<string, Round> = {
     'From the Arctic edge down through Central America.',
     isosIn('North America')
   ),
-  oceania: round('oceania', 'Oceania Map', 'Island nations across the Pacific.', isosIn('Oceania')),
+  oceania: round('oceania', 'Oceania Map', 'Island nations across the Pacific.', isosIn('Oceania'), {
+    // Maritime South-East Asia as context, or the western third of the frame
+    // is open sea where everyone expects Indonesia. Drawn, never asked.
+    render: [...isosIn('Oceania'), 'IDN', 'PHL', 'MYS', 'BRN', 'TLS'],
+  }),
   'south-america': round(
     'south-america',
     'South America Map',
