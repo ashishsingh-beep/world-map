@@ -64,6 +64,12 @@
       "members": ["sea-adriatic", "sea-tyrrhenian", "sea-aegean", "sea-ionian"],
       "visual": "italy-greece-seas",
       "mnemonic": "Rule a line down each peninsula, northwest to southeast — left of it the sea starts with A, right of it it ends in -ian"
+    },
+    {
+      "id": "w-russian-arctic-seas",
+      "name": "Russia's Arctic coast",
+      "members": ["sea-barents", "sea-kara", "sea-laptev", "sea-east-siberian", "sea-chukchi"],
+      "mnemonic": "BKL ESC — Barents, Kara, Laptev, East Siberian, Chukchi, west to east along the Russian Arctic coast to the Bering Strait"
     }
   ],
   "places": [
