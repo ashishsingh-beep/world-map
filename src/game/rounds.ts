@@ -177,6 +177,19 @@ export const WATER_CONTINENTS = SYLLABUS.filter((c) => c.section === 'water')
 export const allPlacesRoundId = (continent: string) =>
   `places-${continent.toLowerCase().replace(/\s+/g, '-')}`
 
+/**
+ * Countries a places round draws beyond its own continent's members.
+ *
+ * Russia is filed as European for the country rounds — right there, wrong
+ * here: the Asia places round reaches Kamchatka, Sakhalin, the Kuril Islands
+ * and the Trans-Siberian Railway's own ends, all of it Russian, and without
+ * Russia drawn those places are patches and pins floating in open sea with no
+ * land under them.
+ */
+const EXTRA_RENDER: Partial<Record<string, string[]>> = {
+  Asia: ['RUS'],
+}
+
 function continentPlaceRound({
   name,
   title,
@@ -198,7 +211,7 @@ function continentPlaceRound({
       ? ['IND', 'PAK', 'NPL', 'BTN', 'CHN', 'BGD', 'AFG', 'MMR', 'LKA']
       : worldwide
         ? allIsos
-        : isosIn(name as Continent)
+        : [...isosIn(name as Continent), ...(EXTRA_RENDER[name] ?? [])]
   return {
     id: allPlacesRoundId(name),
     title,

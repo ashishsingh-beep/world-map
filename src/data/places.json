@@ -5,7 +5,7 @@
       "title": "Asia",
       "section": "places",
       "atlas": "world",
-      "count": 23
+      "count": 55
     },
     {
       "name": "Himalaya",
@@ -458,6 +458,577 @@
       ],
       "significance": "Capital of China",
       "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-tokyo",
+      "name": "Tokyo",
+      "aliases": [],
+      "type": "capital",
+      "country": "JPN",
+      "point": [
+        139.6917,
+        35.6895
+      ],
+      "significance": "Capital of Japan, on Honshu",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-hokkaido",
+      "name": "Hokkaido",
+      "aliases": [],
+      "type": "island",
+      "country": "JPN",
+      "point": [
+        141.3545,
+        43.0618
+      ],
+      "significance": "Northernmost of Japan's four main islands",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-honshu",
+      "name": "Honshu",
+      "aliases": [],
+      "type": "island",
+      "country": "JPN",
+      "point": [
+        138.181,
+        36.6513
+      ],
+      "significance": "Largest of Japan's four main islands, home to Tokyo, Osaka and Kyoto",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-shikoku",
+      "name": "Shikoku",
+      "aliases": [],
+      "type": "island",
+      "country": "JPN",
+      "point": [
+        133.5311,
+        33.5597
+      ],
+      "significance": "Smallest of Japan's four main islands",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-kyushu",
+      "name": "Kyushu",
+      "aliases": [],
+      "type": "island",
+      "country": "JPN",
+      "point": [
+        130.7289,
+        32.8032
+      ],
+      "significance": "Southwesternmost of Japan's four main islands, home to Nagasaki",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-sendai",
+      "name": "Sendai",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        140.8719,
+        38.2682
+      ],
+      "significance": "Largest city in Japan's Tohoku region, on Honshu",
+      "notes": [],
+      "tier": 2,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-fukushima",
+      "name": "Fukushima",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        140.4676,
+        37.7503
+      ],
+      "significance": "Site of the 2011 nuclear disaster, after the Tohoku earthquake and tsunami",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-nagoya",
+      "name": "Nagoya",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        136.9066,
+        35.1815
+      ],
+      "significance": "Gives its name to the Nagoya Protocol, the 2010 treaty on sharing genetic resources",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-kyoto",
+      "name": "Kyoto",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        135.7681,
+        35.0116
+      ],
+      "significance": "Gives its name to the Kyoto Protocol, the 1997 climate treaty",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-osaka",
+      "name": "Osaka",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        135.5023,
+        34.6937
+      ],
+      "significance": "Major port and commercial city on Honshu",
+      "notes": [],
+      "tier": 2,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-hiroshima",
+      "name": "Hiroshima",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        132.4553,
+        34.3853
+      ],
+      "significance": "First city struck by an atomic bomb, on 6 August 1945",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-yokohama",
+      "name": "Yokohama",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        139.638,
+        35.4437
+      ],
+      "significance": "Port city just south of Tokyo, on Tokyo Bay",
+      "notes": [],
+      "tier": 2,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-nagasaki",
+      "name": "Nagasaki",
+      "aliases": [],
+      "type": "city",
+      "country": "JPN",
+      "point": [
+        129.8737,
+        32.7503
+      ],
+      "significance": "Second and last city struck by an atomic bomb, on 9 August 1945",
+      "notes": [
+        "On Kyushu"
+      ],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-izu",
+      "name": "Izu Archipelago",
+      "aliases": [
+        "Izu Islands"
+      ],
+      "type": "island-group",
+      "country": "JPN",
+      "point": [
+        139.3667,
+        34.7333
+      ],
+      "significance": "Volcanic island chain south of Tokyo, administratively part of it",
+      "notes": [],
+      "tier": 2,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "jpn-ryukyu",
+      "name": "Ryukyu Islands",
+      "aliases": [],
+      "type": "island-group",
+      "country": "JPN",
+      "point": [
+        127.6791,
+        26.2124
+      ],
+      "significance": "Island chain stretching from Kyushu toward Taiwan; Okinawa is the largest",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "prk-pyongyang",
+      "name": "Pyongyang",
+      "aliases": [],
+      "type": "capital",
+      "country": "PRK",
+      "point": [
+        125.7625,
+        39.0392
+      ],
+      "significance": "Capital of North Korea",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "kor-seoul",
+      "name": "Seoul",
+      "aliases": [],
+      "type": "capital",
+      "country": "KOR",
+      "point": [
+        126.978,
+        37.5665
+      ],
+      "significance": "Capital of South Korea",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "twn-taipei",
+      "name": "Taipei",
+      "aliases": [],
+      "type": "capital",
+      "country": "TWN",
+      "point": [
+        121.5654,
+        25.033
+      ],
+      "significance": "Capital of Taiwan",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "mng-ulaanbaatar",
+      "name": "Ulaanbaatar",
+      "aliases": [
+        "Ulan Bator"
+      ],
+      "type": "capital",
+      "country": "MNG",
+      "point": [
+        106.9057,
+        47.8864
+      ],
+      "significance": "Capital of Mongolia",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "mng-landlocked",
+      "name": "Mongolia",
+      "aliases": [],
+      "type": "country",
+      "country": "MNG",
+      "point": [
+        103.127,
+        46.9552
+      ],
+      "significance": "Landlocked between Russia and China, the only two countries it borders",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "rus-kamchatka",
+      "name": "Kamchatka Peninsula",
+      "aliases": [
+        "Kamchatka"
+      ],
+      "land": [
+        "Kamchatka Peninsula"
+      ],
+      "type": "peninsula",
+      "country": "RUS",
+      "point": [
+        158.6499,
+        53.0452
+      ],
+      "spanKm": 500,
+      "significance": "Volcanic peninsula in Russia's Far East, in a major earthquake-prone zone",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "rus-kuril",
+      "name": "Kuril Islands",
+      "aliases": [
+        "Kurils"
+      ],
+      "type": "island-group",
+      "country": "RUS",
+      "point": [
+        147.9,
+        45
+      ],
+      "significance": "Volcanic chain between Kamchatka and Japan, disputed between Russia and Japan since World War II",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "rus-sakhalin",
+      "name": "Sakhalin",
+      "aliases": [
+        "Sakhalin Island"
+      ],
+      "type": "island",
+      "country": "RUS",
+      "point": [
+        142.738,
+        46.9591
+      ],
+      "significance": "Long island off Russia's Pacific coast, near Japan, in an earthquake-prone zone",
+      "notes": [],
+      "tier": 2,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "rus-st-petersburg",
+      "name": "St. Petersburg",
+      "aliases": [
+        "Saint Petersburg"
+      ],
+      "type": "port",
+      "country": "RUS",
+      "point": [
+        30.3609,
+        59.9311
+      ],
+      "significance": "Baltic port of Russia, western end of the Trans-Siberian Railway",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "rus-vladivostok",
+      "name": "Vladivostok",
+      "aliases": [],
+      "type": "port",
+      "country": "RUS",
+      "point": [
+        131.8869,
+        43.1155
+      ],
+      "significance": "Pacific port of Russia, eastern end of the Trans-Siberian Railway",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "kaz-astana",
+      "name": "Astana",
+      "aliases": [
+        "Nur-Sultan"
+      ],
+      "type": "capital",
+      "country": "KAZ",
+      "point": [
+        71.4704,
+        51.1605
+      ],
+      "significance": "Capital of Kazakhstan",
+      "notes": [
+        "Renamed Nur-Sultan in 2019, reverted to Astana in 2022"
+      ],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "tkm-ashgabat",
+      "name": "Ashgabat",
+      "aliases": [],
+      "type": "capital",
+      "country": "TKM",
+      "point": [
+        58.383,
+        37.9601
+      ],
+      "significance": "Capital of Turkmenistan",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "uzb-tashkent",
+      "name": "Tashkent",
+      "aliases": [],
+      "type": "capital",
+      "country": "UZB",
+      "point": [
+        69.2401,
+        41.2995
+      ],
+      "significance": "Capital of Uzbekistan",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "uzb-double-landlocked",
+      "name": "Uzbekistan",
+      "aliases": [],
+      "type": "country",
+      "country": "UZB",
+      "point": [
+        63.303,
+        41.7758
+      ],
+      "significance": "One of only two doubly landlocked countries in the world",
+      "notes": [
+        "Every country it borders — Kazakhstan, Turkmenistan, Tajikistan, Kyrgyzstan, Afghanistan — is itself landlocked",
+        "The other doubly landlocked country is Liechtenstein"
+      ],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "kgz-bishkek",
+      "name": "Bishkek",
+      "aliases": [],
+      "type": "capital",
+      "country": "KGZ",
+      "point": [
+        74.5698,
+        42.8746
+      ],
+      "significance": "Capital of Kyrgyzstan",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "tjk-dushanbe",
+      "name": "Dushanbe",
+      "aliases": [],
+      "type": "capital",
+      "country": "TJK",
+      "point": [
+        68.787,
+        38.5598
+      ],
+      "significance": "Capital of Tajikistan",
+      "notes": [],
+      "tier": 1,
+      "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "tjk-near-india",
+      "name": "Tajikistan",
+      "aliases": [],
+      "type": "country",
+      "country": "TJK",
+      "point": [
+        71.0291,
+        38.536
+      ],
+      "significance": "The Central Asian 'stan' that sits closest to India",
+      "notes": [
+        "Separated from India only by Afghanistan's narrow Wakhan Corridor"
+      ],
       "tier": 1,
       "continent": "Asia",
       "section": "places",
@@ -6865,6 +7436,81 @@
         "vnm-hanoi"
       ],
       "mnemonic": "नाम याद आया? (couldn't recall the name?) — it ends in \"-noi\": Ha-noi",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-pyongyang-trick",
+      "name": "Pyongyang",
+      "members": [
+        "prk-pyongyang"
+      ],
+      "mnemonic": "\"Young young\" — प्योंग यंग है (Pyongyang sounds like \"young young\")",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-trans-siberian",
+      "name": "Trans-Siberian Railway",
+      "members": [
+        "rus-st-petersburg",
+        "rus-vladivostok"
+      ],
+      "mnemonic": "Runs coast to coast, St Petersburg on the Baltic to Vladivostok on the Pacific",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-astana-trick",
+      "name": "Astana",
+      "members": [
+        "kaz-astana"
+      ],
+      "mnemonic": "Add an \"A\" onto \"stan\" at both ends: (A)stan(a)",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-bishkek-trick",
+      "name": "Bishkek",
+      "members": [
+        "kgz-bishkek"
+      ],
+      "mnemonic": "खीर का ज़माना गया, अब Cake का है — the age of kheer is over, now it's cake's: Bish-KEK",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-dushanbe-trick",
+      "name": "Dushanbe",
+      "members": [
+        "tjk-dushanbe"
+      ],
+      "mnemonic": "Taj ka दुश्मन है वो — Tajikistan (Taj) sits nearest India; its capital Dushanbe sounds like dushman, \"enemy\"",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-ashgabat-trick",
+      "name": "Ashgabat",
+      "members": [
+        "tkm-ashgabat"
+      ],
+      "mnemonic": "तुर्की अरब (छोड़) — not Turkish, not Arab, whatever \"Turkmenistan\" sounds like",
+      "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "asia-stans-landlocked",
+      "name": "The 'stan' countries",
+      "members": [
+        "KAZ",
+        "KGZ",
+        "TJK",
+        "TKM",
+        "UZB"
+      ],
+      "mnemonic": "Every 'stan' is landlocked except Pakistan, which has a coastline on the Arabian Sea",
       "continent": "Asia",
       "section": "places"
     },
