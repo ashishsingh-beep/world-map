@@ -93,6 +93,17 @@ untouched by this: a peninsula with real geometry is still a patch, still
 orange, still never a capital — this only reaches the *dot* markers, coloured
 by which of the two sections they belong to rather than left uniformly white.
 
+**A country does not belong in the places section, even as a fact.** A places
+round is about specific sites inside a country — its capital, a port, an
+island — never the country itself; the World Map's country round is already
+the place a whole country is the answer. A fact that is genuinely about the
+country as a whole (Laos is the only landlocked country in South East Asia,
+Uzbekistan is doubly landlocked) still belongs, but as a `note` on that
+country's capital, not as its own `type: "country"` place with a marker
+floating at the centroid. Thirteen of these existed across Asia and South
+America before this rule was written down; all thirteen were folded into
+their capital's `notes`, keeping the fact and losing only the stray pin.
+
 Regions are three, not six continents: Africa rides with Asia and Oceania with
 the Pacific side of it. The build derives them in `REGION_OF` from the countries
 along each feature, so a boundary sea belongs to both regions it touches — the

@@ -58,7 +58,7 @@ for (const [t, s] of [
   ['Georgetown', 'Georgtown'], ['Paramaribo', 'Paramarybo'], ['Maracaibo', 'Maracaybo'],
   ['Quito', 'Kito'], ['Sucre', 'Sukre'], ['Santiago', 'Santiego'],
   ['Buenos Aires', 'Buenos Aries'], ['São Paulo', 'Sao Paolo'], ['Asunción', 'Asunsion'],
-  ['Brasília', 'Brazilia'], ['Bolivia', 'Bolivai'],
+  ['Brasília', 'Brazilia'], ['La Paz', 'La Pas'],
 ] as const) check(SA, t, s, 'typo')
 for (const [t, s] of [
   ['Tegucigalpa', 'Tegusigalpa'], ['Port-au-Prince', 'Port au Prins'], ['Havana', 'Havanna'],
@@ -70,9 +70,9 @@ for (const [t, s] of [
 console.log('\n== Near-twins and other real places (must be rejected) ==')
 for (const [t, s] of [
   ['Santos', 'Santiago'], ['Santiago', 'Santos'], ['Caracas', 'Carajas'],
-  ['Paraguay', 'Uruguay'], ['Brasília', 'Brazil'], ['Bolivia', 'Colombia'],
+  ['Asunción', 'Montevideo'], ['Brasília', 'Brazil'], ['La Paz', 'Bogotá'],
   ['French Guiana', 'Guyana'], ['Lima', 'Kingston'], ['Santos', 'Sao Paulo'],
-  ['Bogotá', 'Bolivia'], ['Peru', 'Ecuador'],
+  ['Bogotá', 'La Paz'], ['Lima', 'Quito'],
 ] as const) check(SA, t, s, 'no')
 for (const [t, s] of [
   ['San Juan', 'San Jose'], ['San José', 'San Juan'], ['San José', 'San Salvador'],

@@ -71,7 +71,7 @@
     {
       "id": "asia-mecca-medina-trick",
       "name": "Mecca and Medina",
-      "members": ["sau-holy-cities"],
+      "members": ["sau-riyadh"],
       "mnemonic": "SA (Mecca/Medina) में तो हज फरियाद करने आते हैं — to SA (Mecca/Medina) is exactly where people come pleading for Hajj"
     }
   ],
@@ -286,18 +286,10 @@
       "country": "LAO",
       "point": [102.6331, 17.9757],
       "significance": "Capital of Laos",
-      "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "lao-landlocked",
-      "name": "Laos",
-      "aliases": [],
-      "type": "country",
-      "country": "LAO",
-      "point": null,
-      "significance": "The only landlocked country in South East Asia",
-      "notes": ["Borders Myanmar, Thailand, Cambodia, Vietnam and China — the only ASEAN country bordering China"],
+      "notes": [
+        "Laos is the only landlocked country in South East Asia",
+        "Borders Myanmar, Thailand, Cambodia, Vietnam and China — the only ASEAN country bordering China"
+      ],
       "tier": 1
     },
     {
@@ -539,18 +531,7 @@
       "country": "MNG",
       "point": [106.9057, 47.8864],
       "significance": "Capital of Mongolia",
-      "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "mng-landlocked",
-      "name": "Mongolia",
-      "aliases": [],
-      "type": "country",
-      "country": "MNG",
-      "point": null,
-      "significance": "Landlocked between Russia and China, the only two countries it borders",
-      "notes": [],
+      "notes": ["Mongolia is landlocked between Russia and China, the only two countries it borders"],
       "tier": 1
     },
     {
@@ -640,18 +621,8 @@
       "country": "UZB",
       "point": [69.2401, 41.2995],
       "significance": "Capital of Uzbekistan",
-      "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "uzb-double-landlocked",
-      "name": "Uzbekistan",
-      "aliases": [],
-      "type": "country",
-      "country": "UZB",
-      "point": null,
-      "significance": "One of only two doubly landlocked countries in the world",
       "notes": [
+        "Uzbekistan is one of only two doubly landlocked countries in the world",
         "Every country it borders — Kazakhstan, Turkmenistan, Tajikistan, Kyrgyzstan, Afghanistan — is itself landlocked",
         "The other doubly landlocked country is Liechtenstein"
       ],
@@ -676,18 +647,10 @@
       "country": "TJK",
       "point": [68.787, 38.5598],
       "significance": "Capital of Tajikistan",
-      "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "tjk-near-india",
-      "name": "Tajikistan",
-      "aliases": [],
-      "type": "country",
-      "country": "TJK",
-      "point": null,
-      "significance": "The Central Asian 'stan' that sits closest to India",
-      "notes": ["Separated from India only by Afghanistan's narrow Wakhan Corridor"],
+      "notes": [
+        "Tajikistan is the Central Asian 'stan' that sits closest to India",
+        "Separated from India only by Afghanistan's narrow Wakhan Corridor"
+      ],
       "tier": 1
     },
     {
@@ -852,18 +815,9 @@
       "country": "LBN",
       "point": [35.5018, 33.8938],
       "significance": "Capital of Lebanon",
-      "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "lbn-blue-line",
-      "name": "Lebanon",
-      "aliases": [],
-      "type": "country",
-      "country": "LBN",
-      "point": null,
-      "significance": "Its southern border with Israel is called the Blue Line",
-      "notes": ["Drawn by the UN in 2000 to confirm Israel's withdrawal"],
+      "notes": [
+        "Lebanon's southern border with Israel is called the Blue Line, drawn by the UN in 2000 to confirm Israel's withdrawal"
+      ],
       "tier": 1
     },
     {
@@ -965,7 +919,9 @@
       "country": "SAU",
       "point": [46.6753, 24.7136],
       "significance": "Capital of Saudi Arabia",
-      "notes": [],
+      "notes": [
+        "Saudi Arabia is home to Islam's two holiest cities, Mecca and Medina, the destination of the Hajj pilgrimage"
+      ],
       "tier": 1
     },
     {
@@ -977,17 +933,6 @@
       "point": [39.1925, 21.4858],
       "significance": "Red Sea port, gateway for pilgrims travelling to Mecca",
       "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "sau-holy-cities",
-      "name": "Saudi Arabia",
-      "aliases": [],
-      "type": "country",
-      "country": "SAU",
-      "point": null,
-      "significance": "Home to Islam's two holiest cities, Mecca and Medina",
-      "notes": ["Destination of the Hajj pilgrimage"],
       "tier": 1
     },
     {
@@ -1198,7 +1143,10 @@
       "country": "ISR",
       "point": [35.2137, 31.7683],
       "significance": "Capital of Israel",
-      "notes": ["Not internationally recognised as such by most countries, which keep their embassies in Tel Aviv instead"],
+      "notes": [
+        "Not internationally recognised as such by most countries, which keep their embassies in Tel Aviv instead",
+        "Israel borders Lebanon, Syria, Jordan and Egypt, with a Mediterranean coastline"
+      ],
       "tier": 1
     },
     {
@@ -1220,17 +1168,6 @@
       "country": "ISR",
       "point": [34.9896, 32.794],
       "significance": "Israel's main port, in the north",
-      "notes": [],
-      "tier": 1
-    },
-    {
-      "id": "isr-neighbours",
-      "name": "Israel",
-      "aliases": [],
-      "type": "country",
-      "country": "ISR",
-      "point": null,
-      "significance": "Borders Lebanon, Syria, Jordan and Egypt, with a Mediterranean coastline",
       "notes": [],
       "tier": 1
     },
