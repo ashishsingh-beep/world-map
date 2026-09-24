@@ -1,0 +1,287 @@
+{
+  "continent": "Asia",
+  "source": "World Mapping 3.0 — South East Asia (political), @sudarshangurjar",
+  "groups": [
+    {
+      "id": "asia-nusantara-trick",
+      "name": "Nusantara",
+      "members": ["idn-nusantara"],
+      "mnemonic": "नया संतरा, \"naya santra\" (new orange) — how Nusantara sounds"
+    },
+    {
+      "id": "asia-manila-trick",
+      "name": "Manila",
+      "members": ["phl-manila"],
+      "mnemonic": "Vanila — Manila sounds like vanilla"
+    },
+    {
+      "id": "asia-phnom-penh-trick",
+      "name": "Phnom Penh",
+      "members": ["khm-phnom-penh"],
+      "mnemonic": "Phone Pay — how Phnom Penh sounds"
+    },
+    {
+      "id": "asia-hanoi-trick",
+      "name": "Hanoi",
+      "members": ["vnm-hanoi"],
+      "mnemonic": "नाम याद आया? (couldn't recall the name?) — it ends in \"-noi\": Ha-noi"
+    }
+  ],
+  "places": [
+    {
+      "id": "idn-jakarta",
+      "name": "Jakarta",
+      "aliases": [],
+      "type": "capital",
+      "country": "IDN",
+      "point": [106.8456, -6.2088],
+      "significance": "Current capital of Indonesia, on the island of Java",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "idn-nusantara",
+      "name": "Nusantara",
+      "aliases": [],
+      "type": "city",
+      "country": "IDN",
+      "point": [116.78, -0.95],
+      "significance": "Indonesia's planned future capital, under construction on Borneo (East Kalimantan)",
+      "notes": ["Intended to replace Jakarta"],
+      "tier": 1
+    },
+    {
+      "id": "idn-sumatra",
+      "name": "Sumatra",
+      "aliases": [],
+      "type": "island",
+      "country": "IDN",
+      "point": [101.3431, -0.5897],
+      "significance": "Westernmost of the Greater Sunda Islands, facing the Strait of Malacca",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "idn-java",
+      "name": "Java",
+      "aliases": [],
+      "type": "island",
+      "country": "IDN",
+      "point": [110.4229, -7.6145],
+      "significance": "Indonesia's most populous island, and home to its capital",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "idn-bali",
+      "name": "Bali",
+      "aliases": [],
+      "type": "island",
+      "country": "IDN",
+      "point": [115.1889, -8.4095],
+      "significance": "Small island east of Java, Indonesia's main tourist destination",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "idn-borneo",
+      "name": "Borneo",
+      "aliases": ["Kalimantan"],
+      "type": "island",
+      "country": "IDN",
+      "point": [113.3, -1.5],
+      "significance": "Third-largest island in the world, split between Indonesia, Malaysia and Brunei",
+      "notes": ["Indonesia's share is called Kalimantan"],
+      "tier": 1
+    },
+    {
+      "id": "idn-sulawesi",
+      "name": "Sulawesi",
+      "aliases": ["Celebes"],
+      "type": "island",
+      "country": "IDN",
+      "point": [119.87, -0.9],
+      "significance": "K-shaped island east of Borneo",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "tls-dili",
+      "name": "Dili",
+      "aliases": [],
+      "type": "capital",
+      "country": "TLS",
+      "point": [125.5736, -8.5586],
+      "significance": "Capital of Timor-Leste (East Timor)",
+      "notes": ["Timor-Leste shares the island of Timor with Indonesia's West Timor — its only land border"],
+      "tier": 1
+    },
+    {
+      "id": "mys-kuala-lumpur",
+      "name": "Kuala Lumpur",
+      "aliases": [],
+      "type": "capital",
+      "country": "MYS",
+      "point": [101.6869, 3.139],
+      "significance": "Capital of Malaysia, on the peninsula",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "mys-west",
+      "name": "West Malaysia",
+      "aliases": ["Peninsular Malaysia"],
+      "type": "peninsula",
+      "country": "MYS",
+      "point": [102.5, 4.0],
+      "spanKm": 300,
+      "significance": "The mainland part of Malaysia, on the Malay Peninsula",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "mys-east",
+      "name": "East Malaysia",
+      "aliases": [],
+      "type": "zone",
+      "country": "MYS",
+      "point": [113.99, 4.41],
+      "spanKm": 400,
+      "significance": "Malaysia's share of Borneo — the states of Sabah and Sarawak",
+      "notes": ["Separated from West Malaysia by the South China Sea"],
+      "tier": 1
+    },
+    {
+      "id": "brn-bandar-seri-begawan",
+      "name": "Bandar Seri Begawan",
+      "aliases": [],
+      "type": "capital",
+      "country": "BRN",
+      "point": [114.9481, 4.9031],
+      "significance": "Capital of Brunei, an enclave within East Malaysia on Borneo",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "sgp-singapore",
+      "name": "Singapore",
+      "aliases": ["Singapore City"],
+      "type": "capital",
+      "country": "SGP",
+      "point": [103.8198, 1.3521],
+      "significance": "Island city-state off the southern tip of West Malaysia",
+      "notes": ["A city-state — its capital is the country itself"],
+      "tier": 1
+    },
+    {
+      "id": "phl-manila",
+      "name": "Manila",
+      "aliases": [],
+      "type": "capital",
+      "country": "PHL",
+      "point": [120.9842, 14.5995],
+      "significance": "Capital of the Philippines, on the island of Luzon",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "phl-luzon",
+      "name": "Luzon",
+      "aliases": [],
+      "type": "island",
+      "country": "PHL",
+      "point": [121.0, 15.5],
+      "significance": "Largest and northernmost of the main Philippine islands, home to Manila",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "phl-mindanao",
+      "name": "Mindanao",
+      "aliases": [],
+      "type": "island",
+      "country": "PHL",
+      "point": [125.6128, 7.0731],
+      "significance": "Second-largest and southernmost of the main Philippine islands",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "mmr-naypyidaw",
+      "name": "Naypyidaw",
+      "aliases": [],
+      "type": "capital",
+      "country": "MMR",
+      "point": [96.1297, 19.7633],
+      "significance": "Capital of Myanmar",
+      "notes": ["Capital moved here from Yangon (Rangoon) in 2005"],
+      "tier": 1
+    },
+    {
+      "id": "tha-bangkok",
+      "name": "Bangkok",
+      "aliases": [],
+      "type": "capital",
+      "country": "THA",
+      "point": [100.5018, 13.7563],
+      "significance": "Capital of Thailand",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "lao-vientiane",
+      "name": "Vientiane",
+      "aliases": [],
+      "type": "capital",
+      "country": "LAO",
+      "point": [102.6331, 17.9757],
+      "significance": "Capital of Laos",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "lao-landlocked",
+      "name": "Laos",
+      "aliases": [],
+      "type": "country",
+      "country": "LAO",
+      "point": null,
+      "significance": "The only landlocked country in South East Asia",
+      "notes": ["Borders Myanmar, Thailand, Cambodia, Vietnam and China — the only ASEAN country bordering China"],
+      "tier": 1
+    },
+    {
+      "id": "vnm-hanoi",
+      "name": "Hanoi",
+      "aliases": [],
+      "type": "capital",
+      "country": "VNM",
+      "point": [105.8342, 21.0278],
+      "significance": "Capital of Vietnam",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "khm-phnom-penh",
+      "name": "Phnom Penh",
+      "aliases": [],
+      "type": "capital",
+      "country": "KHM",
+      "point": [104.8922, 11.5449],
+      "significance": "Capital of Cambodia",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "chn-beijing",
+      "name": "Beijing",
+      "aliases": [],
+      "type": "capital",
+      "country": "CHN",
+      "point": [116.4074, 39.9042],
+      "significance": "Capital of China",
+      "notes": [],
+      "tier": 1
+    }
+  ]
+}
