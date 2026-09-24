@@ -104,12 +104,13 @@ function buildQuestions(round: Round): Question[] {
   })
 }
 
-/** Sea, strait and canal each get their own notation; everything else is a dot. */
+/** Sea, strait, canal and peak each get their own notation; a capital gets its
+ *  own colour, coloured apart from every other place a places round asks
+ *  about; everything else is a plain dot. */
 export function shapeOf(q: { place: Place | null }): MarkerShape {
   const t = q.place?.type
-  return t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'peak'
-    ? t
-    : 'dot'
+  if (t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'peak') return t
+  return t === 'capital' ? 'capital' : 'dot'
 }
 
 function shuffle<T>(input: T[]): T[] {

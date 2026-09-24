@@ -74,7 +74,24 @@ Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 **No question-count selector.** Every round asks its full set. The Seas &
 Straits round narrows twice — a region (All, Americas, Europe, Asia), then the
 notations within it — but both pick *which set*, not how many of it, and the
-last notation with anything left in the chosen region cannot be unticked.
+last notation with anything left in the chosen region cannot be unticked. A
+places round (North America, South America, Asia) narrows once, the same way:
+Capitals or Other places, in Learn and in Practice alike, both backed by the
+one `placeKinds` preference so the choice carries over between them. "Other" is
+deliberately everything a capital is not — cities, ports, islands, island
+groups, peninsulas, zones, territories, country facts — not a third bucket,
+because the choice on offer is capitals, other places, or both, never a longer
+list. `placeKindOf` in `src/data/places.ts` is the one function that decides
+which places a capital is; nothing else may re-derive it.
+
+A capital is coloured apart from every other point on a places round's map —
+gold, the cartographic convention, the one colour nothing else already used.
+`SHAPE_FILLS.capital` in `MapCanvas` is exported so `PlaceKindSwatch` in
+`src/ui/bits.tsx` can draw the exact colour the map does, the same discipline
+`KindSwatch` already keeps for the water notations. The area/point split is
+untouched by this: a peninsula with real geometry is still a patch, still
+orange, still never a capital — this only reaches the *dot* markers, coloured
+by which of the two sections they belong to rather than left uniformly white.
 
 Regions are three, not six continents: Africa rides with Asia and Oceania with
 the Pacific side of it. The build derives them in `REGION_OF` from the countries

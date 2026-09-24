@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import { geoArea, geoContains } from 'd3-geo'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, distanceToLineKm, groupsFor, placeOf } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH, distanceToLineKm, groupsFor, placeKindOf, placeOf } from '../data/places'
 import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/areas'
 import { shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { BELTS, BeltSwatch, KindSwatch, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, KindSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 
@@ -21,6 +21,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
   const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
+  /** Which of a places round's two sections are drawn: capitals, other places, or both. */
+  const [placeKindsShown, setPlaceKindsShown] = useState({ capital: true, other: true })
   const [tricks, setTricks] = useState(false)
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
@@ -29,14 +31,19 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal'
   const hasWater = roundPlaces.some((p) => isWaterKind(p.type))
   const isWaterRound = roundPlaces[0]?.section === 'water'
+  const isPlacesSection = roundPlaces[0]?.section === 'places'
   // Which belts this round actually draws, so the legend never names one that
   // is not on the map.
   const belts = BELTS.filter((b) => roundPlaces.some((p) => p.belt === b.id && p.line))
 
   const visible = useMemo(
     () =>
-      roundPlaces.filter((p) => (isWaterKind(p.type) ? shown[p.type] : true)),
-    [roundPlaces, shown]
+      roundPlaces.filter((p) => {
+        if (isWaterKind(p.type)) return shown[p.type]
+        if (isPlacesSection) return placeKindsShown[placeKindOf(p.type)]
+        return true
+      }),
+    [roundPlaces, shown, isPlacesSection, placeKindsShown]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
@@ -165,8 +172,12 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         padding={{ top: 88, right: 32, bottom: isPlaceRound ? 170 : 32, left: 32 }}
       />
 
-      {belts.length > 0 && (
-        <div className="pointer-events-none absolute inset-x-0 top-20 flex justify-center px-4">
+      {/* One column, not three independently positioned pills: a places round
+          can hold a canal (the Panama Canal is North America's), so the places
+          legend and the water legend can both apply to the same round and
+          would otherwise sit on top of each other. */}
+      <div className="pointer-events-none absolute inset-x-0 top-20 flex flex-col items-center gap-2 px-4">
+        {belts.length > 0 && (
           <div className="flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-3 py-1.5 shadow-lg">
             {belts.map((b) => (
               <span
@@ -178,11 +189,40 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               </span>
             ))}
           </div>
-        </div>
-      )}
+        )}
 
-      {hasWater && (
-        <div className="pointer-events-none absolute inset-x-0 top-20 flex justify-center px-4">
+        {isPlacesSection && (
+          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+            {PLACE_KINDS.map(({ kind, label }) => {
+              const n = roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
+              if (!n) return null
+              return (
+                <label
+                  key={kind}
+                  className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                    placeKindsShown[kind] ? 'text-slate-700' : 'text-slate-400'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={placeKindsShown[kind]}
+                    onChange={(e) =>
+                      setPlaceKindsShown((s) => ({ ...s, [kind]: e.target.checked }))
+                    }
+                    className="h-3.5 w-3.5 accent-blue-600"
+                  />
+                  <span className={placeKindsShown[kind] ? '' : 'opacity-40'}>
+                    <PlaceKindSwatch kind={kind} />
+                  </span>
+                  {label}
+                  <span className="font-semibold text-slate-400">{n}</span>
+                </label>
+              )
+            })}
+          </div>
+        )}
+
+        {hasWater && (
           <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
             {WATER_KINDS.map(({ type, label }) => {
               const n = roundPlaces.filter((p) => p.type === type).length
@@ -209,8 +249,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               )
             })}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-4">
         <label className="pointer-events-auto flex cursor-pointer items-center gap-3 rounded-xl bg-white px-4 py-3 font-extrabold text-slate-900 shadow-lg">

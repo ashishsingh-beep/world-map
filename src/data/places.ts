@@ -135,6 +135,17 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   strait: 'strait',
 }
 
+/**
+ * The two sections a places round is split into: the capitals, and everything
+ * else it asks about — cities, ports, islands, island groups, peninsulas,
+ * zones, territories and country facts alike. Not a third bucket for each of
+ * those; "other" is deliberately everything a capital is not, so the choice
+ * stays the one the setup screen and Learn legend actually offer: capitals,
+ * other places, or both.
+ */
+export type PlaceKind = 'capital' | 'other'
+export const placeKindOf = (type: PlaceType): PlaceKind => (type === 'capital' ? 'capital' : 'other')
+
 /** The two notations the Seas & Straits section is built around. */
 export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {
   ocean: '🌏',

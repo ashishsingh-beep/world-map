@@ -1,5 +1,6 @@
 import type { Mode, QuizSnapshot } from '../game/useQuiz'
 import type { WaterKind, WaterRegion } from '../ui/bits'
+import type { PlaceKind } from '../data/places'
 
 /**
  * What survives a refresh, beyond the screen you were on (that lives in the URL
@@ -20,6 +21,8 @@ export interface Prefs {
   timed: boolean
   kinds: Record<WaterKind, boolean>
   region: WaterRegion
+  /** Which of a places round's two sections to ask — capitals, other places, or both. */
+  placeKinds: Record<PlaceKind, boolean>
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -27,6 +30,7 @@ export const DEFAULT_PREFS: Prefs = {
   timed: true,
   kinds: { ocean: true, sea: true, strait: true, canal: true },
   region: 'all',
+  placeKinds: { capital: true, other: true },
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -65,6 +69,7 @@ function drop(key: string): void {
 const MODES: Mode[] = ['pin', 'type', 'significance']
 const KINDS: WaterKind[] = ['ocean', 'sea', 'strait', 'canal']
 const REGIONS: WaterRegion[] = ['all', 'america', 'europe', 'asia']
+const PLACE_KIND_IDS: PlaceKind[] = ['capital', 'other']
 
 export function loadPrefs(): Prefs {
   const raw = read(PREFS_KEY) as Partial<Prefs> | null
@@ -76,6 +81,11 @@ export function loadPrefs(): Prefs {
   // Never restore a state with nothing to ask — the picker forbids it live, and
   // a hand-edited store must not get around that.
   if (!KINDS.some((k) => kinds[k])) return DEFAULT_PREFS
+  const placeKinds = { ...DEFAULT_PREFS.placeKinds }
+  for (const k of PLACE_KIND_IDS) {
+    if (typeof raw.placeKinds?.[k] === 'boolean') placeKinds[k] = raw.placeKinds[k]
+  }
+  if (!PLACE_KIND_IDS.some((k) => placeKinds[k])) return DEFAULT_PREFS
   return {
     mode: MODES.includes(raw.mode as Mode) ? (raw.mode as Mode) : DEFAULT_PREFS.mode,
     timed: typeof raw.timed === 'boolean' ? raw.timed : DEFAULT_PREFS.timed,
@@ -83,6 +93,7 @@ export function loadPrefs(): Prefs {
     region: REGIONS.includes(raw.region as WaterRegion)
       ? (raw.region as WaterRegion)
       : DEFAULT_PREFS.region,
+    placeKinds,
   }
 }
 

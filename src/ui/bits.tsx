@@ -1,4 +1,5 @@
-import { BELT_BAND, type Belt } from '../map/MapCanvas'
+import { BELT_BAND, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
+import type { PlaceKind } from '../data/places'
 import type { ReactNode } from 'react'
 
 /** ISO-2 → regional indicator pair, e.g. "IN" → 🇮🇳. */
@@ -39,6 +40,12 @@ export const WATER_REGIONS = [
 
 export type WaterRegion = (typeof WATER_REGIONS)[number]['id']
 
+/** The two sections a places round is split into, used by the setup filter and the Learn legend. */
+export const PLACE_KINDS = [
+  { kind: 'capital' as const, label: 'Capitals' },
+  { kind: 'other' as const, label: 'Other places' },
+]
+
 /**
  * The Himalayan belts, for the Learn legend. Four parallel ranges drawn in one
  * colour were a single smear; the colour is what tells them apart before a
@@ -64,6 +71,16 @@ export function BeltSwatch({ belt }: { belt: Belt }) {
         fill={BELT_BAND[belt].band}
         fillOpacity={0.38}
       />
+    </svg>
+  )
+}
+
+/** The marker as it is drawn on the map: gold for a capital, plain for the rest. */
+export function PlaceKindSwatch({ kind }: { kind: PlaceKind }) {
+  const fill = kind === 'capital' ? SHAPE_FILLS.capital : SHAPE_FILLS.dot
+  return (
+    <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+      <circle r="5.5" fill={fill} fillOpacity={kind === 'capital' ? 0.95 : 0.55} stroke="#1f2d4d" strokeWidth="1.2" />
     </svg>
   )
 }

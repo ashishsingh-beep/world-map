@@ -12,10 +12,12 @@ import {
 import type { Mode, QuizSnapshot } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
-import { placeOf } from './data/places'
+import { placeKindOf, placeOf, type PlaceKind } from './data/places'
 import {
   Button,
   KindSwatch,
+  PlaceKindSwatch,
+  PLACE_KINDS,
   WATER_KINDS,
   WATER_REGIONS,
   type WaterKind,
@@ -35,12 +37,14 @@ import {
 export default function App() {
   const [route, navigate] = useRoute()
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, kinds, region } = prefs
+  const { mode, timed, kinds, region, placeKinds } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
+  const setPlaceKinds = (next: (k: Record<PlaceKind, boolean>) => Record<PlaceKind, boolean>) =>
+    setPrefs((p) => ({ ...p, placeKinds: next(p.placeKinds) }))
   useEffect(() => savePrefs(prefs), [prefs])
 
   const [runKey, setRunKey] = useState(0)
@@ -55,6 +59,7 @@ export default function App() {
 
   const roundPlaces = round.places?.map(placeOf) ?? []
   const isWaterRound = roundPlaces[0]?.section === 'water'
+  const isPlacesRound = roundPlaces[0]?.section === 'places'
 
   /**
    * Which part of the water set to practise: a region, then the notations
@@ -66,8 +71,10 @@ export default function App() {
     : roundPlaces
   const asked = isWaterRound
     ? inRegion.filter((p) => kinds[p.type as WaterKind] ?? true)
-    : inRegion
-  const playRound = isWaterRound ? { ...round, places: asked.map((p) => p.id) } : round
+    : isPlacesRound
+      ? inRegion.filter((p) => placeKinds[placeKindOf(p.type)])
+      : inRegion
+  const playRound = isWaterRound || isPlacesRound ? { ...round, places: asked.map((p) => p.id) } : round
   const askIds = playRound.places ?? playRound.askable
 
   /** A save is only offered when it is still this exact round's questions. */
@@ -207,6 +214,43 @@ export default function App() {
                           className="h-4 w-4 accent-blue-600"
                         />
                         <KindSwatch type={type} />
+                        <span className="text-sm font-extrabold text-slate-900">{label}</span>
+                        <span className="text-xs font-bold text-slate-400">{n}</span>
+                      </label>
+                    )
+                  })}
+                </div>
+              </>
+            )}
+
+            {isPlacesRound && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
+                <div className="grid grid-cols-2 gap-3">
+                  {PLACE_KINDS.map(({ kind, label }) => {
+                    const n = roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
+                    if (!n) return null
+                    const on = placeKinds[kind]
+                    // Never let the last one be unticked — a round with nothing
+                    // to ask is not a round.
+                    const last = on && asked.length === n
+                    return (
+                      <label
+                        key={kind}
+                        className={`flex items-center justify-center gap-2 rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                          on ? 'border-blue-600' : 'border-transparent'
+                        } ${last ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={on}
+                          disabled={last}
+                          onChange={(e) =>
+                            setPlaceKinds((k) => ({ ...k, [kind]: e.target.checked }))
+                          }
+                          className="h-4 w-4 accent-blue-600"
+                        />
+                        <PlaceKindSwatch kind={kind} />
                         <span className="text-sm font-extrabold text-slate-900">{label}</span>
                         <span className="text-xs font-bold text-slate-400">{n}</span>
                       </label>

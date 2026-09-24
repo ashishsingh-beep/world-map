@@ -35,9 +35,12 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
 /**
  * The notation a marker is drawn with. A round circle reads as open water, a
  * diamond as a narrow gate between two of them, and the two are also coloured
- * apart — so a sea and a strait are never confused at a glance.
+ * apart — so a sea and a strait are never confused at a glance. `capital` is
+ * the same circle as `dot`, coloured apart for the same reason: a places round
+ * mixes capitals in with cities, ports and islands, and the one thing worth
+ * finding at a glance is which pin is the capital.
  */
-export type MarkerShape = 'dot' | 'ocean' | 'sea' | 'strait' | 'canal' | 'peak'
+export type MarkerShape = 'dot' | 'capital' | 'ocean' | 'sea' | 'strait' | 'canal' | 'peak'
 
 /**
  * A mountain range, drawn as a band along its ridgeline. Ranges are the one
@@ -92,8 +95,11 @@ export interface MapPoint {
 }
 
 /** Idle fills, which is where the sea/strait distinction has to carry. */
-const SHAPE_FILLS: Record<MarkerShape, string> = {
+export const SHAPE_FILLS: Record<MarkerShape, string> = {
   dot: '#ffffff',
+  // Gold, the cartographic convention for a capital — and the one colour nothing
+  // else on the map already uses.
+  capital: '#ca8a04',
   ocean: '#0d9488',
   sea: '#1d4ed8',
   strait: '#f97316',
@@ -105,6 +111,7 @@ const SHAPE_FILLS: Record<MarkerShape, string> = {
 /** An ocean outranks the seas inside it, so its marker is drawn larger. */
 const SHAPE_SCALE: Record<MarkerShape, number> = {
   dot: 1,
+  capital: 1,
   ocean: 1.7,
   sea: 1,
   strait: 1,
