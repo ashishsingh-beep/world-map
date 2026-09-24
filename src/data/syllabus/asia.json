@@ -129,6 +129,8 @@
     },
     {
       "id": "mys-west",
+      "land": ["Malay Peninsula"],
+      "clip": true,
       "name": "West Malaysia",
       "aliases": ["Peninsular Malaysia"],
       "type": "peninsula",

@@ -454,6 +454,7 @@
     },
     {
       "id": "na-baja-california",
+      "land": ["Baja California"],
       "name": "Baja California Peninsula",
       "aliases": ["Baja California", "Baja"],
       "type": "peninsula",
@@ -466,6 +467,7 @@
     },
     {
       "id": "na-yucatan",
+      "land": ["Pen. de Yucatán"],
       "name": "Yucatan Peninsula",
       "aliases": ["Yucat\u00e1n", "Yucatan"],
       "type": "peninsula",
@@ -478,6 +480,7 @@
     },
     {
       "id": "na-ungava",
+      "land": ["Péninsule d'Ungava"],
       "name": "Ungava Peninsula",
       "aliases": ["Ungava"],
       "type": "peninsula",

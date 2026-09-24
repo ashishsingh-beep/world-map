@@ -209,6 +209,10 @@
     },
     {
       "id": "mys-west",
+      "land": [
+        "Malay Peninsula"
+      ],
+      "clip": true,
       "name": "West Malaysia",
       "aliases": [
         "Peninsular Malaysia"
@@ -2284,6 +2288,9 @@
     },
     {
       "id": "na-baja-california",
+      "land": [
+        "Baja California"
+      ],
       "name": "Baja California Peninsula",
       "aliases": [
         "Baja California",
@@ -2307,6 +2314,9 @@
     },
     {
       "id": "na-yucatan",
+      "land": [
+        "Pen. de Yucatán"
+      ],
       "name": "Yucatan Peninsula",
       "aliases": [
         "Yucatán",
@@ -2330,6 +2340,9 @@
     },
     {
       "id": "na-ungava",
+      "land": [
+        "Péninsule d'Ungava"
+      ],
       "name": "Ungava Peninsula",
       "aliases": [
         "Ungava"

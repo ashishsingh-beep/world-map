@@ -4,7 +4,8 @@ import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
 import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
-import { areaOf } from '../data/marine'
+import { areaOf as waterAreaOf } from '../data/marine'
+import { areaOf as landAreaOf } from '../data/land'
 import { indiaDivides, indiaLand, indiaOutline, stateLines } from '../data/india'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
@@ -489,7 +490,7 @@ export function MapCanvas({
           {/* Under the land: a sea's polygon runs up to the coast and beyond it
               in places, and the coastline has to stay the thing you read. */}
           {areas?.map((a) => {
-            const f = areaOf(a.id)
+            const f = waterAreaOf(a.id)
             if (!f) return null
             const idle = a.state === 'idle'
             return (
@@ -520,6 +521,29 @@ export function MapCanvas({
                 vectorEffect="non-scaling-stroke"
                 className={askSet.has(iso) ? 'cursor-pointer' : undefined}
                 onClick={(e) => handle(iso, e)}
+              />
+            )
+          })}
+
+          {/* Over the land, the opposite of a sea: a peninsula's polygon is
+              solid ground, so highlighting it under the country fill would
+              bury the highlight completely rather than let it show at the
+              coast. */}
+          {areas?.map((a) => {
+            const f = landAreaOf(a.id)
+            if (!f) return null
+            const idle = a.state === 'idle'
+            return (
+              <path
+                key={`la-${a.id}`}
+                d={path(f) ?? undefined}
+                fill={idle ? '#c2410c' : FILLS[a.state]}
+                fillOpacity={idle ? 0.32 : 0.75}
+                stroke={idle ? '#c2410c' : FILLS[a.state]}
+                strokeOpacity={idle ? 0.55 : 0.9}
+                strokeWidth={idle ? 1 : 1.6}
+                vectorEffect="non-scaling-stroke"
+                pointerEvents="none"
               />
             )
           })}

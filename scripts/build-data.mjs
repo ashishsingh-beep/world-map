@@ -48,9 +48,20 @@ const MARINE_RAW = resolve(CACHE, 'ne_10m_geography_marine_polys.geojson')
 const INDIA_URL =
   'https://raw.githubusercontent.com/udit-001/india-maps-data/main/geojson/india.geojson'
 const INDIA_RAW = resolve(CACHE, 'india-districts.geojson')
+/**
+ * Fourth Natural Earth layer: named physical regions, including real polygons
+ * for peninsulas. A peninsula is a patch of land, not a pin — Baja California
+ * is 1,200km long, and a point-and-radius marker for it is exactly the "within
+ * 850km of a point" mistake the marine layer above already fixed for seas.
+ */
+const LAND_URL =
+  'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_regions_polys.geojson'
+const LAND_RAW = resolve(CACHE, 'ne_10m_geography_regions_polys.geojson')
 
 /** The types that are areas. Everything else in the section is a marker. */
 const AREA_TYPES = new Set(['ocean', 'sea'])
+/** Land-region types that are areas rather than a point-and-radius marker. */
+const LAND_AREA_TYPES = new Set(['peninsula'])
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
 const loose = (s) =>
@@ -151,6 +162,10 @@ function download() {
   if (!existsSync(INDIA_RAW)) {
     console.log('Downloading India districts (India POV)…')
     execFileSync('curl', ['-sSL', '-o', INDIA_RAW, INDIA_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(LAND_RAW)) {
+    console.log('Downloading Natural Earth physical regions…')
+    execFileSync('curl', ['-sSL', '-o', LAND_RAW, LAND_URL], { stdio: 'inherit' })
   }
 }
 
@@ -755,6 +770,162 @@ for (const f of builtMarine.features) {
 if (strayLabels.length) {
   console.error(`\nLabels outside their sea (${strayLabels.length}):`)
   for (const e of strayLabels) console.error('  ' + e)
+  process.exit(1)
+}
+
+/**
+ * The land-region layer, cut down the same way the marine one is: a place
+ * says which Natural Earth polygons are its own with `land`, or its own name
+ * is the key. `"land": []` means "checked, there is no polygon for this" and
+ * the place falls back to a point-and-radius marker.
+ *
+ * One difference from a sea. Natural Earth draws a peninsula as the physical
+ * landform, which can run past the political border the syllabus means —
+ * "Malay Peninsula" reaches deep into Thailand, while "West Malaysia" is only
+ * Malaysia's share of it. A place that needs the political share sets
+ * `"clip": true`, and the polygon is cut to its own `country` before anything
+ * else touches it.
+ */
+const landRaw = JSON.parse(readFileSync(LAND_RAW, 'utf8'))
+const landByName = new Map()
+for (const f of landRaw.features) {
+  const name = f.properties.name ?? f.properties.NAME
+  if (name) landByName.set(loose(name), f)
+}
+
+/** Clips one place's gathered parts to its own country, via a throwaway job. */
+function clipToCountry(parts, iso) {
+  const country = picked.get(iso)
+  if (!country) {
+    errors.push(`land clip: "${iso}" is not a country this build knows`)
+    return parts
+  }
+  const penIn = resolve(CACHE, 'land-clip-pen.geojson')
+  const countryIn = resolve(CACHE, 'land-clip-country.geojson')
+  const clipOut = resolve(CACHE, 'land-clip-out.topo.json')
+  writeFileSync(
+    penIn,
+    JSON.stringify({
+      type: 'FeatureCollection',
+      features: [{ type: 'Feature', properties: {}, geometry: { type: 'MultiPolygon', coordinates: parts } }],
+    })
+  )
+  writeFileSync(
+    countryIn,
+    JSON.stringify({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: country.geometry }] })
+  )
+  execFileSync(
+    resolve(ROOT, 'node_modules/.bin/mapshaper'),
+    [
+      penIn, countryIn, 'combine-files',
+      '-rename-layers', 'pen,country',
+      '-clip', 'target=pen', 'source=country',
+      // TopoJSON, not raw GeoJSON: mapshaper's -clip can hand back a ring
+      // wound the opposite way from its input, which d3-geo then reads as
+      // "the whole globe except this shape" — the same trap `fitExtent`
+      // springs on a hand-built Polygon. Going through TopoJSON sidesteps it,
+      // the way the rest of this build already does.
+      '-o', 'format=topojson', 'quantization=1e5', 'target=pen', clipOut,
+    ],
+    { stdio: 'inherit' }
+  )
+  const clipped = topojsonFeature(
+    JSON.parse(readFileSync(clipOut, 'utf8')),
+    JSON.parse(readFileSync(clipOut, 'utf8')).objects.pen
+  )
+  const f = clipped.type === 'FeatureCollection' ? clipped.features[0] : clipped
+  if (!f) return []
+  const g = f.geometry
+  return g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]
+}
+
+const landFeatures = []
+const noLandPolygon = []
+for (const p of places) {
+  if (!LAND_AREA_TYPES.has(p.type)) continue
+  const wanted = p.land ?? [p.name]
+  let parts = []
+  for (const name of wanted) {
+    const f = landByName.get(loose(name))
+    if (!f) {
+      errors.push(`${p.id}: no land polygon named "${name}"`)
+      continue
+    }
+    const g = f.geometry
+    parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
+  }
+  if (!parts.length) {
+    noLandPolygon.push(p.name)
+    continue
+  }
+  if (p.clip) {
+    if (!p.country) errors.push(`${p.id}: "clip" needs a country`)
+    else parts = clipToCountry(parts, p.country)
+  }
+  landFeatures.push({
+    type: 'Feature',
+    id: p.id,
+    properties: { id: p.id },
+    geometry: { type: 'MultiPolygon', coordinates: parts },
+  })
+}
+if (errors.length) {
+  console.error(`\nLand layer (${errors.length}):`)
+  for (const e of errors) console.error('  ' + e)
+  process.exit(1)
+}
+
+const landFiltered = resolve(CACHE, 'land.geojson')
+writeFileSync(landFiltered, JSON.stringify({ type: 'FeatureCollection', features: landFeatures }))
+const landOut = resolve(OUT, 'land.topo.json')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [
+    landFiltered,
+    '-simplify', '10%', 'keep-shapes',
+    '-clean',
+    '-rename-layers', 'land',
+    '-o', 'format=topojson', 'quantization=1e5', 'id-field=id', landOut,
+  ],
+  { stdio: 'inherit' }
+)
+console.log(
+  `Land regions: ${landFeatures.length} of ${places.filter((p) => LAND_AREA_TYPES.has(p.type)).length}` +
+    (noLandPolygon.length ? ` — no polygon for ${noLandPolygon.join(', ')}` : '')
+)
+
+/** Same two checks as the marine layer: no invisible stub, no stray label. */
+const builtLand = topojsonFeature(
+  JSON.parse(readFileSync(landOut, 'utf8')),
+  JSON.parse(readFileSync(landOut, 'utf8')).objects.land
+)
+const landStubs = []
+for (const f of builtLand.features) {
+  const p = places.find((x) => x.id === (f.id ?? f.properties?.id))
+  if (!p?.spanKm) continue
+  const km = Math.sqrt((geoArea(f) * 6371 * 6371) / Math.PI)
+  if (km / p.spanKm < STUB_RATIO) {
+    landStubs.push(
+      `${p.id}: ${p.name}'s polygon is ${km.toFixed(0)}km across against a ${p.spanKm}km span — ` +
+        'a label stub, not an extent. Give it "land": [] and let it stay a marker.'
+    )
+  }
+}
+if (landStubs.length) {
+  console.error(`\nLand label stubs (${landStubs.length}):`)
+  for (const e of landStubs) console.error('  ' + e)
+  process.exit(1)
+}
+const strayLandLabels = []
+for (const f of builtLand.features) {
+  const p = places.find((x) => x.id === (f.id ?? f.properties?.id))
+  if (!p || geoContains(f, p.point)) continue
+  const c = geoCentroid(f).map((n) => Number(n.toFixed(1)))
+  strayLandLabels.push(`${p.id}: ${p.name}'s point ${JSON.stringify(p.point)} is outside its own polygon — try [${c}]`)
+}
+if (strayLandLabels.length) {
+  console.error(`\nLabels outside their land region (${strayLandLabels.length}):`)
+  for (const e of strayLandLabels) console.error('  ' + e)
   process.exit(1)
 }
 

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
-import { areaOf } from '../data/marine'
+import { areaOf } from '../data/areas'
 import { distanceToLineKm, placeOf, type Place } from '../data/places'
 import { judgeName, type Candidate } from './matchName'
 import type {

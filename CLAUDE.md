@@ -147,6 +147,35 @@ unclickable.
 Country micro-state markers are switched off in that round so no stray ring
 competes with the sea notation.
 
+**A peninsula is an area too — the same rule, on land.** A peninsula is a
+patch, not a pin: Baja California is 1,200km long, and a point-and-radius
+marker for it was the same "within 850km of a point" mistake the marine layer
+above already fixed for seas. Its real extent comes from `src/data/land.ts`,
+Natural Earth's physical-regions layer, the same way a sea's comes from
+`marine.ts` — and `src/data/areas.ts` is the one thing judging and marker-
+suppression code actually imports, since a sea and a peninsula never share an
+id and the two are interchangeable to everything except the renderer.
+
+The renderer is the one place they are not interchangeable, and for the
+opposite reason a sea and land differ: a sea's polygon is drawn *under* the
+country layer, because it runs up to the coast and beyond in places and the
+coastline has to stay what you read. A peninsula's polygon is solid ground, so
+the same trick would bury the highlight completely — it is drawn *over* the
+country layer instead. `MapCanvas` imports `marine.ts` and `land.ts` directly
+for this reason, not the combined `areaOf`.
+
+Natural Earth draws a peninsula as the physical landform, which can run past
+the political border the syllabus means: its "Malay Peninsula" reaches deep
+into Thailand, while "West Malaysia" is only Malaysia's own share. A place
+that needs the political share, not the landform, sets `"clip": true`, and the
+build cuts the polygon to its own `country` before anything else touches it —
+a peninsula genuinely shared between countries, like Yucatan (Mexico, Belize
+and Guatemala), stays unclipped, because the whole landform is exactly what
+its own significance describes. Clipping done through raw GeoJSON output
+found a live instance of the winding trap below — mapshaper's `-clip` handed
+back a ring wound the opposite way from its input, and only going through
+TopoJSON (as the rest of this build already does) reads it correctly.
+
 **A range is a line with width.** The Himalayan ranges are the one thing here
 that is neither a point nor a polygon, so they are drawn as a band along a
 ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
@@ -195,6 +224,9 @@ The whole app is one map engine plus configuration.
 - `src/app/storage.ts` — everything else that survives a refresh.
 - `src/data/india.ts` — the Indian map's land: India, the surround, the
   neighbours' dividing lines, and India's own state lines.
+- `src/data/marine.ts` / `src/data/land.ts` — real extents for area-type
+  places, water and land respectively; `src/data/areas.ts` is the combined
+  lookup everything except `MapCanvas` should import.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 
 `render` and `askable` are separate because Island Nations draws the whole
@@ -242,6 +274,13 @@ fails.
 - **d3-geo polygon winding.** `fitExtent` with a Polygon reads spherical
   winding rules; a clockwise ring means "the globe *except* this box" and
   silently fits the whole planet. Fit to a `MultiPoint` of corners instead.
+  The same trap sprang on mapshaper's `-clip` when building a peninsula's
+  political-border patch (see below): its raw GeoJSON output came back with a
+  ring wound opposite to its input, geoArea read it as the whole sphere minus
+  a sliver, and every containment check passed everywhere except the peninsula
+  itself. Piping the clip through TopoJSON instead — as the rest of this build
+  already does — reads correctly; `topojson-client`'s arc reconstruction does
+  not care which way the source ring was wound.
 - **`vectorEffect="non-scaling-stroke"`** already holds stroke width constant on
   screen. Do not also divide by the zoom scale, or borders vanish when zoomed.
 - **Antimeridian.** Russia, USA, Fiji, NZ and Kiribati have wrapping bounds
