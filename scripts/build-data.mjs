@@ -244,29 +244,21 @@ const ALIASES = {
 }
 
 /**
- * The centroid of a feature's own largest island, not the area-weighted
- * centroid of the whole MultiPolygon. For a compact country the two are the
- * same place; for a nation scattered across an ocean they are not — Kiribati's
- * whole-country centroid falls in open water between the Gilbert and Line
- * Islands, on neither. Oceania only for now, at the user's request: the fix is
- * the same one the marker-size code already applies (`biggestPartPx` in
- * MapCanvas), just reaching the label/marker *position* as well as its size,
- * but every other continent's centroid stays byte-for-byte what it was until
- * this is confirmed to look right here first.
+ * Where a country's marker and label sit, when its own centroid is the wrong
+ * place. For an archipelago the whole-country centroid is usually right even in
+ * open water — the ring is centred on the chain and encloses it. It fails only
+ * for a nation split into groups an ocean apart, where the average of the
+ * groups lands on none of them. Centring on the largest island instead is not
+ * the fix: it put Vanuatu on Espiritu Santo at the chain's northern tip and
+ * Kiribati on Kiritimati, 3,000km from the capital.
  */
-function largestPartCentroid(f) {
-  const parts = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates]
-  let best = null
-  let bestArea = -1
-  for (const p of parts) {
-    const g = { type: 'Polygon', coordinates: p }
-    const a = geoArea(g)
-    if (a > bestArea) {
-      bestArea = a
-      best = g
-    }
-  }
-  return geoCentroid(best ?? f.geometry)
+const CENTROID_OVERRIDES = {
+  // Gilbert, Phoenix and Line Islands span 4,000km; the whole centroid fell
+  // between the Phoenix and Line groups. Tarawa, the capital, is in the Gilberts.
+  KIR: [172.98, 1.42],
+  // Yap to Kosrae is 2,700km, and Pohnpei's area dragged the centroid to the
+  // east end. The marker sits midway along the chain instead.
+  FSM: [150.55, 7.4],
 }
 
 const meta = {}
@@ -277,7 +269,7 @@ for (const [iso, f] of picked) {
   const iso2 = /^[A-Z]{2}$/.test(f.properties.ISO_A2)
     ? f.properties.ISO_A2
     : f.properties.ISO_A2_EH
-  const centroid = continent === 'Oceania' ? largestPartCentroid(f) : geoCentroid(f)
+  const centroid = CENTROID_OVERRIDES[iso] ?? geoCentroid(f)
   meta[iso] = {
     iso,
     iso2,

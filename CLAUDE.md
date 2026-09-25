@@ -323,6 +323,12 @@ fails.
   whole bounds: a feature with parts either side of the line has bounds as wide
   as the map, which put Fiji at 1,336px on the world map and so denied a marker
   ring to the one country that most needed one.
+  Its marker and label *position* are the opposite: the whole-country centroid
+  is right, even in open water, because the ring then encloses the archipelago.
+  Centring on the largest island was tried and put Vanuatu at its northern tip
+  and Kiribati on Kiritimati. Only a nation split into groups an ocean apart
+  needs an authored anchor — `CENTROID_OVERRIDES` in the build (Kiribati at
+  Tarawa, Micronesia midway along Yap–Kosrae).
 
 ## Game rules
 
