@@ -243,6 +243,32 @@ const ALIASES = {
   LCA: ['St Lucia'],
 }
 
+/**
+ * The centroid of a feature's own largest island, not the area-weighted
+ * centroid of the whole MultiPolygon. For a compact country the two are the
+ * same place; for a nation scattered across an ocean they are not — Kiribati's
+ * whole-country centroid falls in open water between the Gilbert and Line
+ * Islands, on neither. Oceania only for now, at the user's request: the fix is
+ * the same one the marker-size code already applies (`biggestPartPx` in
+ * MapCanvas), just reaching the label/marker *position* as well as its size,
+ * but every other continent's centroid stays byte-for-byte what it was until
+ * this is confirmed to look right here first.
+ */
+function largestPartCentroid(f) {
+  const parts = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates]
+  let best = null
+  let bestArea = -1
+  for (const p of parts) {
+    const g = { type: 'Polygon', coordinates: p }
+    const a = geoArea(g)
+    if (a > bestArea) {
+      bestArea = a
+      best = g
+    }
+  }
+  return geoCentroid(best ?? f.geometry)
+}
+
 const meta = {}
 const features = []
 for (const [iso, f] of picked) {
@@ -251,13 +277,14 @@ for (const [iso, f] of picked) {
   const iso2 = /^[A-Z]{2}$/.test(f.properties.ISO_A2)
     ? f.properties.ISO_A2
     : f.properties.ISO_A2_EH
+  const centroid = continent === 'Oceania' ? largestPartCentroid(f) : geoCentroid(f)
   meta[iso] = {
     iso,
     iso2,
     name,
     aliases: ALIASES[iso] ?? [],
     continent,
-    centroid: geoCentroid(f).map((n) => +n.toFixed(4)),
+    centroid: centroid.map((n) => +n.toFixed(4)),
     bounds: geoBounds(f).map((p) => p.map((n) => +n.toFixed(4))),
     // steradians; used at render time to decide when a country needs a marker
     area: +geoArea(f).toExponential(4),
