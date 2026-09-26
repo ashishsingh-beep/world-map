@@ -816,9 +816,10 @@ export function MapCanvas({
                     textAnchor="middle"
                     fontSize={(isTarget ? 15 : 11) / k}
                     fontWeight={800}
-                    fill="#0f172a"
+                    fill="#1f2d4d"
                     stroke="#fff"
-                    strokeWidth={3 / k}
+                    strokeWidth={3.5 / k}
+                    strokeLinejoin="round"
                     paintOrder="stroke"
                   >
                     {p.label}
@@ -888,13 +889,14 @@ export function MapCanvas({
                   y={l.cy}
                   textAnchor="middle"
                   pointerEvents="none"
-                  fontSize={(isSelected ? 15 : 10) / k}
-                  fontWeight={700}
-                  fill={isSelected ? '#0f172a' : '#64748b'}
-                  // The selected country is painted under its own name, so the
-                  // label needs a halo to stay readable on the fill.
-                  stroke={isSelected ? '#fff' : undefined}
-                  strokeWidth={isSelected ? 3.5 / k : undefined}
+                  fontSize={(isSelected ? 15 : 12) / k}
+                  fontWeight={800}
+                  fill="#1f2d4d"
+                  // A halo keeps the name readable over borders, marker rings
+                  // and the selected country's own fill.
+                  stroke="#fff"
+                  strokeWidth={3.5 / k}
+                  strokeLinejoin="round"
                   paintOrder="stroke"
                 >
                   {metaOf(iso).name}

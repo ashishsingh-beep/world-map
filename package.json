@@ -12,6 +12,7 @@
     "check:names": "node --experimental-strip-types scripts/check-names.ts"
   },
   "dependencies": {
+    "@fontsource/nunito": "^5.3.0",
     "d3-geo": "^3.1.1",
     "d3-selection": "^3.0.0",
     "d3-transition": "^3.0.1",

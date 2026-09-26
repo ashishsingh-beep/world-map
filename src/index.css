@@ -12,5 +12,10 @@ input[type="checkbox"]:not(:disabled) {
 }
 button:disabled { cursor: not-allowed; }
 
+/* Every name drawn on a map, in the rounded heavy face the reference uses.
+   Bundled from @fontsource rather than fetched from Google, so it needs no
+   third party and still works offline. */
+svg text { font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif; }
+
 /* A pan that began on a country or a marker is still a pan. */
 svg.is-panning * { cursor: grabbing; }
