@@ -40,10 +40,11 @@ import {
 export default function App() {
   const [route, navigate] = useRoute()
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, count, kinds, region, placeKinds } = prefs
+  const { mode, timed, count, suggestions, kinds, region, placeKinds } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
+  const setSuggestions = (suggestions: boolean) => setPrefs((p) => ({ ...p, suggestions }))
   const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
@@ -128,6 +129,7 @@ export default function App() {
         mode={playMode}
         timed={timed}
         size={size}
+        suggest={suggestions}
         // Only on a refresh into a live round, or an explicit Resume.
         initial={fits(resuming, roundId, askIds, size) ? resuming : null}
         onProgress={onProgress}
@@ -317,6 +319,25 @@ export default function App() {
                 </button>
               ))}
             </div>
+
+            {playMode !== 'pin' && (
+              <label className="mt-3 flex cursor-pointer items-start gap-3 rounded-xl bg-white px-4 py-3">
+                <input
+                  type="checkbox"
+                  checked={suggestions}
+                  onChange={(e) => setSuggestions(e.target.checked)}
+                  className="mt-1 h-4 w-4 accent-blue-600"
+                />
+                <span>
+                  <span className="block font-extrabold text-slate-900">Show suggestions</span>
+                  <span className="block text-xs font-semibold text-slate-500">
+                    {suggestions
+                      ? 'Names appear after 3 letters; press Enter to answer.'
+                      : 'No list. The answer is taken once it is spelt right; skip if you are stuck.'}
+                  </span>
+                </span>
+              </label>
+            )}
 
             <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Time limit</h2>
             <div className="grid grid-cols-2 gap-3">

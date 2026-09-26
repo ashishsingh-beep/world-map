@@ -132,8 +132,17 @@ which are Denmark proper. The Antarctic seas name no region and appear only
 under All. Region and notations narrow *practice*
 only: Learn always draws the whole set, with its own legend chips.
 
-**The typed input suggests, but only after three characters.** The list is the
-round's own answers, never all 196 names, and it is there to fix spelling — not
+**The typed input has two behaviours, chosen by "Show suggestions" on setup.**
+Off — the default, and the reference's way — there is no list and no Enter: the
+answer is taken the moment the field spells it (the name or an alias, ignoring
+case, accents, spaces and punctuation), a wrong spelling just waits, and ⏭ skips
+it as missed. It must be spelt exactly; the misspelling judge below cannot run
+there, because it would accept "Canad" before the name was finished.
+
+On, the input suggests, but only after three characters. The list is the
+round's own answers, never all 196 names — the whole round's, though, not just
+the ten a short round drew, or a ten-question round's list would be multiple
+choice — and it is there to fix spelling — not
 to turn recall into multiple choice, which is what it becomes if it opens on one
 or two letters. Enter submits what was *typed*; picking a suggestion is Enter
 while one is highlighted, or a click, so a fully typed answer is never silently
@@ -145,8 +154,9 @@ fairly.
 
 **Typed answers are judged by `src/game/matchName.ts`.** A misspelling that is
 close enough counts as correct and shows the right spelling, but only if it is
-*strictly closer to the target than to every rival* — the other places in the
-round plus all 196 country names. That second bar is what stops "Uruguay"
+*strictly closer to the target than to every rival* — every other place the
+round could ask (not only the ones this draw did) plus all 196 country names.
+This is the suggestions-on mode only. That second bar is what stops "Uruguay"
 passing as "Paraguay" or "Nigeria" as "Niger". Never relax it without running
 `npm run check:names`; aliases should hold genuine alternative names, never
 misspellings, or the correction note never fires.
@@ -370,7 +380,7 @@ fails.
 | | |
 |---|---|
 | Modes | Pin (name → tap map), Type (map highlights → type name) |
-| Type input | Suggestions after 3 characters; case- and accent-insensitive; misspellings still accepted with a correction (see below) |
+| Type input | Suggestions off (default): taken once spelt exactly, case- and accent-insensitive, ⏭ to skip. Suggestions on: list after 3 characters, Enter submits, misspellings accepted with a correction (see below) |
 | Timer | 15s per question, or off |
 | Wrong/timeout | Reveal correct country, drop pin, move on |
 | Colours | correct green, wrong pick red, missed grey — all persist for the round |

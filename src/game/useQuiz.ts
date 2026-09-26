@@ -3,7 +3,7 @@ import { geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
 import { areaOf } from '../data/areas'
 import { distanceToLineKm, placeOf, type Place } from '../data/places'
-import { judgeName, type Candidate } from './matchName'
+import { judgeName, normaliseName, type Candidate } from './matchName'
 import type {
   CountryState,
   MapArea,
@@ -157,6 +157,12 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
   // Resolved once, so a re-render can never reshuffle a round mid-flight.
   const [start] = useState(() => resume(round, initial, size))
   const [queue] = useState(start.queue)
+  /**
+   * Every question the round could have asked, not the ones this draw did. A
+   * ten-question round's suggestions drawn from its own ten names would be
+   * multiple choice, and its misspellings judged against only nine rivals.
+   */
+  const [pool] = useState(() => buildQuestions(round))
   const [index, setIndex] = useState(start.index)
   const [phase, setPhase] = useState<Phase>('asking')
   const [verdict, setVerdict] = useState<Verdict | null>(null)
@@ -308,10 +314,27 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
   const submitName = useCallback(
     (text: string) => {
       if (phase !== 'asking' || !current) return
-      const { correct, corrected } = judgeName(text, current, [...queue, ...COUNTRY_VOCABULARY])
+      const { correct, corrected } = judgeName(text, current, [...pool, ...COUNTRY_VOCABULARY])
       settle(correct, undefined, undefined, corrected ?? undefined)
     },
-    [phase, current, settle, queue]
+    [phase, current, settle, pool]
+  )
+
+  /**
+   * The field without suggestions: nothing is submitted, the answer is taken
+   * the moment what is typed spells it — the name or an alias, ignoring case,
+   * accents, spaces and punctuation. No misspelling tolerance here: it would
+   * accept a name before it had been finished.
+   */
+  const acceptIfExact = useCallback(
+    (text: string) => {
+      if (phase !== 'asking' || !current) return
+      const typed = normaliseName(text)
+      if (typed && [current.name, ...current.aliases].some((n) => normaliseName(n) === typed)) {
+        settle(true)
+      }
+    },
+    [phase, current, settle]
   )
 
   const skip = useCallback(() => {
@@ -422,8 +445,8 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
    * a thing the player could mean.
    */
   const vocabulary = useMemo(
-    () => queue.map((q) => q.name).sort((a, b) => a.localeCompare(b)),
-    [queue]
+    () => pool.map((q) => q.name).sort((a, b) => a.localeCompare(b)),
+    [pool]
   )
 
   return {
@@ -443,6 +466,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
     pickPoint,
     submitName,
     skip,
+    acceptIfExact,
     states,
     points,
     areas,

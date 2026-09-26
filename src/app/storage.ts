@@ -28,6 +28,12 @@ export interface Prefs {
   mode: Mode
   timed: boolean
   count: QuestionCount
+  /**
+   * Type and Why modes: a list of the round's names under the field, Enter to
+   * submit. Off, the field accepts the answer the moment it is spelt right and
+   * waits otherwise, as the reference does.
+   */
+  suggestions: boolean
   kinds: Record<WaterKind, boolean>
   region: WaterRegion
   /** Which of a places round's two sections to ask — capitals, other places, or both. */
@@ -38,6 +44,7 @@ export const DEFAULT_PREFS: Prefs = {
   mode: 'pin',
   timed: true,
   count: 'all',
+  suggestions: false,
   kinds: { ocean: true, sea: true, strait: true, canal: true },
   region: 'all',
   placeKinds: { capital: true, other: true },
@@ -99,6 +106,8 @@ export function loadPrefs(): Prefs {
   return {
     mode: MODES.includes(raw.mode as Mode) ? (raw.mode as Mode) : DEFAULT_PREFS.mode,
     timed: typeof raw.timed === 'boolean' ? raw.timed : DEFAULT_PREFS.timed,
+    suggestions:
+      typeof raw.suggestions === 'boolean' ? raw.suggestions : DEFAULT_PREFS.suggestions,
     count: QUESTION_COUNTS.includes(raw.count as QuestionCount)
       ? (raw.count as QuestionCount)
       : DEFAULT_PREFS.count,

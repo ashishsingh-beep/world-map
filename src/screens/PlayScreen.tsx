@@ -29,6 +29,8 @@ interface Props {
   timed: boolean
   /** How many questions to draw from the round. */
   size: number
+  /** Type/Why: suggest names under the field and submit on Enter, or take the answer once spelt. */
+  suggest: boolean
   /** A round interrupted by a refresh, to carry on from. */
   initial?: QuizSnapshot | null
   /** Called with the round's state after each question, and null once it ends. */
@@ -37,7 +39,17 @@ interface Props {
   onRetry: () => void
 }
 
-export function PlayScreen({ round, mode, timed, size, initial, onProgress, onExit, onRetry }: Props) {
+export function PlayScreen({
+  round,
+  mode,
+  timed,
+  size,
+  suggest,
+  initial,
+  onProgress,
+  onExit,
+  onRetry,
+}: Props) {
   const quiz = useQuiz({ round, mode, timed, size, initial })
   const [draft, setDraft] = useState('')
   /** Which suggestion the arrow keys are on; -1 means Enter submits what was typed. */
@@ -69,7 +81,7 @@ export function PlayScreen({ round, mode, timed, size, initial, onProgress, onEx
     return [...starts, ...contains].slice(0, SUGGEST_LIMIT)
   }, [draft, vocabulary])
 
-  const showing = !dismissed && quiz.phase === 'asking' ? suggestions : []
+  const showing = suggest && !dismissed && quiz.phase === 'asking' ? suggestions : []
 
   // Saved once per question, not on the clock: `elapsed` ticks ten times a
   // second and writing that often would be absurd. Read through a ref for the
@@ -200,6 +212,9 @@ export function PlayScreen({ round, mode, timed, size, initial, onProgress, onEx
             className="pointer-events-auto flex w-full max-w-4xl gap-2"
             onSubmit={(e) => {
               e.preventDefault()
+              // Without suggestions Enter does nothing: the answer is taken
+              // as it is typed, and a wrong one just waits to be corrected.
+              if (!suggest) return
               // Only what was typed. Picking a suggestion is Enter *on* it,
               // handled below, so a fully typed answer is never swapped out.
               quiz.submitName(draft)
@@ -213,6 +228,7 @@ export function PlayScreen({ round, mode, timed, size, initial, onProgress, onEx
                   setDraft(e.target.value)
                   setActive(-1)
                   setDismissed(false)
+                  if (!suggest) quiz.acceptIfExact(e.target.value)
                 }}
                 onKeyDown={(e) => {
                   if (!showing.length) return
@@ -271,6 +287,7 @@ export function PlayScreen({ round, mode, timed, size, initial, onProgress, onEx
               type="button"
               onClick={quiz.skip}
               aria-label="Skip"
+              title="Skip — counts as missed"
               className="rounded-xl bg-white px-5 text-xl font-bold text-slate-900 shadow-xl"
             >
               ⏭
