@@ -15,6 +15,13 @@ export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
 /** A country smaller than this many screen pixels gets a circle marker instead. */
 const MARKER_THRESHOLD_PX = 9
 const MARKER_RADIUS_PX = 9
+/**
+ * Archipelagos ringed until their largest island is this big, not 9px. Viti
+ * Levu, Guadalcanal and Espiritu Santo each clear 9px on the Oceania map, but
+ * what you are looking for there is a scatter of specks, not one island — the
+ * reference rings all three, and Timor-Leste, one solid island, it does not.
+ */
+const ARCHIPELAGO_THRESHOLD_PX: Partial<Record<string, number>> = { FJI: 48, SLB: 48, VUT: 48 }
 /** Padding factor when the map zooms in to reveal a country. */
 const REVEAL_PADDING = 6
 const MAX_REVEAL_SCALE = 14
@@ -374,10 +381,26 @@ export function MapCanvas({
   }, [size.width, size.height])
 
   /**
+   * The reveal's points by value. The caller builds a fresh array on every
+   * render, and the round re-renders many times a second while its clock runs;
+   * keyed on that identity, the zoom below restarted each time and crept toward
+   * the answer without ever arriving before the reveal ended.
+   */
+  const revealKey = revealPoints?.flat().join(',') ?? ''
+  const stableRevealPoints = useMemo(() => {
+    if (!revealKey) return null
+    const n = revealKey.split(',').map(Number)
+    const out: [number, number][] = []
+    for (let i = 0; i < n.length; i += 2) out.push([n[i], n[i + 1]])
+    return out
+  }, [revealKey])
+
+  /**
    * Reveal animation. Only ever fires on reveal — never while a question is
    * being asked — so the player is not handed the answer by the camera.
    */
   useEffect(() => {
+    const revealPoints = stableRevealPoints
     const svg = svgRef.current
     const behaviour = zoomRef.current
     if (!svg || !behaviour || !size.width) return
@@ -386,6 +409,18 @@ export function MapCanvas({
     if (revealPoints?.length) {
       const bases = revealPoints.map((p) => projection(p)).filter(Boolean) as [number, number][]
       if (!bases.length) return
+      // A frame running across the map's own edge — the Bering Sea on a world
+      // cut at 168.75°W — projects to both sides at once and would fit the
+      // whole map. Walk it point by point and keep each within half a world of
+      // the last, so it comes out as one piece hanging off that edge.
+      const worldPx = projection.scale() * 2 * Math.PI
+      for (let i = 1; i < bases.length; i++) {
+        const prev = bases[i - 1][0]
+        let x = bases[i][0]
+        while (x - prev > worldPx / 2) x -= worldPx
+        while (prev - x > worldPx / 2) x += worldPx
+        bases[i] = [x, bases[i][1]]
+      }
       const xs = bases.map((b) => b[0])
       const ys = bases.map((b) => b[1])
       const w = Math.max(...xs) - Math.min(...xs)
@@ -431,7 +466,7 @@ export function MapCanvas({
       .translate(size.width / 2 - cx * k, size.height / 2 - cy * k)
       .scale(k)
     sel.transition().duration(650).call(behaviour.transform, next)
-  }, [revealIso, revealPoints, projection, path, size.width, size.height])
+  }, [revealIso, stableRevealPoints, projection, path, size.width, size.height])
 
   const k = transform.k
 
@@ -697,7 +732,7 @@ export function MapCanvas({
           {(countryMarkers ? drawn : []).map((f) => {
             const iso = f.properties.iso
             const l = layout[iso]
-            if (!l || l.px * k >= MARKER_THRESHOLD_PX) return null
+            if (!l || l.px * k >= (ARCHIPELAGO_THRESHOLD_PX[iso] ?? MARKER_THRESHOLD_PX)) return null
             const state = states[iso] ?? 'idle'
             return (
               <circle

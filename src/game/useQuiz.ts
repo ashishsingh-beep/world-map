@@ -397,16 +397,19 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
   const currentArea = current ? areaOf(current.id) : null
 
   /**
-   * A sea reveals by framing the whole sea, not the label's point. Skipped for
-   * anything whose bounds wrap the antimeridian — the Pacific's run 128°E to
-   * 68°W, which as a box is the rest of the planet.
+   * A sea reveals by framing the whole sea, not the label's point. Bounds that
+   * wrap the antimeridian — the Pacific's run 128°E to 68°W — are unwrapped to
+   * run east past 180, and the box is walked in steps of under 90° so the map
+   * can tell which way round it goes: its two corners alone cannot, and the
+   * Arctic's, at -180 and 180, are the same meridian.
    */
   const areaFrame = (): [number, number][] | null => {
     const line = current?.place?.line
     if (line) return line as [number, number][]
     if (!currentArea) return null
-    const [[w, s], [e, n]] = geoBounds(currentArea)
-    return w > e ? null : [[w, s], [e, n]]
+    const [[w, s], [e0, n]] = geoBounds(currentArea)
+    const e = e0 < w ? e0 + 360 : e0
+    return [0, 1, 2, 3, 4, 5].map((i): [number, number] => [w + ((e - w) * i) / 5, s + ((n - s) * i) / 5])
   }
 
   /** Stable, so saving can key off "a question was answered" and nothing else. */
@@ -451,11 +454,17 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
     spellingSlips: answers.filter((a) => a.corrected).length,
     /** Only non-null during a reveal — the camera never moves while asking. */
     revealIso: revealing && current.iso ? current.iso : null,
+    // A wrong tap is framed with the answer so you see how far off it was — but
+    // not for water. A tap in the Caribbean for the Arabian Sea framed half the
+    // world, and the sea you had to learn never came into view. The ✕ still
+    // marks the tap wherever it lands.
     revealPoints:
       revealing && isPointAnswer
         ? [
             ...(areaFrame() ?? [current.point]),
-            ...(tapped && verdict === 'incorrect' ? [tapped] : []),
+            ...(tapped && verdict === 'incorrect' && current.place?.section !== 'water'
+              ? [tapped]
+              : []),
           ]
         : null,
     pinIso: revealing && verdict === 'incorrect' && current.iso ? current.iso : null,

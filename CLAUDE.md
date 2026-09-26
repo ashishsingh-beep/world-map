@@ -235,7 +235,14 @@ teach. They live in the syllabus as `line`, and the build derives each range's
 label anchor from the middle of it.
 
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
-the camera gives the answer away.
+the camera gives the answer away. A wrong tap is framed with the answer so you
+see how far off it was, except on water: a tap in the Caribbean for the Arabian
+Sea framed half the world and the sea never came into view. A sea is framed by
+its whole extent, walked in steps under 90° so a box that wraps the 180th (the
+Pacific) or crosses the world map's own edge (the Bering Sea) still reads as one
+piece. `MapCanvas` keys the reveal on its points' *values*: the round re-renders
+many times a second, and keyed on a fresh array the zoom restarted each time and
+never arrived.
 
 ## Architecture
 
@@ -356,7 +363,7 @@ fails.
 | Timer | 15s per question, or off |
 | Wrong/timeout | Reveal correct country, drop pin, move on |
 | Colours | correct green, wrong pick red, missed grey — all persist for the round |
-| Micro-states | Circle markers, sized in screen px, fading out as you zoom in |
+| Micro-states | Circle markers, sized in screen px, fading out as you zoom in. Fiji, the Solomons and Vanuatu keep theirs until their largest island is 48px, not 9 (`ARCHIPELAGO_THRESHOLD_PX`), as the reference does |
 | Results | correct/total, elapsed time, tier title |
 
 ## Still to do
