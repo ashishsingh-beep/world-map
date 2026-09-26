@@ -467,6 +467,16 @@ export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
               : []),
           ]
         : null,
+    /**
+     * The one time the camera may move while a question is up. In Type mode the
+     * sea is painted, so where it is is the clue, not the answer — and a small
+     * one is a few pixels at world scale, hunted for before it can be named.
+     * `MapCanvas` decides whether it is small enough to need it.
+     */
+    focusPoints:
+      phase === 'asking' && mode === 'type' && currentArea && current?.place?.section === 'water'
+        ? areaFrame()
+        : null,
     pinIso: revealing && verdict === 'incorrect' && current.iso ? current.iso : null,
     // No pin on a sea: the painted region already says where it was, and a pin
     // in the middle of it would only re-assert the point this replaced.

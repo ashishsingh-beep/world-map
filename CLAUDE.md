@@ -235,7 +235,12 @@ teach. They live in the syllabus as `line`, and the build derives each range's
 label anchor from the middle of it.
 
 **Auto-zoom fires on reveal only** — never while a question is being asked, or
-the camera gives the answer away. A wrong tap is framed with the answer so you
+the camera gives the answer away. The one exception is Type mode on water, where
+the sea is painted and its place is the clue, not the answer: a sea under 30px on
+the unzoomed map (`SMALL_SEA_PX` — the Gulf of Kutch is 6px, the Gulf of Suez 11)
+is zoomed to while asked, with four times its own size and at least 20° of map
+around it so there are coasts to know it by. Each such question starts from the
+whole map, so the last reveal's zoom is undone first. A wrong tap is framed with the answer so you
 see how far off it was, except on water: a tap in the Caribbean for the Arabian
 Sea framed half the world and the sea never came into view. A sea is framed by
 its whole extent, walked in steps under 90° so a box that wraps the 180th (the

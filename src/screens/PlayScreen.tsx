@@ -116,6 +116,7 @@ export function PlayScreen({ round, mode, timed, initial, onProgress, onExit, on
         bands={quiz.bands}
         atlas={round.atlas}
         revealPoints={quiz.revealPoints}
+        focusPoints={quiz.focusPoints}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
         countryMarkers={!isWaterRound}

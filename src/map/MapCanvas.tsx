@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { geoEquirectangular, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
-import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
+import { zoom as d3Zoom, zoomIdentity, zoomTransform, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
 import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
 import { areaOf as waterAreaOf } from '../data/marine'
@@ -27,6 +27,12 @@ const REVEAL_PADDING = 6
 const MAX_REVEAL_SCALE = 14
 /** A point has no size of its own, so its reveal zoom is capped rather than fitted. */
 const POINT_REVEAL_SCALE = 5
+/** A Type-mode sea smaller than this on the unzoomed map is zoomed to while asked. */
+const SMALL_SEA_PX = 30
+/** How much of its surroundings a focused sea is shown with: this many times its size… */
+const FOCUS_CONTEXT = 4
+/** …and never less than this much of the map, so there are coasts to know it by. */
+const FOCUS_MIN_DEG = 20
 const PLACE_MARKER_PX = 7
 
 /** Screen-space clearance around the fitted geography, so it doesn't butt up
@@ -172,6 +178,11 @@ export interface MapCanvasProps {
    * resets the view.
    */
   revealPoints?: [number, number][] | null
+  /**
+   * The sea a Type-mode question has painted. Zoomed to while it is asked, but
+   * only when it is too small to find on the unzoomed map.
+   */
+  focusPoints?: [number, number][] | null
   /** Drop a pin at this lon/lat — used to show where the answer actually was. */
   pinPoint?: [number, number] | null
   /** Show where the player tapped, so a near miss is visible next to the answer. */
@@ -202,6 +213,23 @@ const FILLS: Record<CountryState, string> = {
   target: '#f43f5e',
 }
 
+/**
+ * Lon/lats by value. Callers build a fresh array on every render, and a round
+ * re-renders many times a second while its clock runs; a camera keyed on that
+ * identity restarted its zoom each time and crept toward the answer without
+ * ever arriving.
+ */
+function useStablePoints(points: [number, number][] | null): [number, number][] | null {
+  const key = points?.flat().join(',') ?? ''
+  return useMemo(() => {
+    if (!key) return null
+    const n = key.split(',').map(Number)
+    const out: [number, number][] = []
+    for (let i = 0; i < n.length; i += 2) out.push([n[i], n[i + 1]])
+    return out
+  }, [key])
+}
+
 export function MapCanvas({
   render,
   askable,
@@ -216,6 +244,7 @@ export function MapCanvas({
   bands,
   atlas = 'world',
   revealPoints = null,
+  focusPoints = null,
   pinPoint = null,
   markPoint = null,
   onPickPoint,
@@ -380,39 +409,20 @@ export function MapCanvas({
     }
   }, [size.width, size.height])
 
-  /**
-   * The reveal's points by value. The caller builds a fresh array on every
-   * render, and the round re-renders many times a second while its clock runs;
-   * keyed on that identity, the zoom below restarted each time and crept toward
-   * the answer without ever arriving before the reveal ended.
-   */
-  const revealKey = revealPoints?.flat().join(',') ?? ''
-  const stableRevealPoints = useMemo(() => {
-    if (!revealKey) return null
-    const n = revealKey.split(',').map(Number)
-    const out: [number, number][] = []
-    for (let i = 0; i < n.length; i += 2) out.push([n[i], n[i + 1]])
-    return out
-  }, [revealKey])
+  const stableRevealPoints = useStablePoints(revealPoints)
+  const stableFocusPoints = useStablePoints(focusPoints)
 
   /**
-   * Reveal animation. Only ever fires on reveal — never while a question is
-   * being asked — so the player is not handed the answer by the camera.
+   * Where a set of lon/lats sits on the unzoomed map, and how big it is. A frame
+   * running across the map's own edge — the Bering Sea on a world cut at
+   * 168.75°W — projects to both sides at once and would fit the whole map, so
+   * it is walked point by point, each kept within half a world of the last,
+   * and comes out as one piece hanging off that edge.
    */
-  useEffect(() => {
-    const revealPoints = stableRevealPoints
-    const svg = svgRef.current
-    const behaviour = zoomRef.current
-    if (!svg || !behaviour || !size.width) return
-    const sel = select(svg)
-
-    if (revealPoints?.length) {
-      const bases = revealPoints.map((p) => projection(p)).filter(Boolean) as [number, number][]
-      if (!bases.length) return
-      // A frame running across the map's own edge — the Bering Sea on a world
-      // cut at 168.75°W — projects to both sides at once and would fit the
-      // whole map. Walk it point by point and keep each within half a world of
-      // the last, so it comes out as one piece hanging off that edge.
+  const frameOf = useCallback(
+    (points: [number, number][]) => {
+      const bases = points.map((p) => projection(p)).filter(Boolean) as [number, number][]
+      if (!bases.length) return null
       const worldPx = projection.scale() * 2 * Math.PI
       for (let i = 1; i < bases.length; i++) {
         const prev = bases[i - 1][0]
@@ -423,27 +433,61 @@ export function MapCanvas({
       }
       const xs = bases.map((b) => b[0])
       const ys = bases.map((b) => b[1])
-      const w = Math.max(...xs) - Math.min(...xs)
-      const h = Math.max(...ys) - Math.min(...ys)
+      return {
+        w: Math.max(...xs) - Math.min(...xs),
+        h: Math.max(...ys) - Math.min(...ys),
+        cx: (Math.max(...xs) + Math.min(...xs)) / 2,
+        cy: (Math.max(...ys) + Math.min(...ys)) / 2,
+      }
+    },
+    [projection]
+  )
+
+  /**
+   * The camera. It moves on reveal, and otherwise only for a small sea painted
+   * by a Type-mode question — never while a Pin-mode question is being asked,
+   * where the camera would hand the player the answer.
+   */
+  useEffect(() => {
+    const revealPoints = stableRevealPoints
+    const focusPoints = stableFocusPoints
+    const svg = svgRef.current
+    const behaviour = zoomRef.current
+    if (!svg || !behaviour || !size.width) return
+    const sel = select(svg)
+
+    const at = (cx: number, cy: number, k: number) =>
+      zoomIdentity.translate(size.width / 2 - cx * k, size.height / 2 - cy * k).scale(k)
+
+    if (revealPoints?.length) {
+      const fr = frameOf(revealPoints)
+      if (!fr) return
       // Fit whatever has to be visible, but never zoom past the point cap —
       // a single point has no extent to fit to.
       const k = Math.max(
         1,
         Math.min(
           POINT_REVEAL_SCALE,
-          size.width / Math.max(w * 1.6, 1),
-          size.height / Math.max(h * 1.6, 1)
+          size.width / Math.max(fr.w * 1.6, 1),
+          size.height / Math.max(fr.h * 1.6, 1)
         )
       )
-      const cx = (Math.max(...xs) + Math.min(...xs)) / 2
-      const cy = (Math.max(...ys) + Math.min(...ys)) / 2
-      sel
-        .transition()
-        .duration(650)
-        .call(
-          behaviour.transform,
-          zoomIdentity.translate(size.width / 2 - cx * k, size.height / 2 - cy * k).scale(k)
-        )
+      sel.transition().duration(650).call(behaviour.transform, at(fr.cx, fr.cy, k))
+      return
+    }
+
+    // A Type-mode sea too small to find at this scale: frame it with its
+    // coasts around it, so it can be seen and still recognised. Back to the
+    // whole map first if the last reveal left the camera zoomed, so each
+    // question starts from the same place.
+    const fr = focusPoints?.length ? frameOf(focusPoints) : null
+    if (fr && Math.max(fr.w, fr.h) < SMALL_SEA_PX) {
+      const pxPerDeg = (projection.scale() * Math.PI) / 180
+      const span = Math.max(Math.max(fr.w, fr.h) * FOCUS_CONTEXT, FOCUS_MIN_DEG * pxPerDeg)
+      const k = Math.min(60, Math.min(size.width, size.height) / span)
+      const t = sel.transition()
+      const from = zoomTransform(svg).k > 1.01 ? t.duration(450).call(behaviour.transform, zoomIdentity).transition() : t
+      from.duration(700).call(behaviour.transform, at(fr.cx, fr.cy, k))
       return
     }
 
@@ -466,7 +510,7 @@ export function MapCanvas({
       .translate(size.width / 2 - cx * k, size.height / 2 - cy * k)
       .scale(k)
     sel.transition().duration(650).call(behaviour.transform, next)
-  }, [revealIso, stableRevealPoints, projection, path, size.width, size.height])
+  }, [revealIso, stableRevealPoints, stableFocusPoints, frameOf, projection, path, size.width, size.height])
 
   const k = transform.k
 
