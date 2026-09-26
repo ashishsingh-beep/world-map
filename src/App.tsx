@@ -29,17 +29,21 @@ import {
   fits,
   loadPrefs,
   loadRound,
+  QUESTION_COUNTS,
+  roundSize,
   savePrefs,
   saveRound,
+  type QuestionCount,
   type SavedRound,
 } from './app/storage'
 
 export default function App() {
   const [route, navigate] = useRoute()
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, kinds, region, placeKinds } = prefs
+  const { mode, timed, count, kinds, region, placeKinds } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
+  const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
   const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
@@ -63,8 +67,8 @@ export default function App() {
 
   /**
    * Which part of the water set to practise: a region, then the notations
-   * within it. Still not a question-count selector — the round asks every one
-   * of whatever is left; these only decide which set.
+   * within it. These decide which set; the question count then decides how
+   * many of it.
    */
   const inRegion = isWaterRound
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
@@ -76,9 +80,12 @@ export default function App() {
       : inRegion
   const playRound = isWaterRound || isPlacesRound ? { ...round, places: asked.map((p) => p.id) } : round
   const askIds = playRound.places ?? playRound.askable
+  const size = roundSize(count, askIds.length)
+  /** The counts this round can fill; a round of 14 offers 10 and All, not 30. */
+  const counts = QUESTION_COUNTS.filter((c) => c === 'all' || c < askIds.length)
 
   /** A save is only offered when it is still this exact round's questions. */
-  const resumable = fits(saved, roundId, askIds) ? saved : null
+  const resumable = fits(saved, roundId, askIds, size) ? saved : null
   const playMode = !round.places && mode === 'significance' ? 'type' : mode
 
   const onProgress = useCallback(
@@ -120,8 +127,9 @@ export default function App() {
         // Country rounds carry no significance data to ask about.
         mode={playMode}
         timed={timed}
+        size={size}
         // Only on a refresh into a live round, or an explicit Resume.
-        initial={fits(resuming, roundId, askIds) ? resuming : null}
+        initial={fits(resuming, roundId, askIds, size) ? resuming : null}
         onProgress={onProgress}
         onExit={() =>
           navigate({ view: 'atlas', roundId, atlas: round.atlas === 'india' ? 'india' : 'world' })
@@ -155,8 +163,7 @@ export default function App() {
             <p className="text-sm font-bold text-slate-500">
               {round.places
                 ? `${asked.length} ${isWaterRound ? 'features' : 'places'}`
-                : `${round.askable.length} countries`}{' '}
-              · every round asks all of them
+                : `${round.askable.length} countries`}
             </p>
 
             {isWaterRound && (
@@ -259,6 +266,32 @@ export default function App() {
                 </div>
               </>
             )}
+
+            <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Questions</h2>
+            <div
+              className="grid gap-3"
+              style={{ gridTemplateColumns: `repeat(${counts.length}, minmax(0, 1fr))` }}
+            >
+              {counts.map((c) => {
+                // A saved count this round cannot fill plays as All, so All is lit.
+                const on = c === 'all' ? size === askIds.length : c === size && c < askIds.length
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => setCount(c)}
+                    className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 bg-white px-2 py-3 text-center ${
+                      on ? 'border-blue-600' : 'border-transparent'
+                    }`}
+                  >
+                    <div className="font-extrabold text-slate-900">{c === 'all' ? 'All' : c}</div>
+                    {c === 'all' && (
+                      <div className="text-xs font-semibold text-slate-500">{askIds.length}</div>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
 
             <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Mode</h2>
             <div className={`grid gap-3 ${round.places ? 'grid-cols-3' : 'grid-cols-2'}`}>

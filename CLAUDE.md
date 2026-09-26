@@ -71,9 +71,15 @@ nothing to locate them against.
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 `scripts/build-data.mjs`.
 
-**No question-count selector.** Every round asks its full set. The Seas &
+**The question count picks how many; everything else picks which.** Every
+round's setup offers 10, 30, 50, 100 or All, as the reference does, drawn at
+random from whatever the other choices leave — a new draw each round, the first
+N of the shuffle. A count the round cannot fill is not offered (Oceania's 14
+countries show 10 and All), and a stored one it cannot fill plays as All. The
+count is part of what a saved round must match, so choosing another retires it.
+The Seas &
 Straits round narrows twice — a region (All, Americas, Europe, Asia), then the
-notations within it — but both pick *which set*, not how many of it, and the
+notations within it — and both pick *which set*, not how many of it, and the
 last notation with anything left in the chosen region cannot be unticked. A
 places round (North America, South America, Asia) narrows once, the same way:
 Capitals or Other places, in Learn and in Practice alike, both backed by the

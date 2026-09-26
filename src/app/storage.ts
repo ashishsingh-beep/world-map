@@ -16,9 +16,18 @@ import type { PlaceKind } from '../data/places'
 const PREFS_KEY = 'map-practice:prefs'
 const PROGRESS_KEY = 'map-practice:progress'
 
+/** How many of a round's questions to ask: a random handful, or every one. */
+export type QuestionCount = 10 | 30 | 50 | 100 | 'all'
+export const QUESTION_COUNTS: QuestionCount[] = [10, 30, 50, 100, 'all']
+
+/** The number a round of `total` actually asks: a count it cannot fill means all of it. */
+export const roundSize = (count: QuestionCount, total: number) =>
+  count === 'all' ? total : Math.min(count, total)
+
 export interface Prefs {
   mode: Mode
   timed: boolean
+  count: QuestionCount
   kinds: Record<WaterKind, boolean>
   region: WaterRegion
   /** Which of a places round's two sections to ask — capitals, other places, or both. */
@@ -28,6 +37,7 @@ export interface Prefs {
 export const DEFAULT_PREFS: Prefs = {
   mode: 'pin',
   timed: true,
+  count: 'all',
   kinds: { ocean: true, sea: true, strait: true, canal: true },
   region: 'all',
   placeKinds: { capital: true, other: true },
@@ -89,6 +99,9 @@ export function loadPrefs(): Prefs {
   return {
     mode: MODES.includes(raw.mode as Mode) ? (raw.mode as Mode) : DEFAULT_PREFS.mode,
     timed: typeof raw.timed === 'boolean' ? raw.timed : DEFAULT_PREFS.timed,
+    count: QUESTION_COUNTS.includes(raw.count as QuestionCount)
+      ? (raw.count as QuestionCount)
+      : DEFAULT_PREFS.count,
     kinds,
     region: REGIONS.includes(raw.region as WaterRegion)
       ? (raw.region as WaterRegion)
@@ -118,12 +131,18 @@ export const saveRound = (saved: SavedRound) => write(PROGRESS_KEY, saved)
 export const clearRound = () => drop(PROGRESS_KEY)
 
 /**
- * Whether a save can still be resumed. The questions must be exactly the ones
- * the round would ask now: untick Straits, or edit a syllabus, and yesterday's
- * half-finished round is no longer this round.
+ * Whether a save can still be resumed. Its questions must all be ones the round
+ * would ask now, and as many of them as it would ask: untick Straits, edit a
+ * syllabus or pick another count, and yesterday's half-finished round is no
+ * longer this round.
  */
-export function fits(saved: SavedRound | null, roundId: string, askIds: string[]): boolean {
-  if (!saved || saved.roundId !== roundId || saved.ids.length !== askIds.length) return false
+export function fits(
+  saved: SavedRound | null,
+  roundId: string,
+  askIds: string[],
+  size: number
+): boolean {
+  if (!saved || saved.roundId !== roundId || saved.ids.length !== size) return false
   const wanted = new Set(askIds)
   return saved.ids.every((id) => wanted.has(id))
 }

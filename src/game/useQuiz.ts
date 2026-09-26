@@ -44,6 +44,8 @@ export interface QuizOptions {
   round: Round
   mode: Mode
   timed: boolean
+  /** How many of the round's questions to ask, drawn at random. All of them if unset. */
+  size?: number
   /**
    * A round to pick back up rather than start. Ignored unless its questions are
    * exactly the ones this round would ask, so a stale save cannot resume into
@@ -123,14 +125,16 @@ function shuffle<T>(input: T[]): T[] {
 }
 
 /**
- * A saved round rebuilt, or a fresh shuffle when the save no longer fits. The
- * check is by question, not by count: a save whose ids are not exactly this
- * round's is from a different round, whatever it claims.
+ * A saved round rebuilt, or a fresh shuffle when the save no longer fits. A
+ * shorter round is the first `size` of that shuffle, so each one is a new
+ * random draw. The check is by question as well as by count: a save holding
+ * an id this round would not ask is from a different round, whatever it claims.
  */
-function resume(round: Round, initial: QuizSnapshot | null) {
+function resume(round: Round, initial: QuizSnapshot | null, size?: number) {
   const built = buildQuestions(round)
-  const fresh = { queue: shuffle(built), index: 0, answers: [] as Answer[], elapsed: 0 }
-  if (!initial || initial.ids.length !== built.length) return fresh
+  const n = Math.min(size ?? built.length, built.length)
+  const fresh = { queue: shuffle(built).slice(0, n), index: 0, answers: [] as Answer[], elapsed: 0 }
+  if (!initial || initial.ids.length !== n) return fresh
 
   const byId = new Map(built.map((q) => [q.id, q]))
   const queue: Question[] = []
@@ -148,13 +152,10 @@ function resume(round: Round, initial: QuizSnapshot | null) {
   }
 }
 
-/**
- * Round state machine. Every round asks its full set — there is no
- * question-count selector by design.
- */
-export function useQuiz({ round, mode, timed, initial = null }: QuizOptions) {
+/** Round state machine. */
+export function useQuiz({ round, mode, timed, size, initial = null }: QuizOptions) {
   // Resolved once, so a re-render can never reshuffle a round mid-flight.
-  const [start] = useState(() => resume(round, initial))
+  const [start] = useState(() => resume(round, initial, size))
   const [queue] = useState(start.queue)
   const [index, setIndex] = useState(start.index)
   const [phase, setPhase] = useState<Phase>('asking')

@@ -27,6 +27,8 @@ interface Props {
   round: Round
   mode: Mode
   timed: boolean
+  /** How many questions to draw from the round. */
+  size: number
   /** A round interrupted by a refresh, to carry on from. */
   initial?: QuizSnapshot | null
   /** Called with the round's state after each question, and null once it ends. */
@@ -35,8 +37,8 @@ interface Props {
   onRetry: () => void
 }
 
-export function PlayScreen({ round, mode, timed, initial, onProgress, onExit, onRetry }: Props) {
-  const quiz = useQuiz({ round, mode, timed, initial })
+export function PlayScreen({ round, mode, timed, size, initial, onProgress, onExit, onRetry }: Props) {
+  const quiz = useQuiz({ round, mode, timed, size, initial })
   const [draft, setDraft] = useState('')
   /** Which suggestion the arrow keys are on; -1 means Enter submits what was typed. */
   const [active, setActive] = useState(-1)
