@@ -1,5 +1,5 @@
 import { MapCanvas } from '../map/MapCanvas'
-import type { Round } from '../game/rounds'
+import { WORLD_VIEW, type Round } from '../game/rounds'
 import { renderIsos } from '../data/countries'
 import { Button, formatClock } from '../ui/bits'
 
@@ -42,10 +42,7 @@ export function ResultsScreen({
         <MapCanvas
           render={renderIsos}
           askable={[]}
-          view={[
-            [-180, -58],
-            [180, 84],
-          ]}
+          view={WORLD_VIEW}
           states={{}}
         />
       </div>

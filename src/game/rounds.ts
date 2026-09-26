@@ -61,11 +61,21 @@ const INDIA_VIEW: BBox = [
   [98, 38],
 ]
 
+/**
+ * The world, cut at 168.75°W rather than down the 180th, so Samoa and Tonga sit
+ * on the right with Fiji and the rest of the Pacific instead of alone on the
+ * far left. Nothing gives a clean cut east of Samoa: St Lawrence Island, the
+ * Aleutians and Alaska overlap in longitude all the way along. At 168.75°W the
+ * nearest of them ends within a kilometre either side, too thin to see, and
+ * Chukotka comes back whole beside the rest of Russia.
+ */
+export const WORLD_VIEW: BBox = [
+  [-168.75, -58],
+  [191.25, 84],
+]
+
 const VIEW_OVERRIDES: Partial<Record<string, BBox>> = {
-  world: [
-    [-180, -58],
-    [180, 84],
-  ],
+  world: WORLD_VIEW,
   europe: [
     [-26, 33],
     [46, 72],
@@ -148,16 +158,22 @@ export const ROUND_ORDER = [
  * America's reaches out to Easter Island.
  */
 function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
-  let [[w, s], [e, n]] = bounds
-  for (const [lon, lat] of points) {
+  const [[w0, s0], [e0, n0]] = bounds
+  // A frame written past 180 (the world, Oceania) spans w0 to w0 + 360: a point
+  // west of it belongs on its eastern side, and 180 is no longer the wall.
+  const crosses = e0 > 180
+  let [w, s, e, n] = [w0, s0, e0, n0]
+  for (const [raw, lat] of points) {
+    const lon = crosses && raw < w0 ? raw + 360 : raw
     w = Math.min(w, lon)
     s = Math.min(s, lat)
     e = Math.max(e, lon)
     n = Math.max(n, lat)
   }
+  const [lo, hi] = crosses ? [e0 - 360, w0 + 360] : [-180, 180]
   return [
-    [Math.max(-180, w - pad), Math.max(-90, s - pad)],
-    [Math.min(180, e + pad), Math.min(90, n + pad)],
+    [Math.max(lo, w - pad), Math.max(-90, s - pad)],
+    [Math.min(hi, e + pad), Math.min(90, n + pad)],
   ]
 }
 

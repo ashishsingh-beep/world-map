@@ -261,6 +261,21 @@ const CENTROID_OVERRIDES = {
   FSM: [150.55, 7.4],
 }
 
+const EARTH_KM2 = 6371 * 6371
+/**
+ * Below this a nation keeps every vertex. A percentage simplification thins each
+ * feature to its largest ring, and `keep-shapes` protects only that one: it left
+ * Kiribati as Kiritimati alone, Micronesia as Pohnpei, Tuvalu and the Maldives
+ * as a single islet each, so the marker pointed at sea where the Gilberts
+ * should be. Any percentage under 100 still erases atolls, and these are tiny
+ * enough that full detail costs about 40KB gzipped.
+ *
+ * Only a nation of several pieces: one of a single piece has nothing to lose,
+ * and the Vatican must not qualify — its outline is a border shared with Italy,
+ * which simplifies at Italy's rate, and without `keep-shapes` it vanished.
+ */
+const SMALL_NATION_KM2 = 30000
+
 const meta = {}
 const features = []
 for (const [iso, f] of picked) {
@@ -284,7 +299,11 @@ for (const [iso, f] of picked) {
   features.push({
     type: 'Feature',
     id: iso,
-    properties: { iso },
+    properties: {
+      iso,
+      small:
+        f.geometry.type === 'MultiPolygon' && geoArea(f) * EARTH_KM2 < SMALL_NATION_KM2 ? 1 : 0,
+    },
     geometry: f.geometry,
   })
 }
@@ -307,13 +326,20 @@ execFileSync(
   resolve(ROOT, 'node_modules/.bin/mapshaper'),
   [
     filtered,
-    '-simplify', '6%', 'keep-shapes',
+    '-simplify', 'variable', 'percentage=small ? 1 : 0.06', 'keep-shapes',
     '-clean',
+    '-filter-fields', 'iso',
     '-rename-layers', 'countries',
     '-o', 'format=topojson', 'quantization=1e5', 'id-field=iso', topoOut,
   ],
   { stdio: 'inherit' }
 )
+
+{
+  const topo = JSON.parse(readFileSync(topoOut, 'utf8'))
+  const lost = topo.objects.countries.geometries.filter((g) => !g.type).map((g) => g.id)
+  if (lost.length) throw new Error(`Simplification erased the whole of: ${lost.join(', ')}`)
+}
 
 writeFileSync(resolve(OUT, 'countries.meta.json'), JSON.stringify(meta, null, 2))
 

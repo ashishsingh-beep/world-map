@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { geoEquirectangular, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
@@ -7,6 +7,7 @@ import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countri
 import { areaOf as waterAreaOf } from '../data/marine'
 import { areaOf as landAreaOf } from '../data/land'
 import { indiaDivides, indiaLand, indiaOutline, stateLines } from '../data/india'
+import { outlineWithoutSeam } from './seam'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -500,35 +501,61 @@ export function MapCanvas({
             const f = waterAreaOf(a.id)
             if (!f) return null
             const idle = a.state === 'idle'
+            const seamless = outlineWithoutSeam(f.geometry)
+            const stroke = {
+              stroke: idle ? '#0369a1' : FILLS[a.state],
+              strokeOpacity: idle ? 0.35 : 0.9,
+              strokeWidth: idle ? 0.8 : 1.6,
+            }
             return (
-              <path
-                key={`a-${a.id}`}
-                d={path(f) ?? undefined}
-                fill={idle ? '#0369a1' : FILLS[a.state]}
-                fillOpacity={idle ? 0.18 : 0.75}
-                stroke={idle ? '#0369a1' : FILLS[a.state]}
-                strokeOpacity={idle ? 0.35 : 0.9}
-                strokeWidth={idle ? 0.8 : 1.6}
-                vectorEffect="non-scaling-stroke"
-                pointerEvents="none"
-              />
+              <Fragment key={`a-${a.id}`}>
+                <path
+                  d={path(f) ?? undefined}
+                  fill={idle ? '#0369a1' : FILLS[a.state]}
+                  fillOpacity={idle ? 0.18 : 0.75}
+                  {...(seamless ? { stroke: 'none' } : stroke)}
+                  vectorEffect="non-scaling-stroke"
+                  pointerEvents="none"
+                />
+                {seamless && (
+                  <path
+                    d={path(seamless) ?? undefined}
+                    fill="none"
+                    {...stroke}
+                    vectorEffect="non-scaling-stroke"
+                    pointerEvents="none"
+                  />
+                )}
+              </Fragment>
             )
           })}
 
           {drawn.map((f) => {
             const iso = f.properties.iso
             const state = states[iso] ?? 'idle'
+            const seamless = outlineWithoutSeam(f.geometry)
             return (
-              <path
-                key={iso}
-                d={path(f) ?? undefined}
-                fill={FILLS[state]}
-                stroke="#1f2d4d"
-                strokeWidth={0.6}
-                vectorEffect="non-scaling-stroke"
-                className={askSet.has(iso) ? 'cursor-pointer' : undefined}
-                onClick={(e) => handle(iso, e)}
-              />
+              <Fragment key={iso}>
+                <path
+                  d={path(f) ?? undefined}
+                  fill={FILLS[state]}
+                  stroke={seamless ? 'none' : '#1f2d4d'}
+                  strokeWidth={0.6}
+                  vectorEffect="non-scaling-stroke"
+                  className={askSet.has(iso) ? 'cursor-pointer' : undefined}
+                  onClick={(e) => handle(iso, e)}
+                />
+                {seamless && (
+                  <path
+                    d={path(seamless) ?? undefined}
+                    fill="none"
+                    stroke="#1f2d4d"
+                    strokeWidth={0.6}
+                    vectorEffect="non-scaling-stroke"
+                    pointerEvents="none"
+                  />
+                )}
+              </Fragment>
             )
           })}
 

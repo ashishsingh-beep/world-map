@@ -318,7 +318,16 @@ fails.
   Samoa, Tonga and Kiribati against the other. Its view is hand-set instead and
   crosses the antimeridian, written as an east past 180 (110°E to 210°E);
   `MapCanvas` turns the globe to that view's middle meridian, and only when a
-  view asks for it, so every other round keeps the map it always drew. And a
+  view asks for it. The world view asks too: `WORLD_VIEW` is cut at 168.75°W,
+  not the 180th, so Samoa and Tonga sit beside Fiji rather than alone at the far
+  left. East of Samoa every longitude hits St Lawrence Island, the Aleutians or
+  Alaska; 168.75°W is where the nearest two end within a kilometre either side.
+  `fitAround` keeps such a frame whole (a point west of it moves 360° east).
+  Turning the map exposes Natural Earth's own cut: Chukotka, Fiji, Antarctica
+  and the Bering, Ross and Pacific patches are pieces that meet along the 180th,
+  and their outline drew a line down the middle of the map. `outlineWithoutSeam`
+  in `src/map/seam.ts` strokes them without those edges; the fill still uses
+  them to close. And a
   country's on-screen size is measured from its **largest piece**, not its
   whole bounds: a feature with parts either side of the line has bounds as wide
   as the map, which put Fiji at 1,336px on the world map and so denied a marker
@@ -329,6 +338,14 @@ fails.
   and Kiribati on Kiritimati. Only a nation split into groups an ocean apart
   needs an authored anchor — `CENTROID_OVERRIDES` in the build (Kiribati at
   Tarawa, Micronesia midway along Yap–Kosrae).
+  An anchor needs land under it. The 6% simplification thinned every country to
+  its largest ring, and `keep-shapes` protects only that one, so Kiribati was
+  drawn as Kiritimati alone and its Tarawa ring sat over empty sea. A nation of
+  several pieces under 30,000 km² now keeps every vertex (`SMALL_NATION_KM2`);
+  any lesser percentage still erases atolls. Single-piece nations stay at 6%
+  under `keep-shapes`: the Vatican's outline is a border shared with Italy, and
+  given full detail of its own it vanished. The build fails if any country
+  comes out with no geometry.
 
 ## Game rules
 
