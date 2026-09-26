@@ -829,20 +829,6 @@
       "tier": 1
     },
     {
-      "id": "sea-aqaba",
-      "name": "Gulf of Aqaba",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [34.7, 28.8],
-      "spanKm": 90,
-      "basin": "Red Sea",
-      "borders": ["EGY", "ISR", "JOR", "SAU"],
-      "significance": "Eastern arm of the Red Sea, Israel's and Jordan's only southern outlet",
-      "notes": [],
-      "tier": 1
-    },
-    {
       "id": "sea-suez-gulf",
       "name": "Gulf of Suez",
       "aliases": [],

@@ -33,7 +33,7 @@
       "title": "Seas & Straits",
       "section": "water",
       "atlas": "world",
-      "count": 135
+      "count": 134
     },
     {
       "name": "South America",
@@ -5386,34 +5386,6 @@
         "ARE"
       ],
       "significance": "The Arabian Sea's antechamber, leading to the Strait of Hormuz",
-      "notes": [],
-      "tier": 1,
-      "continent": "World",
-      "section": "water",
-      "atlas": "world",
-      "regions": [
-        "asia"
-      ]
-    },
-    {
-      "id": "sea-aqaba",
-      "name": "Gulf of Aqaba",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [
-        34.7,
-        28.8
-      ],
-      "spanKm": 90,
-      "basin": "Red Sea",
-      "borders": [
-        "EGY",
-        "ISR",
-        "JOR",
-        "SAU"
-      ],
-      "significance": "Eastern arm of the Red Sea, Israel's and Jordan's only southern outlet",
       "notes": [],
       "tier": 1,
       "continent": "World",
