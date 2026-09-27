@@ -206,6 +206,16 @@ const EXTRA_RENDER: Partial<Record<string, string[]>> = {
   Asia: ['RUS'],
 }
 
+/**
+ * A places round's frame before its own places stretch it. Fitting Europe to
+ * its members reaches Russia's Pacific coast, as the country round found; it
+ * starts from that round's hand-set frame instead, and Greenland, Svalbard and
+ * Jan Mayen then widen it only as far as they need.
+ */
+const PLACE_BASE_VIEW: Partial<Record<string, BBox>> = {
+  Europe: VIEW_OVERRIDES.europe,
+}
+
 function continentPlaceRound({
   name,
   title,
@@ -251,7 +261,7 @@ function continentPlaceRound({
       atlas === 'india'
         ? INDIA_VIEW
         : fitAround(
-            worldwide ? (VIEW_OVERRIDES.world as BBox) : fit(isos),
+            worldwide ? (VIEW_OVERRIDES.world as BBox) : (PLACE_BASE_VIEW[name] ?? fit(isos)),
             ps.map((p) => p.point)
           ),
   }

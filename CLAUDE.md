@@ -65,7 +65,8 @@ geometry so nothing can turn it into a question. Use `renderIsos` to draw,
 `allIsos` to ask; a round's `render` carries the context, its `askable` does not.
 Antarctica is there for the same reason: without it the Scotia Sea, the Drake
 Passage and the Ross, Weddell and Amundsen Seas float in featureless blue with
-nothing to locate them against.
+nothing to locate them against. The Faroe Islands, Danish too, are drawn because
+the Europe places round asks about them and a marker needs land under it.
 
 **Kosovo** does not exist separately in that dataset (its territory is inside
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
@@ -81,7 +82,7 @@ The Seas &
 Straits round narrows twice — a region (All, Americas, Europe, Asia), then the
 notations within it — and both pick *which set*, not how many of it, and the
 last notation with anything left in the chosen region cannot be unticked. A
-places round (North America, South America, Asia) narrows once, the same way:
+places round (North America, South America, Asia, Europe) narrows once, the same way:
 Capitals or Other places, in Learn and in Practice alike, both backed by the
 one `placeKinds` preference so the choice carries over between them. "Other" is
 deliberately everything a capital is not — cities, ports, islands, island
@@ -109,6 +110,15 @@ country's capital, not as its own `type: "country"` place with a marker
 floating at the centroid. Thirteen of these existed across Asia and South
 America before this rule was written down; all thirteen were folded into
 their capital's `notes`, keeping the fact and losing only the stray pin.
+
+A constituent country is not that. England, Scotland, Wales and Northern Ireland
+are never a question in any country round, so the Europe places round asks them
+itself, as `type: "constituent"` patches — an area, like a peninsula, drawn over
+the country layer. Their outlines come from Natural Earth's map units
+(`MAP_UNITS_URL`), used for those four and nothing else; every border the map
+draws still comes from the India point-of-view country file. Edinburgh, Cardiff
+and Belfast are capitals of their countries, so they sit under Capitals with
+London and Dublin.
 
 Regions are three, not six continents: Africa rides with Asia and Oceania with
 the Pacific side of it. The build derives them in `REGION_OF` from the countries
@@ -281,7 +291,8 @@ The whole app is one map engine plus configuration.
 - `src/data/india.ts` — the Indian map's land: India, the surround, the
   neighbours' dividing lines, and India's own state lines.
 - `src/data/marine.ts` / `src/data/land.ts` — real extents for area-type
-  places, water and land respectively; `src/data/areas.ts` is the combined
+  places, water and land respectively (land: peninsulas and the UK's
+  constituent countries); `src/data/areas.ts` is the combined
   lookup everything except `MapCanvas` should import.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 

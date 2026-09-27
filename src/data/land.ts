@@ -4,8 +4,9 @@ import topo from './land.topo.json'
 
 /**
  * The real extent of every land region in the syllabus that is drawn as a
- * patch rather than a marker — so far, peninsulas — from Natural Earth's
- * physical regions layer, keyed by place id.
+ * patch rather than a marker, keyed by place id: peninsulas, from Natural
+ * Earth's physical regions layer, and the UK's constituent countries, from its
+ * map units.
  *
  * A peninsula is a patch, not a pin: Baja California is 1,200km long, and a
  * point-and-radius marker for it is the same mistake a sea's marker used to

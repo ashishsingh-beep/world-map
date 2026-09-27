@@ -58,10 +58,20 @@ const LAND_URL =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_regions_polys.geojson'
 const LAND_RAW = resolve(CACHE, 'ne_10m_geography_regions_polys.geojson')
 
+/**
+ * Fifth: Natural Earth's map units, which split the UK into England, Scotland,
+ * Wales and Northern Ireland. Used for those constituent countries' patches and
+ * nothing else — every border this project draws still comes from the India
+ * point-of-view country file above.
+ */
+const MAP_UNITS_URL =
+  'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_map_units.geojson'
+const MAP_UNITS_RAW = resolve(CACHE, 'ne_10m_admin_0_map_units.geojson')
+
 /** The types that are areas. Everything else in the section is a marker. */
 const AREA_TYPES = new Set(['ocean', 'sea'])
 /** Land-region types that are areas rather than a point-and-radius marker. */
-const LAND_AREA_TYPES = new Set(['peninsula'])
+const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
 const loose = (s) =>
@@ -99,10 +109,12 @@ const EXPECTED_COUNT = 196 + (INCLUDE_KOSOVO ? 1 : 0)
  * Drawn but never asked about. Greenland is Danish, not a UN member, so it is
  * not one of the 196 — but leaving it out puts a hole in the North Atlantic
  * and strands the Denmark Strait, Baffin Bay and the Nares Strait with nothing
- * to sit beside. These get geometry only: no meta entry, so nothing downstream
- * can turn them into a question.
+ * to sit beside. The Faroe Islands, Danish too, are drawn because the Europe
+ * places round asks about them, and a marker needs land under it. These get
+ * geometry only: no meta entry, so nothing downstream can turn them into a
+ * country question.
  */
-const RENDER_ONLY = ['GRL', 'ATA']
+const RENDER_ONLY = ['GRL', 'ATA', 'FRO']
 
 /** Display names where Natural Earth's ADMIN string isn't what a player expects. */
 const NAME_OVERRIDES = {
@@ -166,6 +178,10 @@ function download() {
   if (!existsSync(LAND_RAW)) {
     console.log('Downloading Natural Earth physical regions…')
     execFileSync('curl', ['-sSL', '-o', LAND_RAW, LAND_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(MAP_UNITS_RAW)) {
+    console.log('Downloading Natural Earth map units…')
+    execFileSync('curl', ['-sSL', '-o', MAP_UNITS_RAW, MAP_UNITS_URL], { stdio: 'inherit' })
   }
 }
 
@@ -311,7 +327,9 @@ for (const [iso, f] of picked) {
 for (const iso of RENDER_ONLY) {
   const f = renderOnly.get(iso)
   if (!f) throw new Error(`Render-only geography missing from source: ${iso}`)
-  features.push({ type: 'Feature', id: iso, properties: { iso }, geometry: f.geometry })
+  // The Faroes are eighteen islands; at 6% only the largest would be left.
+  const small = f.geometry.type === 'MultiPolygon' && geoArea(f) * EARTH_KM2 < SMALL_NATION_KM2 ? 1 : 0
+  features.push({ type: 'Feature', id: iso, properties: { iso, small }, geometry: f.geometry })
 }
 console.log(`Render-only geography: ${RENDER_ONLY.join(', ')}`)
 
@@ -476,6 +494,8 @@ console.log(`India states: ${stateCount}, framed by the land of ${NEIGHBOURS.len
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
   'mine', 'canal', 'zone', 'peninsula',
+  // A country within a sovereign state — England, Scotland, Wales, N. Ireland
+  'constituent',
   // Indian map: the mountains section
   'peak', 'range',
   // Seas & Straits section
@@ -837,6 +857,11 @@ for (const f of landRaw.features) {
   const name = f.properties.name ?? f.properties.NAME
   if (name) landByName.set(loose(name), f)
 }
+/** A constituent country's patch is its map unit, looked up by the same key. */
+const unitByName = new Map()
+for (const f of JSON.parse(readFileSync(MAP_UNITS_RAW, 'utf8')).features) {
+  if (f.properties.GEOUNIT) unitByName.set(loose(f.properties.GEOUNIT), f)
+}
 
 /** Clips one place's gathered parts to its own country, via a throwaway job. */
 function clipToCountry(parts, iso) {
@@ -891,9 +916,9 @@ for (const p of places) {
   const wanted = p.land ?? [p.name]
   let parts = []
   for (const name of wanted) {
-    const f = landByName.get(loose(name))
+    const f = (p.type === 'constituent' ? unitByName : landByName).get(loose(name))
     if (!f) {
-      errors.push(`${p.id}: no land polygon named "${name}"`)
+      errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : 'land polygon'} named "${name}"`)
       continue
     }
     const g = f.geometry

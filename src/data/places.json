@@ -8,6 +8,13 @@
       "count": 104
     },
     {
+      "name": "Europe",
+      "title": "Europe",
+      "section": "places",
+      "atlas": "world",
+      "count": 46
+    },
+    {
       "name": "Himalaya",
       "title": "Himalayan Ranges & Peaks",
       "section": "mountains",
@@ -1908,6 +1915,823 @@
       "notes": [],
       "tier": 1,
       "continent": "Asia",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "dnk-copenhagen",
+      "name": "Copenhagen",
+      "aliases": [],
+      "type": "capital",
+      "country": "DNK",
+      "point": [
+        12.5683,
+        55.6761
+      ],
+      "significance": "Capital of Denmark, on the island of Zealand facing the Øresund",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "nor-oslo",
+      "name": "Oslo",
+      "aliases": [],
+      "type": "capital",
+      "country": "NOR",
+      "point": [
+        10.7522,
+        59.9139
+      ],
+      "significance": "Capital of Norway, at the head of the Oslofjord",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "swe-stockholm",
+      "name": "Stockholm",
+      "aliases": [],
+      "type": "capital",
+      "country": "SWE",
+      "point": [
+        18.0686,
+        59.3293
+      ],
+      "significance": "Capital of Sweden, built across islands where Lake Mälaren meets the Baltic",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "fin-helsinki",
+      "name": "Helsinki",
+      "aliases": [],
+      "type": "capital",
+      "country": "FIN",
+      "point": [
+        24.9384,
+        60.1699
+      ],
+      "significance": "Capital of Finland, on the Gulf of Finland",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "isl-reykjavik",
+      "name": "Reykjavik",
+      "aliases": [
+        "Reykjavík"
+      ],
+      "type": "capital",
+      "country": "ISL",
+      "point": [
+        -21.9426,
+        64.1466
+      ],
+      "significance": "Capital of Iceland",
+      "notes": [
+        "The northernmost capital in the world"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "nor-svalbard",
+      "name": "Svalbard",
+      "aliases": [],
+      "type": "island-group",
+      "country": "NOR",
+      "point": [
+        16,
+        78.6
+      ],
+      "significance": "Norwegian archipelago in the Arctic Ocean, midway between mainland Norway and the North Pole",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "nor-jan-mayen",
+      "name": "Jan Mayen",
+      "aliases": [],
+      "type": "island",
+      "country": "NOR",
+      "point": [
+        -8.3,
+        71.03
+      ],
+      "significance": "Remote Norwegian volcanic island in the Greenland Sea, between Iceland and Svalbard",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "grl-greenland",
+      "name": "Greenland",
+      "aliases": [],
+      "type": "territory",
+      "country": null,
+      "sovereign": "DNK",
+      "point": [
+        -41,
+        74
+      ],
+      "significance": "The world's largest island, an autonomous territory of Denmark",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "fro-faroe",
+      "name": "Faroe Islands",
+      "aliases": [
+        "Faroes",
+        "Faeroe Islands"
+      ],
+      "type": "territory",
+      "country": null,
+      "sovereign": "DNK",
+      "point": [
+        -6.99,
+        62.14
+      ],
+      "significance": "Self-governing Danish archipelago in the North Atlantic, between Iceland and Scotland",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-london",
+      "name": "London",
+      "aliases": [],
+      "type": "capital",
+      "country": "GBR",
+      "point": [
+        -0.1276,
+        51.5072
+      ],
+      "significance": "Capital of the United Kingdom, and of England, on the Thames",
+      "notes": [
+        "The UK is the sovereign country, recognised like India, China or the USA — not Great Britain, and not its individual countries (England, Scotland, Wales, Northern Ireland)",
+        "Great Britain is England, Scotland and Wales; the United Kingdom adds Northern Ireland",
+        "The UK comprises four constituent countries, which have their own capital and parliament (except England) and varying degrees of devolved self-government — but ultimate sovereignty rests with the UK"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-england",
+      "name": "England",
+      "aliases": [],
+      "type": "constituent",
+      "country": "GBR",
+      "point": [
+        -1.5,
+        52.6
+      ],
+      "spanKm": 300,
+      "significance": "The largest of the UK's four constituent countries; its capital, London, is also the UK's",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-scotland",
+      "name": "Scotland",
+      "aliases": [],
+      "type": "constituent",
+      "country": "GBR",
+      "point": [
+        -4.2,
+        56.8
+      ],
+      "spanKm": 250,
+      "significance": "Constituent country of the UK, in the north of Great Britain",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-wales",
+      "name": "Wales",
+      "aliases": [],
+      "type": "constituent",
+      "country": "GBR",
+      "point": [
+        -3.7,
+        52.3
+      ],
+      "spanKm": 110,
+      "significance": "Constituent country of the UK, in the west of Great Britain",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-northern-ireland",
+      "name": "Northern Ireland",
+      "aliases": [],
+      "type": "constituent",
+      "country": "GBR",
+      "point": [
+        -6.7,
+        54.65
+      ],
+      "spanKm": 80,
+      "significance": "Constituent country of the UK, in the north-east of the island of Ireland",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-edinburgh",
+      "name": "Edinburgh",
+      "aliases": [],
+      "type": "capital",
+      "country": "GBR",
+      "point": [
+        -3.1883,
+        55.9533
+      ],
+      "significance": "Capital of Scotland, a constituent country of the UK",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-cardiff",
+      "name": "Cardiff",
+      "aliases": [],
+      "type": "capital",
+      "country": "GBR",
+      "point": [
+        -3.1791,
+        51.4816
+      ],
+      "significance": "Capital of Wales, a constituent country of the UK",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gbr-belfast",
+      "name": "Belfast",
+      "aliases": [],
+      "type": "capital",
+      "country": "GBR",
+      "point": [
+        -5.9301,
+        54.5973
+      ],
+      "significance": "Capital of Northern Ireland, a constituent country of the UK",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "irl-dublin",
+      "name": "Dublin",
+      "aliases": [],
+      "type": "capital",
+      "country": "IRL",
+      "point": [
+        -6.2603,
+        53.3498
+      ],
+      "significance": "Capital of Ireland, a separate country from the UK's Northern Ireland",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "deu-berlin",
+      "name": "Berlin",
+      "aliases": [],
+      "type": "capital",
+      "country": "DEU",
+      "point": [
+        13.405,
+        52.52
+      ],
+      "significance": "Capital of Germany",
+      "notes": [
+        "Germany borders nine countries: Denmark, Poland, the Czech Republic, Austria, Switzerland, France, Luxembourg, Belgium and the Netherlands"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "deu-hamburg",
+      "name": "Hamburg",
+      "aliases": [],
+      "type": "port",
+      "country": "DEU",
+      "point": [
+        9.9937,
+        53.5511
+      ],
+      "significance": "Riverine port on the Elbe — Germany's largest port",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "deu-essen",
+      "name": "Essen",
+      "aliases": [],
+      "type": "city",
+      "country": "DEU",
+      "point": [
+        7.0116,
+        51.4556
+      ],
+      "significance": "In the Ruhr valley — anthracite coal",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "deu-bonn",
+      "name": "Bonn",
+      "aliases": [],
+      "type": "city",
+      "country": "DEU",
+      "point": [
+        7.0982,
+        50.7374
+      ],
+      "significance": "Bonn Convention — on the conservation of migratory species",
+      "notes": [
+        "Former capital of West Germany, on the Rhine"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "deu-munich",
+      "name": "Munich",
+      "aliases": [
+        "München"
+      ],
+      "type": "city",
+      "country": "DEU",
+      "point": [
+        11.582,
+        48.1351
+      ],
+      "significance": "Musical instruments",
+      "notes": [
+        "Capital of Bavaria and Germany's third-largest city"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "pol-warsaw",
+      "name": "Warsaw",
+      "aliases": [],
+      "type": "capital",
+      "country": "POL",
+      "point": [
+        21.0122,
+        52.2297
+      ],
+      "significance": "Capital of Poland, on the Vistula",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "cze-prague",
+      "name": "Prague",
+      "aliases": [],
+      "type": "capital",
+      "country": "CZE",
+      "point": [
+        14.4378,
+        50.0755
+      ],
+      "significance": "Capital of the Czech Republic, on the Vltava",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "aut-vienna",
+      "name": "Vienna",
+      "aliases": [],
+      "type": "capital",
+      "country": "AUT",
+      "point": [
+        16.3738,
+        48.2082
+      ],
+      "significance": "Capital of Austria, on the Danube",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "che-bern",
+      "name": "Bern",
+      "aliases": [
+        "Berne"
+      ],
+      "type": "capital",
+      "country": "CHE",
+      "point": [
+        7.4474,
+        46.948
+      ],
+      "significance": "Capital of Switzerland",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "fra-paris",
+      "name": "Paris",
+      "aliases": [],
+      "type": "capital",
+      "country": "FRA",
+      "point": [
+        2.3522,
+        48.8566
+      ],
+      "significance": "Capital of France, on the Seine",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "bel-brussels",
+      "name": "Brussels",
+      "aliases": [],
+      "type": "capital",
+      "country": "BEL",
+      "point": [
+        4.3517,
+        50.8503
+      ],
+      "significance": "Capital of Belgium, and seat of the European Union's main institutions",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "lux-luxembourg-city",
+      "name": "Luxembourg City",
+      "aliases": [
+        "Luxembourg"
+      ],
+      "type": "capital",
+      "country": "LUX",
+      "point": [
+        6.1319,
+        49.6116
+      ],
+      "significance": "Capital of Luxembourg",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "nld-amsterdam",
+      "name": "Amsterdam",
+      "aliases": [],
+      "type": "capital",
+      "country": "NLD",
+      "point": [
+        4.9041,
+        52.3676
+      ],
+      "significance": "Capital of the Netherlands, though the government sits in The Hague",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "che-zurich",
+      "name": "Zurich",
+      "aliases": [
+        "Zürich"
+      ],
+      "type": "city",
+      "country": "CHE",
+      "point": [
+        8.5417,
+        47.3769
+      ],
+      "significance": "Watches — Switzerland's largest city",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "esp-madrid",
+      "name": "Madrid",
+      "aliases": [],
+      "type": "capital",
+      "country": "ESP",
+      "point": [
+        -3.7038,
+        40.4168
+      ],
+      "significance": "Capital of Spain, at the centre of the Iberian Peninsula",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "prt-lisbon",
+      "name": "Lisbon",
+      "aliases": [],
+      "type": "capital",
+      "country": "PRT",
+      "point": [
+        -9.1393,
+        38.7223
+      ],
+      "significance": "Capital of Portugal, on the Atlantic at the mouth of the Tagus",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-rome",
+      "name": "Rome",
+      "aliases": [],
+      "type": "capital",
+      "country": "ITA",
+      "point": [
+        12.4964,
+        41.9028
+      ],
+      "significance": "Capital of Italy, near the Tiber river",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-venice",
+      "name": "Venice",
+      "aliases": [],
+      "type": "city",
+      "country": "ITA",
+      "point": [
+        12.3155,
+        45.4408
+      ],
+      "significance": "Religious place — the lagoon city of canals, on the Adriatic",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-turin",
+      "name": "Turin",
+      "aliases": [],
+      "type": "city",
+      "country": "ITA",
+      "point": [
+        7.6869,
+        45.0703
+      ],
+      "significance": "Automobile sector — home of Fiat",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-milan",
+      "name": "Milan",
+      "aliases": [],
+      "type": "city",
+      "country": "ITA",
+      "point": [
+        9.19,
+        45.4642
+      ],
+      "significance": "Fashion hub",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-naples",
+      "name": "Naples",
+      "aliases": [],
+      "type": "port",
+      "country": "ITA",
+      "point": [
+        14.2681,
+        40.8518
+      ],
+      "significance": "Port city of southern Italy, on the Tyrrhenian (west) coast",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "fra-corsica",
+      "name": "Corsica",
+      "aliases": [],
+      "type": "island",
+      "country": "FRA",
+      "point": [
+        9,
+        42.15
+      ],
+      "significance": "French island in the Mediterranean, north of Sardinia",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-sardinia",
+      "name": "Sardinia",
+      "aliases": [],
+      "type": "island",
+      "country": "ITA",
+      "point": [
+        9,
+        40.1
+      ],
+      "significance": "Italian island in the Mediterranean, south of Corsica",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ita-sicily",
+      "name": "Sicily",
+      "aliases": [],
+      "type": "island",
+      "country": "ITA",
+      "point": [
+        14.1,
+        37.6
+      ],
+      "significance": "Largest island in the Mediterranean, at the toe of Italy",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "esp-balearic",
+      "name": "Balearic Islands",
+      "aliases": [],
+      "type": "island-group",
+      "country": "ESP",
+      "point": [
+        3.3,
+        39.35
+      ],
+      "significance": "Spanish islands in the western Mediterranean: Mallorca, Menorca and Ibiza",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "esp-mallorca",
+      "name": "Mallorca",
+      "aliases": [
+        "Majorca"
+      ],
+      "type": "island",
+      "country": "ESP",
+      "point": [
+        2.95,
+        39.62
+      ],
+      "significance": "Largest of the Balearic Islands (Spain)",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "esp-ibiza",
+      "name": "Ibiza",
+      "aliases": [],
+      "type": "island",
+      "country": "ESP",
+      "point": [
+        1.42,
+        38.98
+      ],
+      "significance": "Balearic island (Spain), the westernmost of the three",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "esp-menorca",
+      "name": "Menorca",
+      "aliases": [
+        "Minorca"
+      ],
+      "type": "island",
+      "country": "ESP",
+      "point": [
+        4.1,
+        39.97
+      ],
+      "significance": "Balearic island (Spain), the easternmost of the three",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
       "section": "places",
       "atlas": "world"
     },
@@ -8274,6 +9098,132 @@
       ],
       "mnemonic": "SA (Mecca/Medina) में तो हज फरियाद करने आते हैं — to SA (Mecca/Medina) is exactly where people come pleading for Hajj",
       "continent": "Asia",
+      "section": "places"
+    },
+    {
+      "id": "eur-nordic-trick",
+      "name": "The Nordic countries",
+      "members": [
+        "dnk-copenhagen",
+        "nor-oslo",
+        "swe-stockholm",
+        "fin-helsinki",
+        "isl-reykjavik"
+      ],
+      "mnemonic": "DNSFI — Denmark, Norway, Sweden, Finland, Iceland, and their islands",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-scandinavia-trick",
+      "name": "Scandinavia",
+      "members": [
+        "dnk-copenhagen",
+        "nor-oslo",
+        "swe-stockholm"
+      ],
+      "mnemonic": "Scandinavian = Nordic − Greenland — mostly Denmark, Norway and Sweden, though the neighbours are sometimes counted too",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-copenhagen-trick",
+      "name": "Copenhagen",
+      "members": [
+        "dnk-copenhagen"
+      ],
+      "mnemonic": "Mark uses Pen — DenMARK, COPENhagen",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-oslo-trick",
+      "name": "Oslo",
+      "members": [
+        "nor-oslo"
+      ],
+      "mnemonic": "दूसरा रास्ता (way) लो — Nor-WAY, Os-LO",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-stockholm-trick",
+      "name": "Stockholm",
+      "members": [
+        "swe-stockholm"
+      ],
+      "mnemonic": "Sweat (Sweden) stock में है — STOCKholm",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-helsinki-trick",
+      "name": "Helsinki",
+      "members": [
+        "fin-helsinki"
+      ],
+      "mnemonic": "Fin ↔ Sin — FINland, HelSINki",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-warsaw-trick",
+      "name": "Warsaw",
+      "members": [
+        "pol-warsaw"
+      ],
+      "mnemonic": "Poland saw war (WW2) — WARSAW",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-prague-trick",
+      "name": "Prague",
+      "members": [
+        "cze-prague"
+      ],
+      "mnemonic": "Prague sounds like Paraguay, the country",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-vienna-trick",
+      "name": "Vienna",
+      "members": [
+        "aut-vienna"
+      ],
+      "mnemonic": "Vienna Convention",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-brussels-trick",
+      "name": "Brussels",
+      "members": [
+        "bel-brussels"
+      ],
+      "mnemonic": "Bell का Brush बना लो — BELgium, BRUSSels",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-amsterdam-trick",
+      "name": "Amsterdam",
+      "members": [
+        "nld-amsterdam"
+      ],
+      "mnemonic": "Dam land पे बना है — Amster-DAM, Nether-LANDS",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-madrid-trick",
+      "name": "Madrid",
+      "members": [
+        "esp-madrid"
+      ],
+      "mnemonic": "इंसान Pain में Mad हो जाता है — sPAIN, MADrid",
+      "continent": "Europe",
       "section": "places"
     },
     {

@@ -12,6 +12,8 @@ export type PlaceType =
   | 'canal'
   | 'zone'
   | 'peninsula'
+  /** A country inside a sovereign state — England, Scotland, Wales, Northern Ireland. */
+  | 'constituent'
   | 'peak'
   | 'range'
   | 'ocean'
@@ -128,6 +130,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   canal: 'canal',
   zone: 'region',
   peninsula: 'peninsula',
+  constituent: 'constituent country',
   peak: 'peak',
   range: 'range',
   ocean: 'ocean',
