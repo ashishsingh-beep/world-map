@@ -12,7 +12,7 @@
       "title": "Europe",
       "section": "places",
       "atlas": "world",
-      "count": 66
+      "count": 70
     },
     {
       "name": "Himalaya",
@@ -3082,6 +3082,76 @@
         41.9981
       ],
       "significance": "Capital of North Macedonia",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "blr-minsk",
+      "name": "Minsk",
+      "aliases": [],
+      "type": "capital",
+      "country": "BLR",
+      "point": [
+        27.5615,
+        53.9045
+      ],
+      "significance": "Capital of Belarus",
+      "notes": [
+        "Belarus is landlocked"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "est-tallinn",
+      "name": "Tallinn",
+      "aliases": [],
+      "type": "capital",
+      "country": "EST",
+      "point": [
+        24.7536,
+        59.437
+      ],
+      "significance": "Capital of Estonia, on the Gulf of Finland",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "lva-riga",
+      "name": "Riga",
+      "aliases": [],
+      "type": "capital",
+      "country": "LVA",
+      "point": [
+        24.1052,
+        56.9496
+      ],
+      "significance": "Capital of Latvia, on the Gulf of Riga",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ltu-vilnius",
+      "name": "Vilnius",
+      "aliases": [],
+      "type": "capital",
+      "country": "LTU",
+      "point": [
+        25.2797,
+        54.6872
+      ],
+      "significance": "Capital of Lithuania",
       "notes": [],
       "tier": 1,
       "continent": "Europe",
@@ -9678,6 +9748,19 @@
         "alb-tirana"
       ],
       "mnemonic": "तैरना Ban है — TIRANA, alBANia",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-bell-trick",
+      "name": "BELL",
+      "members": [
+        "blr-minsk",
+        "est-tallinn",
+        "lva-riga",
+        "ltu-vilnius"
+      ],
+      "mnemonic": "BELL — Belarus, Estonia, Latvia, Lithuania",
       "continent": "Europe",
       "section": "places"
     },
