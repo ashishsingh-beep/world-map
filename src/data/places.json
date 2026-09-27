@@ -12,7 +12,7 @@
       "title": "Europe",
       "section": "places",
       "atlas": "world",
-      "count": 46
+      "count": 66
     },
     {
       "name": "Himalaya",
@@ -2729,6 +2729,359 @@
         39.97
       ],
       "significance": "Balearic island (Spain), the easternmost of the three",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "hun-budapest",
+      "name": "Budapest",
+      "aliases": [],
+      "type": "capital",
+      "country": "HUN",
+      "point": [
+        19.0402,
+        47.4979
+      ],
+      "significance": "Capital of Hungary, on the Danube",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "svk-bratislava",
+      "name": "Bratislava",
+      "aliases": [],
+      "type": "capital",
+      "country": "SVK",
+      "point": [
+        17.1077,
+        48.1486
+      ],
+      "significance": "Capital of Slovakia, on the Danube beside the Austrian border",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "svn-ljubljana",
+      "name": "Ljubljana",
+      "aliases": [],
+      "type": "capital",
+      "country": "SVN",
+      "point": [
+        14.5058,
+        46.0569
+      ],
+      "significance": "Capital of Slovenia",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "hrv-zagreb",
+      "name": "Zagreb",
+      "aliases": [],
+      "type": "capital",
+      "country": "HRV",
+      "point": [
+        15.9819,
+        45.815
+      ],
+      "significance": "Capital of Croatia",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "srb-belgrade",
+      "name": "Belgrade",
+      "aliases": [],
+      "type": "capital",
+      "country": "SRB",
+      "point": [
+        20.4489,
+        44.7866
+      ],
+      "significance": "Capital of Serbia, where the Sava meets the Danube",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "rou-bucharest",
+      "name": "Bucharest",
+      "aliases": [],
+      "type": "capital",
+      "country": "ROU",
+      "point": [
+        26.1025,
+        44.4268
+      ],
+      "significance": "Capital of Romania",
+      "notes": [
+        "Moldova is the country between Romania and Ukraine"
+      ],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-kyiv",
+      "name": "Kyiv",
+      "aliases": [
+        "Kiev"
+      ],
+      "type": "capital",
+      "country": "UKR",
+      "point": [
+        30.5234,
+        50.4501
+      ],
+      "significance": "Capital of Ukraine, on the Dnieper",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-odesa",
+      "name": "Odesa",
+      "aliases": [
+        "Odessa"
+      ],
+      "type": "port",
+      "country": "UKR",
+      "point": [
+        30.7233,
+        46.4825
+      ],
+      "significance": "Ukraine's main Black Sea port",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-kherson",
+      "name": "Kherson",
+      "aliases": [],
+      "type": "city",
+      "country": "UKR",
+      "point": [
+        32.6169,
+        46.6354
+      ],
+      "significance": "City on the lower Dnieper, near the Black Sea",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-zaporizhzhia",
+      "name": "Zaporizhzhia",
+      "aliases": [
+        "Zaporizhia",
+        "Zaporozhye"
+      ],
+      "type": "city",
+      "country": "UKR",
+      "point": [
+        35.1396,
+        47.8388
+      ],
+      "significance": "Industrial city on the Dnieper",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-mariupol",
+      "name": "Mariupol",
+      "aliases": [],
+      "type": "port",
+      "country": "UKR",
+      "point": [
+        37.5498,
+        47.0971
+      ],
+      "significance": "Port on the Sea of Azov",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-donetsk",
+      "name": "Donetsk",
+      "aliases": [],
+      "type": "city",
+      "country": "UKR",
+      "point": [
+        37.8028,
+        48.0159
+      ],
+      "significance": "Coal — heart of the Donbas coalfield",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ukr-crimea",
+      "land": [
+        "CRIMEA"
+      ],
+      "spanKm": 170,
+      "name": "Crimea",
+      "aliases": [],
+      "type": "peninsula",
+      "country": "UKR",
+      "point": [
+        34.2,
+        45.2
+      ],
+      "significance": "Peninsula between the Black Sea and the Sea of Azov",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "srb-kosovo",
+      "name": "Kosovo",
+      "aliases": [],
+      "type": "territory",
+      "country": "SRB",
+      "point": [
+        20.9,
+        42.6
+      ],
+      "significance": "Territory in the south of Serbia that declared independence in 2008; India does not recognise it, and this map draws it inside Serbia",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "bgr-sofia",
+      "name": "Sofia",
+      "aliases": [],
+      "type": "capital",
+      "country": "BGR",
+      "point": [
+        23.3219,
+        42.6977
+      ],
+      "significance": "Capital of Bulgaria",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "grc-athens",
+      "name": "Athens",
+      "aliases": [],
+      "type": "capital",
+      "country": "GRC",
+      "point": [
+        23.7275,
+        37.9838
+      ],
+      "significance": "Capital of Greece, on the Aegean coast",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "alb-tirana",
+      "name": "Tirana",
+      "aliases": [],
+      "type": "capital",
+      "country": "ALB",
+      "point": [
+        19.8187,
+        41.3275
+      ],
+      "significance": "Capital of Albania",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "mne-podgorica",
+      "name": "Podgorica",
+      "aliases": [],
+      "type": "capital",
+      "country": "MNE",
+      "point": [
+        19.2594,
+        42.4304
+      ],
+      "significance": "Capital of Montenegro",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "bih-sarajevo",
+      "name": "Sarajevo",
+      "aliases": [],
+      "type": "capital",
+      "country": "BIH",
+      "point": [
+        18.4131,
+        43.8563
+      ],
+      "significance": "Capital of Bosnia and Herzegovina",
+      "notes": [],
+      "tier": 1,
+      "continent": "Europe",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "mkd-skopje",
+      "name": "Skopje",
+      "aliases": [],
+      "type": "capital",
+      "country": "MKD",
+      "point": [
+        21.4254,
+        41.9981
+      ],
+      "significance": "Capital of North Macedonia",
       "notes": [],
       "tier": 1,
       "continent": "Europe",
@@ -9223,6 +9576,108 @@
         "esp-madrid"
       ],
       "mnemonic": "इंसान Pain में Mad हो जाता है — sPAIN, MADrid",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-budapest-trick",
+      "name": "Budapest",
+      "members": [
+        "hun-budapest"
+      ],
+      "mnemonic": "Center — Buddha Hungry था तो Paste खा लिया (HUNGary, BUDAPEST)",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-slovakia-slovenia-trick",
+      "name": "Slovakia and Slovenia",
+      "members": [
+        "aut-vienna",
+        "svk-bratislava",
+        "svn-ljubljana"
+      ],
+      "mnemonic": "Austria is the reference: Slov-A-kia is Aus के ऊपर / right (a), Slov-E-nia Aus के नीचे / left (e)",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-bratislava-trick",
+      "name": "Bratislava",
+      "members": [
+        "svk-bratislava"
+      ],
+      "mnemonic": "Lova ↔ Lava — sLOVAkia, BratisLAVA",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-zagreb-trick",
+      "name": "Zagreb",
+      "members": [
+        "hrv-zagreb"
+      ],
+      "mnemonic": "C-shaped — जा गरीब (Croatia, ZAGREB)",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-belgrade-trick",
+      "name": "Belgrade",
+      "members": [
+        "srb-belgrade"
+      ],
+      "mnemonic": "Sir ने काट दिए Grade — SERbia, belGRADE. Serbia is the reference, the connector between the two groups",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-bucharest-trick",
+      "name": "Bucharest",
+      "members": [
+        "rou-bucharest"
+      ],
+      "mnemonic": "Man को bukhar आ गया तो rest ले रहा — roMANia, BUCHAREST",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-kyiv-trick",
+      "name": "Kyiv",
+      "members": [
+        "ukr-kyiv"
+      ],
+      "mnemonic": "U-shaped — Ukraine",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-skopje-trick",
+      "name": "Skopje",
+      "members": [
+        "mkd-skopje"
+      ],
+      "mnemonic": "Central — (North) Macedonia sits at the centre of the Balkan group",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-sofia-trick",
+      "name": "Sofia",
+      "members": [
+        "bgr-sofia"
+      ],
+      "mnemonic": "Sofia from Bulgaria",
+      "continent": "Europe",
+      "section": "places"
+    },
+    {
+      "id": "eur-tirana-trick",
+      "name": "Tirana",
+      "members": [
+        "alb-tirana"
+      ],
+      "mnemonic": "तैरना Ban है — TIRANA, alBANia",
       "continent": "Europe",
       "section": "places"
     },
