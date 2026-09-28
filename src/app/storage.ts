@@ -56,6 +56,8 @@ export interface SavedRound extends QuizSnapshot {
   mode: Mode
   timed: boolean
   savedAt: number
+  /** Set when the round is a practice of an earlier round's misses: those ids. */
+  drill?: string[]
 }
 
 function read(key: string): unknown {
@@ -133,7 +135,12 @@ export function loadRound(): SavedRound | null {
     raw.index >= 0 &&
     raw.index < raw.ids.length &&
     typeof raw.elapsed === 'number'
-  return ok ? raw : null
+  if (!ok) return null
+  // A drill that is not a list of ids is not a drill; the round still stands.
+  if (raw.drill !== undefined && !(Array.isArray(raw.drill) && raw.drill.every((id) => typeof id === 'string'))) {
+    return { ...raw, drill: undefined }
+  }
+  return raw
 }
 
 export const saveRound = (saved: SavedRound) => write(PROGRESS_KEY, saved)

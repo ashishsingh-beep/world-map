@@ -55,6 +55,14 @@ export default function App() {
   const [runKey, setRunKey] = useState(0)
   /** The round in progress, read once at start-up so a refresh can resume it. */
   const [saved, setSaved] = useState<SavedRound | null>(loadRound)
+  /**
+   * A practice of one round's misses: just those questions, in the same mode and
+   * timer. Kept with the saved round, so a refresh mid-practice carries on with
+   * it rather than dropping back to the full set.
+   */
+  const [drill, setDrill] = useState<{ roundId: string; ids: string[] } | null>(() =>
+    saved?.drill ? { roundId: saved.roundId, ids: saved.drill } : null
+  )
   /** Null once the player has chosen to begin again rather than carry on. */
   const [resuming, setResuming] = useState<SavedRound | null>(saved)
 
@@ -79,9 +87,19 @@ export default function App() {
     : isPlacesRound
       ? inRegion.filter((p) => placeKinds[placeKindOf(p.type)])
       : inRegion
-  const playRound = isWaterRound || isPlacesRound ? { ...round, places: asked.map((p) => p.id) } : round
+  // A drill lives only on its play screen: off it — the browser's back button
+  // included — the round is its full set again, and every way back in through
+  // `begin` says afresh whether it is a drill.
+  const drillIds = route.view === 'play' && drill?.roundId === roundId ? drill.ids : null
+  const narrowed = isWaterRound || isPlacesRound ? { ...round, places: asked.map((p) => p.id) } : round
+  const playRound = drillIds
+    ? round.places
+      ? { ...round, places: drillIds }
+      : { ...round, askable: drillIds }
+    : narrowed
   const askIds = playRound.places ?? playRound.askable
-  const size = roundSize(count, askIds.length)
+  // A drill asks every miss; the question count chose the round it came from.
+  const size = drillIds ? askIds.length : roundSize(count, askIds.length)
   /** The counts this round can fill; a round of 14 offers 10 and All, not 30. */
   const counts = QUESTION_COUNTS.filter((c) => c === 'all' || c < askIds.length)
 
@@ -96,11 +114,18 @@ export default function App() {
         setSaved(null)
         return
       }
-      const next = { ...snapshot, roundId, mode: playMode, timed, savedAt: Date.now() }
+      const next: SavedRound = {
+        ...snapshot,
+        roundId,
+        mode: playMode,
+        timed,
+        savedAt: Date.now(),
+        ...(drillIds ? { drill: drillIds } : {}),
+      }
       saveRound(next)
       setSaved(next)
     },
-    [roundId, playMode, timed]
+    [roundId, playMode, timed, drillIds]
   )
 
   // A placeholder continent has nothing to ask. The menu disables its card, but
@@ -111,7 +136,8 @@ export default function App() {
     if (route.view === 'play' && empty) navigate({ view: 'setup', roundId }, true)
   }, [route.view, empty, roundId, navigate])
 
-  const begin = (from: SavedRound | null) => {
+  const begin = (from: SavedRound | null, nextDrill: string[] | null = null) => {
+    setDrill(nextDrill ? { roundId, ids: nextDrill } : null)
     if (!from) clearRound()
     setResuming(from)
     setRunKey((k) => k + 1)
@@ -136,7 +162,10 @@ export default function App() {
         onExit={() =>
           navigate({ view: 'atlas', roundId, atlas: round.atlas === 'india' ? 'india' : 'world' })
         }
+        // From a drill, Retry means the full round again.
         onRetry={() => begin(null)}
+        onPractiseMissed={(ids) => begin(null, ids)}
+        drill={!!drillIds}
       />
     )
   }

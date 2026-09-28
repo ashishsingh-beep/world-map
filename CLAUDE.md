@@ -316,6 +316,10 @@ build. A saved round resumes only when its questions are exactly the ones the
 round would ask now, so unticking a notation or editing a syllabus retires the
 save rather than resuming a round that no longer exists. `useQuiz` takes that
 save as `initial` and hands back a `snapshot`; it never touches storage itself.
+A practice of misses stores its ids in the save as `drill`, so a refresh mid-
+practice resumes that practice, not the full round. The drill holds only on the
+play screen: every way into play goes through `begin`, which says afresh whether
+it is one, so the back button cannot leak a drill into the setup screen.
 
 Because the hash is user-editable, anything reachable by URL must survive being
 asked for out of order: `roundById` returns null rather than throwing, and a
@@ -396,7 +400,7 @@ fails.
 | Wrong/timeout | Reveal correct country, drop pin, move on |
 | Colours | correct green, wrong pick red, missed grey — all persist for the round |
 | Micro-states | Circle markers, sized in screen px, fading out as you zoom in. Fiji, the Solomons and Vanuatu keep theirs until their largest island is 48px, not 9 (`ARCHIPELAGO_THRESHOLD_PX`), as the reference does |
-| Results | correct/total, elapsed time, tier title |
+| Results | correct/total, elapsed time, tier title, over the round's own map as it ended. Misses (wrong or skipped) are listed; tapping one flies the map to it and names it. One button, "Practise the N you missed", replays only those in the same mode and timer, and its own results offer the same for what is still missed |
 
 ## Still to do
 

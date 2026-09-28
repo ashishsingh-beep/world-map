@@ -456,8 +456,13 @@ export function MapCanvas({
     if (!svg || !behaviour || !size.width) return
     const sel = select(svg)
 
+    // Framed in the part of the map that is not under a panel or the HUD.
+    const viewW = Math.max(1, size.width - pad.left - pad.right)
+    const viewH = Math.max(1, size.height - pad.top - pad.bottom)
+    const midX = pad.left + viewW / 2
+    const midY = pad.top + viewH / 2
     const at = (cx: number, cy: number, k: number) =>
-      zoomIdentity.translate(size.width / 2 - cx * k, size.height / 2 - cy * k).scale(k)
+      zoomIdentity.translate(midX - cx * k, midY - cy * k).scale(k)
 
     if (revealPoints?.length) {
       const fr = frameOf(revealPoints)
@@ -468,8 +473,8 @@ export function MapCanvas({
         1,
         Math.min(
           POINT_REVEAL_SCALE,
-          size.width / Math.max(fr.w * 1.6, 1),
-          size.height / Math.max(fr.h * 1.6, 1)
+          viewW / Math.max(fr.w * 1.6, 1),
+          viewH / Math.max(fr.h * 1.6, 1)
         )
       )
       sel.transition().duration(650).call(behaviour.transform, at(fr.cx, fr.cy, k))
@@ -484,7 +489,7 @@ export function MapCanvas({
     if (fr && Math.max(fr.w, fr.h) < SMALL_SEA_PX) {
       const pxPerDeg = (projection.scale() * Math.PI) / 180
       const span = Math.max(Math.max(fr.w, fr.h) * FOCUS_CONTEXT, FOCUS_MIN_DEG * pxPerDeg)
-      const k = Math.min(60, Math.min(size.width, size.height) / span)
+      const k = Math.min(60, Math.min(viewW, viewH) / span)
       const t = sel.transition()
       const from = zoomTransform(svg).k > 1.01 ? t.duration(450).call(behaviour.transform, zoomIdentity).transition() : t
       from.duration(700).call(behaviour.transform, at(fr.cx, fr.cy, k))
@@ -502,15 +507,25 @@ export function MapCanvas({
     const h = Math.max(b[1][1] - b[0][1], 1)
     const k = Math.min(
       MAX_REVEAL_SCALE,
-      Math.max(1, Math.min(size.width / (w * REVEAL_PADDING), size.height / (h * REVEAL_PADDING)))
+      Math.max(1, Math.min(viewW / (w * REVEAL_PADDING), viewH / (h * REVEAL_PADDING)))
     )
     const cx = (b[0][0] + b[1][0]) / 2
     const cy = (b[0][1] + b[1][1]) / 2
-    const next = zoomIdentity
-      .translate(size.width / 2 - cx * k, size.height / 2 - cy * k)
-      .scale(k)
-    sel.transition().duration(650).call(behaviour.transform, next)
-  }, [revealIso, stableRevealPoints, stableFocusPoints, frameOf, projection, path, size.width, size.height])
+    sel.transition().duration(650).call(behaviour.transform, at(cx, cy, k))
+  }, [
+    revealIso,
+    stableRevealPoints,
+    stableFocusPoints,
+    frameOf,
+    projection,
+    path,
+    size.width,
+    size.height,
+    pad.left,
+    pad.right,
+    pad.top,
+    pad.bottom,
+  ])
 
   const k = transform.k
 

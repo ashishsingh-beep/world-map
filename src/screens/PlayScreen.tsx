@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH, placeOf } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
 import {
   QUESTION_SECONDS,
@@ -37,6 +37,10 @@ interface Props {
   onProgress?: (snapshot: QuizSnapshot | null) => void
   onExit: () => void
   onRetry: () => void
+  /** A round of only these questions, from the results screen. */
+  onPractiseMissed?: (ids: string[]) => void
+  /** This round is itself a practice of an earlier round's misses. */
+  drill?: boolean
 }
 
 export function PlayScreen({
@@ -49,6 +53,8 @@ export function PlayScreen({
   onProgress,
   onExit,
   onRetry,
+  onPractiseMissed,
+  drill = false,
 }: Props) {
   const quiz = useQuiz({ round, mode, timed, size, initial })
   const [draft, setDraft] = useState('')
@@ -103,6 +109,21 @@ export function PlayScreen({
         total={quiz.total}
         elapsed={quiz.elapsed}
         spellingSlips={quiz.spellingSlips}
+        map={{
+          states: quiz.states,
+          points: quiz.points,
+          areas: quiz.areas,
+          bands: quiz.bands,
+          // The water round keeps its country rings off, as it does in play.
+          countryMarkers: !(round.places && placeOf(round.places[0])?.section === 'water'),
+        }}
+        missed={quiz.missed}
+        onPractiseMissed={
+          onPractiseMissed && quiz.missed.length
+            ? () => onPractiseMissed(quiz.missed.map((m) => m.id))
+            : undefined
+        }
+        drill={drill}
         onRetry={onRetry}
         onExit={onExit}
       />

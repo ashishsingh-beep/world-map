@@ -115,6 +115,38 @@ export function shapeOf(q: { place: Place | null }): MarkerShape {
   return t === 'capital' ? 'capital' : 'dot'
 }
 
+/**
+ * What frames a question on the map: a range's line, or an area's extent. Null
+ * for a point, which is framed by itself, and for a country, framed by its own
+ * geometry. An area's bounds that wrap the antimeridian — the Pacific's run
+ * 128°E to 68°W — are unwrapped to run east past 180, and the box is walked in
+ * steps of under 90° so the map can tell which way round it goes: its two
+ * corners alone cannot, and the Arctic's, at -180 and 180, are the same meridian.
+ */
+function frameOf(q: Question): [number, number][] | null {
+  const line = q.place?.line
+  if (line) return line as [number, number][]
+  const area = q.iso ? null : areaOf(q.id)
+  if (!area) return null
+  const [[w, s], [e0, n]] = geoBounds(area)
+  const e = e0 < w ? e0 + 360 : e0
+  return [0, 1, 2, 3, 4, 5].map((i): [number, number] => [w + ((e - w) * i) / 5, s + ((n - s) * i) / 5])
+}
+
+/** One question the player got wrong or skipped, with what the map needs to show it. */
+export interface Miss {
+  id: string
+  name: string
+  /** Set for a country, which the map frames by its own shape. */
+  iso: string | null
+  /** A place's point, where its label goes. */
+  point: [number, number]
+  /** What frames it when it is not a country: its extent, or just its point. */
+  frame: [number, number][]
+  /** Drawn as an area or a band rather than a marker. */
+  extent: boolean
+}
+
 function shuffle<T>(input: T[]): T[] {
   const a = [...input]
   for (let i = a.length - 1; i > 0; i--) {
@@ -416,25 +448,31 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
   }, [answers, phase, current, verdict, mode, byId])
 
   const correctCount = answers.filter((a) => a.correct).length
+  /** Everything wrong or skipped, in the order it was asked, for the results screen. */
+  const missed = useMemo(
+    () =>
+      answers
+        .filter((a) => !a.correct)
+        .map((a) => byId.get(a.id))
+        .filter((q): q is Question => !!q)
+        .map(
+          (q): Miss => ({
+            id: q.id,
+            name: q.name,
+            iso: q.iso,
+            point: q.point,
+            frame: frameOf(q) ?? [q.point],
+            extent: !!frameOf(q),
+          })
+        ),
+    [answers, byId]
+  )
   const revealing = phase === 'revealing' && current
   const isPointAnswer = !!current && !current.iso
   const currentArea = current ? areaOf(current.id) : null
 
-  /**
-   * A sea reveals by framing the whole sea, not the label's point. Bounds that
-   * wrap the antimeridian — the Pacific's run 128°E to 68°W — are unwrapped to
-   * run east past 180, and the box is walked in steps of under 90° so the map
-   * can tell which way round it goes: its two corners alone cannot, and the
-   * Arctic's, at -180 and 180, are the same meridian.
-   */
-  const areaFrame = (): [number, number][] | null => {
-    const line = current?.place?.line
-    if (line) return line as [number, number][]
-    if (!currentArea) return null
-    const [[w, s], [e0, n]] = geoBounds(currentArea)
-    const e = e0 < w ? e0 + 360 : e0
-    return [0, 1, 2, 3, 4, 5].map((i): [number, number] => [w + ((e - w) * i) / 5, s + ((n - s) * i) / 5])
-  }
+  /** A sea reveals by framing the whole sea, not the label's point. */
+  const areaFrame = () => (current ? frameOf(current) : null)
 
   /** Stable, so saving can key off "a question was answered" and nothing else. */
   const queueIds = useMemo(() => queue.map((q) => q.id), [queue])
@@ -458,6 +496,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
     verdict,
     answers,
     correctCount,
+    missed,
     elapsed,
     remaining,
     paused,
