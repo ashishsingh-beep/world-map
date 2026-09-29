@@ -517,7 +517,7 @@ console.log(`India states: ${stateCount}, framed by the land of ${NEIGHBOURS.len
  */
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
-  'mine', 'canal', 'zone', 'peninsula',
+  'mine', 'canal', 'zone', 'peninsula', 'cape',
   // A country within a sovereign state — England, Scotland, Wales, N. Ireland
   'constituent',
   // Indian map: the mountains section

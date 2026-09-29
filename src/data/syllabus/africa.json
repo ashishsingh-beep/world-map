@@ -355,6 +355,273 @@
       "significance": "Kenya's port on the Indian Ocean",
       "notes": [],
       "tier": 1
+    },
+    {
+      "id": "uga-kampala",
+      "name": "Kampala",
+      "aliases": [],
+      "type": "capital",
+      "country": "UGA",
+      "point": [32.5825, 0.3476],
+      "significance": "Capital of Uganda, near the northern shore of Lake Victoria",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "rwa-kigali",
+      "name": "Kigali",
+      "aliases": [],
+      "type": "capital",
+      "country": "RWA",
+      "point": [30.0619, -1.9441],
+      "significance": "Capital of Rwanda",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "bdi-gitega",
+      "name": "Gitega",
+      "aliases": [],
+      "type": "capital",
+      "country": "BDI",
+      "point": [29.9246, -3.4271],
+      "significance": "Capital of Burundi",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "tza-dodoma",
+      "name": "Dodoma",
+      "aliases": [],
+      "type": "capital",
+      "country": "TZA",
+      "point": [35.7516, -6.163],
+      "significance": "Capital of Tanzania, in the centre of the country",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "tza-dar-es-salaam",
+      "name": "Dar es Salaam",
+      "aliases": [],
+      "type": "port",
+      "country": "TZA",
+      "point": [39.2083, -6.7924],
+      "significance": "Tanzania's port on the Indian Ocean",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "tza-zanzibar",
+      "name": "Zanzibar",
+      "aliases": ["Unguja", "Zanzibar Island"],
+      "type": "island",
+      "country": "TZA",
+      "point": [39.34, -6.18],
+      "significance": "Tanzanian island in the Indian Ocean, south of Pemba",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "tza-pemba",
+      "name": "Pemba",
+      "aliases": ["Pemba Island"],
+      "type": "island",
+      "country": "TZA",
+      "point": [39.73, -5.24],
+      "significance": "Tanzanian island in the Indian Ocean, north of Zanzibar",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "mwi-lilongwe",
+      "name": "Lilongwe",
+      "aliases": [],
+      "type": "capital",
+      "country": "MWI",
+      "point": [33.7741, -13.9626],
+      "significance": "Capital of Malawi",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "moz-maputo",
+      "name": "Maputo",
+      "aliases": [],
+      "type": "capital",
+      "country": "MOZ",
+      "point": [32.5732, -25.9692],
+      "significance": "Capital of Mozambique, in the far south beside Eswatini",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zmb-lusaka",
+      "name": "Lusaka",
+      "aliases": [],
+      "type": "capital",
+      "country": "ZMB",
+      "point": [28.3228, -15.3875],
+      "significance": "Capital of Zambia",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zwe-harare",
+      "name": "Harare",
+      "aliases": [],
+      "type": "capital",
+      "country": "ZWE",
+      "point": [31.0335, -17.8252],
+      "significance": "Capital of Zimbabwe",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "bwa-gaborone",
+      "name": "Gaborone",
+      "aliases": [],
+      "type": "capital",
+      "country": "BWA",
+      "point": [25.9231, -24.6282],
+      "significance": "Capital of Botswana, near the South African border",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zaf-pretoria",
+      "name": "Pretoria",
+      "aliases": [],
+      "type": "capital",
+      "country": "ZAF",
+      "point": [28.1881, -25.7479],
+      "significance": "Executive capital of South Africa",
+      "notes": [
+        "South Africa has three capitals: Pretoria (executive), Cape Town (legislative), Bloemfontein (judicial)",
+        "Two countries lie within South Africa's borders: Eswatini and Lesotho"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "zaf-cape-town",
+      "name": "Cape Town",
+      "aliases": [],
+      "type": "capital",
+      "country": "ZAF",
+      "point": [18.4241, -33.9249],
+      "significance": "Legislative capital of South Africa",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zaf-bloemfontein",
+      "name": "Bloemfontein",
+      "aliases": [],
+      "type": "capital",
+      "country": "ZAF",
+      "point": [26.2041, -29.0852],
+      "significance": "Judicial capital of South Africa",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zaf-kimberley",
+      "name": "Kimberley",
+      "aliases": [],
+      "type": "city",
+      "country": "ZAF",
+      "point": [24.7631, -28.7282],
+      "significance": "South Africa's diamond city",
+      "notes": ["Diamond"],
+      "tier": 1
+    },
+    {
+      "id": "zaf-johannesburg",
+      "name": "Johannesburg",
+      "aliases": [],
+      "type": "city",
+      "country": "ZAF",
+      "point": [28.0473, -26.2041],
+      "significance": "South Africa's gold city",
+      "notes": ["Gold"],
+      "tier": 1
+    },
+    {
+      "id": "zaf-durban",
+      "name": "Durban",
+      "aliases": [],
+      "type": "port",
+      "country": "ZAF",
+      "point": [31.0218, -29.8587],
+      "significance": "South African port on the Indian Ocean",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zaf-east-london",
+      "name": "East London",
+      "aliases": [],
+      "type": "port",
+      "country": "ZAF",
+      "point": [27.8546, -33.0153],
+      "significance": "South African port on the Indian Ocean",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "zaf-good-hope",
+      "name": "Cape of Good Hope",
+      "aliases": [],
+      "type": "cape",
+      "country": "ZAF",
+      "point": [18.4735, -34.3568],
+      "significance": "Rocky headland at the tip of the Cape Peninsula, south of Cape Town",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "ago-luanda",
+      "name": "Luanda",
+      "aliases": [],
+      "type": "capital",
+      "country": "AGO",
+      "point": [13.2344, -8.839],
+      "significance": "Capital of Angola, on the Atlantic",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "nam-windhoek",
+      "name": "Windhoek",
+      "aliases": [],
+      "type": "capital",
+      "country": "NAM",
+      "point": [17.0658, -22.5609],
+      "significance": "Capital of Namibia",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "cod-kinshasa",
+      "name": "Kinshasa",
+      "aliases": [],
+      "type": "capital",
+      "country": "COD",
+      "point": [15.2663, -4.4419],
+      "significance": "Capital of DR Congo, across the Congo River from Brazzaville",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "cog-brazzaville",
+      "name": "Brazzaville",
+      "aliases": [],
+      "type": "capital",
+      "country": "COG",
+      "point": [15.2429, -4.2634],
+      "significance": "Capital of the Republic of the Congo, across the Congo River from Kinshasa",
+      "notes": [],
+      "tier": 1
     }
   ],
   "groups": [
@@ -402,6 +669,60 @@
         "dji-djibouti"
       ],
       "mnemonic": "SEED — Somalia, Ethiopia, Eritrea, Djibouti"
+    },
+    {
+      "id": "afr-ktmm-trick",
+      "name": "Kenya to Mozambique",
+      "members": ["KEN", "TZA", "MWI", "MOZ", "ken-nairobi", "tza-dodoma", "mwi-lilongwe", "moz-maputo"],
+      "mnemonic": "K → T → M₁, M₂ — Kenya, then Tanzania, then Malawi and Mozambique, north to south"
+    },
+    {
+      "id": "afr-zz-trick",
+      "name": "Zambia and Zimbabwe",
+      "members": ["ZMB", "ZWE", "zmb-lusaka", "zwe-harare"],
+      "mnemonic": "Z₁ → Z₂ — Zambia, then Zimbabwe below it"
+    },
+    {
+      "id": "afr-urb-trick",
+      "name": "Uganda, Rwanda, Burundi",
+      "members": ["UGA", "RWA", "BDI", "uga-kampala", "rwa-kigali", "bdi-gitega"],
+      "mnemonic": "U ← R ← B, उल्टी coffee — Burundi, Rwanda, Uganda going north: Gitega, Kigali, Kampala"
+    },
+    {
+      "id": "afr-lilongwe-trick",
+      "name": "Lilongwe",
+      "members": ["MWI", "mwi-lilongwe"],
+      "mnemonic": "Gale ki MALA LAMBI (long) hai — MALAwi, LiLONGwe"
+    },
+    {
+      "id": "afr-harare-trick",
+      "name": "Harare",
+      "members": ["ZWE", "zwe-harare"],
+      "mnemonic": "HAR jaate hai hmesha — HARare, Zimbabwe"
+    },
+    {
+      "id": "afr-eswatini-trick",
+      "name": "Eswatini",
+      "members": ["SWZ"],
+      "mnemonic": "Eswatini ⇒ Swati"
+    },
+    {
+      "id": "afr-ban-trick",
+      "name": "BAN",
+      "members": ["BWA", "AGO", "NAM", "bwa-gaborone", "ago-luanda", "nam-windhoek"],
+      "mnemonic": "BAN — Botswana (Gaborone), Angola (Luanda), Namibia (Windhoek)"
+    },
+    {
+      "id": "afr-angola-trick",
+      "name": "Angola",
+      "members": ["AGO", "ago-luanda"],
+      "mnemonic": "'A' इसलिए ऊपर — the A of BAN sits on top: Angola is above Namibia and Botswana"
+    },
+    {
+      "id": "afr-group-c-trick",
+      "name": "Group of C",
+      "members": ["COD", "COG", "CAF", "TCD", "CMR", "cod-kinshasa", "cog-brazzaville"],
+      "mnemonic": "Group of C — C₁ DRC (Bada Congo), C₂ Chhota Congo, C₃ CAR, C₄ Chad, C₅ Cameroon"
     }
   ]
 }
