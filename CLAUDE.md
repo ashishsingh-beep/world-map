@@ -63,9 +63,8 @@ the Denmark Strait and Baffin Bay. `RENDER_ONLY` in the build gives it geometry
 with no meta entry, and `allIsos` comes from the metadata rather than the
 geometry so nothing can turn it into a question. Use `renderIsos` to draw,
 `allIsos` to ask; a round's `render` carries the context, its `askable` does not.
-Antarctica is there for the same reason: without it the Scotia Sea, the Drake
-Passage and the Ross, Weddell and Amundsen Seas float in featureless blue with
-nothing to locate them against. The Faroe Islands, Danish too, are drawn because
+Antarctica is there for the same reason: without it the Southern Ocean and the
+Drake Passage float in featureless blue with nothing to locate them against. The Faroe Islands, Danish too, are drawn because
 the Europe places round asks about them and a marker needs land under it.
 
 **Kosovo** does not exist separately in that dataset (its territory is inside
@@ -138,8 +137,9 @@ boundary: Turkey owns both shores of the Sea of Marmara and of the Bosporus and
 the Dardanelles, so the one country they border decided all three were Asian
 alone — the Bosporus, which is the line between the continents, included. The White and Barents Seas keep
 Europe, being genuinely European Arctic, as do the Baltic and the Danish Straits,
-which are Denmark proper. The Antarctic seas name no region and appear only
-under All. Region and notations narrow *practice*
+which are Denmark proper. The Antarctic seas — Ross, Weddell, Amundsen, Scotia —
+are not in the set at all; the Southern Ocean and the Drake Passage are what is
+left of the far south. Region and notations narrow *practice*
 only: Learn always draws the whole set, with its own legend chips.
 
 **The typed input has two behaviours, chosen by "Show suggestions" on setup.**
@@ -188,10 +188,10 @@ The area's fill carries the quiz *state*, as a country's does. The authored
 point survives as the label's anchor and nothing else; the build fails if it
 falls outside its own sea. `KindSwatch` in `src/ui/bits.tsx` redraws the legend,
 so change both or they drift apart — it shows a patch for oceans and seas now,
-not a pin. Three seas have no usable polygon and fall back to their point, declaring it
+not a pin. Two seas have no usable polygon and fall back to their point, declaring it
 with `"marine": []`: the Celtic Sea and the Gulf of Panama are absent from the
-layer, and Natural Earth's "Scotia Sea" is a 50km label stub standing in for a
-900km sea. The build measures every polygon against its authored `spanKm` and
+layer. (Natural Earth's "Scotia Sea" was the same, a 50km label stub standing in
+for a 900km sea, before the Antarctic seas were taken out.) The build measures every polygon against its authored `spanKm` and
 refuses one under a fifth of it — drawn, a stub is invisible and unclickable;
 judged, it marks every honest tap wrong.
 
