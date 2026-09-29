@@ -5,7 +5,7 @@
       "title": "Africa",
       "section": "places",
       "atlas": "world",
-      "count": 55
+      "count": 63
     },
     {
       "name": "Asia",
@@ -1064,6 +1064,443 @@
       "significance": "Capital of the Republic of the Congo, across the Congo River from Kinshasa",
       "notes": [],
       "tier": 1,
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "mli-bamako",
+      "name": "Bamako",
+      "aliases": [],
+      "type": "capital",
+      "country": "MLI",
+      "point": [
+        -8.0029,
+        12.6392
+      ],
+      "significance": "Capital of Mali, on the Niger River",
+      "notes": [],
+      "tier": 1,
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "ner-niamey",
+      "name": "Niamey",
+      "aliases": [],
+      "type": "capital",
+      "country": "NER",
+      "point": [
+        2.1254,
+        13.5116
+      ],
+      "significance": "Capital of Niger, on the Niger River",
+      "notes": [
+        "Niger is landlocked, north of Nigeria"
+      ],
+      "tier": 1,
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "nga-abuja",
+      "name": "Abuja",
+      "aliases": [],
+      "type": "capital",
+      "country": "NGA",
+      "point": [
+        7.3986,
+        9.0765
+      ],
+      "significance": "Capital of Nigeria, in the centre of the country",
+      "notes": [],
+      "tier": 1,
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "gha-accra",
+      "name": "Accra",
+      "aliases": [],
+      "type": "capital",
+      "country": "GHA",
+      "point": [
+        -0.187,
+        5.6037
+      ],
+      "significance": "Capital of Ghana, on the Gulf of Guinea",
+      "notes": [],
+      "tier": 1,
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "afr-grain-coast",
+      "coastOf": [
+        "LBR"
+      ],
+      "spanKm": 60,
+      "name": "Grain Coast",
+      "aliases": [
+        "Pepper Coast"
+      ],
+      "type": "coast",
+      "country": null,
+      "significance": "Liberia's shore, named for the melegueta pepper — 'grains of paradise' — once traded there",
+      "notes": [],
+      "tier": 1,
+      "line": [
+        [
+          -11.475,
+          6.92
+        ],
+        [
+          -11.367,
+          6.811
+        ],
+        [
+          -11.353,
+          6.701
+        ],
+        [
+          -11.054,
+          6.585
+        ],
+        [
+          -10.824,
+          6.437
+        ],
+        [
+          -10.788,
+          6.293
+        ],
+        [
+          -10.658,
+          6.227
+        ],
+        [
+          -10.395,
+          6.177
+        ],
+        [
+          -10.046,
+          5.896
+        ],
+        [
+          -10.039,
+          5.854
+        ],
+        [
+          -9.499,
+          5.389
+        ],
+        [
+          -9.47,
+          5.321
+        ],
+        [
+          -9.279,
+          5.145
+        ],
+        [
+          -9.016,
+          4.979
+        ],
+        [
+          -8.606,
+          4.786
+        ],
+        [
+          -8.257,
+          4.579
+        ],
+        [
+          -8.102,
+          4.553
+        ],
+        [
+          -7.832,
+          4.453
+        ],
+        [
+          -7.713,
+          4.361
+        ],
+        [
+          -7.54,
+          4.352
+        ]
+      ],
+      "point": [
+        -9.499,
+        5.389
+      ],
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "afr-ivory-coast",
+      "coastOf": [
+        "CIV"
+      ],
+      "spanKm": 60,
+      "name": "Ivory Coast",
+      "aliases": [],
+      "type": "coast",
+      "country": null,
+      "significance": "Côte d'Ivoire's shore, named for the ivory once traded there",
+      "notes": [],
+      "tier": 1,
+      "line": [
+        [
+          -7.54,
+          4.352
+        ],
+        [
+          -7.457,
+          4.343
+        ],
+        [
+          -7.173,
+          4.519
+        ],
+        [
+          -7.058,
+          4.54
+        ],
+        [
+          -6.914,
+          4.656
+        ],
+        [
+          -6.583,
+          4.76
+        ],
+        [
+          -5.852,
+          5.029
+        ],
+        [
+          -5.524,
+          5.1
+        ],
+        [
+          -4.786,
+          5.144
+        ],
+        [
+          -4.621,
+          5.18
+        ],
+        [
+          -3.994,
+          5.232
+        ],
+        [
+          -4.185,
+          5.281
+        ],
+        [
+          -4.441,
+          5.225
+        ],
+        [
+          -4.477,
+          5.291
+        ],
+        [
+          -4.124,
+          5.307
+        ],
+        [
+          -3.839,
+          5.201
+        ],
+        [
+          -3.314,
+          5.119
+        ],
+        [
+          -3.206,
+          5.218
+        ],
+        [
+          -3.137,
+          5.142
+        ],
+        [
+          -2.947,
+          5.177
+        ],
+        [
+          -2.842,
+          5.149
+        ]
+      ],
+      "point": [
+        -3.994,
+        5.232
+      ],
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "afr-gold-coast",
+      "coastOf": [
+        "GHA"
+      ],
+      "spanKm": 60,
+      "name": "Gold Coast",
+      "aliases": [],
+      "type": "coast",
+      "country": null,
+      "significance": "Ghana's shore, named for its gold — and Ghana's own name under British rule",
+      "notes": [],
+      "tier": 1,
+      "line": [
+        [
+          -2.842,
+          5.149
+        ],
+        [
+          -2.975,
+          5.085
+        ],
+        [
+          -3.116,
+          5.107
+        ],
+        [
+          -3.119,
+          5.092
+        ],
+        [
+          -2.691,
+          5.01
+        ],
+        [
+          -2.356,
+          4.92
+        ],
+        [
+          -2.09,
+          4.737
+        ],
+        [
+          -1.748,
+          4.876
+        ],
+        [
+          -1.568,
+          5.019
+        ],
+        [
+          -1.233,
+          5.1
+        ],
+        [
+          -1.049,
+          5.199
+        ],
+        [
+          -0.801,
+          5.215
+        ],
+        [
+          -0.639,
+          5.342
+        ],
+        [
+          -0.506,
+          5.369
+        ],
+        [
+          -0.373,
+          5.493
+        ],
+        [
+          0.034,
+          5.628
+        ],
+        [
+          0.157,
+          5.724
+        ],
+        [
+          0.322,
+          5.779
+        ],
+        [
+          0.722,
+          5.755
+        ],
+        [
+          0.913,
+          5.778
+        ],
+        [
+          0.995,
+          5.84
+        ],
+        [
+          1.1,
+          6.047
+        ],
+        [
+          1.186,
+          6.1
+        ]
+      ],
+      "point": [
+        -0.801,
+        5.215
+      ],
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "afr-slave-coast",
+      "coastOf": [
+        "TGO",
+        "BEN"
+      ],
+      "spanKm": 60,
+      "name": "Slave Coast",
+      "aliases": [],
+      "type": "coast",
+      "country": null,
+      "significance": "The shore of Togo and Benin on the Bight of Benin, named for the Atlantic slave trade",
+      "notes": [],
+      "tier": 1,
+      "line": [
+        [
+          1.186,
+          6.1
+        ],
+        [
+          1.618,
+          6.213
+        ],
+        [
+          1.885,
+          6.274
+        ],
+        [
+          2.705,
+          6.368
+        ]
+      ],
+      "point": [
+        1.885,
+        6.274
+      ],
       "continent": "Africa",
       "section": "places",
       "atlas": "world"
@@ -10505,6 +10942,72 @@
         "cog-brazzaville"
       ],
       "mnemonic": "Group of C — C₁ DRC (Bada Congo), C₂ Chhota Congo, C₃ CAR, C₄ Chad, C₅ Cameroon",
+      "continent": "Africa",
+      "section": "places"
+    },
+    {
+      "id": "afr-n1n2-trick",
+      "name": "Nigeria and Niger",
+      "members": [
+        "NGA",
+        "NER",
+        "nga-abuja",
+        "ner-niamey"
+      ],
+      "mnemonic": "N₁ → Nigeria (Ria → coastline); N₂ → Niger (landlocked, north of Nigeria)",
+      "continent": "Africa",
+      "section": "places"
+    },
+    {
+      "id": "afr-west-coast-trick",
+      "name": "West Africa's coast",
+      "members": [
+        "MRT",
+        "SEN",
+        "GIN",
+        "SLE",
+        "LBR",
+        "CIV",
+        "GHA",
+        "TGO",
+        "BEN",
+        "gha-accra"
+      ],
+      "mnemonic": "MS GS LCD GTB — Mauritania, Senegal · Guinea, Sierra Leone · Liberia, Côte d'Ivoire · Ghana, Togo, Benin",
+      "continent": "Africa",
+      "section": "places"
+    },
+    {
+      "id": "afr-two-gs-trick",
+      "name": "2 G's near Senegal",
+      "members": [
+        "GMB",
+        "GNB",
+        "SEN"
+      ],
+      "mnemonic": "2 G's near Senegal — Gambia and Guinea-Bissau",
+      "continent": "Africa",
+      "section": "places"
+    },
+    {
+      "id": "afr-left-out-trick",
+      "name": "Left out",
+      "members": [
+        "BFA"
+      ],
+      "mnemonic": "Left out — Burkina Faso",
+      "continent": "Africa",
+      "section": "places"
+    },
+    {
+      "id": "afr-m-trick",
+      "name": "Ⓜ",
+      "members": [
+        "MLI",
+        "MRT",
+        "mli-bamako"
+      ],
+      "mnemonic": "Ⓜ → Mali and Mauritania",
       "continent": "Africa",
       "section": "places"
     },

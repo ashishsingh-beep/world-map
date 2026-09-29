@@ -16,7 +16,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
-import { feature as topojsonFeature, merge as topojsonMerge } from 'topojson-client'
+import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh } from 'topojson-client'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -518,6 +518,8 @@ console.log(`India states: ${stateCount}, framed by the land of ${NEIGHBOURS.len
 const PLACE_TYPES = new Set([
   'country', 'territory', 'capital', 'city', 'port', 'island', 'island-group',
   'mine', 'canal', 'zone', 'peninsula', 'cape',
+  // A stretch of shoreline — the Gold Coast. A band along it, like a range.
+  'coast',
   // A country within a sovereign state — England, Scotland, Wales, N. Ireland
   'constituent',
   // Indian map: the mountains section
@@ -578,6 +580,33 @@ function distanceToFeatureKm(feature, point) {
   return best
 }
 
+/**
+ * A coast's line, taken from the drawn countries rather than traced by hand:
+ * an arc that belongs to one country alone is shoreline, since every land
+ * border is shared by the two countries either side of it. Islands are left
+ * out (only runs of real length count), and the pieces are chained west to
+ * east, so a coast of two countries — the Slave Coast, Togo and Benin — is one
+ * line, and its label reads left to right along it.
+ */
+const drawnTopo = JSON.parse(readFileSync(topoOut, 'utf8'))
+function coastlineOf(isos, where) {
+  const shore = topojsonMesh(
+    drawnTopo,
+    drawnTopo.objects.countries,
+    (a, b) => a === b && isos.includes(a.id)
+  )
+  const lengthKm = (l) => l.slice(1).reduce((km, c, i) => km + geoDistance(l[i], c) * 6371, 0)
+  const runs = shore.coordinates
+    .filter((l) => lengthKm(l) > 50)
+    .map((l) => (l[0][0] > l[l.length - 1][0] ? [...l].reverse() : l))
+    .sort((a, b) => a[0][0] - b[0][0])
+  if (!runs.length) {
+    errors.push(`${where}: no coastline found for ${isos.join(', ')}`)
+    return []
+  }
+  return runs.flat().map(([lon, lat]) => [Number(lon.toFixed(3)), Number(lat.toFixed(3))])
+}
+
 const SYLLABUS = resolve(OUT, 'syllabus')
 const places = []
 const groups = []
@@ -633,9 +662,13 @@ for (const file of syllabusFiles) {
      * exists only to anchor the label — the same job the authored point does
      * for a sea now that seas are drawn as regions.
      */
-    if (p.type === 'range') {
+    if (p.type === 'coast') {
+      if (!p.coastOf?.length) errors.push(`${where(p.id)}: a coast needs coastOf, the countries whose shore it is`)
+      else p.line = coastlineOf(p.coastOf, where(p.id))
+    }
+    if (p.type === 'range' || p.type === 'coast') {
       if (!Array.isArray(p.line) || p.line.length < 2) {
-        errors.push(`${where(p.id)}: a range needs a line of at least two points`)
+        errors.push(`${where(p.id)}: a ${p.type} needs a line of at least two points`)
       } else {
         p.point = p.line[Math.floor(p.line.length / 2)]
       }
@@ -652,7 +685,7 @@ for (const file of syllabusFiles) {
 
     // The check that catches transposed or mistyped coordinates.
     const feature = p.country ? picked.get(p.country) : null
-    if (feature && point && !p.offshore && p.type !== 'country' && p.type !== 'range') {
+    if (feature && point && !p.offshore && !['country', 'range', 'coast'].includes(p.type)) {
       const slack = geoContains(feature, point) ? 0 : distanceToFeatureKm(feature, point)
       if (slack > ONSHORE_SLACK_KM) {
         const km = geoDistance(point, meta[p.country].centroid) * 6371

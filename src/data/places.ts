@@ -14,6 +14,8 @@ export type PlaceType =
   | 'peninsula'
   /** A headland — the Cape of Good Hope. A point, not an area. */
   | 'cape'
+  /** A stretch of shoreline — the Gold Coast. Drawn as a band, like a range. */
+  | 'coast'
   /** A country inside a sovereign state — England, Scotland, Wales, Northern Ireland. */
   | 'constituent'
   | 'peak'
@@ -133,6 +135,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   zone: 'region',
   peninsula: 'peninsula',
   cape: 'cape',
+  coast: 'coast',
   constituent: 'constituent country',
   peak: 'peak',
   range: 'range',
@@ -144,7 +147,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
 /**
  * The two sections a places round is split into: the capitals, and everything
  * else it asks about — cities, ports, islands, island groups, peninsulas,
- * capes, zones, territories and country facts alike. Not a third bucket for each of
+ * capes, coasts, zones, territories and country facts alike. Not a third bucket for each of
  * those; "other" is deliberately everything a capital is not, so the choice
  * stays the one the setup screen and Learn legend actually offer: capitals,
  * other places, or both.

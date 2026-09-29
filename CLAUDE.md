@@ -253,6 +253,15 @@ ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
 range emits no marker and no second label. A peak is a brown triangle.
 
+**A coast is a line with width too.** The Grain, Ivory, Gold and Slave Coasts
+are stretches of shoreline, so they are `type: "coast"` bands answered like a
+range, not pins and not whole countries. Their lines are not traced: the build
+takes them from the drawn country topology (`coastOf`), where an arc belonging
+to one country alone is shore, drops islands, and chains the runs west to east
+so the Slave Coast (Togo and Benin) is one line. A band with no belt is a coast,
+amber (`COAST_BAND`), and its name sits upright at the middle of the shore —
+along the path, a short kinked coast ran its text off the end.
+
 **The belt is the colour.** Four parallel ranges in one brown were a single
 smear, so `BELT_BAND` in `MapCanvas` gives each belt a band colour and a label
 ink: Trans brown, Greater sky blue, Lesser purple, Shiwalik green. `BeltSwatch`

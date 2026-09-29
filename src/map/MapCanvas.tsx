@@ -86,6 +86,13 @@ export const BELT_BAND: Record<Belt, { band: string; ink: string }> = {
   outer: { band: '#8fcc63', ink: '#3f6212' },
 }
 
+/**
+ * A band with no belt is a coast — the Gold Coast, the Slave Coast — laid
+ * along the shoreline. Amber, the notes' own ink for them: the belts' sky blue
+ * would vanish half over the sea.
+ */
+const COAST_BAND = { band: '#e0a030', ink: '#7c2d12' }
+
 /** A sea or ocean drawn as its real extent rather than as a marker. */
 export interface MapArea {
   id: string
@@ -754,7 +761,11 @@ export function MapCanvas({
             const d = path({ type: 'LineString', coordinates: b.line } as never)
             if (!d) return null
             const idle = b.state === 'idle'
-            const belt = BELT_BAND[b.belt ?? 'greater']
+            const belt = b.belt ? BELT_BAND[b.belt] : COAST_BAND
+            // A coast is short and kinked where a ridgeline is long and smooth:
+            // text along it ran off the end or folded at a headland, so its
+            // name sits upright at the middle of the shore instead.
+            const mid = b.belt ? null : projection(b.line[Math.floor(b.line.length / 2)])
             return (
               <g key={`b-${b.id}`} pointerEvents="none">
                 <path id={`band-${b.id}`} d={d} fill="none" stroke="none" />
@@ -763,11 +774,26 @@ export function MapCanvas({
                   fill="none"
                   stroke={idle ? belt.band : FILLS[b.state]}
                   strokeOpacity={idle ? 0.38 : 0.75}
-                  strokeWidth={22 / k}
+                  strokeWidth={(b.belt ? 22 : 14) / k}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                {b.label && (
+                {b.label && mid && (
+                  <text
+                    x={mid[0]}
+                    y={mid[1] + 20 / k}
+                    fontSize={11 / k}
+                    fontWeight={800}
+                    fill={belt.ink}
+                    stroke="#fff"
+                    strokeWidth={3 / k}
+                    paintOrder="stroke"
+                    textAnchor="middle"
+                  >
+                    {b.label}
+                  </text>
+                )}
+                {b.label && !mid && (
                   <text
                     fontSize={11 / k}
                     fontWeight={800}

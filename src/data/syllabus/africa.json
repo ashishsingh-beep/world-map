@@ -622,6 +622,98 @@
       "significance": "Capital of the Republic of the Congo, across the Congo River from Kinshasa",
       "notes": [],
       "tier": 1
+    },
+    {
+      "id": "mli-bamako",
+      "name": "Bamako",
+      "aliases": [],
+      "type": "capital",
+      "country": "MLI",
+      "point": [-8.0029, 12.6392],
+      "significance": "Capital of Mali, on the Niger River",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "ner-niamey",
+      "name": "Niamey",
+      "aliases": [],
+      "type": "capital",
+      "country": "NER",
+      "point": [2.1254, 13.5116],
+      "significance": "Capital of Niger, on the Niger River",
+      "notes": ["Niger is landlocked, north of Nigeria"],
+      "tier": 1
+    },
+    {
+      "id": "nga-abuja",
+      "name": "Abuja",
+      "aliases": [],
+      "type": "capital",
+      "country": "NGA",
+      "point": [7.3986, 9.0765],
+      "significance": "Capital of Nigeria, in the centre of the country",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "gha-accra",
+      "name": "Accra",
+      "aliases": [],
+      "type": "capital",
+      "country": "GHA",
+      "point": [-0.187, 5.6037],
+      "significance": "Capital of Ghana, on the Gulf of Guinea",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-grain-coast",
+      "coastOf": ["LBR"],
+      "spanKm": 60,
+      "name": "Grain Coast",
+      "aliases": ["Pepper Coast"],
+      "type": "coast",
+      "country": null,
+      "significance": "Liberia's shore, named for the melegueta pepper — 'grains of paradise' — once traded there",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-ivory-coast",
+      "coastOf": ["CIV"],
+      "spanKm": 60,
+      "name": "Ivory Coast",
+      "aliases": [],
+      "type": "coast",
+      "country": null,
+      "significance": "Côte d'Ivoire's shore, named for the ivory once traded there",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-gold-coast",
+      "coastOf": ["GHA"],
+      "spanKm": 60,
+      "name": "Gold Coast",
+      "aliases": [],
+      "type": "coast",
+      "country": null,
+      "significance": "Ghana's shore, named for its gold — and Ghana's own name under British rule",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-slave-coast",
+      "coastOf": ["TGO", "BEN"],
+      "spanKm": 60,
+      "name": "Slave Coast",
+      "aliases": [],
+      "type": "coast",
+      "country": null,
+      "significance": "The shore of Togo and Benin on the Bight of Benin, named for the Atlantic slave trade",
+      "notes": [],
+      "tier": 1
     }
   ],
   "groups": [
@@ -723,6 +815,36 @@
       "name": "Group of C",
       "members": ["COD", "COG", "CAF", "TCD", "CMR", "cod-kinshasa", "cog-brazzaville"],
       "mnemonic": "Group of C — C₁ DRC (Bada Congo), C₂ Chhota Congo, C₃ CAR, C₄ Chad, C₅ Cameroon"
+    },
+    {
+      "id": "afr-n1n2-trick",
+      "name": "Nigeria and Niger",
+      "members": ["NGA", "NER", "nga-abuja", "ner-niamey"],
+      "mnemonic": "N₁ → Nigeria (Ria → coastline); N₂ → Niger (landlocked, north of Nigeria)"
+    },
+    {
+      "id": "afr-west-coast-trick",
+      "name": "West Africa's coast",
+      "members": ["MRT", "SEN", "GIN", "SLE", "LBR", "CIV", "GHA", "TGO", "BEN", "gha-accra"],
+      "mnemonic": "MS GS LCD GTB — Mauritania, Senegal · Guinea, Sierra Leone · Liberia, Côte d'Ivoire · Ghana, Togo, Benin"
+    },
+    {
+      "id": "afr-two-gs-trick",
+      "name": "2 G's near Senegal",
+      "members": ["GMB", "GNB", "SEN"],
+      "mnemonic": "2 G's near Senegal — Gambia and Guinea-Bissau"
+    },
+    {
+      "id": "afr-left-out-trick",
+      "name": "Left out",
+      "members": ["BFA"],
+      "mnemonic": "Left out — Burkina Faso"
+    },
+    {
+      "id": "afr-m-trick",
+      "name": "Ⓜ",
+      "members": ["MLI", "MRT", "mli-bamako"],
+      "mnemonic": "Ⓜ → Mali and Mauritania"
     }
   ]
 }
