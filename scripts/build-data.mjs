@@ -16,7 +16,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
-import { feature as topojsonFeature } from 'topojson-client'
+import { feature as topojsonFeature, merge as topojsonMerge } from 'topojson-client'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -68,10 +68,31 @@ const MAP_UNITS_URL =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_map_units.geojson'
 const MAP_UNITS_RAW = resolve(CACHE, 'ne_10m_admin_0_map_units.geojson')
 
+/**
+ * Sixth: Natural Earth's admin-1 provinces, for the few regions the syllabus
+ * names that are an administrative unit rather than a landform — Ethiopia's
+ * Afar Region, and the Sinai Peninsula, which the physical-regions layer does
+ * not carry but Egypt's North and South Sinai governorates together are. A
+ * place asks for them with `admin1`, looked up within its own `country`; no
+ * border drawn on the map comes from here. It is 40MB, so it is fetched only
+ * when some place actually uses it.
+ */
+const ADMIN1_URL =
+  'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson'
+const ADMIN1_RAW = resolve(CACHE, 'ne_10m_admin_1_states_provinces.geojson')
+
 /** The types that are areas. Everything else in the section is a marker. */
 const AREA_TYPES = new Set(['ocean', 'sea'])
 /** Land-region types that are areas rather than a point-and-radius marker. */
 const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
+/**
+ * A region that is not a peninsula — the Afar Region, say — is a zone, and a
+ * zone is a marker unless it names a polygon of its own with `land` or
+ * `admin1`. Most zones cannot: Nagorno-Karabakh and East Malaysia have none.
+ */
+const isLandArea = (p) =>
+  LAND_AREA_TYPES.has(p.type) ||
+  (p.type === 'zone' && Boolean(p.land?.length || p.admin1?.length || p.countries?.length))
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
 const loose = (s) =>
@@ -110,11 +131,14 @@ const EXPECTED_COUNT = 196 + (INCLUDE_KOSOVO ? 1 : 0)
  * not one of the 196 — but leaving it out puts a hole in the North Atlantic
  * and strands the Denmark Strait, Baffin Bay and the Nares Strait with nothing
  * to sit beside. The Faroe Islands, Danish too, are drawn because the Europe
- * places round asks about them, and a marker needs land under it. These get
+ * places round asks about them, and a marker needs land under it; Gibraltar,
+ * British, because the Africa round asks about it beside Ceuta. Bir Tawil,
+ * claimed by neither Egypt nor Sudan, is its own feature in the source and
+ * left a hole in the desert on the 22nd parallel. These get
  * geometry only: no meta entry, so nothing downstream can turn them into a
  * country question.
  */
-const RENDER_ONLY = ['GRL', 'ATA', 'FRO']
+const RENDER_ONLY = ['GRL', 'ATA', 'FRO', 'GIB', 'BRT']
 
 /** Display names where Natural Earth's ADMIN string isn't what a player expects. */
 const NAME_OVERRIDES = {
@@ -850,6 +874,11 @@ if (strayLabels.length) {
  * Malaysia's share of it. A place that needs the political share sets
  * `"clip": true`, and the polygon is cut to its own `country` before anything
  * else touches it.
+ *
+ * Two more sources for what the physical layer lacks: `admin1` names
+ * provinces within the place's country (Ethiopia's Afar Region; Sinai, as
+ * Egypt's North and South Sinai governorates), and `countries` names whole
+ * countries (the Horn of Africa, as the notes define it).
  */
 const landRaw = JSON.parse(readFileSync(LAND_RAW, 'utf8'))
 const landByName = new Map()
@@ -861,6 +890,22 @@ for (const f of landRaw.features) {
 const unitByName = new Map()
 for (const f of JSON.parse(readFileSync(MAP_UNITS_RAW, 'utf8')).features) {
   if (f.properties.GEOUNIT) unitByName.set(loose(f.properties.GEOUNIT), f)
+}
+
+/** Admin-1 units keyed by country and name, read only if a place asks for one. */
+let admin1Cache = null
+function admin1ByName() {
+  if (admin1Cache) return admin1Cache
+  if (!existsSync(ADMIN1_RAW)) {
+    console.log('Downloading Natural Earth admin-1 provinces…')
+    execFileSync('curl', ['-sSL', '-o', ADMIN1_RAW, ADMIN1_URL], { stdio: 'inherit' })
+  }
+  admin1Cache = new Map()
+  for (const f of JSON.parse(readFileSync(ADMIN1_RAW, 'utf8')).features) {
+    const { adm0_a3: iso, name } = f.properties
+    if (iso && name && f.geometry) admin1Cache.set(`${iso}|${loose(name)}`, f)
+  }
+  return admin1Cache
 }
 
 /** Clips one place's gathered parts to its own country, via a throwaway job. */
@@ -909,13 +954,37 @@ function clipToCountry(parts, iso) {
   return g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]
 }
 
+const countriesTopo = JSON.parse(readFileSync(topoOut, 'utf8'))
 const landFeatures = []
 const noLandPolygon = []
 for (const p of places) {
-  if (!LAND_AREA_TYPES.has(p.type)) continue
-  const wanted = p.land ?? [p.name]
+  if (!isLandArea(p)) continue
   let parts = []
-  for (const name of wanted) {
+  // A region the notes define as a set of countries — the Horn of Africa is
+  // Somalia, Ethiopia, Eritrea and Djibouti — is those countries' own land,
+  // merged from the drawn topology so it has one outline, on their borders.
+  if (p.countries) {
+    const geoms = countriesTopo.objects.countries.geometries
+    for (const iso of p.countries) {
+      if (!geoms.some((g) => g.id === iso)) {
+        errors.push(`${p.id}: "${iso}" in its countries is not a country this build knows`)
+      }
+    }
+    const merged = topojsonMerge(countriesTopo, geoms.filter((g) => p.countries.includes(g.id)))
+    parts.push(...merged.coordinates)
+  }
+  if (p.admin1) {
+    for (const name of p.admin1) {
+      const f = admin1ByName().get(`${p.country}|${loose(name)}`)
+      if (!f) {
+        errors.push(`${p.id}: no admin-1 unit "${name}" in ${p.country}`)
+        continue
+      }
+      const g = f.geometry
+      parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
+    }
+  }
+  for (const name of p.admin1 || p.countries ? (p.land ?? []) : (p.land ?? [p.name])) {
     const f = (p.type === 'constituent' ? unitByName : landByName).get(loose(name))
     if (!f) {
       errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : 'land polygon'} named "${name}"`)
@@ -952,15 +1021,21 @@ execFileSync(
   resolve(ROOT, 'node_modules/.bin/mapshaper'),
   [
     landFiltered,
-    '-simplify', '10%', 'keep-shapes',
-    '-clean',
+    // An absolute interval, not a percentage. A percentage — even mapshaper's
+    // `variable` one — ranks every vertex in the layer against every other, so
+    // each new patch re-thinned the old ones: Afar's dense admin-1 border cost
+    // Musandam a fifth of its area. At 2km nothing added can touch the rest.
+    '-simplify', 'interval=2000', 'keep-shapes',
+    // Patches may nest — the Afar Region lies inside the Horn of Africa — and
+    // a plain -clean hands each overlap to one feature, which erased Afar.
+    '-clean', 'allow-overlaps',
     '-rename-layers', 'land',
     '-o', 'format=topojson', 'quantization=1e5', 'id-field=id', landOut,
   ],
   { stdio: 'inherit' }
 )
 console.log(
-  `Land regions: ${landFeatures.length} of ${places.filter((p) => LAND_AREA_TYPES.has(p.type)).length}` +
+  `Land regions: ${landFeatures.length} of ${places.filter(isLandArea).length}` +
     (noLandPolygon.length ? ` — no polygon for ${noLandPolygon.join(', ')}` : '')
 )
 

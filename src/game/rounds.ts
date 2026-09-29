@@ -207,6 +207,34 @@ const EXTRA_RENDER: Partial<Record<string, string[]>> = {
 }
 
 /**
+ * Africa's places frame, set by hand: Cape Verde to Mauritius, the Cape to
+ * Gibraltar. Fitted to its members it reached Rodrigues and the Prince Edward
+ * Islands, which added nothing but ocean.
+ */
+const AFRICA_PLACES_VIEW: BBox = [
+  [-26, -37],
+  [60, 40],
+]
+
+/** Whether a country's bounds reach into a frame, minding the antimeridian. */
+function touches(iso: string, [[w, s], [e, n]]: BBox) {
+  const [[cw, cs], [ce, cn]] = metaOf(iso).bounds
+  if (cs > n || cn < s) return false
+  if (cw > ce) return ce >= w || cw <= e
+  return ce >= w && cw <= e
+}
+
+/**
+ * Africa's places round draws whatever else its frame shows, never asked:
+ * Ceuta faces Spain, Sinai runs up to Israel and the Horn looks across at
+ * Arabia, and with those shores left blank the notes' own landmarks sit beside
+ * open sea.
+ */
+const CONTEXT_IN_VIEW: Partial<Record<string, BBox>> = {
+  Africa: AFRICA_PLACES_VIEW,
+}
+
+/**
  * A places round's frame before its own places stretch it. Fitting Europe to
  * its members reaches Russia's Pacific coast, as the country round found; it
  * starts from that round's hand-set frame instead, and Greenland, Svalbard and
@@ -214,6 +242,13 @@ const EXTRA_RENDER: Partial<Record<string, string[]>> = {
  */
 const PLACE_BASE_VIEW: Partial<Record<string, BBox>> = {
   Europe: VIEW_OVERRIDES.europe,
+  Africa: AFRICA_PLACES_VIEW,
+}
+
+function contextIn(name: string): string[] {
+  const view = CONTEXT_IN_VIEW[name]
+  if (!view) return []
+  return allIsos.filter((iso) => meta[iso].continent !== name && touches(iso, view))
 }
 
 function continentPlaceRound({
@@ -237,7 +272,11 @@ function continentPlaceRound({
       ? ['IND', 'PAK', 'NPL', 'BTN', 'CHN', 'BGD', 'AFG', 'MMR', 'LKA']
       : worldwide
         ? allIsos
-        : [...isosIn(name as Continent), ...(EXTRA_RENDER[name] ?? [])]
+        : [
+            ...isosIn(name as Continent),
+            ...(EXTRA_RENDER[name] ?? []),
+            ...contextIn(name),
+          ]
   return {
     id: allPlacesRoundId(name),
     title,

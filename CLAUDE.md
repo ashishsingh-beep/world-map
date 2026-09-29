@@ -65,7 +65,12 @@ geometry so nothing can turn it into a question. Use `renderIsos` to draw,
 `allIsos` to ask; a round's `render` carries the context, its `askable` does not.
 Antarctica is there for the same reason: without it the Southern Ocean and the
 Drake Passage float in featureless blue with nothing to locate them against. The Faroe Islands, Danish too, are drawn because
-the Europe places round asks about them and a marker needs land under it.
+the Europe places round asks about them and a marker needs land under it, and
+Gibraltar because the Africa round asks about it beside Ceuta. Bir Tawil, which
+neither Egypt nor Sudan claims, is its own feature in the source and was a hole
+in the desert on the 22nd parallel. Abyei, between Sudan and South Sudan, is
+still one: the India point-of-view file has no feature there at all, and
+filling it would mean borrowing another worldview's geometry.
 
 **Kosovo** does not exist separately in that dataset (its territory is inside
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
@@ -217,6 +222,18 @@ coastline has to stay what you read. A peninsula's polygon is solid ground, so
 the same trick would bury the highlight completely — it is drawn *over* the
 country layer instead. `MapCanvas` imports `marine.ts` and `land.ts` directly
 for this reason, not the combined `areaOf`.
+
+A region is an area too when there is a polygon to be had. The physical layer
+has no Sinai and no Afar, so a place can instead name admin-1 provinces within
+its own country (`admin1`: Sinai is Egypt's North and South Sinai governorates)
+or whole countries (`countries`: the Horn of Africa is the notes' SEED four,
+merged from the drawn country topology so it has one outline, on their
+borders). A `zone` with none of `land`, `admin1` or `countries` stays a marker —
+Nagorno-Karabakh has no polygon anywhere. Patches may nest (Afar lies inside the
+Horn), which is why the land layer is cleaned with `allow-overlaps`: plain
+`-clean` handed the overlap to the Horn and erased Afar. It is simplified by an
+absolute 2km interval, not a percentage, because a percentage ranks every vertex
+in the layer together and each new patch re-thinned the old ones.
 
 Natural Earth draws a peninsula as the physical landform, which can run past
 the political border the syllabus means: its "Malay Peninsula" reaches deep

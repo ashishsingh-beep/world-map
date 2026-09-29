@@ -1,0 +1,407 @@
+{
+  "continent": "Africa",
+  "source": "World Mapping 3.0 — Africa (political), @sudarshangurjar",
+  "places": [
+    {
+      "id": "esp-ceuta",
+      "name": "Ceuta",
+      "aliases": [],
+      "type": "territory",
+      "country": "ESP",
+      "point": [-5.3162, 35.8894],
+      "significance": "Spanish city on the Moroccan coast, facing Gibraltar across the strait",
+      "notes": ["A small landmass in Africa administered by another country — Spain"],
+      "tier": 1
+    },
+    {
+      "id": "gib-gibraltar",
+      "name": "Gibraltar",
+      "aliases": [],
+      "type": "territory",
+      "country": null,
+      "sovereign": "GBR",
+      "point": [-5.3536, 36.1408],
+      "significance": "British Overseas Territory at the southern tip of Spain, across the strait from Ceuta",
+      "notes": ["A small landmass administered by another country — the United Kingdom"],
+      "tier": 1
+    },
+    {
+      "id": "egy-sinai",
+      "admin1": ["Shamal Sina'", "Janub Sina'"],
+      "spanKm": 380,
+      "name": "Sinai Peninsula",
+      "aliases": ["Sinai"],
+      "type": "peninsula",
+      "country": "EGY",
+      "point": [33.8, 29.3],
+      "significance": "Egypt's triangle of land in Asia, east of the Suez Canal",
+      "notes": ["The Suez Canal runs along its western edge"],
+      "tier": 1
+    },
+    {
+      "id": "egy-suez-canal",
+      "spanKm": 60,
+      "name": "Suez Canal",
+      "aliases": [],
+      "type": "canal",
+      "country": "EGY",
+      "point": [32.35, 30.6],
+      "significance": "Links the Mediterranean to the Red Sea, cutting Sinai off from the rest of Egypt",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "mar-rabat",
+      "name": "Rabat",
+      "aliases": [],
+      "type": "capital",
+      "country": "MAR",
+      "point": [-6.8498, 34.0209],
+      "significance": "Capital of Morocco, on the Atlantic coast",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "mar-casablanca",
+      "name": "Casablanca",
+      "aliases": [],
+      "type": "city",
+      "country": "MAR",
+      "point": [-7.5898, 33.5731],
+      "significance": "Morocco's largest city, on the Atlantic",
+      "notes": ["Chemical industries"],
+      "tier": 1
+    },
+    {
+      "id": "mar-marrakech",
+      "name": "Marrakech",
+      "aliases": ["Marrakesh"],
+      "type": "city",
+      "country": "MAR",
+      "point": [-7.9811, 31.6295],
+      "significance": "The Red City, below the High Atlas",
+      "notes": ["Religious place"],
+      "tier": 1
+    },
+    {
+      "id": "mar-tangier",
+      "name": "Tangier",
+      "aliases": ["Tangiers"],
+      "type": "port",
+      "country": "MAR",
+      "point": [-5.834, 35.7595],
+      "significance": "Major port on the Strait of Gibraltar",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-alboran",
+      "marine": ["Alboran Sea"],
+      "spanKm": 170,
+      "name": "Alboran Sea",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [-3.5, 36.0],
+      "significance": "Westernmost basin of the Mediterranean, off Morocco's north coast",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "dza-algiers",
+      "name": "Algiers",
+      "aliases": [],
+      "type": "capital",
+      "country": "DZA",
+      "point": [3.0588, 36.7538],
+      "significance": "Capital of Algeria, on the Mediterranean",
+      "notes": ["Mediterranean type of climate"],
+      "tier": 1
+    },
+    {
+      "id": "tun-tunis",
+      "name": "Tunis",
+      "aliases": [],
+      "type": "capital",
+      "country": "TUN",
+      "point": [10.1815, 36.8065],
+      "significance": "Capital of Tunisia, on the Mediterranean",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "lby-tripoli",
+      "name": "Tripoli",
+      "aliases": [],
+      "type": "capital",
+      "country": "LBY",
+      "point": [13.1913, 32.8872],
+      "significance": "Capital of Libya, on the Mediterranean",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "lby-benghazi",
+      "name": "Benghazi",
+      "aliases": [],
+      "type": "port",
+      "country": "LBY",
+      "point": [20.0868, 32.1194],
+      "significance": "Important port of eastern Libya, on the Gulf of Sidra",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-sidra",
+      "marine": ["Gulf of Sidra"],
+      "spanKm": 450,
+      "name": "Gulf of Sidra",
+      "aliases": ["Gulf of Sirte"],
+      "type": "sea",
+      "country": null,
+      "point": [18.5, 31.4],
+      "significance": "The wide bight in Libya's Mediterranean coast",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "egy-cairo",
+      "name": "Cairo",
+      "aliases": [],
+      "type": "capital",
+      "country": "EGY",
+      "point": [31.2357, 30.0444],
+      "significance": "Capital of Egypt, on the Nile at the head of its delta",
+      "notes": ["Egypt: north → Mediterranean Sea, east → Red Sea"],
+      "tier": 1
+    },
+    {
+      "id": "egy-port-said",
+      "name": "Port Said",
+      "aliases": [],
+      "type": "port",
+      "country": "EGY",
+      "point": [32.3019, 31.2653],
+      "significance": "Port at the Mediterranean end of the Suez Canal",
+      "notes": ["Near the Suez Canal"],
+      "tier": 1
+    },
+    {
+      "id": "egy-alexandria",
+      "name": "Alexandria",
+      "aliases": [],
+      "type": "city",
+      "country": "EGY",
+      "point": [29.9187, 31.2001],
+      "significance": "Egypt's Mediterranean city west of the delta",
+      "notes": ["Near the mouth of the Nile"],
+      "tier": 1
+    },
+    {
+      "id": "egy-suez",
+      "name": "Suez",
+      "aliases": [],
+      "type": "city",
+      "country": "EGY",
+      "point": [32.5498, 29.9668],
+      "significance": "City at the Red Sea end of the Suez Canal",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afr-horn",
+      "countries": ["SOM", "ETH", "ERI", "DJI"],
+      "spanKm": 1500,
+      "name": "Horn of Africa",
+      "aliases": ["Somali Peninsula"],
+      "type": "peninsula",
+      "country": null,
+      "point": [45.5, 8.0],
+      "significance": "Africa's eastern tip, between the Gulf of Aden and the Indian Ocean — Somalia, Ethiopia, Eritrea and Djibouti",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "sdn-khartoum",
+      "name": "Khartoum",
+      "aliases": [],
+      "type": "capital",
+      "country": "SDN",
+      "point": [32.5599, 15.5007],
+      "significance": "Capital of Sudan, where the Blue and White Nile meet",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "ssd-juba",
+      "name": "Juba",
+      "aliases": [],
+      "type": "capital",
+      "country": "SSD",
+      "point": [31.5825, 4.8594],
+      "significance": "Capital of South Sudan, on the White Nile",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "som-mogadishu",
+      "name": "Mogadishu",
+      "aliases": [],
+      "type": "capital",
+      "country": "SOM",
+      "point": [45.3182, 2.0469],
+      "significance": "Capital of Somalia, on the Indian Ocean",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "som-berbera",
+      "name": "Berbera",
+      "aliases": [],
+      "type": "port",
+      "country": "SOM",
+      "point": [45.0143, 10.4396],
+      "significance": "Port on Somalia's Gulf of Aden coast",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "eri-asmara",
+      "name": "Asmara",
+      "aliases": [],
+      "type": "capital",
+      "country": "ERI",
+      "point": [38.9251, 15.3229],
+      "significance": "Capital of Eritrea, in the highlands",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "eri-massawa",
+      "name": "Massawa",
+      "aliases": [],
+      "type": "port",
+      "country": "ERI",
+      "point": [39.45, 15.61],
+      "significance": "Eritrea's port on the Red Sea",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "eth-addis-ababa",
+      "name": "Addis Ababa",
+      "aliases": [],
+      "type": "capital",
+      "country": "ETH",
+      "point": [38.7578, 8.9806],
+      "significance": "Capital of Ethiopia, on the Ethiopian Highlands",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "eth-danakil",
+      "spanKm": 150,
+      "name": "Danakil Depression",
+      "aliases": ["Danakil"],
+      "type": "zone",
+      "country": "ETH",
+      "point": [40.3, 14.2],
+      "significance": "Low-lying desert basin in Ethiopia's far north-east, well below sea level",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "eth-afar",
+      "admin1": ["Afar"],
+      "spanKm": 400,
+      "name": "Afar Region",
+      "aliases": ["Afar"],
+      "type": "zone",
+      "country": "ETH",
+      "point": [41.0, 11.8],
+      "significance": "Ethiopia's north-eastern region, bordering Eritrea and Djibouti",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "dji-djibouti",
+      "name": "Djibouti City",
+      "aliases": ["Djibouti"],
+      "type": "capital",
+      "country": "DJI",
+      "point": [43.1456, 11.5721],
+      "significance": "Capital of Djibouti, on the Gulf of Aden",
+      "notes": ["A port"],
+      "tier": 1
+    },
+    {
+      "id": "ken-nairobi",
+      "name": "Nairobi",
+      "aliases": [],
+      "type": "capital",
+      "country": "KEN",
+      "point": [36.8219, -1.2921],
+      "significance": "Capital of Kenya",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "ken-mombasa",
+      "name": "Mombasa",
+      "aliases": [],
+      "type": "port",
+      "country": "KEN",
+      "point": [39.6682, -4.0435],
+      "significance": "Kenya's port on the Indian Ocean",
+      "notes": [],
+      "tier": 1
+    }
+  ],
+  "groups": [
+    {
+      "id": "afr-matle-trick",
+      "name": "North Africa",
+      "members": [
+        "MAR",
+        "DZA",
+        "TUN",
+        "LBY",
+        "EGY",
+        "mar-rabat",
+        "dza-algiers",
+        "tun-tunis",
+        "lby-tripoli",
+        "egy-cairo"
+      ],
+      "mnemonic": "MATLE (\"Tension mat le\") — Morocco, Algeria, Tunisia, Libya, Egypt, west to east along the Mediterranean"
+    },
+    {
+      "id": "afr-tripoli-trick",
+      "name": "Tripoli",
+      "members": ["lby-tripoli"],
+      "mnemonic": "TripoLI → LIbya"
+    },
+    {
+      "id": "afr-libya-l-trick",
+      "name": "Libya on the map",
+      "members": ["LBY", "lby-tripoli", "lby-benghazi"],
+      "mnemonic": "Find the L in the map — Libya"
+    },
+    {
+      "id": "afr-seed-trick",
+      "name": "Horn of Africa",
+      "members": [
+        "SOM",
+        "ETH",
+        "ERI",
+        "DJI",
+        "afr-horn",
+        "som-mogadishu",
+        "eth-addis-ababa",
+        "eri-asmara",
+        "dji-djibouti"
+      ],
+      "mnemonic": "SEED — Somalia, Ethiopia, Eritrea, Djibouti"
+    }
+  ]
+}
