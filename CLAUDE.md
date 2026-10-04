@@ -271,7 +271,8 @@ top of it.
 
 Patches nest now on water too: the Great Barrier Reef is a `reef` inside the
 Coral Sea, and a places round can carry its own copy of a sea the Seas & Straits
-round already has (the Alboran, the Coral, the Tasman). The marine layer is
+round already has (Africa's Alboran). Oceans, seas and straits otherwise belong
+to the Seas & Straits round alone: Oceania's places round carries none. The marine layer is
 cleaned with `allow-overlaps` for both reasons; a plain `-clean` handed each
 overlap to one feature, which silently left the Seas round's Alboran Sea with no
 polygon at all. Natural Earth also names the reef twice, once with no extent, so

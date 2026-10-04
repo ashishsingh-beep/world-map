@@ -40,7 +40,7 @@
       "title": "Australia (Oceania)",
       "section": "places",
       "atlas": "world",
-      "count": 45
+      "count": 37
     },
     {
       "name": "World",
@@ -7169,69 +7169,6 @@
       "atlas": "world"
     },
     {
-      "id": "ocn-carpentaria",
-      "marine": [
-        "Gulf of Carpentaria"
-      ],
-      "spanKm": 600,
-      "name": "Gulf of Carpentaria",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [
-        139,
-        -14.5
-      ],
-      "significance": "The great gulf in Australia's north coast, west of Cape York",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-coral-sea",
-      "marine": [
-        "Coral Sea"
-      ],
-      "spanKm": 1500,
-      "name": "Coral Sea",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [
-        155,
-        -18
-      ],
-      "significance": "Off Queensland's coast, home of the Great Barrier Reef",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-tasman-sea",
-      "marine": [
-        "Tasman Sea"
-      ],
-      "spanKm": 1500,
-      "name": "Tasman Sea",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [
-        160,
-        -38
-      ],
-      "significance": "Between Australia and New Zealand",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
       "id": "ocn-barrier-reef",
       "marine": [
         "Great Barrier Reef"
@@ -7246,49 +7183,6 @@
         -18
       ],
       "significance": "The world's largest coral reef system, off Queensland in the Coral Sea",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-indian-ocean",
-      "marine": [
-        "INDIAN OCEAN"
-      ],
-      "spanKm": 4000,
-      "name": "Indian Ocean",
-      "aliases": [],
-      "type": "ocean",
-      "country": null,
-      "point": [
-        108,
-        -30
-      ],
-      "significance": "The ocean west and south of Australia",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-pacific-ocean",
-      "marine": [
-        "South Pacific Ocean",
-        "North Pacific Ocean"
-      ],
-      "spanKm": 8000,
-      "name": "Pacific Ocean",
-      "aliases": [],
-      "type": "ocean",
-      "country": null,
-      "point": [
-        -160,
-        -20
-      ],
-      "significance": "The ocean east of Australia and around New Zealand",
       "notes": [],
       "tier": 1,
       "continent": "Oceania",
@@ -7504,63 +7398,6 @@
         -38.8
       ],
       "significance": "New Zealand's largest lake, in the middle of the North Island",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-bay-of-plenty",
-      "marine": [
-        "Bay of Plenty"
-      ],
-      "spanKm": 150,
-      "name": "Bay of Plenty",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [
-        177,
-        -37.6
-      ],
-      "significance": "The wide bay on the North Island's north-east coast",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-cook-strait",
-      "spanKm": 40,
-      "name": "Cook Strait",
-      "aliases": [],
-      "type": "strait",
-      "country": null,
-      "point": [
-        174.5,
-        -41.2
-      ],
-      "significance": "Between the North and South Islands",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "ocn-foveaux-strait",
-      "spanKm": 30,
-      "name": "Foveaux Strait",
-      "aliases": [],
-      "type": "strait",
-      "country": null,
-      "point": [
-        168.1,
-        -46.7
-      ],
-      "significance": "Between the South Island and Stewart Island",
       "notes": [],
       "tier": 1,
       "continent": "Oceania",
