@@ -47,7 +47,7 @@
       "title": "Seas & Straits",
       "section": "water",
       "atlas": "world",
-      "count": 130
+      "count": 133
     },
     {
       "name": "South America",
@@ -7633,6 +7633,33 @@
       ]
     },
     {
+      "id": "sea-sidra",
+      "name": "Gulf of Sidra",
+      "aliases": [
+        "Gulf of Sirte"
+      ],
+      "type": "sea",
+      "country": null,
+      "point": [
+        18.5,
+        31.4
+      ],
+      "spanKm": 450,
+      "basin": "Mediterranean",
+      "borders": [
+        "LBY"
+      ],
+      "significance": "The wide bight in Libya's Mediterranean coast, between Tripoli and Benghazi",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water",
+      "atlas": "world",
+      "regions": [
+        "asia"
+      ]
+    },
+    {
       "id": "sea-tyrrhenian",
       "name": "Tyrrhenian Sea",
       "aliases": [],
@@ -9537,6 +9564,31 @@
       ]
     },
     {
+      "id": "sea-bay-of-plenty",
+      "name": "Bay of Plenty",
+      "aliases": [],
+      "type": "sea",
+      "country": null,
+      "point": [
+        177,
+        -37.6
+      ],
+      "spanKm": 150,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "NZL"
+      ],
+      "significance": "The wide bay on the North Island's north-east coast",
+      "notes": [],
+      "tier": 2,
+      "continent": "World",
+      "section": "water",
+      "atlas": "world",
+      "regions": [
+        "asia"
+      ]
+    },
+    {
       "id": "sea-bismarck",
       "name": "Bismarck Sea",
       "aliases": [],
@@ -10964,6 +11016,32 @@
       "significance": "Separates New Zealand's North and South Islands",
       "notes": [],
       "tier": 1,
+      "continent": "World",
+      "section": "water",
+      "atlas": "world",
+      "regions": [
+        "asia"
+      ]
+    },
+    {
+      "id": "st-foveaux",
+      "name": "Foveaux Strait",
+      "aliases": [],
+      "type": "strait",
+      "country": null,
+      "point": [
+        168.1,
+        -46.7
+      ],
+      "spanKm": 30,
+      "basin": "Pacific Ocean",
+      "borders": [
+        "NZL"
+      ],
+      "connects": "Tasman Sea ↔ Pacific Ocean",
+      "significance": "Separates New Zealand's South Island from Stewart Island",
+      "notes": [],
+      "tier": 2,
       "continent": "World",
       "section": "water",
       "atlas": "world",
