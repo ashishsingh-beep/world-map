@@ -40,7 +40,7 @@
       "title": "Australia (Oceania)",
       "section": "places",
       "atlas": "world",
-      "count": 37
+      "count": 38
     },
     {
       "name": "World",
@@ -7318,6 +7318,23 @@
         -38.8
       ],
       "significance": "New Zealand's largest lake, in the middle of the North Island",
+      "notes": [],
+      "tier": 1,
+      "continent": "Oceania",
+      "section": "places",
+      "atlas": "world"
+    },
+    {
+      "id": "png-port-moresby",
+      "name": "Port Moresby",
+      "aliases": [],
+      "type": "capital",
+      "country": "PNG",
+      "point": [
+        147.1803,
+        -9.4438
+      ],
+      "significance": "Capital of Papua New Guinea, on the south coast of New Guinea",
       "notes": [],
       "tier": 1,
       "continent": "Oceania",
