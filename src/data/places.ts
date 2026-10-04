@@ -16,6 +16,18 @@ export type PlaceType =
   | 'cape'
   /** A stretch of shoreline — the Gold Coast. Drawn as a band, like a range. */
   | 'coast'
+  /** A state or territory within a country — Queensland. An area, from admin-1. */
+  | 'state'
+  /** A lake too small to draw as an area at continental scale — Lake Taupo. */
+  | 'lake'
+  /** A reef — the Great Barrier Reef. An area, from the marine layer. */
+  | 'reef'
+  /**
+   * One of the great divisions of a continent — Melanesia, Micronesia,
+   * Polynesia. Its own section of a places round, apart from capitals and
+   * other places, and drawn as a tinted area.
+   */
+  | 'region'
   /** A country inside a sovereign state — England, Scotland, Wales, Northern Ireland. */
   | 'constituent'
   | 'peak'
@@ -75,6 +87,8 @@ export interface Place {
   belt?: 'trans' | 'greater' | 'lesser' | 'outer'
   /** Hit radius in km. A sea is answered by pointing anywhere in it. */
   spanKm?: number
+  /** A region's own colour, as the notes draw it. */
+  tint?: string
 }
 
 export interface PlaceGroup {
@@ -136,6 +150,10 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   peninsula: 'peninsula',
   cape: 'cape',
   coast: 'coast',
+  state: 'state',
+  lake: 'lake',
+  reef: 'reef',
+  region: 'region',
   constituent: 'constituent country',
   peak: 'peak',
   range: 'range',
@@ -145,15 +163,17 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
 }
 
 /**
- * The two sections a places round is split into: the capitals, and everything
- * else it asks about — cities, ports, islands, island groups, peninsulas,
- * capes, coasts, zones, territories and country facts alike. Not a third bucket for each of
- * those; "other" is deliberately everything a capital is not, so the choice
- * stays the one the setup screen and Learn legend actually offer: capitals,
- * other places, or both.
+ * The sections a places round is split into: the capitals; the great regions a
+ * continent divides into (Melanesia, Micronesia, Polynesia), where it has any;
+ * and everything else it asks about — cities, ports, islands, island groups,
+ * peninsulas, capes, coasts, states, zones, territories alike. Not a bucket
+ * for each of those: "other" is deliberately everything that is neither a
+ * capital nor a region, so the choice stays the one the setup screen and Learn
+ * legend actually offer.
  */
-export type PlaceKind = 'capital' | 'other'
-export const placeKindOf = (type: PlaceType): PlaceKind => (type === 'capital' ? 'capital' : 'other')
+export type PlaceKind = 'capital' | 'other' | 'region'
+export const placeKindOf = (type: PlaceType): PlaceKind =>
+  type === 'capital' ? 'capital' : type === 'region' ? 'region' : 'other'
 
 /** The two notations the Seas & Straits section is built around. */
 export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {

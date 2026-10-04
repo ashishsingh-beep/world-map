@@ -82,7 +82,7 @@ const ADMIN1_URL =
 const ADMIN1_RAW = resolve(CACHE, 'ne_10m_admin_1_states_provinces.geojson')
 
 /** The types that are areas. Everything else in the section is a marker. */
-const AREA_TYPES = new Set(['ocean', 'sea'])
+const AREA_TYPES = new Set(['ocean', 'sea', 'reef'])
 /** Land-region types that are areas rather than a point-and-radius marker. */
 const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
 /**
@@ -92,7 +92,8 @@ const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
  */
 const isLandArea = (p) =>
   LAND_AREA_TYPES.has(p.type) ||
-  (p.type === 'zone' && Boolean(p.land?.length || p.admin1?.length || p.countries?.length))
+  (['zone', 'state', 'island'].includes(p.type) &&
+    Boolean(p.land?.length || p.admin1?.length || p.countries?.length))
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
 const loose = (s) =>
@@ -520,6 +521,10 @@ const PLACE_TYPES = new Set([
   'mine', 'canal', 'zone', 'peninsula', 'cape',
   // A stretch of shoreline — the Gold Coast. A band along it, like a range.
   'coast',
+  // A state within a country, from admin-1; a lake; a reef, from the marine layer
+  'state', 'lake', 'reef',
+  // A continent's great divisions — Melanesia, Micronesia, Polynesia
+  'region',
   // A country within a sovereign state — England, Scotland, Wales, N. Ireland
   'constituent',
   // Indian map: the mountains section
@@ -528,7 +533,7 @@ const PLACE_TYPES = new Set([
   'ocean', 'sea', 'strait',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
-const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal'])
+const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal', 'reef'])
 
 /**
  * Practice regions for the Seas & Straits round, derived from the countries
@@ -786,7 +791,11 @@ const marineRaw = JSON.parse(readFileSync(MARINE_RAW, 'utf8'))
 const marineByName = new Map()
 for (const f of marineRaw.features) {
   const name = f.properties.name
-  if (name) marineByName.set(loose(name), f)
+  if (!name) continue
+  // A name can appear twice — "Great Barrier Reef" is the reef and an empty
+  // second entry — so the one with real extent wins.
+  const prev = marineByName.get(loose(name))
+  if (!prev || geoArea(f) > geoArea(prev)) marineByName.set(loose(name), f)
 }
 
 const marineFeatures = []
@@ -835,7 +844,10 @@ execFileSync(
     // outline is never traced for its coastline, but it does have to look like
     // the sea it is.
     '-simplify', '25%', 'keep-shapes',
-    '-clean',
+    // A reef lies inside its sea — the Great Barrier Reef in the Coral Sea —
+    // and a plain -clean hands the overlap to one of them, leaving the other
+    // an empty outline. The named seas themselves never overlap.
+    '-clean', 'allow-overlaps',
     '-rename-layers', 'marine',
     '-o', 'format=topojson', 'quantization=1e4', 'id-field=id', marineOut,
   ],
@@ -1106,6 +1118,70 @@ if (strayLandLabels.length) {
   for (const e of strayLandLabels) console.error('  ' + e)
   process.exit(1)
 }
+
+/**
+ * The great regions a continent divides into — Melanesia, Micronesia and
+ * Polynesia, with Australia and New Zealand beside them. These are a
+ * convention, not a coastline: no dataset publishes them, and as the union of
+ * their islands they would be invisible specks on a sea. So they are drawn, as
+ * the notes draw them, as a `ring` around each region — the one place outside
+ * the Himalayan ridgelines where geometry is authored by hand — and the build
+ * holds each ring to its `members`: every member country inside its own
+ * region, and none inside another's.
+ *
+ * Rings may run east past 180 (Polynesia reaches Easter Island at 251°E), and
+ * d3-geo reads winding spherically, so a ring the wrong way round is "the whole
+ * globe except this" and is turned before it is written.
+ */
+const regionFeatures = []
+const regionErrors = []
+const regionPlaces = places.filter((p) => p.type === 'region')
+for (const p of regionPlaces) {
+  if (!Array.isArray(p.ring) || p.ring.length < 3) {
+    regionErrors.push(`${p.id}: a region needs a ring of at least three corners`)
+    continue
+  }
+  // Straight on the map, as the notes draw them: d3-geo joins two corners by a
+  // great circle, which on a long edge bows by degrees, so each edge is cut
+  // into steps under 1° that are straight in longitude and latitude.
+  const corners = [...p.ring, p.ring[0]]
+  const ring = [corners[0]]
+  for (let i = 1; i < corners.length; i++) {
+    const [[x0, y0], [x1, y1]] = [corners[i - 1], corners[i]]
+    const steps = Math.ceil(Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)))
+    for (let k = 1; k <= steps; k++) {
+      ring.push([x0 + ((x1 - x0) * k) / steps, y0 + ((y1 - y0) * k) / steps].map((n) => Number(n.toFixed(3))))
+    }
+  }
+  const f = { type: 'Feature', id: p.id, properties: { id: p.id }, geometry: { type: 'Polygon', coordinates: [ring] } }
+  if (geoArea(f) > 2 * Math.PI) f.geometry.coordinates = [[...ring].reverse()]
+  if (!geoContains(f, p.point)) regionErrors.push(`${p.id}: ${p.name}'s point ${p.point} is outside its own ring`)
+  for (const iso of p.members ?? []) {
+    if (!meta[iso]) regionErrors.push(`${p.id}: unknown member "${iso}"`)
+    else if (!geoContains(f, meta[iso].centroid)) {
+      regionErrors.push(`${p.id}: member ${iso} (${meta[iso].centroid}) is outside ${p.name}'s ring`)
+    }
+  }
+  regionFeatures.push(f)
+  delete p.ring
+}
+for (const p of regionPlaces) {
+  for (const iso of p.members ?? []) {
+    if (!meta[iso]) continue
+    for (const f of regionFeatures) {
+      if (f.id !== p.id && geoContains(f, meta[iso].centroid)) {
+        regionErrors.push(`${iso} belongs to ${p.name} but sits inside ${f.id} too`)
+      }
+    }
+  }
+}
+if (regionErrors.length) {
+  console.error(`\nRegions (${regionErrors.length}):`)
+  for (const e of regionErrors) console.error('  ' + e)
+  process.exit(1)
+}
+writeFileSync(resolve(OUT, 'regions.json'), JSON.stringify({ type: 'FeatureCollection', features: regionFeatures }))
+console.log(`Regions: ${regionFeatures.length}, every member inside its own and no other`)
 
 writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))
 

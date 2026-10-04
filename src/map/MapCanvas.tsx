@@ -6,6 +6,7 @@ import 'd3-transition'
 import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
 import { areaOf as waterAreaOf } from '../data/marine'
 import { areaOf as landAreaOf } from '../data/land'
+import { placeById } from '../data/places'
 import { indiaDivides, indiaLand, indiaOutline, stateLines } from '../data/india'
 import { outlineWithoutSeam } from './seam'
 
@@ -596,6 +597,35 @@ export function MapCanvas({
         onClick={handleMapClick}
       >
         <g transform={transform.toString()}>
+          {/* Under the land too: a region of Oceania is mostly ocean with its
+              islands in it, so it tints the sea the way the notes do and leaves
+              the islands — and Australia's states over it — to be read. In the
+              notes' own colour, which is what tells Melanesia from Polynesia. */}
+          {areas?.map((a) => {
+            const tint = placeById.get(a.id)?.tint
+            const f = tint ? landAreaOf(a.id) : null
+            if (!f || !tint) return null
+            const idle = a.state === 'idle'
+            const d = path(f) ?? undefined
+            // A pale wash first: straight onto the cyan sea, red reads as grey
+            // and pink as lavender, and the notes' pastels are lost.
+            return (
+              <Fragment key={`r-${a.id}`}>
+                <path d={d} fill="#ffffff" fillOpacity={0.85} stroke="none" pointerEvents="none" />
+                <path
+                  d={d}
+                  fill={idle ? tint : FILLS[a.state]}
+                  fillOpacity={idle ? 0.32 : 0.7}
+                  stroke={idle ? tint : FILLS[a.state]}
+                  strokeOpacity={0.9}
+                  strokeWidth={idle ? 1.2 : 2}
+                  vectorEffect="non-scaling-stroke"
+                  pointerEvents="none"
+                />
+              </Fragment>
+            )
+          })}
+
           {/* Under the land: a sea's polygon runs up to the coast and beyond it
               in places, and the coastline has to stay the thing you read. */}
           {areas?.map((a) => {
@@ -668,6 +698,8 @@ export function MapCanvas({
             const f = landAreaOf(a.id)
             if (!f) return null
             const idle = a.state === 'idle'
+            // A region is drawn under the land instead, above.
+            if (placeById.get(a.id)?.tint) return null
             return (
               <path
                 key={`la-${a.id}`}

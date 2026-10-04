@@ -9,10 +9,12 @@ country set. 100% frontend, no backend, no accounts.
 npm run dev            # local dev
 npm run build          # production build -> dist/
 npm run data           # regenerate src/data/* from Natural Earth
-npx tsc --noEmit       # typecheck
+npx tsc -b             # typecheck
 ```
 
-Before claiming a change is done: run `npx tsc --noEmit` and `npm run build`.
+Before claiming a change is done: run `npx tsc -b` and `npm run build`. Not
+`npx tsc --noEmit`: the root tsconfig only references the app and node configs,
+so without `-b` it checks no files at all and passes whatever is wrong.
 
 ## Non-negotiables
 
@@ -86,14 +88,17 @@ The Seas &
 Straits round narrows twice — a region (All, Americas, Europe, Asia), then the
 notations within it — and both pick *which set*, not how many of it, and the
 last notation with anything left in the chosen region cannot be unticked. A
-places round (North America, South America, Asia, Europe) narrows once, the same way:
-Capitals or Other places, in Learn and in Practice alike, both backed by the
-one `placeKinds` preference so the choice carries over between them. "Other" is
-deliberately everything a capital is not — cities, ports, islands, island
-groups, peninsulas, zones, territories, country facts — not a third bucket,
-because the choice on offer is capitals, other places, or both, never a longer
-list. `placeKindOf` in `src/data/places.ts` is the one function that decides
-which places a capital is; nothing else may re-derive it.
+places round narrows once, the same way, by section: Capitals, Regions and
+Other places, in Learn and in Practice alike, all backed by the one
+`placeKinds` preference so the choice carries over between them. A round shows
+only the sections it has — Regions is Oceania's alone (Melanesia, Micronesia,
+Polynesia, Australia, New Zealand) — and because one preference backs every
+round, a round none of whose own sections is ticked asks all of them rather
+than nothing. "Other" is deliberately everything that is neither a capital nor
+a region — cities, ports, islands, states, peninsulas, zones, territories — not
+a bucket per type, because the choice on offer stays three at most.
+`placeKindOf` in `src/data/places.ts` is the one function that decides which
+section a place is in; nothing else may re-derive it.
 
 A capital is coloured apart from every other point on a places round's map —
 gold, the cartographic convention, the one colour nothing else already used.
@@ -247,6 +252,31 @@ found a live instance of the winding trap below — mapshaper's `-clip` handed
 back a ring wound the opposite way from its input, and only going through
 TopoJSON (as the rest of this build already does) reads it correctly.
 
+**Oceania's regions are drawn, and held to their members.** Melanesia,
+Micronesia and Polynesia are a convention, not a coastline: no dataset
+publishes them, and as the union of their islands they would be invisible specks
+in the sea. So each is a `ring` of corners as the notes draw it, with Australia
+and New Zealand beside them — the one place outside the Himalayan ridgelines
+where geometry is authored by hand. The build keeps them honest: every country
+in a region's `members` must fall inside its ring and inside no other ring. The
+edges are cut into sub-degree steps so they come out straight on the map, as
+drawn, rather than bowing along great circles; a ring the wrong way round is
+turned, since d3-geo would read it as the whole globe but the region. They go to
+`regions.json`, not through mapshaper, because Polynesia runs east past 180 to
+Easter Island and a planar clean would not survive that. `land.ts` serves them
+with the other land patches. On the map a region is drawn *under* the countries,
+like a sea, in the notes' own colour (`tint`) over a pale wash — straight onto
+the cyan sea, red read as grey — so the islands and Australia's states stay on
+top of it.
+
+Patches nest now on water too: the Great Barrier Reef is a `reef` inside the
+Coral Sea, and a places round can carry its own copy of a sea the Seas & Straits
+round already has (the Alboran, the Coral, the Tasman). The marine layer is
+cleaned with `allow-overlaps` for both reasons; a plain `-clean` handed each
+overlap to one feature, which silently left the Seas round's Alboran Sea with no
+polygon at all. Natural Earth also names the reef twice, once with no extent, so
+a repeated marine name keeps its largest polygon.
+
 **A range is a line with width.** The Himalayan ranges are the one thing here
 that is neither a point nor a polygon, so they are drawn as a band along a
 ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
@@ -317,8 +347,9 @@ The whole app is one map engine plus configuration.
 - `src/data/india.ts` — the Indian map's land: India, the surround, the
   neighbours' dividing lines, and India's own state lines.
 - `src/data/marine.ts` / `src/data/land.ts` — real extents for area-type
-  places, water and land respectively (land: peninsulas and the UK's
-  constituent countries); `src/data/areas.ts` is the combined
+  places, water and land respectively (land: peninsulas, states, islands, the
+  UK's constituent countries, and Oceania's drawn regions from
+  `regions.json`); `src/data/areas.ts` is the combined
   lookup everything except `MapCanvas` should import.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 

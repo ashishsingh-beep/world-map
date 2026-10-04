@@ -40,9 +40,13 @@ export const WATER_REGIONS = [
 
 export type WaterRegion = (typeof WATER_REGIONS)[number]['id']
 
-/** The two sections a places round is split into, used by the setup filter and the Learn legend. */
+/**
+ * The sections a places round is split into, used by the setup filter and the
+ * Learn legend. A round shows only the ones it has: Regions is Oceania's.
+ */
 export const PLACE_KINDS = [
   { kind: 'capital' as const, label: 'Capitals' },
+  { kind: 'region' as const, label: 'Regions' },
   { kind: 'other' as const, label: 'Other places' },
 ]
 
@@ -75,8 +79,18 @@ export function BeltSwatch({ belt }: { belt: Belt }) {
   )
 }
 
-/** The marker as it is drawn on the map: gold for a capital, plain for the rest. */
+/**
+ * The marker as it is drawn on the map: gold for a capital, plain for the
+ * rest, and a patch for a region, which is an area and has no marker.
+ */
 export function PlaceKindSwatch({ kind }: { kind: PlaceKind }) {
+  if (kind === 'region') {
+    return (
+      <svg width="16" height="14" viewBox="0 0 16 14" aria-hidden>
+        <path d="M1 3 L9 1 L15 6 L11 13 L2 11 Z" fill="#22c55e" fillOpacity={0.35} stroke="#16a34a" strokeWidth="1.2" />
+      </svg>
+    )
+  }
   const fill = kind === 'capital' ? SHAPE_FILLS.capital : SHAPE_FILLS.dot
   return (
     <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>

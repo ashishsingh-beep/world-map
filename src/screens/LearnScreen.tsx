@@ -21,8 +21,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
   const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
-  /** Which of a places round's two sections are drawn: capitals, other places, or both. */
-  const [placeKindsShown, setPlaceKindsShown] = useState({ capital: true, other: true })
+  /** Which of a places round's sections are drawn: capitals, regions, other places. */
+  const [placeKindsShown, setPlaceKindsShown] = useState({ capital: true, other: true, region: true })
   const [tricks, setTricks] = useState(false)
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])

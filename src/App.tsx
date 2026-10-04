@@ -82,10 +82,19 @@ export default function App() {
   const inRegion = isWaterRound
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : roundPlaces
+  /**
+   * The sections this round has — Regions is Oceania's alone. One preference
+   * backs every round, so Regions on by itself would leave Europe nothing to
+   * ask; when none of a round's own sections is on, all of them are.
+   */
+  const kindsHere = PLACE_KINDS.map((k) => k.kind).filter((k) =>
+    roundPlaces.some((p) => placeKindOf(p.type) === k)
+  )
+  const kindOn = (k: PlaceKind) => placeKinds[k] || !kindsHere.some((h) => placeKinds[h])
   const asked = isWaterRound
     ? inRegion.filter((p) => kinds[p.type as WaterKind] ?? true)
     : isPlacesRound
-      ? inRegion.filter((p) => placeKinds[placeKindOf(p.type)])
+      ? inRegion.filter((p) => kindOn(placeKindOf(p.type)))
       : inRegion
   // A drill lives only on its play screen: off it — the browser's back button
   // included — the round is its full set again, and every way back in through
@@ -264,11 +273,13 @@ export default function App() {
             {isPlacesRound && (
               <>
                 <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
-                <div className="grid grid-cols-2 gap-3">
+                <div
+                  className={`grid gap-3 ${kindsHere.length > 2 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2'}`}
+                >
                   {PLACE_KINDS.map(({ kind, label }) => {
                     const n = roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
                     if (!n) return null
-                    const on = placeKinds[kind]
+                    const on = kindOn(kind)
                     // Never let the last one be unticked — a round with nothing
                     // to ask is not a round.
                     const last = on && asked.length === n
@@ -283,8 +294,14 @@ export default function App() {
                           type="checkbox"
                           checked={on}
                           disabled={last}
+                          // From what this round shows, not the raw preference,
+                          // so a section it lent back on stays on.
                           onChange={(e) =>
-                            setPlaceKinds((k) => ({ ...k, [kind]: e.target.checked }))
+                            setPlaceKinds((k) => {
+                              const next = { ...k }
+                              for (const h of kindsHere) next[h] = kindOn(h)
+                              return { ...next, [kind]: e.target.checked }
+                            })
                           }
                           className="h-4 w-4 accent-blue-600"
                         />

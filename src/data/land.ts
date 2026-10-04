@@ -1,6 +1,7 @@
 import { feature } from 'topojson-client'
 import type { Feature, Geometry } from 'geojson'
 import topo from './land.topo.json'
+import regionsJson from './regions.json'
 
 /**
  * The real extent of every land region in the syllabus that is drawn as a
@@ -22,7 +23,17 @@ const collection = feature(
   (topo as never as { objects: Record<string, unknown> }).objects.land as never
 ) as unknown as { features: LandFeature[] }
 
-export const landById = new Map(collection.features.map((f) => [f.properties.id, f]))
+/**
+ * The regions a continent divides into (Melanesia, Polynesia…), drawn rather
+ * than taken from a dataset and kept out of the topology for it: a ring that
+ * runs east past 180 would not survive mapshaper's planar cleaning. They are
+ * solid-ground patches to everything that draws or judges them.
+ */
+const regions = regionsJson as unknown as { features: LandFeature[] }
+
+export const landById = new Map(
+  [...collection.features, ...regions.features].map((f) => [f.properties.id, f])
+)
 
 /** The drawn extent of a place, or null when it is a point-and-radius marker. */
 export function areaOf(id: string): LandFeature | null {

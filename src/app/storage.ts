@@ -47,7 +47,7 @@ export const DEFAULT_PREFS: Prefs = {
   suggestions: false,
   kinds: { ocean: true, sea: true, strait: true, canal: true },
   region: 'all',
-  placeKinds: { capital: true, other: true },
+  placeKinds: { capital: true, other: true, region: true },
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -88,7 +88,7 @@ function drop(key: string): void {
 const MODES: Mode[] = ['pin', 'type', 'significance']
 const KINDS: WaterKind[] = ['ocean', 'sea', 'strait', 'canal']
 const REGIONS: WaterRegion[] = ['all', 'america', 'europe', 'asia']
-const PLACE_KIND_IDS: PlaceKind[] = ['capital', 'other']
+const PLACE_KIND_IDS: PlaceKind[] = ['capital', 'other', 'region']
 
 export function loadPrefs(): Prefs {
   const raw = read(PREFS_KEY) as Partial<Prefs> | null

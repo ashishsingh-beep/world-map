@@ -216,12 +216,27 @@ const AFRICA_PLACES_VIEW: BBox = [
   [60, 40],
 ]
 
-/** Whether a country's bounds reach into a frame, minding the antimeridian. */
+/**
+ * Oceania's places frame: the whole of the notes' map, Australia in the west
+ * to the Polynesian triangle's corners at Hawaii and Easter Island, which the
+ * country round's frame stops well short of. Written east past 180.
+ */
+const OCEANIA_PLACES_VIEW: BBox = [
+  [108, -52],
+  [258, 32],
+]
+
+/**
+ * Whether a country's bounds reach into a frame, minding the antimeridian twice
+ * over: a country can wrap it (Fiji, the USA), and so can a frame written east
+ * past 180 (Oceania's), where Samoa at -172 is really at 188.
+ */
 function touches(iso: string, [[w, s], [e, n]]: BBox) {
   const [[cw, cs], [ce, cn]] = metaOf(iso).bounds
   if (cs > n || cn < s) return false
-  if (cw > ce) return ce >= w || cw <= e
-  return ce >= w && cw <= e
+  const overlaps = (a: number, b: number) => b >= w && a <= e
+  if (cw > ce) return overlaps(cw, ce + 360) || overlaps(cw - 360, ce)
+  return overlaps(cw, ce) || overlaps(cw + 360, ce + 360)
 }
 
 /**
@@ -232,6 +247,7 @@ function touches(iso: string, [[w, s], [e, n]]: BBox) {
  */
 const CONTEXT_IN_VIEW: Partial<Record<string, BBox>> = {
   Africa: AFRICA_PLACES_VIEW,
+  Oceania: OCEANIA_PLACES_VIEW,
 }
 
 /**
@@ -243,6 +259,7 @@ const CONTEXT_IN_VIEW: Partial<Record<string, BBox>> = {
 const PLACE_BASE_VIEW: Partial<Record<string, BBox>> = {
   Europe: VIEW_OVERRIDES.europe,
   Africa: AFRICA_PLACES_VIEW,
+  Oceania: OCEANIA_PLACES_VIEW,
 }
 
 function contextIn(name: string): string[] {
