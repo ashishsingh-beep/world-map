@@ -1247,6 +1247,94 @@
       "significance": "Territory disputed between Israel and Syria, occupied by Israel since 1967",
       "notes": [],
       "tier": 1
+    },
+    {
+      "id": "ind-new-delhi",
+      "name": "New Delhi",
+      "aliases": ["Delhi"],
+      "type": "capital",
+      "country": "IND",
+      "point": [77.209, 28.6139],
+      "significance": "Capital of India, on the Yamuna",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "pak-islamabad",
+      "name": "Islamabad",
+      "aliases": [],
+      "type": "capital",
+      "country": "PAK",
+      "point": [73.0479, 33.6844],
+      "significance": "Capital of Pakistan, below the Margalla Hills",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "afg-kabul",
+      "name": "Kabul",
+      "aliases": [],
+      "type": "capital",
+      "country": "AFG",
+      "point": [69.2075, 34.5553],
+      "significance": "Capital of Afghanistan, on the Kabul River",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "npl-kathmandu",
+      "name": "Kathmandu",
+      "aliases": [],
+      "type": "capital",
+      "country": "NPL",
+      "point": [85.324, 27.7172],
+      "significance": "Capital of Nepal, in the Kathmandu Valley",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "btn-thimphu",
+      "name": "Thimphu",
+      "aliases": [],
+      "type": "capital",
+      "country": "BTN",
+      "point": [89.6386, 27.4728],
+      "significance": "Capital of Bhutan, in the Himalayan valley of the Wang Chhu",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "bgd-dhaka",
+      "name": "Dhaka",
+      "aliases": [],
+      "type": "capital",
+      "country": "BGD",
+      "point": [90.4125, 23.8103],
+      "significance": "Capital of Bangladesh, near the Buriganga river",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "lka-kotte",
+      "name": "Sri Jayawardenepura Kotte",
+      "aliases": ["Kotte", "Sri Jayewardenepura Kotte"],
+      "type": "capital",
+      "country": "LKA",
+      "point": [79.9018, 6.8868],
+      "significance": "Official capital of Sri Lanka, a suburb of Colombo",
+      "notes": ["Colombo is the commercial capital"],
+      "tier": 1
+    },
+    {
+      "id": "mdv-male",
+      "name": "Malé",
+      "aliases": ["Male"],
+      "type": "capital",
+      "country": "MDV",
+      "point": [73.5093, 4.1755],
+      "significance": "Capital of the Maldives, on its own island in the North Malé Atoll",
+      "notes": [],
+      "tier": 1
     }
   ]
 }
