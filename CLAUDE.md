@@ -269,13 +269,15 @@ like a sea, in the notes' own colour (`tint`) over a pale wash — straight onto
 the cyan sea, red read as grey — so the islands and Australia's states stay on
 top of it.
 
-Patches nest now on water too: the Great Barrier Reef is a `reef` inside the
-Coral Sea, and a places round can carry its own copy of a sea the Seas & Straits
-round already has (Africa's Alboran). Oceans, seas and straits otherwise belong
-to the Seas & Straits round alone: Oceania's places round carries none. The marine layer is
-cleaned with `allow-overlaps` for both reasons; a plain `-clean` handed each
-overlap to one feature, which silently left the Seas round's Alboran Sea with no
-polygon at all. Natural Earth also names the reef twice, once with no extent, so
+**Oceans, seas, straits and canals live in the Seas & Straits round only.** A
+places round is about sites on land; none carries a water feature, even one its
+notes mention, and the build refuses one in a places syllabus. A reef is not one
+of these: the Great Barrier Reef stays in Oceania's places.
+
+Patches still nest on water: the reef lies inside the Coral Sea. The marine
+layer is cleaned with `allow-overlaps` for that reason; a plain `-clean` handed
+each overlap to one feature, which once left the Seas round's Alboran Sea with
+no polygon at all, when a places round carried a copy of it. Natural Earth also names the reef twice, once with no extent, so
 a repeated marine name keeps its largest polygon.
 
 **A range is a line with width.** The Himalayan ranges are the one thing here

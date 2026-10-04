@@ -5,7 +5,7 @@
       "title": "Africa",
       "section": "places",
       "atlas": "world",
-      "count": 63
+      "count": 60
     },
     {
       "name": "Asia",
@@ -33,7 +33,7 @@
       "title": "North America",
       "section": "places",
       "atlas": "world",
-      "count": 41
+      "count": 40
     },
     {
       "name": "Oceania",
@@ -124,24 +124,6 @@
       "atlas": "world"
     },
     {
-      "id": "egy-suez-canal",
-      "spanKm": 60,
-      "name": "Suez Canal",
-      "aliases": [],
-      "type": "canal",
-      "country": "EGY",
-      "point": [
-        32.35,
-        30.6
-      ],
-      "significance": "Links the Mediterranean to the Red Sea, cutting Sinai off from the rest of Egypt",
-      "notes": [],
-      "tier": 1,
-      "continent": "Africa",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
       "id": "mar-rabat",
       "name": "Rabat",
       "aliases": [],
@@ -218,27 +200,6 @@
       "atlas": "world"
     },
     {
-      "id": "afr-alboran",
-      "marine": [
-        "Alboran Sea"
-      ],
-      "spanKm": 170,
-      "name": "Alboran Sea",
-      "aliases": [],
-      "type": "sea",
-      "country": null,
-      "point": [
-        -3.5,
-        36
-      ],
-      "significance": "Westernmost basin of the Mediterranean, off Morocco's north coast",
-      "notes": [],
-      "tier": 1,
-      "continent": "Africa",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
       "id": "dza-algiers",
       "name": "Algiers",
       "aliases": [],
@@ -302,29 +263,6 @@
         32.1194
       ],
       "significance": "Important port of eastern Libya, on the Gulf of Sidra",
-      "notes": [],
-      "tier": 1,
-      "continent": "Africa",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "afr-sidra",
-      "marine": [
-        "Gulf of Sidra"
-      ],
-      "spanKm": 450,
-      "name": "Gulf of Sidra",
-      "aliases": [
-        "Gulf of Sirte"
-      ],
-      "type": "sea",
-      "country": null,
-      "point": [
-        18.5,
-        31.4
-      ],
-      "significance": "The wide bight in Libya's Mediterranean coast",
       "notes": [],
       "tier": 1,
       "continent": "Africa",
@@ -6392,24 +6330,6 @@
         8.98
       ],
       "significance": "Capital of Panama",
-      "notes": [],
-      "tier": 1,
-      "continent": "North America",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "pan-panama-canal",
-      "name": "Panama Canal",
-      "aliases": [],
-      "type": "canal",
-      "country": "PAN",
-      "point": [
-        -79.7,
-        9.15
-      ],
-      "spanKm": 50,
-      "significance": "Canal cut through Panama to link the Atlantic and the Pacific",
       "notes": [],
       "tier": 1,
       "continent": "North America",

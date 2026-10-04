@@ -705,6 +705,12 @@ for (const file of syllabusFiles) {
     }
 
     const section = doc.section ?? 'places'
+    // Oceans, seas, straits and canals are the Seas & Straits round's alone; a
+    // places round is about sites on land, and a copy there was a second,
+    // competing answer to the same question.
+    if (section === 'places' && ['ocean', 'sea', 'strait', 'canal'].includes(p.type)) {
+      errors.push(`${where(p.id)}: a ${p.type} belongs in the Seas & Straits round, not a places round`)
+    }
     let regions
     if (section === 'water') {
       const found = new Set()

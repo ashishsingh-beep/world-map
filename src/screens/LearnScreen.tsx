@@ -172,10 +172,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         padding={{ top: 88, right: 32, bottom: isPlaceRound ? 170 : 32, left: 32 }}
       />
 
-      {/* One column, not three independently positioned pills: a places round
-          can hold a canal (the Panama Canal is North America's), so the places
-          legend and the water legend can both apply to the same round and
-          would otherwise sit on top of each other. */}
+      {/* One column, not three independently positioned pills, so that if a
+          round ever needs two legends they stack rather than sit on top of
+          each other. */}
       <div className="pointer-events-none absolute inset-x-0 top-20 flex flex-col items-center gap-2 px-4">
         {belts.length > 0 && (
           <div className="flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-3 py-1.5 shadow-lg">
