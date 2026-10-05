@@ -21,7 +21,7 @@
       "type": "region",
       "country": null,
       "point": [150, 12],
-      "significance": "The 'small islands' north of the equator — Palau, the Federated States of Micronesia, the Marshall Islands, Nauru and Kiribati",
+      "significance": "The 'small islands' north of the equator — Palau, the Marshall Islands, Nauru, Kiribati and their neighbours",
       "notes": [],
       "tier": 1
     },
@@ -63,7 +63,7 @@
       "type": "region",
       "country": null,
       "point": [134, -25],
-      "significance": "The continent of Australia and Tasmania",
+      "significance": "The world's smallest continent, with the island of Tasmania off its south-east",
       "notes": [],
       "tier": 1
     },
@@ -90,7 +90,7 @@
       "type": "state",
       "country": "AUS",
       "point": [122, -25.5],
-      "significance": "Australia's largest state, the whole western third",
+      "significance": "Australia's largest state, a third of the continent, and its mining heartland — Pilbara iron ore and Goldfields gold",
       "notes": [],
       "tier": 1
     },
@@ -103,7 +103,7 @@
       "type": "state",
       "country": "AUS",
       "point": [135.5, -30],
-      "significance": "State on the Great Australian Bight",
+      "significance": "The driest state, on the Great Australian Bight — Barossa Valley wine, and the uranium of Olympic Dam",
       "notes": [],
       "tier": 1
     },
@@ -116,7 +116,7 @@
       "type": "state",
       "country": "AUS",
       "point": [133.5, -19.5],
-      "significance": "Territory in the north centre, from Darwin to Alice Springs",
+      "significance": "A self-governing territory, not a state — the tropical Top End around Darwin and the Red Centre around Uluru",
       "notes": [],
       "tier": 1
     },
@@ -129,7 +129,7 @@
       "type": "state",
       "country": "AUS",
       "point": [144.5, -22.5],
-      "significance": "North-eastern state, from Cape York to Brisbane",
+      "significance": "The Sunshine State — the Great Barrier Reef, sugarcane along the coast, and coal from the Bowen Basin",
       "notes": [],
       "tier": 1
     },
@@ -142,7 +142,7 @@
       "type": "state",
       "country": "AUS",
       "point": [146.5, -32.5],
-      "significance": "South-eastern state, around Sydney",
+      "significance": "Australia's most populous state and its first colony, founded at Sydney Cove in 1788",
       "notes": [],
       "tier": 1
     },
@@ -155,7 +155,7 @@
       "type": "state",
       "country": "AUS",
       "point": [144, -37],
-      "significance": "South-eastern state, around Melbourne",
+      "significance": "The smallest mainland state and the most densely peopled",
       "notes": [],
       "tier": 1
     },
@@ -168,7 +168,7 @@
       "type": "state",
       "country": "AUS",
       "point": [146.6, -42],
-      "significance": "Australia's island state, south of Victoria",
+      "significance": "Australia's island state across the Bass Strait — mountainous, forested, and run largely on hydroelectric power",
       "notes": ["Island state"],
       "tier": 1
     },
@@ -179,7 +179,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [149.13, -35.2809],
-      "significance": "Capital of Australia, inland between Sydney and Melbourne",
+      "significance": "Capital of Australia — a planned city, built as the compromise between rivals Sydney and Melbourne",
       "notes": [],
       "tier": 1
     },
@@ -190,7 +190,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [115.8605, -31.9505],
-      "significance": "Capital of Western Australia, on the Indian Ocean",
+      "significance": "Capital of Western Australia, among the most isolated big cities in the world, with its port at Fremantle",
       "notes": ["Port"],
       "tier": 1
     },
@@ -201,7 +201,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [138.6007, -34.9285],
-      "significance": "Capital of South Australia",
+      "significance": "Capital of South Australia, on Gulf St Vincent — gateway to the Barossa Valley wine country",
       "notes": [],
       "tier": 1
     },
@@ -212,7 +212,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [130.8456, -12.4634],
-      "significance": "Capital of the Northern Territory, on the Timor Sea",
+      "significance": "Capital of the Northern Territory, on the Timor Sea — Australia's closest city to Asia",
       "notes": ["Front Door"],
       "tier": 1
     },
@@ -223,7 +223,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [153.0251, -27.4698],
-      "significance": "Capital of Queensland",
+      "significance": "Capital of Queensland and Australia's third-largest city",
       "notes": [],
       "tier": 1
     },
@@ -234,7 +234,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [151.2093, -33.8688],
-      "significance": "Capital of New South Wales",
+      "significance": "Capital of New South Wales and Australia's largest city — the Opera House and Harbour Bridge on Port Jackson",
       "notes": [],
       "tier": 1
     },
@@ -245,7 +245,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [144.9631, -37.8136],
-      "significance": "Capital of Victoria",
+      "significance": "Capital of Victoria and Australia's second city, on Port Phillip Bay — seat of the national government from 1901 to 1927",
       "notes": [],
       "tier": 1
     },
@@ -256,7 +256,7 @@
       "type": "capital",
       "country": "AUS",
       "point": [147.3272, -42.8821],
-      "significance": "Capital of Tasmania",
+      "significance": "Capital of Tasmania, on the Derwent estuary — Australia's gateway to Antarctica",
       "notes": [],
       "tier": 1
     },
@@ -267,7 +267,7 @@
       "type": "port",
       "country": "AUS",
       "point": [145.7781, -16.9186],
-      "significance": "Queensland port beside the Great Barrier Reef",
+      "significance": "Tropical port and the main gateway to the Great Barrier Reef — the tourism hub of far north Queensland",
       "notes": [],
       "tier": 1
     },
@@ -278,7 +278,7 @@
       "type": "port",
       "country": "AUS",
       "point": [146.8169, -19.259],
-      "significance": "Queensland port beside the Great Barrier Reef",
+      "significance": "North Queensland's largest city and port — ships out Mount Isa's copper, lead and zinc, and sugar; headquarters of the Great Barrier Reef Marine Park Authority",
       "notes": [],
       "tier": 1
     },
@@ -289,7 +289,7 @@
       "type": "city",
       "country": "AUS",
       "point": [133.8807, -23.698],
-      "significance": "Town in the heart of the outback, in the Northern Territory",
+      "significance": "The Red Centre's town, near the middle of the continent — gateway to Uluru, and the halfway stop of the Ghan railway between Adelaide and Darwin",
       "notes": [],
       "tier": 1
     },
@@ -300,7 +300,7 @@
       "type": "city",
       "country": "AUS",
       "point": [121.4656, -30.7489],
-      "significance": "Inland town of Western Australia, east of Perth",
+      "significance": "Gold-rush town of the Goldfields, still mining — home of the Super Pit, one of Australia's biggest open-cut gold mines",
       "notes": [],
       "tier": 1
     },
@@ -313,7 +313,7 @@
       "type": "peninsula",
       "country": "AUS",
       "point": [142.8, -13.5],
-      "significance": "Australia's northern tip, between the Gulf of Carpentaria and the Coral Sea",
+      "significance": "Australia's northernmost point, between the Gulf of Carpentaria and the Coral Sea — its tip looks across the Torres Strait to New Guinea",
       "notes": [],
       "tier": 1
     },
@@ -339,7 +339,7 @@
       "type": "island",
       "country": "NZL",
       "point": [175.6, -38.6],
-      "significance": "New Zealand's northern island, home to Auckland and Wellington",
+      "significance": "New Zealand's volcanic island, home to three in four New Zealanders — and to Auckland and the capital, Wellington",
       "notes": [],
       "tier": 1
     },
@@ -352,7 +352,7 @@
       "type": "island",
       "country": "NZL",
       "point": [170.5, -43.8],
-      "significance": "New Zealand's larger island, crossed by the Southern Alps",
+      "significance": "New Zealand's larger, mountainous island — glaciers, fiords and the sheep and wheat country of Canterbury",
       "notes": [],
       "tier": 1
     },
@@ -365,7 +365,7 @@
       "type": "island",
       "country": "NZL",
       "point": [167.95, -47.0],
-      "significance": "Island south of the South Island, across the Foveaux Strait",
+      "significance": "New Zealand's third island, across the Foveaux Strait — almost all of it the Rakiura National Park",
       "notes": [],
       "tier": 1
     },
@@ -376,7 +376,7 @@
       "type": "capital",
       "country": "NZL",
       "point": [174.7762, -41.2865],
-      "significance": "Capital of New Zealand, at the southern tip of the North Island on the Cook Strait",
+      "significance": "Capital of New Zealand, on the Cook Strait — the southernmost capital of any sovereign state",
       "notes": [],
       "tier": 1
     },
@@ -398,7 +398,7 @@
       "type": "port",
       "country": "NZL",
       "point": [172.7206, -43.6033],
-      "significance": "Port of Christchurch, on Banks Peninsula",
+      "significance": "Port of Christchurch, in a drowned volcanic crater on Banks Peninsula — the South Island's busiest port",
       "notes": [],
       "tier": 1
     },
@@ -411,7 +411,7 @@
       "type": "peninsula",
       "country": "NZL",
       "point": [172.95, -43.75],
-      "significance": "Volcanic peninsula on the South Island's east coast",
+      "significance": "Peninsula of two worn-down volcanoes on the South Island's east coast, sheltering Lyttelton's harbour",
       "notes": [],
       "tier": 1
     },
@@ -422,7 +422,7 @@
       "type": "capital",
       "country": "PNG",
       "point": [147.1803, -9.4438],
-      "significance": "Capital of Papua New Guinea, on the south coast of New Guinea",
+      "significance": "Capital and largest city of Papua New Guinea, on the Coral Sea coast",
       "notes": [],
       "tier": 1
     }
