@@ -409,7 +409,7 @@
       "type": "city",
       "country": "JPN",
       "point": [136.9066, 35.1815],
-      "significance": "Gives its name to the Nagoya Protocol, the 2010 treaty on sharing genetic resources",
+      "significance": "Host city of the 2010 treaty on access to genetic resources and sharing their benefits",
       "notes": [],
       "tier": 1
     },
@@ -420,7 +420,7 @@
       "type": "city",
       "country": "JPN",
       "point": [135.7681, 35.0116],
-      "significance": "Gives its name to the Kyoto Protocol, the 1997 climate treaty",
+      "significance": "Host city of the 1997 climate treaty that first set binding emission cuts for rich countries",
       "notes": [],
       "tier": 1
     },
@@ -1277,7 +1277,7 @@
       "type": "capital",
       "country": "AFG",
       "point": [69.2075, 34.5553],
-      "significance": "Capital of Afghanistan, on the Kabul River",
+      "significance": "Capital of Afghanistan, high in a valley below the Hindu Kush",
       "notes": [],
       "tier": 1
     },
@@ -1288,7 +1288,7 @@
       "type": "capital",
       "country": "NPL",
       "point": [85.324, 27.7172],
-      "significance": "Capital of Nepal, in the Kathmandu Valley",
+      "significance": "Capital of Nepal, in a Himalayan valley of seven World Heritage monument zones",
       "notes": [],
       "tier": 1
     },
@@ -1332,7 +1332,7 @@
       "type": "capital",
       "country": "MDV",
       "point": [73.5093, 4.1755],
-      "significance": "Capital of the Maldives, on its own island in the North Malé Atoll",
+      "significance": "Capital of the Maldives — one of the most densely packed cities on earth, on a single small coral island",
       "notes": [],
       "tier": 1
     }

@@ -20,7 +20,7 @@
       "type": "capital",
       "country": "NOR",
       "point": [10.7522, 59.9139],
-      "significance": "Capital of Norway, at the head of the Oslofjord",
+      "significance": "Capital of Norway, at the head of its fjord — where the Nobel Peace Prize is awarded",
       "notes": [],
       "tier": 1
     },
@@ -254,7 +254,7 @@
       "type": "city",
       "country": "DEU",
       "point": [7.0982, 50.7374],
-      "significance": "Bonn Convention — on the conservation of migratory species",
+      "significance": "Former West German capital, whose 1979 convention protects migratory species of wild animals",
       "notes": [
         "Former capital of West Germany, on the Rhine"
       ],
@@ -346,7 +346,7 @@
       "type": "capital",
       "country": "LUX",
       "point": [6.1319, 49.6116],
-      "significance": "Capital of Luxembourg",
+      "significance": "Capital of the Grand Duchy and a seat of EU institutions — the Court of Justice and the European Investment Bank",
       "notes": [],
       "tier": 1
     },
@@ -781,7 +781,7 @@
       "type": "capital",
       "country": "LVA",
       "point": [24.1052, 56.9496],
-      "significance": "Capital of Latvia, on the Gulf of Riga",
+      "significance": "Capital of Latvia and the largest city of the Baltic states, at the mouth of the Daugava",
       "notes": [],
       "tier": 1
     },

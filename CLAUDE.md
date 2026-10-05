@@ -109,6 +109,13 @@ untouched by this: a peninsula with real geometry is still a patch, still
 orange, still never a capital — this only reaches the *dot* markers, coloured
 by which of the two sections they belong to rather than left uniformly white.
 
+**A significance says why a place matters, never just where it is.** It is
+the line on every Learn card and the whole clue in Why mode, so "Town in the
+heart of the outback" taught nothing: Alice Springs is the gateway to Uluru and
+the Ghan's halfway stop, and that is what the clue says now. Nor may it name its
+own answer — "Capital of Djibouti", "on the Brisbane River" — and the build
+refuses one that contains the place's name or an alias.
+
 **A country does not belong in the places section, even as a fact.** A places
 round is about specific sites inside a country — its capital, a port, an
 island — never the country itself; the World Map's country round is already

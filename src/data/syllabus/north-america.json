@@ -68,7 +68,7 @@
       "type": "city",
       "country": "CAN",
       "point": [-73.57, 45.5],
-      "significance": "Montreal Protocol — the treaty protecting the ozone layer",
+      "significance": "Quebec's largest city, where the 1987 treaty to protect the ozone layer was signed",
       "notes": [],
       "tier": 1
     },
@@ -475,7 +475,7 @@
       "country": "CAN",
       "point": [-73.5, 60.5],
       "spanKm": 320,
-      "significance": "Northern tip of Quebec, between Hudson Bay and Ungava Bay",
+      "significance": "Quebec's Arctic peninsula, between Hudson Bay and the Hudson Strait — tundra homeland of Nunavik's Inuit",
       "notes": ["Hudson Strait runs along its north, joining Hudson Bay to the Atlantic"],
       "tier": 2
     },

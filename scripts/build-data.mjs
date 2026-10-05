@@ -650,6 +650,14 @@ for (const file of syllabusFiles) {
 
     if (!PLACE_TYPES.has(p.type)) errors.push(`${where(p.id)}: unknown type "${p.type}"`)
     if (!p.significance) errors.push(`${where(p.id)}: missing significance`)
+    // The significance is Why mode's clue: one that names its own answer —
+    // "Capital of Djibouti", "on the Brisbane River" — asks nothing.
+    for (const n of [p.name, ...(p.aliases ?? [])]) {
+      if (n.length > 3 && p.significance?.toLowerCase().includes(n.toLowerCase())) {
+        errors.push(`${where(p.id)}: significance names its own answer ("${n}")`)
+        break
+      }
+    }
     for (const iso of [p.country, p.sovereign, ...(p.borders ?? [])]) {
       if (iso && !meta[iso]) errors.push(`${where(p.id)}: unknown ISO "${iso}"`)
     }

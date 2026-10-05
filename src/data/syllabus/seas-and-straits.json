@@ -1008,7 +1008,7 @@
       "spanKm": 520,
       "basin": "Pacific Ocean",
       "borders": ["JPN", "KOR", "PRK", "RUS"],
-      "significance": "Marginal sea walled off by the Japanese islands; Korea calls it the East Sea",
+      "significance": "Marginal sea walled off from the Pacific by the Japanese islands, between Japan, Korea and Russia — its name disputed by Korea",
       "notes": [],
       "tier": 1
     },
@@ -1462,7 +1462,7 @@
       "basin": "Baltic Sea",
       "borders": ["DNK", "SWE"],
       "connects": "Kattegat ↔ Baltic Sea",
-      "significance": "Copenhagen's strait, crossed by the Øresund bridge-tunnel to Malmö",
+      "significance": "Copenhagen's strait, crossed by the bridge-and-tunnel link to Malmö — Denmark's channel into the Baltic",
       "notes": [],
       "tier": 2
     },
