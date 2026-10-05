@@ -358,12 +358,16 @@ the Mahabharat, Nag Tibba, Mussoorie or Kumaon — which is most of what the not
 teach. They live in the syllabus as `line`, and the build derives each range's
 label anchor from the middle of it.
 
-**Auto-zoom fires on reveal only** — never while a question is being asked, or
-the camera gives the answer away. The one exception is Type mode on water, where
-the sea is painted and its place is the clue, not the answer: a sea under 30px on
-the unzoomed map (`SMALL_SEA_PX` — the Gulf of Kutch is 6px, the Gulf of Suez 11)
-is zoomed to while asked, with four times its own size and at least 20° of map
-around it so there are coasts to know it by. Each such question starts from the
+**Auto-zoom fires on reveal only** — never while a Pin-mode question is being
+asked, or the camera gives the answer away. The one exception is Type mode, where
+the thing is painted and its place is the clue, not the answer: a sea, country or
+place under 30px on the unzoomed map (`SMALL_SEA_PX` — the Gulf of Kutch is 6px,
+Eswatini a few, a capital's dot none at all) is zoomed to while asked, with four
+times its own size and at least 20° of map around it so there are coasts and
+neighbours to know it by. On the Political Map a country is measured by its
+bounds, so Madagascar stays where it is and an archipelago spread over 25° —
+the Federated States of Micronesia — keeps its ring rather than a zoom; the
+Seas round still focuses seas only, never a strait's marker. Each such question starts from the
 whole map, so the last reveal's zoom is undone first. A wrong tap is framed with the answer so you
 see how far off it was, except on water: a tap in the Caribbean for the Arabian
 Sea framed half the world and the sea never came into view. A sea is framed by

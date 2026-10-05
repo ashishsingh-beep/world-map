@@ -452,8 +452,8 @@ export function MapCanvas({
   )
 
   /**
-   * The camera. It moves on reveal, and otherwise only for a small sea painted
-   * by a Type-mode question — never while a Pin-mode question is being asked,
+   * The camera. It moves on reveal, and otherwise only for something small
+   * painted by a Type-mode question — never while a Pin-mode question is being asked,
    * where the camera would hand the player the answer.
    */
   useEffect(() => {
@@ -489,8 +489,8 @@ export function MapCanvas({
       return
     }
 
-    // A Type-mode sea too small to find at this scale: frame it with its
-    // coasts around it, so it can be seen and still recognised. Back to the
+    // A Type-mode sea, country or place too small to find at this scale:
+    // frame it with its surroundings, so it can be seen and still recognised. Back to the
     // whole map first if the last reveal left the camera zoomed, so each
     // question starts from the same place.
     const fr = focusPoints?.length ? frameOf(focusPoints) : null

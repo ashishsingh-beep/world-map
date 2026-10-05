@@ -131,10 +131,25 @@ function frameOf(q: Question): [number, number][] | null {
   const line = q.place?.line
   if (line) return line as [number, number][]
   const area = q.iso ? null : areaOf(q.id)
-  if (!area) return null
-  const [[w, s], [e0, n]] = geoBounds(area)
+  return area ? boundsFrame(geoBounds(area)) : null
+}
+
+function boundsFrame([[w, s], [e0, n]]: [[number, number], [number, number]]): [number, number][] {
   const e = e0 < w ? e0 + 360 : e0
   return [0, 1, 2, 3, 4, 5].map((i): [number, number] => [w + ((e - w) * i) / 5, s + ((n - s) * i) / 5])
+}
+
+/**
+ * What a Type-mode question on the Political Map is framed by while it is
+ * asked: its area, its coast's line, its point, or the country's own bounds.
+ * `MapCanvas` zooms only when that is too small to find unzoomed — Eswatini,
+ * Lesotho, a capital's dot — so a large one is shown where it already is.
+ */
+function focusOf(q: Question): [number, number][] {
+  const frame = frameOf(q)
+  if (frame) return frame
+  const f = q.iso ? featureByIso.get(q.iso) : null
+  return f ? boundsFrame(geoBounds(f)) : [q.point]
 }
 
 /** One question the player got wrong or skipped, with what the map needs to show it. */
@@ -537,14 +552,22 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
         : null,
     /**
      * The one time the camera may move while a question is up. In Type mode the
-     * sea is painted, so where it is is the clue, not the answer — and a small
-     * one is a few pixels at world scale, hunted for before it can be named.
-     * `MapCanvas` decides whether it is small enough to need it.
+     * sea, country or place is painted, so where it is is the clue, not the
+     * answer — and a small one is a few pixels at world scale, hunted for
+     * before it can be named. `MapCanvas` decides whether it is small enough
+     * to need it. Never in Pin mode, where the camera would give it away.
      */
     focusPoints:
-      phase === 'asking' && mode === 'type' && currentArea && current?.place?.section === 'water'
-        ? areaFrame()
-        : null,
+      phase !== 'asking' || mode !== 'type' || !current
+        ? null
+        : current.place?.section === 'water'
+          ? currentArea
+            ? areaFrame()
+            : null
+          : // The Political Map: a country, or a place in the places section.
+            !current.place || current.place.section === 'places'
+            ? focusOf(current)
+            : null,
     pinIso: revealing && verdict === 'incorrect' && current.iso ? current.iso : null,
     // No pin on a sea: the painted region already says where it was, and a pin
     // in the middle of it would only re-assert the point this replaced.
