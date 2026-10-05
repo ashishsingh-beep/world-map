@@ -602,7 +602,8 @@ export function MapCanvas({
               the islands — and Australia's states over it — to be read. In the
               notes' own colour, which is what tells Melanesia from Polynesia. */}
           {areas?.map((a) => {
-            const tint = placeById.get(a.id)?.tint
+            const place = placeById.get(a.id)
+            const tint = place?.onLand ? undefined : place?.tint
             const f = tint ? landAreaOf(a.id) : null
             if (!f || !tint) return null
             const idle = a.state === 'idle'
@@ -698,15 +699,18 @@ export function MapCanvas({
             const f = landAreaOf(a.id)
             if (!f) return null
             const idle = a.state === 'idle'
-            // A region is drawn under the land instead, above.
-            if (placeById.get(a.id)?.tint) return null
+            // A region over the sea is drawn under the land instead, above;
+            // one on land keeps its own colour here.
+            const place = placeById.get(a.id)
+            if (place?.tint && !place.onLand) return null
+            const ink = place?.tint ?? '#c2410c'
             return (
               <path
                 key={`la-${a.id}`}
                 d={path(f) ?? undefined}
-                fill={idle ? '#c2410c' : FILLS[a.state]}
+                fill={idle ? ink : FILLS[a.state]}
                 fillOpacity={idle ? 0.32 : 0.75}
-                stroke={idle ? '#c2410c' : FILLS[a.state]}
+                stroke={idle ? ink : FILLS[a.state]}
                 strokeOpacity={idle ? 0.55 : 0.9}
                 strokeWidth={idle ? 1 : 1.6}
                 vectorEffect="non-scaling-stroke"

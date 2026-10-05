@@ -334,13 +334,16 @@
     },
     {
       "id": "sa-lithium-triangle-zone",
+      "ring": [[-67.49, -20.13], [-66.95, -25.37], [-68.25, -23.5]],
+      "tint": "#14b8a6",
+      "onLand": true,
       "name": "Lithium Triangle",
       "aliases": ["Lithium Triangle ABC"],
       "type": "zone",
       "country": null,
-      "point": [-67.0, -23.0],
+      "point": [-67.56, -23.0],
       "significance": "World's largest lithium reserves, spanning Argentina, Bolivia and Chile",
-      "notes": ["Mnemonic: ABC — Argentina, Bolivia, Chile"],
+      "notes": ["Mnemonic: ABC — Argentina, Bolivia, Chile", "Its corners are the salt flats of Uyuni (Bolivia), Atacama (Chile) and Hombre Muerto (Argentina)"],
       "tier": 1
     }
   ]

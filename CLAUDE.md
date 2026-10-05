@@ -304,7 +304,11 @@ turned, since d3-geo would read it as the whole globe but the region. They go to
 `regions.json`, not through mapshaper, because Polynesia runs east past 180 to
 Easter Island and a planar clean would not survive that. Any other area that is
 a convention defined by its corners takes a `ring` the same way: the Bermuda
-Triangle is a zone whose ring is Miami, Bermuda and San Juan. `land.ts` serves them
+Triangle is a zone whose ring is Miami, Bermuda and San Juan, and the Lithium
+Triangle one whose ring is the salt flats of Uyuni, Atacama and Hombre Muerto.
+The Lithium Triangle lies wholly on land, where a patch drawn under the
+countries would be hidden by them, so it sets `onLand` and is drawn over them in
+its own tint, as a peninsula is. `land.ts` serves them
 with the other land patches. On the map a region is drawn *under* the countries,
 like a sea, in the notes' own colour (`tint`) over a pale wash — straight onto
 the cyan sea, red read as grey — so the islands and Australia's states stay on

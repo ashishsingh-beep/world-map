@@ -90,6 +90,11 @@ export interface Place {
   /** A region's own colour, as the notes draw it. */
   tint?: string
   /**
+   * A tinted patch that lies on land — the Lithium Triangle — and so is drawn
+   * over the countries, like a peninsula, not under them like a sea region.
+   */
+  onLand?: boolean
+  /**
    * A capital of a state or constituent country — Perth, Edinburgh — rather
    * than of the country itself. Still under Capitals; never in the country's
    * own Why-mode clue.
