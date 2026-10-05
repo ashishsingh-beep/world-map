@@ -40,7 +40,7 @@
       "title": "Australia (Oceania)",
       "section": "places",
       "atlas": "world",
-      "count": 38
+      "count": 34
     },
     {
       "name": "World",
@@ -7238,86 +7238,6 @@
         -43.75
       ],
       "significance": "Volcanic peninsula on the South Island's east coast",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "nzl-canterbury-plains",
-      "spanKm": 100,
-      "name": "Canterbury Plains",
-      "aliases": [],
-      "type": "zone",
-      "country": "NZL",
-      "point": [
-        171.9,
-        -43.8
-      ],
-      "significance": "The South Island's farming plain, east of the Southern Alps",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "nzl-southern-alps",
-      "land": [
-        "SOUTHERN ALPS"
-      ],
-      "spanKm": 300,
-      "name": "Southern Alps",
-      "aliases": [],
-      "type": "zone",
-      "country": "NZL",
-      "point": [
-        170.3,
-        -43.6
-      ],
-      "significance": "The mountain chain along the South Island",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "nzl-mt-cook",
-      "name": "Mt Cook",
-      "aliases": [
-        "Mount Cook",
-        "Aoraki",
-        "Aoraki / Mount Cook"
-      ],
-      "type": "peak",
-      "country": "NZL",
-      "point": [
-        170.1418,
-        -43.595
-      ],
-      "elevationM": 3724,
-      "significance": "New Zealand's highest peak, in the Southern Alps",
-      "notes": [],
-      "tier": 1,
-      "continent": "Oceania",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "nzl-lake-taupo",
-      "name": "Lake Taupo",
-      "aliases": [
-        "Taupo"
-      ],
-      "type": "lake",
-      "country": "NZL",
-      "point": [
-        175.9,
-        -38.8
-      ],
-      "significance": "New Zealand's largest lake, in the middle of the North Island",
       "notes": [],
       "tier": 1,
       "continent": "Oceania",
