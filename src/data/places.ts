@@ -89,6 +89,12 @@ export interface Place {
   spanKm?: number
   /** A region's own colour, as the notes draw it. */
   tint?: string
+  /**
+   * A capital of a state or constituent country — Perth, Edinburgh — rather
+   * than of the country itself. Still under Capitals; never in the country's
+   * own Why-mode clue.
+   */
+  subnational?: boolean
 }
 
 export interface PlaceGroup {
@@ -129,6 +135,31 @@ export const placeGroups: PlaceGroup[] = doc.groups
 
 export const placeById = new Map(places.map((p) => [p.id, p]))
 
+/**
+ * A country's national capitals, from the places syllabi: one for most, more
+ * where a country has several (South Africa's three, Bolivia's two), none for a
+ * country no syllabus has reached yet.
+ */
+const capitalsByIso = new Map<string, string[]>()
+for (const p of places) {
+  if (p.type !== 'capital' || p.subnational || !p.country) continue
+  capitalsByIso.set(p.country, [...(capitalsByIso.get(p.country) ?? []), p.name])
+}
+
+/** A country's national capitals, by name, for its Learn card. */
+export const capitalsOf = (iso: string): string[] => capitalsByIso.get(iso) ?? []
+
+/**
+ * A country's Why-mode clue: "Country with capital Nairobi". Null when no
+ * syllabus names its capital yet, and Why mode leaves that country out.
+ */
+export function countryClue(iso: string): string | null {
+  const caps = capitalsByIso.get(iso)
+  if (!caps?.length) return null
+  if (caps.length === 1) return `Country with capital ${caps[0]}`
+  return `Country with capitals ${caps.slice(0, -1).join(', ')} and ${caps[caps.length - 1]}`
+}
+
 export function placeOf(id: string): Place {
   const p = placeById.get(id)
   if (!p) throw new Error(`Unknown place: ${id}`)
@@ -163,7 +194,8 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
 }
 
 /**
- * The sections a places round is split into: the capitals; the great regions a
+ * The sections a Political Map round is split into: the countries themselves
+ * (never a place — `placeKindOf` does not return it); the capitals; the great regions a
  * continent divides into (Melanesia, Micronesia, Polynesia), where it has any;
  * and everything else it asks about — cities, ports, islands, island groups,
  * peninsulas, capes, coasts, states, zones, territories alike. Not a bucket
@@ -171,7 +203,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
  * capital nor a region, so the choice stays the one the setup screen and Learn
  * legend actually offer.
  */
-export type PlaceKind = 'capital' | 'other' | 'region'
+export type PlaceKind = 'country' | 'capital' | 'other' | 'region'
 export const placeKindOf = (type: PlaceType): PlaceKind =>
   type === 'capital' ? 'capital' : type === 'region' ? 'region' : 'other'
 

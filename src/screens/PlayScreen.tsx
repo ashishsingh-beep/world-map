@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, placeOf } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH, countryClue, placeOf } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
 import {
   QUESTION_SECONDS,
@@ -115,7 +115,7 @@ export function PlayScreen({
           areas: quiz.areas,
           bands: quiz.bands,
           // The water round keeps its country rings off, as it does in play.
-          countryMarkers: !(round.places && placeOf(round.places[0])?.section === 'water'),
+          countryMarkers: !(round.places?.length && placeOf(round.places[0])?.section === 'water'),
         }}
         missed={quiz.missed}
         onPractiseMissed={
@@ -131,16 +131,25 @@ export function PlayScreen({
   }
 
   const q = quiz.current
-  const isPlaceRound = !!round.places
+  const isPlaceRound = !!round.places?.length
+  /** A Political Map round asks countries and places together. */
+  const isMixed = isPlaceRound && round.askable.length > 0
   const isWaterRound = q?.place?.section === 'water'
   const country = q?.iso ? metaOf(q.iso) : null
+  /**
+   * A country question answers to a tap on the country — its polygon or its
+   * micro-state ring — and a place question to the marker or area under the
+   * tap. In a mixed round the map switches with the question, so the Vatican's
+   * ring still answers "Vatican City" and a tap on Italy never answers "Rome".
+   */
+  const asksCountry = !!q && !q.place
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-[#22cdfb]">
       <MapCanvas
         className="absolute inset-0"
         render={round.render}
-        askable={mode === 'pin' ? round.askable : []}
+        askable={mode === 'pin' && asksCountry ? round.askable : []}
         view={round.view}
         states={quiz.states}
         revealIso={quiz.revealIso}
@@ -155,7 +164,7 @@ export function PlayScreen({
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
         countryMarkers={!isWaterRound}
-        onPickPoint={isPlaceRound && mode === 'pin' ? quiz.pickPoint : undefined}
+        onPickPoint={isPlaceRound && mode === 'pin' && !asksCountry ? quiz.pickPoint : undefined}
         padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />
 
@@ -206,16 +215,16 @@ export function PlayScreen({
         {mode === 'significance' && (
           <div className="max-w-2xl rounded-2xl bg-white px-6 py-4 text-center shadow-xl">
             <div className="text-[10px] font-bold tracking-widest text-slate-400">
-              WHICH PLACE IS THIS?
+              {asksCountry ? 'WHICH COUNTRY IS THIS?' : 'WHICH PLACE IS THIS?'}
             </div>
             <div className="mt-1 text-lg leading-snug font-extrabold text-slate-900">
-              {q?.place?.significance}
+              {q?.place ? q.place.significance : q?.iso ? countryClue(q.iso) : null}
             </div>
           </div>
         )}
         {mode === 'pin' ? (
           <div className="flex items-center gap-3 rounded-full bg-white px-7 py-3 shadow-xl">
-            {!isPlaceRound && country && (
+            {asksCountry && country && (
               <span className="text-3xl leading-none">{flagEmoji(country.iso2)}</span>
             )}
             {q?.place && WATER_GLYPH[q.place.type] && (
@@ -226,6 +235,11 @@ export function PlayScreen({
               <span className="text-sm font-bold tracking-wide text-slate-400 uppercase">
                 {TYPE_LABEL[q.place.type]}
               </span>
+            )}
+            {/* Said outright in a mixed round, where Singapore or Australia
+                could otherwise be either a country or one of its places. */}
+            {isMixed && asksCountry && (
+              <span className="text-sm font-bold tracking-wide text-slate-400 uppercase">country</span>
             )}
           </div>
         ) : (
@@ -268,7 +282,15 @@ export function PlayScreen({
                     quiz.submitName(showing[active])
                   }
                 }}
-                placeholder={isPlaceRound ? 'Type place name' : 'Type country name'}
+                placeholder={
+                  isMixed
+                    ? asksCountry
+                      ? 'Type the country'
+                      : `Type the ${q?.place ? TYPE_LABEL[q.place.type] : 'place'}`
+                    : isPlaceRound
+                      ? 'Type place name'
+                      : 'Type country name'
+                }
                 autoComplete="off"
                 autoCorrect="off"
                 spellCheck={false}

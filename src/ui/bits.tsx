@@ -41,10 +41,12 @@ export const WATER_REGIONS = [
 export type WaterRegion = (typeof WATER_REGIONS)[number]['id']
 
 /**
- * The sections a places round is split into, used by the setup filter and the
- * Learn legend. A round shows only the ones it has: Regions is Oceania's.
+ * The sections a Political Map round is split into, used by the setup filter
+ * and the Learn legend. A round shows only the ones it has: Regions is
+ * Oceania's.
  */
 export const PLACE_KINDS = [
+  { kind: 'country' as const, label: 'Countries' },
   { kind: 'capital' as const, label: 'Capitals' },
   { kind: 'region' as const, label: 'Regions' },
   { kind: 'other' as const, label: 'Other places' },
@@ -65,7 +67,7 @@ export const BELTS = [
 /** The band as the map draws it, colour and translucency both. */
 export function BeltSwatch({ belt }: { belt: Belt }) {
   return (
-    <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden>
+    <svg width="18" height="12" viewBox="0 0 18 12" className="shrink-0" aria-hidden>
       <rect
         x="0"
         y="2"
@@ -84,16 +86,23 @@ export function BeltSwatch({ belt }: { belt: Belt }) {
  * rest, and a patch for a region, which is an area and has no marker.
  */
 export function PlaceKindSwatch({ kind }: { kind: PlaceKind }) {
+  if (kind === 'country') {
+    return (
+      <svg width="16" height="14" viewBox="0 0 16 14" className="shrink-0" aria-hidden>
+        <path d="M2 4 L6 1 L12 2 L15 7 L11 13 L4 12 L1 8 Z" fill="#f5f5c8" stroke="#1f2d4d" strokeWidth="1.2" />
+      </svg>
+    )
+  }
   if (kind === 'region') {
     return (
-      <svg width="16" height="14" viewBox="0 0 16 14" aria-hidden>
+      <svg width="16" height="14" viewBox="0 0 16 14" className="shrink-0" aria-hidden>
         <path d="M1 3 L9 1 L15 6 L11 13 L2 11 Z" fill="#22c55e" fillOpacity={0.35} stroke="#16a34a" strokeWidth="1.2" />
       </svg>
     )
   }
   const fill = kind === 'capital' ? SHAPE_FILLS.capital : SHAPE_FILLS.dot
   return (
-    <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+    <svg width="14" height="14" viewBox="-7 -7 14 14" className="shrink-0" aria-hidden>
       <circle r="5.5" fill={fill} fillOpacity={kind === 'capital' ? 0.95 : 0.55} stroke="#1f2d4d" strokeWidth="1.2" />
     </svg>
   )
@@ -103,7 +112,7 @@ export function PlaceKindSwatch({ kind }: { kind: PlaceKind }) {
 export function KindSwatch({ type }: { type: WaterKind }) {
   if (type === 'strait') {
     return (
-      <svg width="18" height="14" viewBox="-9 -7 18 14" aria-hidden>
+      <svg width="18" height="14" viewBox="-9 -7 18 14" className="shrink-0" aria-hidden>
         <path d="M0 -5.5 L5.5 0 L0 5.5 L-5.5 0 Z" fill="#f97316" stroke="#1f2d4d" strokeWidth="1" />
         <path d="M-8.5 0 L-6 0 M6 0 L8.5 0" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
       </svg>
@@ -111,7 +120,7 @@ export function KindSwatch({ type }: { type: WaterKind }) {
   }
   if (type === 'canal') {
     return (
-      <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden>
+      <svg width="14" height="14" viewBox="-7 -7 14 14" className="shrink-0" aria-hidden>
         <rect x="-4" y="-5.5" width="8" height="11" fill="#a855f7" stroke="#1f2d4d" strokeWidth="1" />
       </svg>
     )

@@ -650,6 +650,9 @@ for (const file of syllabusFiles) {
 
     if (!PLACE_TYPES.has(p.type)) errors.push(`${where(p.id)}: unknown type "${p.type}"`)
     if (!p.significance) errors.push(`${where(p.id)}: missing significance`)
+    // A state's or constituent country's capital — Perth, Edinburgh — is not
+    // the country's own, and a country's Why-mode clue must not name it.
+    if (p.subnational && p.type !== 'capital') errors.push(`${where(p.id)}: only a capital can be subnational`)
     // The significance is Why mode's clue: one that names its own answer —
     // "Capital of Djibouti", "on the Brisbane River" — asks nothing.
     for (const n of [p.name, ...(p.aliases ?? [])]) {

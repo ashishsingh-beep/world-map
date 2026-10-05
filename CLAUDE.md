@@ -87,18 +87,50 @@ count is part of what a saved round must match, so choosing another retires it.
 The Seas &
 Straits round narrows twice — a region (All, Americas, Europe, Asia), then the
 notations within it — and both pick *which set*, not how many of it, and the
-last notation with anything left in the chosen region cannot be unticked. A
-places round narrows once, the same way, by section: Capitals, Regions and
-Other places, in Learn and in Practice alike, all backed by the one
-`placeKinds` preference so the choice carries over between them. A round shows
-only the sections it has — Regions is Oceania's alone (Melanesia, Micronesia,
-Polynesia, Australia, New Zealand) — and because one preference backs every
-round, a round none of whose own sections is ticked asks all of them rather
-than nothing. "Other" is deliberately everything that is neither a capital nor
-a region — cities, ports, islands, states, peninsulas, zones, territories — not
-a bucket per type, because the choice on offer stays three at most.
+last notation with anything left in the chosen region cannot be unticked. The
+Political Map narrows once, the same way, by section: Countries, Capitals,
+Regions and Other places, in Learn and in Practice alike, all backed by the one
+`placeKinds` preference so the choice carries over between scopes. A round
+shows only the sections it has — Regions is Oceania's alone (Melanesia,
+Micronesia, Polynesia, Australia, New Zealand) — and because one preference
+backs every scope, a scope none of whose own sections is ticked asks all of
+them rather than nothing. The first visit ticks Countries and Capitals: the
+whole world with everything on is over 500 questions. "Other" is deliberately
+everything that is neither a country, a capital nor a region — cities, ports,
+islands, states, peninsulas, zones, territories — not a bucket per type.
 `placeKindOf` in `src/data/places.ts` is the one function that decides which
 section a place is in; nothing else may re-derive it.
+
+**The Political Map is one round per scope, not a country round and a places
+round.** The World Map menu is the Political Map and Seas & Straits, nothing
+else. A Political Map round (`political-<scope>`, scope `world` or a continent)
+carries the scope's countries as `askable` and its places as `places`, and a
+question is a country or a place inside the same round: "Find the country:
+Kenya" beside "Find the capital: Nairobi". The old country and places rounds
+still exist in `rounds.ts` as its ingredients, and their links (`#/europe`,
+`#/places-europe`) redirect to the scope through `canonicalRoundId`. Its frame
+fits what is asked: `view` reaches the places (Oceania's runs to Easter Island
+for Polynesia), `countryView` is the tighter one used when no place is ticked.
+
+In Pin mode the map switches with the question. A country question answers to
+a tap on the country — its polygon or its micro-state ring, so Tuvalu stays
+answerable — and a place question to the marker or patch under the tap, so a
+tap on Italy never answers "Rome". In Learn both are on screen; a marker wins
+a tap, then the smallest patch under it, the country counting as one patch:
+Fiji beats Melanesia and Sinai beats Egypt, and a country entirely covered by
+smaller patches — Australia by its states — is reached by putting Other places
+away in the legend.
+
+A prompt in a mixed round names its kind ("country", "capital", "region"),
+because a name can be both: Australia and New Zealand are countries and
+Oceania regions. Singapore's capital is "Singapore City" for the same reason.
+
+Why mode asks a country by its capital — "Country with capital Nairobi", or
+all of them where there are several (South Africa's three, Bolivia's two), from
+`countryClue` in `src/data/places.ts`. A state's or constituent country's
+capital is marked `subnational` (Perth, Edinburgh) and never named in its
+country's clue. A country whose capital no syllabus names yet has no clue and
+sits Why mode out; the setup screen says how many.
 
 A capital is coloured apart from every other point on a places round's map —
 gold, the cartographic convention, the one colour nothing else already used.
@@ -348,8 +380,10 @@ The whole app is one map engine plus configuration.
 - `src/map/MapCanvas.tsx` — the engine. Takes `render` (geography to draw),
   `askable` (what's quizzable), and `view` (a bbox). Everything else is
   derived. Continent rounds are not special-cased; they are different arguments.
-- `src/game/rounds.ts` — the rounds as config. A syllabus file's `section`
-  decides which menu group it lands in: `places` or `water`.
+- `src/game/rounds.ts` — the rounds as config: the Political Map's scopes,
+  built from the country rounds and the places syllabi, and the Seas & Straits
+  and India rounds. A syllabus file's `section` decides which it feeds:
+  `places` (the Political Map), `water` or `mountains`.
 - `src/game/useQuiz.ts` — round state machine.
 - `src/screens/` — Play, Results, Learn.
 - `src/app/route.ts` — the URL hash, which is where the current screen lives.
@@ -366,15 +400,15 @@ The whole app is one map engine plus configuration.
 `render` and `askable` are separate because Island Nations draws the whole
 world and asks only its own subset.
 
-**There are two atlases.** The home screen picks between the World Map, which
-holds everything built so far, and the India Map, which starts with the
+**There are two atlases.** The home screen picks between the World Map — the
+Political Map and Seas & Straits — and the India Map, which starts with the
 Himalaya. A syllabus declares which one it belongs to with `atlas`, a round
 carries it, and `MapCanvas` draws the state outlines when it is `india`. The
 hashes are `#/world-map` and `#/india-map` — not `#/world`, which is already the
 World Map country round.
 
 **A refresh must never cost you anything.** Which screen you are on is the URL
-hash (`#/europe/learn`), not component state — and the hash rather than the path,
+hash (`#/political-europe/learn`), not component state — and the hash rather than the path,
 because this deploys as static files with no server to rewrite `/europe/learn`
 back to `index.html`. Settings and a round in progress go to `localStorage`.
 Every read of it is defended and re-validated: it throws outright in some

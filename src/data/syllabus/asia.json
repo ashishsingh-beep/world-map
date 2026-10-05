@@ -214,8 +214,8 @@
     },
     {
       "id": "sgp-singapore",
-      "name": "Singapore",
-      "aliases": ["Singapore City"],
+      "name": "Singapore City",
+      "aliases": [],
       "type": "capital",
       "country": "SGP",
       "point": [103.8198, 1.3521],

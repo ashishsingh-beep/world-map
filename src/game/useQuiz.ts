@@ -86,24 +86,28 @@ interface Question {
   place: Place | null
 }
 
+/**
+ * A round's questions: its places, then its countries. A Political Map round
+ * has both — "Find the country: Kenya" beside "Find the capital: Nairobi" —
+ * and every other round has only one of the two, its other list empty.
+ */
 function buildQuestions(round: Round): Question[] {
-  if (round.places) {
-    return round.places.map((id) => {
-      const p = placeOf(id)
-      return {
-        id,
-        name: p.name,
-        aliases: p.aliases,
-        point: p.point,
-        iso: p.type === 'country' ? p.country : null,
-        place: p,
-      }
-    })
-  }
-  return round.askable.map((iso) => {
+  const places = (round.places ?? []).map((id): Question => {
+    const p = placeOf(id)
+    return {
+      id,
+      name: p.name,
+      aliases: p.aliases,
+      point: p.point,
+      iso: p.type === 'country' ? p.country : null,
+      place: p,
+    }
+  })
+  const countries = round.askable.map((iso): Question => {
     const m = metaOf(iso)
     return { id: iso, name: m.name, aliases: m.aliases ?? [], point: m.centroid, iso, place: null }
   })
+  return [...places, ...countries]
 }
 
 /** Sea, strait, canal and peak each get their own notation; a capital gets its

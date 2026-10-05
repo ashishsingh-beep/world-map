@@ -1669,10 +1669,8 @@
     },
     {
       "id": "sgp-singapore",
-      "name": "Singapore",
-      "aliases": [
-        "Singapore City"
-      ],
+      "name": "Singapore City",
+      "aliases": [],
       "type": "capital",
       "country": "SGP",
       "point": [
@@ -3715,6 +3713,7 @@
       "name": "Edinburgh",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "GBR",
       "point": [
         -3.1883,
@@ -3732,6 +3731,7 @@
       "name": "Cardiff",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "GBR",
       "point": [
         -3.1791,
@@ -3749,6 +3749,7 @@
       "name": "Belfast",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "GBR",
       "point": [
         -5.9301,
@@ -6879,6 +6880,7 @@
       "name": "Perth",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         115.8605,
@@ -6898,6 +6900,7 @@
       "name": "Adelaide",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         138.6007,
@@ -6915,6 +6918,7 @@
       "name": "Darwin",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         130.8456,
@@ -6934,6 +6938,7 @@
       "name": "Brisbane",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         153.0251,
@@ -6951,6 +6956,7 @@
       "name": "Sydney",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         151.2093,
@@ -6968,6 +6974,7 @@
       "name": "Melbourne",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         144.9631,
@@ -6985,6 +6992,7 @@
       "name": "Hobart",
       "aliases": [],
       "type": "capital",
+      "subnational": true,
       "country": "AUS",
       "point": [
         147.3272,

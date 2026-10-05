@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
   INDIA_CONTINENTS,
-  PLACE_CONTINENTS,
+  POLITICAL_ROUNDS,
+  POLITICAL_SCOPES,
   PLACE_ROUNDS,
+  politicalRoundId,
   WATER_CONTINENTS,
-  ROUNDS,
-  ROUND_ORDER,
   allPlacesRoundId,
   roundById,
 } from './game/rounds'
 import type { Mode, QuizSnapshot } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
-import { placeKindOf, placeOf, type PlaceKind } from './data/places'
+import { countryClue, placeKindOf, placeOf, type PlaceKind } from './data/places'
+import { meta } from './data/countries'
 import {
   Button,
   KindSwatch,
@@ -72,7 +73,9 @@ export default function App() {
 
   const roundPlaces = round.places?.map(placeOf) ?? []
   const isWaterRound = roundPlaces[0]?.section === 'water'
-  const isPlacesRound = roundPlaces[0]?.section === 'places'
+  /** The Political Map: countries and their places in one round. */
+  const isPolitical = !!round.scope
+  const isPlacesRound = isPolitical || roundPlaces[0]?.section === 'places'
 
   /**
    * Which part of the water set to practise: a region, then the notations
@@ -83,30 +86,63 @@ export default function App() {
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : roundPlaces
   /**
+   * Why mode's clue for a country is its capital, so a country no syllabus
+   * names a capital for yet has no clue to ask from, and sits out.
+   */
+  const clueless = isPolitical ? round.askable.filter((iso) => !countryClue(iso)) : []
+  const roundCountries =
+    isPolitical && mode === 'significance'
+      ? round.askable.filter((iso) => countryClue(iso))
+      : isPolitical
+        ? round.askable
+        : []
+  const inSection = (k: PlaceKind) =>
+    k === 'country' ? roundCountries.length : roundPlaces.filter((p) => placeKindOf(p.type) === k).length
+  /**
    * The sections this round has — Regions is Oceania's alone. One preference
    * backs every round, so Regions on by itself would leave Europe nothing to
    * ask; when none of a round's own sections is on, all of them are.
    */
-  const kindsHere = PLACE_KINDS.map((k) => k.kind).filter((k) =>
-    roundPlaces.some((p) => placeKindOf(p.type) === k)
-  )
+  const kindsHere = PLACE_KINDS.map((k) => k.kind).filter((k) => inSection(k) > 0)
   const kindOn = (k: PlaceKind) => placeKinds[k] || !kindsHere.some((h) => placeKinds[h])
   const asked = isWaterRound
     ? inRegion.filter((p) => kinds[p.type as WaterKind] ?? true)
     : isPlacesRound
       ? inRegion.filter((p) => kindOn(placeKindOf(p.type)))
       : inRegion
+  const askedCountries = isPolitical && kindOn('country') ? roundCountries : []
+  /**
+   * A round narrowed to these questions. A Political Map round with no places
+   * left in it takes the countries' own frame — Oceania's stops at Samoa, not
+   * Easter Island, when there is no Polynesia to reach.
+   */
+  const withQuestions = (places: string[], countries: string[]) =>
+    isPolitical
+      ? {
+          ...round,
+          places,
+          askable: countries,
+          view: places.length ? round.view : (round.countryView ?? round.view),
+        }
+      : round.places
+        ? { ...round, places }
+        : { ...round, askable: countries }
   // A drill lives only on its play screen: off it — the browser's back button
   // included — the round is its full set again, and every way back in through
   // `begin` says afresh whether it is a drill.
   const drillIds = route.view === 'play' && drill?.roundId === roundId ? drill.ids : null
-  const narrowed = isWaterRound || isPlacesRound ? { ...round, places: asked.map((p) => p.id) } : round
   const playRound = drillIds
-    ? round.places
-      ? { ...round, places: drillIds }
-      : { ...round, askable: drillIds }
-    : narrowed
-  const askIds = playRound.places ?? playRound.askable
+    ? withQuestions(
+        drillIds.filter((id) => !meta[id]),
+        drillIds.filter((id) => meta[id])
+      )
+    : isWaterRound || isPlacesRound
+      ? withQuestions(
+          asked.map((p) => p.id),
+          askedCountries
+        )
+      : round
+  const askIds = [...(playRound.places ?? []), ...playRound.askable]
   // A drill asks every miss; the question count chose the round it came from.
   const size = drillIds ? askIds.length : roundSize(count, askIds.length)
   /** The counts this round can fill; a round of 14 offers 10 and All, not 30. */
@@ -114,7 +150,7 @@ export default function App() {
 
   /** A save is only offered when it is still this exact round's questions. */
   const resumable = fits(saved, roundId, askIds, size) ? saved : null
-  const playMode = !round.places && mode === 'significance' ? 'type' : mode
+  const playMode = !round.places?.length && mode === 'significance' ? 'type' : mode
 
   const onProgress = useCallback(
     (snapshot: QuizSnapshot | null) => {
@@ -196,15 +232,45 @@ export default function App() {
           >
             ← Back
           </button>
-          <h1 className="text-4xl font-extrabold text-slate-900">{round.title}</h1>
+          <h1 className="text-4xl font-extrabold text-slate-900">
+            {isPolitical ? 'Political Map' : round.title}
+          </h1>
           <p className="mt-1 mb-6 text-slate-600">{round.blurb}</p>
 
           <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
             <p className="text-sm font-bold text-slate-500">
-              {round.places
-                ? `${asked.length} ${isWaterRound ? 'features' : 'places'}`
-                : `${round.askable.length} countries`}
+              {isPolitical
+                ? `${askIds.length} question${askIds.length === 1 ? '' : 's'} · ${round.title}`
+                : round.places
+                  ? `${asked.length} ${isWaterRound ? 'features' : 'places'}`
+                  : `${round.askable.length} countries`}
             </p>
+
+            {isPolitical && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Scope</h2>
+                <div className="flex flex-wrap gap-2">
+                  {POLITICAL_SCOPES.map((scope) => {
+                    const id = politicalRoundId(scope.id)
+                    const on = id === roundId
+                    return (
+                      <button
+                        key={scope.id}
+                        type="button"
+                        // In place: the scope is part of the address, so a
+                        // refresh keeps it, but it is one setup screen.
+                        onClick={() => navigate({ view: 'setup', roundId: id }, true)}
+                        className={`cursor-pointer rounded-full border-2 bg-white px-4 py-2 text-sm font-extrabold text-slate-900 ${
+                          on ? 'border-blue-600' : 'border-transparent'
+                        }`}
+                      >
+                        {scope.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </>
+            )}
 
             {isWaterRound && (
               <>
@@ -272,17 +338,21 @@ export default function App() {
 
             {isPlacesRound && (
               <>
-                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Practise</h2>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">
+                  {isPolitical ? 'Include' : 'Practise'}
+                </h2>
                 <div
-                  className={`grid gap-3 ${kindsHere.length > 2 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2'}`}
+                  className={`grid grid-cols-2 gap-3 ${
+                    kindsHere.length === 3 ? 'sm:grid-cols-3' : kindsHere.length === 4 ? 'sm:grid-cols-4' : ''
+                  }`}
                 >
                   {PLACE_KINDS.map(({ kind, label }) => {
-                    const n = roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
+                    const n = inSection(kind)
                     if (!n) return null
                     const on = kindOn(kind)
                     // Never let the last one be unticked — a round with nothing
                     // to ask is not a round.
-                    const last = on && asked.length === n
+                    const last = on && askIds.length === n
                     return (
                       <label
                         key={kind}
@@ -312,6 +382,13 @@ export default function App() {
                     )
                   })}
                 </div>
+                {isPolitical && mode === 'significance' && kindOn('country') && clueless.length > 0 && (
+                  <p className="mt-2 text-xs font-semibold text-slate-500">
+                    Why mode asks a country by its capital, so the {clueless.length}{' '}
+                    {clueless.length === 1 ? 'country' : 'countries'} whose capital is not in the
+                    notes yet {clueless.length === 1 ? 'sits' : 'sit'} this one out.
+                  </p>
+                )}
               </>
             )}
 
@@ -434,7 +511,7 @@ export default function App() {
         id: 'world',
         title: 'World Map',
         blurb: 'Countries, capitals and ports, and the seas and straits between them.',
-        count: `${ROUND_ORDER.length} country rounds · ${PLACE_CONTINENTS.length + WATER_CONTINENTS.length} more`,
+        count: `Political Map · Seas & Straits`,
       },
       {
         id: 'india',
@@ -519,25 +596,37 @@ export default function App() {
           ← Both maps
         </button>
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">World Map</h1>
-        <p className="mt-1 mb-8 text-slate-600">Find countries on the map.</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {ROUND_ORDER.map((id) => {
-            const r = ROUNDS[id]
-            return (
+        <p className="mt-1 mb-8 text-slate-600">
+          Countries and the places inside them on one map, and the seas and straits between them.
+        </p>
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+          <button
+            type="button"
+            onClick={() => navigate({ view: 'setup', roundId: politicalRoundId('world') })}
+            className="w-full cursor-pointer text-left"
+          >
+            <div className="text-2xl font-extrabold text-slate-900">Political Map</div>
+            <div className="mt-1 text-sm text-slate-600">
+              Countries, capitals, regions and key places — the whole world or one continent, in
+              any mix.
+            </div>
+          </button>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {POLITICAL_SCOPES.map((scope) => (
               <button
-                key={id}
+                key={scope.id}
                 type="button"
-                onClick={() => navigate({ view: 'setup', roundId: id })}
-                className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                onClick={() => navigate({ view: 'setup', roundId: politicalRoundId(scope.id) })}
+                className="cursor-pointer rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200"
               >
-                <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
-                <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                  {r.askable.length} COUNTRIES
-                </div>
+                {scope.label}
               </button>
-            )
-          })}
+            ))}
+          </div>
+          <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+            {POLITICAL_ROUNDS[politicalRoundId('world')].askable.length} COUNTRIES ·{' '}
+            {POLITICAL_ROUNDS[politicalRoundId('world')].places?.length} PLACES
+          </div>
         </div>
 
         {WATER_CONTINENTS.length > 0 && (
@@ -571,38 +660,6 @@ export default function App() {
           </section>
         )}
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-extrabold text-slate-900">Places</h2>
-          <p className="mt-1 mb-4 text-slate-600">
-            Capitals, cities, ports and key sites — the whole continent in one round.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {PLACE_CONTINENTS.map((continent) => {
-              const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
-              const empty = !r.places?.length
-              return (
-                <button
-                  key={r.id}
-                  type="button"
-                  // An empty round would start a quiz with nothing to ask.
-                  disabled={empty}
-                  onClick={() => navigate({ view: 'setup', roundId: r.id })}
-                  className={`rounded-2xl border border-slate-200 p-5 text-left shadow-sm transition ${
-                    empty
-                      ? 'cursor-not-allowed bg-slate-100 opacity-70'
-                      : 'bg-white hover:shadow-md'
-                  }`}
-                >
-                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
-                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                    {empty ? 'COMING SOON' : `${r.places?.length} PLACES`}
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        </section>
       </div>
     </div>
   )

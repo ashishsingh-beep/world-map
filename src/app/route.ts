@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { roundById } from '../game/rounds'
+import { canonicalRoundId, roundById } from '../game/rounds'
 
 /**
  * Where you are, kept in the URL hash rather than in component state, so a
@@ -9,10 +9,10 @@ import { roundById } from '../game/rounds'
  * path like /europe/learn would 404 on a hard refresh unless the host is set up
  * to rewrite it. A hash cannot, on any host, ever.
  *
- *   #/                     the menu
- *   #/europe               that round's setup
- *   #/europe/learn         Learn mode
- *   #/europe/play          a round in progress
+ *   #/                          the menu
+ *   #/political-europe          that round's setup
+ *   #/political-europe/learn    Learn mode
+ *   #/political-europe/play     a round in progress
  */
 export type View = 'home' | 'atlas' | 'setup' | 'learn' | 'play'
 
@@ -30,7 +30,7 @@ export interface Route {
   atlas?: Atlas
 }
 
-export const HOME: Route = { view: 'home', roundId: 'world' }
+export const HOME: Route = { view: 'home', roundId: 'political-world' }
 
 /** Always returns a route that exists — a hand-edited hash cannot crash the app. */
 export function parseHash(hash: string): Route {
@@ -38,9 +38,12 @@ export function parseHash(hash: string): Route {
   if (!id) return HOME
   const atlas = ATLASES[id as keyof typeof ATLASES]
   if (atlas) return { view: 'atlas', roundId: HOME.roundId, atlas }
-  if (!roundById(id)) return HOME
-  if (screen === 'learn' || screen === 'play') return { view: screen, roundId: id }
-  return { view: 'setup', roundId: id }
+  // An old link — a country round, a continent's places — lands on its
+  // Political Map scope, and the hash is tidied to say so.
+  const roundId = canonicalRoundId(id)
+  if (!roundById(roundId)) return HOME
+  if (screen === 'learn' || screen === 'play') return { view: screen, roundId }
+  return { view: 'setup', roundId }
 }
 
 export function toHash(route: Route): string {

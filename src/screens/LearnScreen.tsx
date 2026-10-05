@@ -1,7 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { geoArea, geoContains } from 'd3-geo'
-import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, distanceToLineKm, groupsFor, placeKindOf, placeOf } from '../data/places'
+import { featureByIso, meta, metaOf } from '../data/countries'
+import {
+  TYPE_LABEL,
+  WATER_GLYPH,
+  capitalsOf,
+  distanceToLineKm,
+  groupsFor,
+  placeKindOf,
+  placeOf,
+} from '../data/places'
 import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/areas'
 import { shapeOf } from '../game/useQuiz'
@@ -21,8 +29,15 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
   const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
-  /** Which of a places round's sections are drawn: capitals, regions, other places. */
-  const [placeKindsShown, setPlaceKindsShown] = useState({ capital: true, other: true, region: true })
+  /** Which of a round's sections are drawn: countries, capitals, regions, other places. */
+  const [placeKindsShown, setPlaceKindsShown] = useState({
+    country: true,
+    capital: true,
+    other: true,
+    region: true,
+  })
+  /** The country under the last tap, which a place on top of it may outrank. */
+  const tappedCountry = useRef<string | null>(null)
   const [tricks, setTricks] = useState(false)
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
@@ -32,6 +47,14 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const hasWater = roundPlaces.some((p) => isWaterKind(p.type))
   const isWaterRound = roundPlaces[0]?.section === 'water'
   const isPlacesSection = roundPlaces[0]?.section === 'places'
+  /**
+   * A Political Map round shows its countries and its places on one map. Its
+   * countries are a section of the legend like any other, so they can be put
+   * away to get at a state that covers one.
+   */
+  const isMixed = isPlaceRound && round.askable.length > 0
+  const countriesShown = isMixed && placeKindsShown.country
+  const countryCount = isMixed ? round.askable.length : 0
   // Which belts this round actually draws, so the legend never names one that
   // is not on the map.
   const belts = BELTS.filter((b) => roundPlaces.some((p) => p.belt === b.id && p.line))
@@ -47,6 +70,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
+  const selectedCountry = selected && meta[selected] && (!isMixed || countriesShown) ? selected : null
 
   const points: MapPoint[] = useMemo(
     () =>
@@ -96,7 +120,11 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   )
 
   /** Tricks attached to the place itself or to the country it sits in. */
-  const mnemonics = place ? groupsFor([place]).filter((g) => g.mnemonic) : []
+  const mnemonics = place
+    ? groupsFor([place]).filter((g) => g.mnemonic)
+    : selectedCountry && isMixed
+      ? groupsFor([], [selectedCountry]).filter((g) => g.mnemonic)
+      : []
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-[#22cdfb]">
@@ -105,13 +133,18 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         render={round.render}
         // `askable`, not `render`: the latter now carries context geography
         // like Greenland, which has no name to reveal.
-        askable={isPlaceRound ? [] : round.askable}
+        askable={isPlaceRound && !countriesShown ? [] : round.askable}
         view={round.view}
         // Practice paints the country it is asking about; Learn paints the one
         // you tapped, so the name arrives with the shape that goes with it.
         // Place rounds are excluded: there `selected` is a place id, not an ISO.
-        states={isPlaceRound || !selected ? {} : { [selected]: 'target' }}
-        onPick={setSelected}
+        states={selectedCountry ? { [selectedCountry]: 'target' } : {}}
+        onPick={(iso) => {
+          // A place round decides in `onPickPoint`, which runs next and knows
+          // whether a marker or a smaller patch sits under the same tap.
+          if (isMixed) tappedCountry.current = iso
+          else setSelected(iso)
+        }}
         // A tap on open sea, or on geography this round does not ask about,
         // clears the highlight. Place rounds already do this in `onPickPoint`.
         onDeselect={isPlaceRound ? undefined : () => setSelected(null)}
@@ -134,6 +167,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   const px = Math.hypot(a[0] - b[0], a[1] - b[1])
                   if (!best || px < best.px) best = { id: p.id, px }
                 }
+                const country = tappedCountry.current
+                tappedCountry.current = null
                 if (best && best.px <= 40) {
                   setSelected(best.id)
                   return
@@ -151,22 +186,28 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   setSelected(ridge.id)
                   return
                 }
-                // Otherwise the sea the tap landed in, smallest first so the
-                // Tyrrhenian beats the Mediterranean around it.
+                // Otherwise the patch the tap landed in, smallest first so the
+                // Tyrrhenian beats the Mediterranean around it — and the
+                // country under it is one more patch: Fiji beats Melanesia,
+                // Sinai beats Egypt, and Australia's states beat Australia.
                 let inside: { id: string; area: number } | null = null
+                const consider = (id: string, f: Parameters<typeof geoArea>[0]) => {
+                  const size = geoArea(f)
+                  if (!inside || size < inside.area) inside = { id, area: size }
+                }
                 for (const p of visible) {
                   const f = areaOf(p.id)
-                  if (!f || !geoContains(f, lonLat)) continue
-                  const size = geoArea(f)
-                  if (!inside || size < inside.area) inside = { id: p.id, area: size }
+                  if (f && geoContains(f, lonLat)) consider(p.id, f)
                 }
-                setSelected(inside ? inside.id : null)
+                const cf = country ? featureByIso.get(country) : null
+                if (country && cf) consider(country, cf)
+                setSelected(inside ? (inside as { id: string }).id : null)
               }
             : undefined
         }
         countryMarkers={!isWaterRound}
-        labels={isPlaceRound ? 'none' : showAll ? 'all' : 'selected'}
-        selectedIso={isPlaceRound ? null : selected}
+        labels={isPlaceRound && !countriesShown ? 'none' : showAll ? 'all' : 'selected'}
+        selectedIso={selectedCountry}
         // Constant, not conditional on `place`: refitting when a card opens
         // would make the whole map jump on every selection.
         padding={{ top: 88, right: 32, bottom: isPlaceRound ? 170 : 32, left: 32 }}
@@ -193,7 +234,10 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         {isPlacesSection && (
           <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
             {PLACE_KINDS.map(({ kind, label }) => {
-              const n = roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
+              const n =
+                kind === 'country'
+                  ? countryCount
+                  : roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
               if (!n) return null
               return (
                 <label
@@ -280,6 +324,30 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         </div>
       </div>
 
+      {selectedCountry && isMixed && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4">
+          <div className="pointer-events-auto w-full max-w-lg rounded-2xl bg-white p-4 shadow-xl">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-lg font-extrabold text-slate-900">{metaOf(selectedCountry).name}</span>
+              <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">country</span>
+              <span className="text-xs font-semibold text-slate-500">{metaOf(selectedCountry).continent}</span>
+            </div>
+            <p className="mt-1.5 text-sm leading-snug font-bold text-slate-800">
+              {capitalsOf(selectedCountry).length
+                ? `Capital${capitalsOf(selectedCountry).length > 1 ? 's' : ''}: ${capitalsOf(selectedCountry).join(', ')}`
+                : 'Its capital is not in the notes yet.'}
+            </p>
+            {mnemonics.map((g) => (
+              <div key={g.id} className="mt-2 rounded-xl bg-yellow-50 px-3 py-2">
+                <p className="text-xs font-bold text-slate-700">
+                  {g.name}: {g.mnemonic}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {place && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4">
           <div className="pointer-events-auto w-full max-w-lg rounded-2xl bg-white p-4 shadow-xl">
@@ -350,7 +418,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
       {tricks && (
         <TricksSheet
           subject={roundPlaces}
-          isos={isPlaceRound ? [] : round.askable}
+          isos={isPlaceRound && !isMixed ? [] : round.askable}
           onClose={() => setTricks(false)}
         />
       )}

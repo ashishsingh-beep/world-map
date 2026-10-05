@@ -19,6 +19,13 @@ export interface Round {
   /** Which atlas the round is drawn on: the world map or the Indian one. */
   atlas?: 'world' | 'india'
   view: BBox
+  /**
+   * Political Map rounds only: the scope (`world`, `africa`…), and the tighter
+   * frame to use when only countries are asked. `view` is then the frame for
+   * the places too, which can reach further — Oceania's to Easter Island.
+   */
+  scope?: string
+  countryView?: BBox
 }
 
 const isosIn = (continent: Continent) =>
@@ -330,9 +337,72 @@ for (const continent of SYLLABUS) {
 }
 
 /**
+ * The Political Map: countries and the places inside them in one round, by
+ * scope — the whole world or one continent. What it asks is narrowed on setup
+ * by section (countries, capitals, regions, other places), so the country and
+ * places rounds it replaces are its arguments, not separate menus.
+ */
+export const POLITICAL_SCOPES = [
+  { id: 'world', label: 'World', continent: null },
+  { id: 'africa', label: 'Africa', continent: 'Africa' },
+  { id: 'asia', label: 'Asia', continent: 'Asia' },
+  { id: 'europe', label: 'Europe', continent: 'Europe' },
+  { id: 'north-america', label: 'North America', continent: 'North America' },
+  { id: 'south-america', label: 'South America', continent: 'South America' },
+  { id: 'oceania', label: 'Oceania', continent: 'Oceania' },
+] as const
+
+export const politicalRoundId = (scope: string) => `political-${scope}`
+
+function politicalRound(scope: (typeof POLITICAL_SCOPES)[number]): Round {
+  const countries = ROUNDS[scope.id]
+  const placesRound = scope.continent ? PLACE_ROUNDS[allPlacesRoundId(scope.continent)] : null
+  const places = placesRound
+    ? (placesRound.places ?? [])
+    : allPlaces.filter((p) => p.section === 'places' && p.atlas === 'world').map((p) => p.id)
+  return {
+    id: politicalRoundId(scope.id),
+    title: scope.label,
+    blurb: 'Countries, capitals and key places, together on one map.',
+    render: [...new Set([...countries.render, ...(placesRound?.render ?? [])])],
+    askable: countries.askable,
+    places,
+    view: placesRound
+      ? placesRound.view
+      : fitAround(WORLD_VIEW, places.map((id) => allPlaces.find((p) => p.id === id)!.point)),
+    countryView: countries.view,
+    scope: scope.id,
+  }
+}
+
+export const POLITICAL_ROUNDS: Record<string, Round> = {}
+for (const scope of POLITICAL_SCOPES) {
+  const round = politicalRound(scope)
+  POLITICAL_ROUNDS[round.id] = round
+}
+
+/**
+ * Where an old link now lives. The country rounds (`#/europe`) and the world
+ * atlas's places rounds (`#/places-europe`) are both the Political Map now; the
+ * Seas & Straits and India rounds keep their own ids.
+ */
+export function canonicalRoundId(id: string): string {
+  if (POLITICAL_ROUNDS[id]) return id
+  if (ROUNDS[id]) return politicalRoundId(id)
+  // Only a world-atlas places round: `places-world` is Seas & Straits, whose
+  // continent happens to be called World, and keeps its own round.
+  const r = PLACE_ROUNDS[id]
+  const isPlaces = r?.atlas !== 'india' && !!r?.places?.length &&
+    r.places.every((pid) => allPlaces.find((p) => p.id === pid)?.section === 'places')
+  const scope = id.replace(/^places-/, '')
+  if (isPlaces && POLITICAL_ROUNDS[politicalRoundId(scope)]) return politicalRoundId(scope)
+  return id
+}
+
+/**
  * A round by id, or null. Null rather than a throw because ids now come from
  * the URL, where anyone can type one that does not exist.
  */
 export function roundById(id: string): Round | null {
-  return ROUNDS[id] ?? PLACE_ROUNDS[id] ?? null
+  return POLITICAL_ROUNDS[id] ?? ROUNDS[id] ?? PLACE_ROUNDS[id] ?? null
 }
