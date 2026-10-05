@@ -1152,7 +1152,10 @@ if (strayLandLabels.length) {
  */
 const regionFeatures = []
 const regionErrors = []
-const regionPlaces = places.filter((p) => p.type === 'region')
+// Oceania's regions, and any other area that is a convention drawn by its
+// corners rather than a coastline — the Bermuda Triangle, Miami to Bermuda to
+// San Juan.
+const regionPlaces = places.filter((p) => p.type === 'region' || p.ring)
 for (const p of regionPlaces) {
   if (!Array.isArray(p.ring) || p.ring.length < 3) {
     regionErrors.push(`${p.id}: a region needs a ring of at least three corners`)

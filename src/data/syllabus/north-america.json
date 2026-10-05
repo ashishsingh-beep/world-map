@@ -481,12 +481,14 @@
     },
     {
       "id": "na-bermuda-triangle",
+      "ring": [[-80.19, 25.77], [-64.75, 32.31], [-66.1, 18.47]],
+      "tint": "#f59e0b",
       "name": "Bermuda Triangle",
       "aliases": [],
       "type": "zone",
       "country": null,
       "point": [-70.5, 26.0],
-      "significance": "Stretch of Atlantic bounded by Miami, Bermuda and Puerto Rico",
+      "significance": "Stretch of Atlantic between Miami, Bermuda and San Juan, where ships and aircraft are said to have vanished",
       "notes": [],
       "tier": 1
     }
