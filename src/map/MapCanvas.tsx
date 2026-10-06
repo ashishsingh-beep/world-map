@@ -34,6 +34,10 @@ const MAX_REVEAL_SCALE = 14
  * speck. Automatic zooms keep their own, much lower, caps.
  */
 const MAX_ZOOM = 400
+
+/** The look of the map's own buttons, Lat/Long and Reset. */
+const CONTROL =
+  'flex w-[60px] cursor-pointer flex-col items-center gap-0.5 rounded-xl px-2 py-2 text-[10px] leading-none font-extrabold shadow-lg transition'
 /** A point has no size of its own, so its reveal zoom is capped rather than fitted. */
 const POINT_REVEAL_SCALE = 5
 /** A Type-mode sea smaller than this on the unzoomed map is zoomed to while asked. */
@@ -544,6 +548,15 @@ export function MapCanvas({
   ])
 
   const k = transform.k
+
+  /** Already showing the round's whole frame, so Reset has nothing to do. */
+  const atHome = k < 1.001 && Math.abs(transform.x) < 0.5 && Math.abs(transform.y) < 0.5
+  const resetZoom = () => {
+    const svg = svgRef.current
+    const behaviour = zoomRef.current
+    if (!svg || !behaviour) return
+    select(svg).transition().duration(500).call(behaviour.transform, zoomIdentity)
+  }
 
   /**
    * Latitude and longitude, switched on and off from the map itself and
@@ -1163,23 +1176,46 @@ export function MapCanvas({
         {grid && gridLabels()}
       </svg>
 
-      <button
-        type="button"
-        onClick={toggleGrid}
-        aria-pressed={grid}
-        title={grid ? 'Hide latitude and longitude' : 'Show latitude and longitude'}
-        className={`absolute top-1/2 right-3 z-[5] flex -translate-y-1/2 cursor-pointer flex-col items-center gap-0.5 rounded-xl px-2 py-2 text-[10px] leading-none font-extrabold shadow-lg transition ${
-          grid ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'
-        }`}
-      >
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-          <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5" />
-          <ellipse cx="11" cy="11" rx="4" ry="9" stroke="currentColor" strokeWidth="1.2" />
-          <path d="M2 11h18M3.5 6.5h15M3.5 15.5h15" stroke="currentColor" strokeWidth="1.2" />
-          <path d="M2 11h18" stroke="#dc2626" strokeWidth="1.8" />
-        </svg>
-        Lat/Long
-      </button>
+      {/* The map's own controls, at its right edge halfway down: the one
+          place no screen puts anything of its own. */}
+      <div className="absolute top-1/2 right-3 z-[5] flex -translate-y-1/2 flex-col gap-2">
+        <button
+          type="button"
+          onClick={toggleGrid}
+          aria-pressed={grid}
+          title={grid ? 'Hide latitude and longitude' : 'Show latitude and longitude'}
+          className={`${CONTROL} ${grid ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5" />
+            <ellipse cx="11" cy="11" rx="4" ry="9" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M2 11h18M3.5 6.5h15M3.5 15.5h15" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M2 11h18" stroke="#dc2626" strokeWidth="1.8" />
+          </svg>
+          Lat/Long
+        </button>
+        {/* Back to the round's own frame, from however far in or across
+            you have gone. Greyed when you are already there. */}
+        <button
+          type="button"
+          onClick={resetZoom}
+          disabled={atHome}
+          title="Back to the whole map"
+          className={`${CONTROL} bg-white text-slate-700 enabled:hover:bg-slate-100 disabled:cursor-default disabled:opacity-45`}
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path
+              d="M3 8V3h5M19 8V3h-5M3 14v5h5M19 14v5h-5"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle cx="11" cy="11" r="2.2" fill="currentColor" />
+          </svg>
+          Reset
+        </button>
+      </div>
     </div>
   )
 

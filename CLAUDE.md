@@ -423,7 +423,8 @@ Niue, the Cooks and the Aleutians on America's.
 
 **Zoom goes to 400×** (`MAX_ZOOM` in `MapCanvas`), deep enough that Ilhéu das
 Rolas and Tuvalu's atolls are shapes rather than specks; automatic zooms keep
-their own lower caps. Two things follow from that depth. The country topology
+their own lower caps. A Reset button under Lat/Long flies back to the round's
+own frame from anywhere, greyed when the map is already there. Two things follow from that depth. The country topology
 is quantized at 1e6, not 1e5: at 1e5 a coordinate snaps to a 400m grid, and at
 full zoom every small island came out as a staircase of pixels. And under a
 degree the graticule goes to minutes (30′, 15′, 6′) and is built for the cells
