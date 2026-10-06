@@ -396,6 +396,17 @@
       "tier": 1
     },
     {
+      "id": "stp-rolas",
+      "name": "Ilhéu das Rolas",
+      "aliases": ["Rolas Island", "Ilheu das Rolas"],
+      "type": "island",
+      "country": "STP",
+      "point": [6.526, -0.002],
+      "significance": "Islet off São Tomé where the Equator crosses land in the Gulf of Guinea — a monument marks the line",
+      "notes": ["Too small for the map's outline of São Tomé and Príncipe: the main island ends about 3km north of the Equator"],
+      "tier": 1
+    },
+    {
       "id": "mwi-lilongwe",
       "name": "Lilongwe",
       "aliases": [],
