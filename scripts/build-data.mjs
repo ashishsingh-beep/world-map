@@ -69,6 +69,17 @@ const MAP_UNITS_URL =
 const MAP_UNITS_RAW = resolve(CACHE, 'ne_10m_admin_0_map_units.geojson')
 
 /**
+ * Natural Earth's geographic lines, for the one of them that is not a plain
+ * parallel or meridian: the International Date Line, which zig-zags so that
+ * Kiribati, Samoa, Tokelau and Tonga keep Asia's date and the Diomedes are a
+ * day apart. The Equator, the Tropics and the Prime Meridian are drawn from
+ * their latitudes in the app; this file's Tropics sit at 23.56°, not 23.44°.
+ */
+const GEO_LINES_URL =
+  'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geographic_lines.geojson'
+const GEO_LINES_RAW = resolve(CACHE, 'ne_10m_geographic_lines.geojson')
+
+/**
  * Sixth: Natural Earth's admin-1 provinces, for the few regions the syllabus
  * names that are an administrative unit rather than a landform — Ethiopia's
  * Afar Region, and the Sinai Peninsula, which the physical-regions layer does
@@ -207,6 +218,10 @@ function download() {
   if (!existsSync(MAP_UNITS_RAW)) {
     console.log('Downloading Natural Earth map units…')
     execFileSync('curl', ['-sSL', '-o', MAP_UNITS_RAW, MAP_UNITS_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(GEO_LINES_RAW)) {
+    console.log('Downloading Natural Earth geographic lines…')
+    execFileSync('curl', ['-sSL', '-o', GEO_LINES_RAW, GEO_LINES_URL], { stdio: 'inherit' })
   }
 }
 
@@ -1227,6 +1242,83 @@ if (regionErrors.length) {
 }
 writeFileSync(resolve(OUT, 'regions.json'), JSON.stringify({ type: 'FeatureCollection', features: regionFeatures }))
 console.log(`Regions: ${regionFeatures.length}, every member inside its own and no other`)
+
+/**
+ * The International Date Line, as one line from pole to pole. Natural Earth
+ * ships it in five pieces cut at the 180th, so they are chained end to end and
+ * each longitude unwrapped against the one before it — the Kiribati bulge
+ * comes out at 210°E rather than -150°, and the line never jumps the map.
+ *
+ * Then held to what it is for: each island below must land on its own side.
+ * Counting the crossings west of a point along its parallel says which side it
+ * is on, the zig-zag included.
+ */
+const dateLine = (() => {
+  const raw = JSON.parse(readFileSync(GEO_LINES_RAW, 'utf8'))
+  const idl = raw.features.find((f) => f.properties.name === 'International Date Line')
+  if (!idl) throw new Error('No International Date Line in the geographic lines')
+  const pieces = idl.geometry.type === 'MultiLineString' ? [...idl.geometry.coordinates] : [idl.geometry.coordinates]
+  const same = (a, b) =>
+    Math.abs(a[1] - b[1]) < 0.01 && Math.abs((((a[0] - b[0]) % 360) + 540) % 360 - 180) < 0.01
+  pieces.sort((a, b) => b[0][1] - a[0][1])
+  let line = [...pieces.shift()]
+  while (pieces.length) {
+    const i = pieces.findIndex((p) => same(p[0], line.at(-1)))
+    if (i < 0) throw new Error(`Date Line pieces do not join at ${line.at(-1)}`)
+    line.push(...pieces.splice(i, 1)[0].slice(1))
+  }
+  // Unwrap: every longitude within 180° of the one before it, east of 0.
+  let prev = line[0][0] < 0 ? line[0][0] + 360 : line[0][0]
+  line = line.map(([x, y]) => {
+    while (x - prev > 180) x -= 360
+    while (prev - x > 180) x += 360
+    prev = x
+    return [Math.round(x * 1000) / 1000, Math.round(y * 1000) / 1000]
+  })
+  if (Math.abs(line[0][1]) < 89 || Math.abs(line.at(-1)[1]) < 89) {
+    throw new Error('The Date Line does not run pole to pole')
+  }
+  return line
+})()
+{
+  const westOfLine = ([lon, lat]) => {
+    const x = lon < 0 ? lon + 360 : lon
+    let crossings = 0
+    for (let i = 1; i < dateLine.length; i++) {
+      const [x1, y1] = dateLine[i - 1]
+      const [x2, y2] = dateLine[i]
+      if (y1 <= lat === y2 <= lat) continue
+      if (x1 + ((lat - y1) / (y2 - y1)) * (x2 - x1) < x) crossings++
+    }
+    return crossings % 2 === 0
+  }
+  // [name, lon, lat, keeps Asia's date]
+  const sides = [
+    ['Kiritimati', -157.4, 1.87, true],
+    ['Tarawa', 173.0, 1.45, true],
+    ['Apia, Samoa', -171.77, -13.83, true],
+    ['Tokelau', -171.85, -9.2, true],
+    ["Nuku'alofa, Tonga", -175.2, -21.14, true],
+    ['Suva, Fiji', 178.44, -18.14, true],
+    ['Chatham Islands', -176.5, -43.95, true],
+    ['Big Diomede', -169.05, 65.78, true],
+    ['Little Diomede', -168.93, 65.75, false],
+    ['Pago Pago, American Samoa', -170.7, -14.28, false],
+    ['Niue', -169.87, -19.05, false],
+    ['Rarotonga, Cook Islands', -159.78, -21.23, false],
+    ['Attu, Aleutians', 172.9, 52.9, false],
+    ['Honolulu', -157.86, 21.31, false],
+  ]
+  const wrong = sides.filter(([, lon, lat, west]) => westOfLine([lon, lat]) !== west)
+  if (wrong.length) {
+    throw new Error(`Date Line puts these on the wrong side: ${wrong.map((w) => w[0]).join(', ')}`)
+  }
+  writeFileSync(
+    resolve(OUT, 'dateline.json'),
+    JSON.stringify({ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: dateLine } })
+  )
+  console.log(`Date Line: ${dateLine.length} points, ${sides.length} islands on their own side`)
+}
 
 writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))
 

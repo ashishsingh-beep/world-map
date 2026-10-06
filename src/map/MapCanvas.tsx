@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
-import { geoEquirectangular, geoPath } from 'd3-geo'
+import { geoEquirectangular, geoGraticule, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, zoomTransform, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
@@ -9,6 +9,8 @@ import { areaOf as landAreaOf } from '../data/land'
 import { placeById } from '../data/places'
 import { indiaDivides, indiaLand, indiaOutline, stateLines } from '../data/india'
 import { outlineWithoutSeam } from './seam'
+import { formatLat, formatLon, GRID_STEPS, REFERENCE_LINES } from './grid'
+import { loadGrid, saveGrid } from '../app/storage'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -537,6 +539,43 @@ export function MapCanvas({
 
   const k = transform.k
 
+  /**
+   * Latitude and longitude, switched on and off from the map itself and
+   * remembered for every map after it. The graticule is the finest spacing
+   * that keeps its lines ~48px apart at the current zoom — 30° on a phone's
+   * world map, 15° (an hour) on a desktop's, a degree or two over India.
+   */
+  const [grid, setGrid] = useState(loadGrid)
+  const toggleGrid = () => {
+    const next = !grid
+    setGrid(next)
+    saveGrid(next)
+  }
+  const pxPerDeg = ((projection.scale() * Math.PI) / 180) * k
+  const gridStep = GRID_STEPS.find((s) => s * pxPerDeg >= 48) ?? GRID_STEPS[GRID_STEPS.length - 1]
+  const graticulePath = useMemo(() => {
+    if (!grid) return null
+    const lines = geoGraticule()
+      .extent([
+        [-180, -90 + 1e-6],
+        [180, 90 - 1e-6],
+      ])
+      .step([gridStep, gridStep])
+      .lines()
+    return path({ type: 'MultiLineString', coordinates: lines.map((l) => l.coordinates) }) ?? null
+  }, [grid, gridStep, path])
+  const referencePaths = useMemo(
+    () =>
+      grid
+        ? REFERENCE_LINES.map((l) => ({
+            ...l,
+            d: path({ type: 'LineString', coordinates: l.coordinates }) ?? undefined,
+            base: l.coordinates.map((c) => projection(c)),
+          }))
+        : [],
+    [grid, path, projection]
+  )
+
   /** Where the pointer went down, so a pan is never mistaken for a tap. */
   const downAt = useRef<[number, number] | null>(null)
   /** Set by a country's own handler, read by the background one below. */
@@ -583,7 +622,7 @@ export function MapCanvas({
   }
 
   return (
-    <div ref={wrapRef} className={className ?? 'h-full w-full'}>
+    <div ref={wrapRef} className={className ?? 'relative h-full w-full'}>
       <svg
         ref={svgRef}
         width={size.width}
@@ -785,6 +824,41 @@ export function MapCanvas({
                 />
               ))}
             </>
+          )}
+
+          {/* The grid, over the land so the Equator can be followed across
+              Africa, under every band, marker and name. A white casing under
+              each named line keeps it legible over the cyan sea and the
+              pale land alike. */}
+          {grid && (
+            <g pointerEvents="none" fill="none">
+              <path
+                d={graticulePath ?? undefined}
+                stroke="#1f2d4d"
+                strokeOpacity={0.28}
+                strokeWidth={0.6}
+                vectorEffect="non-scaling-stroke"
+              />
+              {referencePaths.map((l) => (
+                <Fragment key={`g-${l.id}`}>
+                  <path
+                    d={l.d}
+                    stroke="#fff"
+                    strokeOpacity={0.75}
+                    strokeWidth={3.6}
+                    vectorEffect="non-scaling-stroke"
+                  />
+                  <path
+                    d={l.d}
+                    stroke={l.colour}
+                    strokeWidth={1.8}
+                    strokeDasharray={l.dash}
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </Fragment>
+              ))}
+            </g>
           )}
 
           {/* Ranges: a band along the ridgeline, under the peaks standing on
@@ -1060,7 +1134,121 @@ export function MapCanvas({
               )
             })}
         </g>
+
+        {grid && gridLabels()}
       </svg>
+
+      <button
+        type="button"
+        onClick={toggleGrid}
+        aria-pressed={grid}
+        title={grid ? 'Hide latitude and longitude' : 'Show latitude and longitude'}
+        className={`absolute top-1/2 right-3 z-[5] flex -translate-y-1/2 cursor-pointer flex-col items-center gap-0.5 rounded-xl px-2 py-2 text-[10px] leading-none font-extrabold shadow-lg transition ${
+          grid ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'
+        }`}
+      >
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5" />
+          <ellipse cx="11" cy="11" rx="4" ry="9" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M2 11h18M3.5 6.5h15M3.5 15.5h15" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M2 11h18" stroke="#dc2626" strokeWidth="1.8" />
+        </svg>
+        Lat/Long
+      </button>
     </div>
   )
+
+  /**
+   * Names in screen space, not on the map: they hug the edges of whatever is
+   * on screen, so a parallel is named at the left wherever you have panned,
+   * and the numbers along the edges stay as many as the graticule's lines.
+   */
+  function gridLabels() {
+    const { width: W, height: H } = size
+    const s = projection.scale()
+    const [tx, ty] = projection.translate()
+    const mapL = transform.applyX(tx - s * Math.PI)
+    const mapR = transform.applyX(tx + s * Math.PI)
+    const mapT = transform.applyY(ty - (s * Math.PI) / 2)
+    const mapB = transform.applyY(ty + (s * Math.PI) / 2)
+    const left = Math.max(mapL, 0) + 6
+    const foot = Math.min(mapB, H) - 6
+    const yOf = (lat: number) => transform.applyY(projection([0, lat])?.[1] ?? NaN)
+    const xOf = (lon: number) => transform.applyX(projection([lon, 0])?.[0] ?? NaN)
+    const onScreenY = (y: number) => y > Math.max(mapT, 0) + 10 && y < Math.min(mapB, H) - 4
+    const onScreenX = (x: number) => x > Math.max(mapL, 0) + 4 && x < Math.min(mapR, W) - 4
+
+    const named = referencePaths.flatMap((l) => {
+      if (l.runs === 'parallel') {
+        const y = yOf(l.coordinates[0][1])
+        return onScreenY(y) ? [{ l, text: `${l.name} ${l.at}`, x: left, y: y - 5, vertical: false }] : []
+      }
+      // A meridian is named reading upward from just above the foot of the
+      // map, beside the line where it crosses that height; the Date Line's
+      // zig-zag included. A segment that leaps the map is the seam, not it.
+      const at = foot - 18
+      const pts = l.base.map((b) => (b ? (transform.apply(b) as [number, number]) : null))
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 1]
+        const b = pts[i]
+        if (!a || !b || Math.abs(b[0] - a[0]) > W / 2 || a[1] <= at === b[1] <= at) continue
+        const x = a[0] + ((at - a[1]) / (b[1] - a[1])) * (b[0] - a[0])
+        if (!onScreenX(x)) continue
+        // Rotated, a name has only the map's height to run in: on a phone's
+        // world map that is not enough for the whole of it, so it loses its
+        // number first and then its name, rather than running off the map.
+        const room = at - Math.max(mapT, 0) - 8
+        const text = [`${l.name} ${l.at}`, l.name].find((t) => t.length * 6.2 <= room)
+        return text ? [{ l, text, x: x - 5, y: at, vertical: true }] : []
+      }
+      return []
+    })
+    const namedYs = named.filter((n) => !n.vertical).map((n) => n.y + 5)
+
+    const lats: number[] = []
+    for (let lat = -90 + gridStep; lat < 90; lat += gridStep) lats.push(lat)
+    // A longitude is wider than the gap between its lines on a small screen:
+    // every other one is named, or every third, until they stop touching.
+    const lonEvery = gridStep * ([1, 2, 3, 4, 6, 12].find((m) => gridStep * m * pxPerDeg >= 40) ?? 12)
+    const lons: number[] = []
+    for (let lon = -180; lon < 180; lon += gridStep) if (lon % lonEvery === 0) lons.push(lon)
+
+    const halo = { stroke: '#fff', strokeWidth: 3, strokeLinejoin: 'round' as const, paintOrder: 'stroke' }
+    return (
+      <g pointerEvents="none" fontWeight={800}>
+        {lats.map((lat) => {
+          const y = yOf(lat)
+          // Not down among the longitudes along the foot.
+          if (!onScreenY(y) || y > foot - 14 || namedYs.some((n) => Math.abs(n - y) < 14)) return null
+          return (
+            <text key={`la-${lat}`} x={left} y={y - 3} fontSize={10} fill="#1f2d4d" fillOpacity={0.75} {...halo}>
+              {formatLat(lat)}
+            </text>
+          )
+        })}
+        {lons.map((lon) => {
+          const x = xOf(lon)
+          if (!onScreenX(x)) return null
+          return (
+            <text key={`lo-${lon}`} x={x + 3} y={foot} fontSize={10} fill="#1f2d4d" fillOpacity={0.75} {...halo}>
+              {formatLon(lon)}
+            </text>
+          )
+        })}
+        {named.map(({ l, text, x, y, vertical }) => (
+          <text
+            key={`n-${l.id}`}
+            x={x}
+            y={y}
+            fontSize={11}
+            fill={l.colour}
+            transform={vertical ? `rotate(-90 ${x} ${y})` : undefined}
+            {...halo}
+          >
+            {text}
+          </text>
+        ))}
+      </g>
+    )
+  }
 }

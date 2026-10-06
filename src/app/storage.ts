@@ -164,3 +164,18 @@ export function fits(
   const wanted = new Set(askIds)
   return saved.ids.every((id) => wanted.has(id))
 }
+
+const GRID_KEY = 'map-practice:grid'
+
+/**
+ * The latitude and longitude switch. One setting for every map in the app,
+ * kept apart from `Prefs` because it belongs to no round's setup: it is
+ * flipped on the map itself, whatever screen the map is on.
+ */
+export function loadGrid(): boolean {
+  return read(GRID_KEY) === true
+}
+
+export function saveGrid(on: boolean): void {
+  write(GRID_KEY, on)
+}

@@ -399,6 +399,21 @@ piece. `MapCanvas` keys the reveal on its points' *values*: the round re-renders
 many times a second, and keyed on a fresh array the zoom restarted each time and
 never arrived.
 
+**Latitude and longitude are one switch for every map.** The Lat/Long button
+sits on the map itself, at its right edge, on every screen and both atlases,
+and is remembered (`loadGrid`/`saveGrid`, its own storage key, not a round
+pref). On, it draws a faint graticule — spaced so its lines stay ~48px apart,
+30° on a phone's world map down to a degree or two over India — with its
+degrees along the left and foot of whatever is on screen, and picks out five
+lines by name (`REFERENCE_LINES` in `src/map/grid.ts`): the Equator, both
+Tropics at 23°26′ (not Natural Earth's 23.56°), the Prime Meridian and the
+International Date Line. The Date Line is the one that is not straight, so it
+alone is data: `npm run data` chains Natural Earth's five pieces into one line
+pole to pole, unwrapped east past 180 (the Kiribati bulge is 210°E), and fails
+unless each of fourteen islands lands on its own side — Kiritimati, Samoa,
+Tokelau, Tonga and Big Diomede on Asia's date, Little Diomede, American Samoa,
+Niue, the Cooks and the Aleutians on America's.
+
 ## Architecture
 
 The whole app is one map engine plus configuration.
@@ -421,6 +436,8 @@ The whole app is one map engine plus configuration.
   UK's constituent countries, and Oceania's drawn regions from
   `regions.json`); `src/data/areas.ts` is the combined
   lookup everything except `MapCanvas` should import.
+- `src/map/grid.ts` — the Lat/Long switch's lines; the Date Line is
+  `src/data/dateline.json`, written by the build.
 - `scripts/build-data.mjs` — the only thing that touches Natural Earth.
 
 `render` and `askable` are separate because Island Nations draws the whole
