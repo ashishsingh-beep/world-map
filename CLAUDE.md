@@ -112,6 +112,17 @@ still exist in `rounds.ts` as its ingredients, and their links (`#/europe`,
 fits what is asked: `view` reaches the places (Oceania's runs to Easter Island
 for Polynesia), `countryView` is the tighter one used when no place is ticked.
 
+Continents combine: `political-africa+europe` is a round built on demand from
+the two, in menu order whatever order it was asked in (`politicalIdFor`), and
+the world beside any continent is just the world. The setup's scope chips
+toggle continents in and out; World stands alone, and the last continent of a
+mix cannot be tapped away. A mix's frame is the union of its continents' frames
+(`unionFrames`), tried with longitudes as written and again counted east from
+Greenwich, the narrower winning: Africa with Europe is the usual map, Asia with
+Oceania or with North America one frame across the Pacific, written past 180 so
+the map turns to it, and a mix neither holds together — Africa with Oceania —
+the whole world.
+
 In Pin mode the map switches with the question. A country question answers to
 a tap on the country — its polygon or its micro-state ring, so Tuvalu stays
 answerable — and a place question to the marker or patch under the tap, so a

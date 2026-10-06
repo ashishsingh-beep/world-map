@@ -382,12 +382,83 @@ for (const scope of POLITICAL_SCOPES) {
 }
 
 /**
+ * Continents together, in menu order and without repeats: `political-africa+europe`.
+ * The whole world swallows any continent beside it, and one continent is just
+ * that continent's own round.
+ */
+export function politicalIdFor(scopes: string[]): string {
+  const known = POLITICAL_SCOPES.map((s) => s.id as string)
+  const picked = known.filter((id) => scopes.includes(id))
+  if (!picked.length || picked.includes('world')) return politicalRoundId('world')
+  return politicalRoundId(picked.join('+'))
+}
+
+/** The continents a Political Map round covers, or null for an id that is not one. */
+export function scopesOf(id: string): string[] | null {
+  if (!id.startsWith('political-')) return null
+  const scopes = id.slice('political-'.length).split('+')
+  return scopes.every((s) => POLITICAL_ROUNDS[politicalRoundId(s)]) ? scopes : null
+}
+
+/**
+ * One frame around several. Longitudes are tried as written and again counted
+ * east from Greenwich, and the narrower union wins: Africa with Europe stays on
+ * the usual map, while Asia with Oceania — or with North America — is one
+ * frame across the Pacific, written east past 180 so the map turns to it.
+ * Where neither holds together (Africa with Oceania) it is the whole world.
+ */
+function unionFrames(frames: BBox[]): BBox {
+  const s = Math.min(...frames.map((f) => f[0][1]))
+  const n = Math.max(...frames.map((f) => f[1][1]))
+  const spans: [number, number][] = []
+  if (frames.every(([[w], [e]]) => w >= -180 && e <= 180)) {
+    spans.push([Math.min(...frames.map((f) => f[0][0])), Math.max(...frames.map((f) => f[1][0]))])
+  }
+  const east = frames.map(([[w], [e]]): [number, number] | null =>
+    w >= 0 ? [w, e] : e <= 0 ? [w + 360, e + 360] : null
+  )
+  if (east.every(Boolean)) {
+    spans.push([
+      Math.min(...east.map((x) => x![0])),
+      Math.max(...east.map((x) => x![1])),
+    ])
+  }
+  const best = spans.sort((a, b) => a[1] - a[0] - (b[1] - b[0]))[0]
+  if (!best || best[1] - best[0] > 300) return [[WORLD_VIEW[0][0], s], [WORLD_VIEW[1][0], n]]
+  return [[best[0], s], [best[1], n]]
+}
+
+const COMBINED: Record<string, Round> = {}
+function combinedRound(id: string): Round | null {
+  if (COMBINED[id]) return COMBINED[id]
+  const scopes = scopesOf(id)
+  if (!scopes || scopes.length < 2 || politicalIdFor(scopes) !== id) return null
+  const parts = scopes.map((sc) => POLITICAL_ROUNDS[politicalRoundId(sc)])
+  const round: Round = {
+    id,
+    title: parts.map((r) => r.title).join(' + '),
+    blurb: parts[0].blurb,
+    render: [...new Set(parts.flatMap((r) => r.render))],
+    askable: [...new Set(parts.flatMap((r) => r.askable))],
+    places: [...new Set(parts.flatMap((r) => r.places ?? []))],
+    view: unionFrames(parts.map((r) => r.view)),
+    countryView: unionFrames(parts.map((r) => r.countryView ?? r.view)),
+    scope: scopes.join('+'),
+  }
+  COMBINED[id] = round
+  return round
+}
+
+/**
  * Where an old link now lives. The country rounds (`#/europe`) and the world
  * atlas's places rounds (`#/places-europe`) are both the Political Map now; the
  * Seas & Straits and India rounds keep their own ids.
  */
 export function canonicalRoundId(id: string): string {
   if (POLITICAL_ROUNDS[id]) return id
+  // Continents in any order, or repeated, or beside the world: one spelling.
+  const scopes = scopesOf(id)
+  if (scopes) return politicalIdFor(scopes)
   if (ROUNDS[id]) return politicalRoundId(id)
   // Only a world-atlas places round: `places-world` is Seas & Straits, whose
   // continent happens to be called World, and keeps its own round.
@@ -404,5 +475,5 @@ export function canonicalRoundId(id: string): string {
  * the URL, where anyone can type one that does not exist.
  */
 export function roundById(id: string): Round | null {
-  return POLITICAL_ROUNDS[id] ?? ROUNDS[id] ?? PLACE_ROUNDS[id] ?? null
+  return POLITICAL_ROUNDS[id] ?? combinedRound(id) ?? ROUNDS[id] ?? PLACE_ROUNDS[id] ?? null
 }

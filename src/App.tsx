@@ -4,7 +4,9 @@ import {
   POLITICAL_ROUNDS,
   POLITICAL_SCOPES,
   PLACE_ROUNDS,
+  politicalIdFor,
   politicalRoundId,
+  scopesOf,
   WATER_CONTINENTS,
   allPlacesRoundId,
   roundById,
@@ -75,6 +77,8 @@ export default function App() {
   const isWaterRound = roundPlaces[0]?.section === 'water'
   /** The Political Map: countries and their places in one round. */
   const isPolitical = !!round.scope
+  /** Which continents it covers — one, several, or `world`. */
+  const scopes = scopesOf(roundId) ?? []
   const isPlacesRound = isPolitical || roundPlaces[0]?.section === 'places'
 
   /**
@@ -251,24 +255,46 @@ export default function App() {
                 <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Scope</h2>
                 <div className="flex flex-wrap gap-2">
                   {POLITICAL_SCOPES.map((scope) => {
-                    const id = politicalRoundId(scope.id)
-                    const on = id === roundId
+                    const on = scopes.includes(scope.id)
+                    /**
+                     * The world on its own, or any mix of continents. A
+                     * continent tapped while the world is on starts a mix of
+                     * one; the last continent of a mix cannot be tapped away.
+                     */
+                    const next =
+                      scope.id === 'world'
+                        ? ['world']
+                        : scopes.includes('world')
+                          ? [scope.id]
+                          : on
+                            ? scopes.filter((x) => x !== scope.id)
+                            : [...scopes, scope.id]
+                    const last = on && scopes.length === 1
                     return (
                       <button
                         key={scope.id}
                         type="button"
+                        aria-pressed={on}
+                        disabled={last && scope.id !== 'world'}
                         // In place: the scope is part of the address, so a
                         // refresh keeps it, but it is one setup screen.
-                        onClick={() => navigate({ view: 'setup', roundId: id }, true)}
-                        className={`cursor-pointer rounded-full border-2 bg-white px-4 py-2 text-sm font-extrabold text-slate-900 ${
+                        onClick={() =>
+                          next.length &&
+                          navigate({ view: 'setup', roundId: politicalIdFor(next) }, true)
+                        }
+                        className={`rounded-full border-2 bg-white px-4 py-2 text-sm font-extrabold text-slate-900 ${
                           on ? 'border-blue-600' : 'border-transparent'
-                        }`}
+                        } ${last ? 'cursor-default' : 'cursor-pointer'}`}
                       >
+                        {on && scope.id !== 'world' && scopes.length > 1 ? '✓ ' : ''}
                         {scope.label}
                       </button>
                     )
                   })}
                 </div>
+                <p className="mt-2 text-xs font-semibold text-slate-500">
+                  Tap continents to practise several together, or World for all of them.
+                </p>
               </>
             )}
 
