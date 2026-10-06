@@ -612,6 +612,23 @@ function coastlineOf(isos, where) {
   return runs.flat().map(([lon, lat]) => [Number(lon.toFixed(3)), Number(lat.toFixed(3))])
 }
 
+/** A name's or a clue's words, lower-cased, accents dropped. */
+const wordsOf = (text) =>
+  text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().match(/[a-z]+/g) ?? []
+
+/**
+ * Words a name shares with a thousand others and that give nothing away:
+ * "the Gulf of", "Peninsula", "City". Everything else in a name is the answer.
+ */
+const GENERIC_WORDS = new Set(
+  `the of and city peninsula island islands isle sea gulf bay strait straits cape coast
+  region canal lake river mount mountains range ocean north south east west northern
+  southern eastern western great new saint san santa port state territory desert plateau
+  plains plain national park republic united central upper lower little grand point head
+  sound channel passage reef triangle zone depression highlands archipelago pass falls
+  basin delta corridor line fort old gate canyon crossing peak mine iron ore bight`.split(/\s+/)
+)
+
 const SYLLABUS = resolve(OUT, 'syllabus')
 const places = []
 const groups = []
@@ -653,11 +670,19 @@ for (const file of syllabusFiles) {
     // A state's or constituent country's capital — Perth, Edinburgh — is not
     // the country's own, and a country's Why-mode clue must not name it.
     if (p.subnational && p.type !== 'capital') errors.push(`${where(p.id)}: only a capital can be subnational`)
-    // The significance is Why mode's clue: one that names its own answer —
-    // "Capital of Djibouti", "on the Brisbane River" — asks nothing.
-    for (const n of [p.name, ...(p.aliases ?? [])]) {
-      if (n.length > 3 && p.significance?.toLowerCase().includes(n.toLowerCase())) {
-        errors.push(`${where(p.id)}: significance names its own answer ("${n}")`)
+    // The significance is Why mode's clue: one that names its own answer asks
+    // nothing — and naming part of it is as bad. "Capital of Djibouti" gave it
+    // whole; "cut off by the Gulf of California" gave Baja California's key
+    // word; "the Korean Peninsula" gave the Korea Strait's. So every
+    // distinctive word of the name and its aliases is checked, and a clue
+    // word that starts with one counts as naming it — from five letters, so
+    // that "Dhar" does not catch Dharamshala nor "Isla" catch island; a
+    // four-letter word (Suez, Java) has to appear whole.
+    const said = wordsOf(p.significance ?? '')
+    for (const w of [p.name, ...(p.aliases ?? [])].flatMap(wordsOf)) {
+      if (w.length < 4 || GENERIC_WORDS.has(w)) continue
+      if (said.some((x) => (w.length >= 5 ? x.startsWith(w) : x === w))) {
+        errors.push(`${where(p.id)}: significance gives away its own answer ("${w}")`)
         break
       }
     }

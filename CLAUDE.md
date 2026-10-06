@@ -156,8 +156,13 @@ by which of the two sections they belong to rather than left uniformly white.
 the line on every Learn card and the whole clue in Why mode, so "Town in the
 heart of the outback" taught nothing: Alice Springs is the gateway to Uluru and
 the Ghan's halfway stop, and that is what the clue says now. Nor may it name its
-own answer — "Capital of Djibouti", "on the Brisbane River" — and the build
-refuses one that contains the place's name or an alias.
+own answer, whole or in part — "Capital of Djibouti", "cut off by the Gulf of
+California" for Baja California, "the Korean Peninsula" for the Korea Strait —
+and the build refuses a clue containing any distinctive word of the name or an
+alias (`GENERIC_WORDS` lists the ones that give nothing away: Gulf, Peninsula,
+City…). A clue word that starts with a name word of five letters or more counts
+as naming it; a four-letter one (Suez, Java) has to appear whole, so "Dhar" does
+not catch Dharamshala.
 
 **A country does not belong in the places section, even as a fact.** A places
 round is about specific sites inside a country — its capital, a port, an

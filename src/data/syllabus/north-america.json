@@ -257,7 +257,7 @@
       "type": "capital",
       "country": "MEX",
       "point": [-99.13, 19.43],
-      "significance": "Capital of Mexico",
+      "significance": "Capital of the most populous Spanish-speaking country, built on the drained lakebed of Aztec Tenochtitlan",
       "notes": [],
       "tier": 1
     },
@@ -279,7 +279,7 @@
       "type": "capital",
       "country": "GTM",
       "point": [-90.51, 14.63],
-      "significance": "Capital of Guatemala",
+      "significance": "Capital and largest city of Central America's most populous country",
       "notes": [],
       "tier": 1
     },
@@ -290,7 +290,7 @@
       "type": "capital",
       "country": "SLV",
       "point": [-89.19, 13.69],
-      "significance": "Capital of El Salvador",
+      "significance": "Capital of Central America's smallest and most densely populated country, at the foot of a volcano",
       "notes": [],
       "tier": 1
     },
@@ -334,7 +334,7 @@
       "type": "capital",
       "country": "PAN",
       "point": [-79.52, 8.98],
-      "significance": "Capital of Panama",
+      "significance": "Capital at the Pacific end of the isthmus canal, the banking hub of Central America",
       "notes": [],
       "tier": 1
     },
@@ -449,7 +449,7 @@
       "country": "MEX",
       "point": [-113.5, 27.5],
       "spanKm": 420,
-      "significance": "Long finger of Mexico down the Pacific, cut off from the mainland by the Gulf of California",
+      "significance": "Long finger of Mexico down the Pacific, cut off from the mainland by the Sea of Cortez",
       "notes": ["The Gulf of California is also called the Sea of Cortés"],
       "tier": 1
     },
@@ -488,7 +488,7 @@
       "type": "zone",
       "country": null,
       "point": [-70.5, 26.0],
-      "significance": "Stretch of Atlantic between Miami, Bermuda and San Juan, where ships and aircraft are said to have vanished",
+      "significance": "Stretch of Atlantic between Miami, a British island territory and San Juan, where ships and aircraft are said to have vanished",
       "notes": [],
       "tier": 1
     }

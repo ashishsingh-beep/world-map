@@ -179,7 +179,7 @@
       "type": "peninsula",
       "country": null,
       "point": [45.5, 8.0],
-      "significance": "Africa's eastern tip, between the Gulf of Aden and the Indian Ocean — Somalia, Ethiopia, Eritrea and Djibouti",
+      "significance": "The continent's eastern tip, jutting into the Arabian Sea between the Gulf of Aden and the Indian Ocean",
       "notes": [],
       "tier": 1
     },
@@ -637,7 +637,7 @@
       "aliases": ["Pepper Coast"],
       "type": "coast",
       "country": null,
-      "significance": "Liberia's shore, named for the melegueta pepper — 'grains of paradise' — once traded there",
+      "significance": "Liberia's shore of the Gulf of Guinea, named for a spice the Portuguese once traded there",
       "notes": [],
       "tier": 1
     },
@@ -649,7 +649,7 @@
       "aliases": [],
       "type": "coast",
       "country": null,
-      "significance": "Côte d'Ivoire's shore, named for the ivory once traded there",
+      "significance": "The shore between Liberia and Ghana, named for the elephant tusks once traded there",
       "notes": [],
       "tier": 1
     },
@@ -661,7 +661,7 @@
       "aliases": [],
       "type": "coast",
       "country": null,
-      "significance": "Ghana's shore, named for its gold — and Ghana's own name under British rule",
+      "significance": "Ghana's shore, named for the precious metal traded there — and the country's own name under British rule",
       "notes": [],
       "tier": 1
     },
@@ -673,7 +673,7 @@
       "aliases": [],
       "type": "coast",
       "country": null,
-      "significance": "The shore of Togo and Benin on the Bight of Benin, named for the Atlantic slave trade",
+      "significance": "The shore of Togo and Benin on the Bight of Benin, named for the Atlantic trade in captive Africans",
       "notes": [],
       "tier": 1
     }

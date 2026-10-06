@@ -81,7 +81,7 @@
       "spanKm": 4000,
       "basin": "Ocean",
       "borders": ["USA", "BRA", "GBR", "ZAF", "NGA", "ARG"],
-      "significance": "Second largest ocean, split by the Mid-Atlantic Ridge",
+      "significance": "Second largest ocean, split down its middle by a mid-ocean ridge",
       "notes": ["Busiest ocean for trade between Europe and the Americas"],
       "tier": 1
     },
@@ -124,7 +124,7 @@
       "spanKm": 2200,
       "basin": "Ocean",
       "borders": [],
-      "significance": "Ring of water around Antarctica, carrying the Antarctic Circumpolar Current",
+      "significance": "Ring of water around the southern continent, carrying the strongest current on earth, the Circumpolar Current",
       "notes": ["The only ocean that circles the globe unbroken by land"],
       "tier": 1
     },
@@ -406,7 +406,7 @@
       "spanKm": 450,
       "basin": "Arctic Ocean",
       "borders": ["DNK", "NOR"],
-      "significance": "Between Greenland and Svalbard, a main source of deep Atlantic water",
+      "significance": "Between the world's largest island and Svalbard, a main source of deep North Atlantic water",
       "notes": [],
       "tier": 2
     },
@@ -624,7 +624,7 @@
       "spanKm": 450,
       "basin": "Arctic Ocean",
       "borders": ["CAN", "DNK"],
-      "significance": "Between Baffin Island and Greenland, the iceberg nursery of the Atlantic",
+      "significance": "Between Canada's largest island and Greenland, the iceberg nursery of the North Atlantic",
       "notes": [],
       "tier": 2
     },
@@ -652,7 +652,7 @@
       "spanKm": 170,
       "basin": "Arctic Ocean",
       "borders": ["CAN"],
-      "significance": "Arctic gulf between the Boothia Peninsula and Baffin Island",
+      "significance": "Arctic gulf in Canada's archipelago, beside the northernmost point of the North American mainland",
       "notes": [],
       "tier": 2
     },
@@ -682,7 +682,7 @@
       "spanKm": 130,
       "basin": "Pacific Ocean",
       "borders": ["PAN"],
-      "significance": "Pacific-side gulf where the Panama Canal comes out",
+      "significance": "Pacific-side gulf where the isthmus canal comes out",
       "notes": [],
       "tier": 1
     },
@@ -697,7 +697,7 @@
       "spanKm": 280,
       "basin": "Atlantic Ocean",
       "borders": ["CAN"],
-      "significance": "Mouth of the St Lawrence, Canada's gateway to the Great Lakes",
+      "significance": "Mouth of Canada's great river, the sea gateway to the Great Lakes",
       "notes": [],
       "tier": 2
     },
@@ -782,7 +782,7 @@
       "spanKm": 450,
       "basin": "Indian Ocean",
       "borders": ["MMR", "THA", "IND", "IDN"],
-      "significance": "Sea east of the Andaman Islands, opening into the Strait of Malacca",
+      "significance": "Sea between India's Bay of Bengal islands and the coast of Myanmar and Thailand, opening into the Strait of Malacca",
       "notes": [],
       "tier": 1
     },
@@ -852,7 +852,7 @@
       "spanKm": 130,
       "basin": "Red Sea",
       "borders": ["EGY"],
-      "significance": "Western arm of the Red Sea, the approach to the Suez Canal",
+      "significance": "Western arm of the Red Sea, the southern approach to Egypt's canal",
       "notes": [],
       "tier": 1
     },
@@ -908,7 +908,7 @@
       "spanKm": 380,
       "basin": "Indian Ocean",
       "borders": ["AUS", "TLS", "IDN"],
-      "significance": "Gas-rich sea between Timor and northern Australia",
+      "significance": "Gas-rich sea off northern Australia, where the Greater Sunrise field lies",
       "notes": [],
       "tier": 2
     },
@@ -950,7 +950,7 @@
       "spanKm": 450,
       "basin": "Indian Ocean",
       "borders": ["AUS"],
-      "significance": "Long open bight along Australia's southern coast",
+      "significance": "Long open bight along the southern coast of the island continent, facing the Southern Ocean",
       "notes": [],
       "tier": 2
     },
@@ -979,7 +979,7 @@
       "spanKm": 420,
       "basin": "Pacific Ocean",
       "borders": ["CHN", "JPN", "KOR", "TWN"],
-      "significance": "Sea between China and Japan, home of the disputed Senkaku Islands",
+      "significance": "Sea off Shanghai, between the mainland and the Ryukyu Islands — home of the disputed Senkaku Islands",
       "notes": [],
       "tier": 1
     },
@@ -993,7 +993,7 @@
       "spanKm": 330,
       "basin": "Pacific Ocean",
       "borders": ["CHN", "KOR", "PRK"],
-      "significance": "Named for the silt the Yellow River pours into it",
+      "significance": "Named for the silt the Huang He pours into it, between the Chinese mainland and Korea",
       "notes": [],
       "tier": 1
     },
@@ -1008,7 +1008,7 @@
       "spanKm": 520,
       "basin": "Pacific Ocean",
       "borders": ["JPN", "KOR", "PRK", "RUS"],
-      "significance": "Marginal sea walled off from the Pacific by the Japanese islands, between Japan, Korea and Russia — its name disputed by Korea",
+      "significance": "Marginal sea walled off from the Pacific by Honshu and Hokkaido, with Korea and Russia on its other shores — its name disputed by Korea",
       "notes": [],
       "tier": 1
     },
@@ -1066,7 +1066,7 @@
       "spanKm": 320,
       "basin": "Pacific Ocean",
       "borders": ["IDN", "PHL", "MYS"],
-      "significance": "Deep basin between Borneo, Sulawesi and Mindanao",
+      "significance": "Deep basin between Borneo, Mindanao and Indonesia's K-shaped island",
       "notes": [],
       "tier": 2
     },
@@ -1108,7 +1108,7 @@
       "spanKm": 420,
       "basin": "Pacific Ocean",
       "borders": ["IDN"],
-      "significance": "Shallow shelf sea between Java, Sumatra and Borneo",
+      "significance": "Shallow shelf sea between Sumatra, Borneo and Indonesia's most populous island",
       "notes": [],
       "tier": 1
     },
@@ -1164,7 +1164,7 @@
       "spanKm": 650,
       "basin": "Pacific Ocean",
       "borders": ["AUS", "NZL"],
-      "significance": "Stormy sea between Australia and New Zealand — the \"Tasman\"",
+      "significance": "Stormy sea between Australia and New Zealand — 'the ditch'",
       "notes": [],
       "tier": 1
     },
@@ -1192,7 +1192,7 @@
       "spanKm": 230,
       "basin": "Pacific Ocean",
       "borders": ["PNG"],
-      "significance": "Sea north of New Guinea, inside the Bismarck Archipelago",
+      "significance": "Sea north of New Guinea, enclosed by New Britain and New Ireland",
       "notes": [],
       "tier": 3
     },
@@ -1206,7 +1206,7 @@
       "spanKm": 230,
       "basin": "Pacific Ocean",
       "borders": ["PNG", "SLB"],
-      "significance": "Sea between New Guinea and the Solomon Islands",
+      "significance": "Sea between New Guinea, New Britain and Bougainville",
       "notes": [],
       "tier": 3
     },
@@ -1263,7 +1263,7 @@
       "spanKm": 450,
       "basin": "Pacific Ocean",
       "borders": ["USA"],
-      "significance": "Storm-breeding gulf on Alaska's southern coast",
+      "significance": "Storm-breeding gulf on the southern coast of the largest US state",
       "notes": [],
       "tier": 2
     },
@@ -1295,7 +1295,7 @@
       "borders": ["TUR"],
       "region": ["europe", "asia"],
       "connects": "Black Sea ↔ Sea of Marmara",
-      "significance": "Splits Istanbul between Europe and Asia; Russia's grain route west",
+      "significance": "Splits Turkey's largest city between Europe and Asia; Russia's grain route west",
       "notes": ["Governed with the Dardanelles under the Montreux Convention"],
       "tier": 1
     },
@@ -1356,7 +1356,7 @@
       "basin": "Mediterranean",
       "borders": ["ITA", "TUN"],
       "connects": "Western ↔ Eastern Mediterranean",
-      "significance": "The Mediterranean's own waist, between Sicily and Tunisia",
+      "significance": "The Mediterranean's own waist, between Italy's largest island and Tunisia",
       "notes": [],
       "tier": 2
     },
@@ -1628,7 +1628,7 @@
       "basin": "Pacific Ocean",
       "borders": ["SGP", "MYS", "IDN"],
       "connects": "Strait of Malacca ↔ South China Sea",
-      "significance": "The eastern end of the Malacca run, past the port of Singapore",
+      "significance": "The eastern end of the Malacca run, past the city-state's port",
       "notes": [],
       "tier": 2
     },
@@ -1688,7 +1688,7 @@
       "basin": "Pacific Ocean",
       "borders": ["CHN", "TWN"],
       "connects": "East China Sea ↔ South China Sea",
-      "significance": "The 180 km of water between China and Taiwan",
+      "significance": "The 180 km of water between mainland China and the island it claims",
       "notes": [],
       "tier": 1
     },
@@ -1703,7 +1703,7 @@
       "basin": "Pacific Ocean",
       "borders": ["TWN", "PHL"],
       "connects": "South China Sea ↔ Philippine Sea",
-      "significance": "Deep-water gate between Taiwan and Luzon, watched closely by navies",
+      "significance": "Deep-water gate between Taiwan and the Philippines' largest island, watched closely by navies",
       "notes": [],
       "tier": 2
     },
@@ -1718,7 +1718,7 @@
       "basin": "Pacific Ocean",
       "borders": ["KOR", "JPN"],
       "connects": "East China Sea ↔ Sea of Japan",
-      "significance": "Between Korea and Japan, with Tsushima island in midstream",
+      "significance": "Between the peninsula's southern tip and Japan, with an island in midstream splitting it in two",
       "notes": [],
       "tier": 1
     },
@@ -1780,7 +1780,7 @@
       "basin": "Indian Ocean",
       "borders": ["MOZ", "MDG"],
       "connects": "Indian Ocean ↔ Indian Ocean, around Madagascar",
-      "significance": "Between Mozambique and Madagascar, the route for ships too big for Suez",
+      "significance": "Between Madagascar and the African mainland, the route for ships too big for Suez",
       "notes": [],
       "tier": 1
     },
@@ -1796,7 +1796,7 @@
       "basin": "Atlantic Ocean",
       "borders": ["USA", "CUB", "BHS"],
       "connects": "Gulf of Mexico ↔ Atlantic Ocean",
-      "significance": "Where the Gulf Stream leaves the Gulf, between Florida and Cuba",
+      "significance": "Where the Gulf Stream leaves the Gulf of Mexico, between the US mainland's southern tip and Cuba",
       "notes": [],
       "tier": 1
     },
@@ -1858,7 +1858,7 @@
       "basin": "Arctic Ocean",
       "borders": ["CAN"],
       "connects": "Labrador Sea ↔ Hudson Bay",
-      "significance": "The only sea route into Hudson Bay",
+      "significance": "The only sea route into Canada's great inland bay",
       "notes": [],
       "tier": 2
     },
@@ -1980,7 +1980,7 @@
       "basin": "Atlantic Ocean",
       "borders": ["PAN"],
       "connects": "Atlantic Ocean ↔ Pacific Ocean",
-      "significance": "Lock canal across Panama, sparing ships the trip round Cape Horn",
+      "significance": "Lock canal across the Central American isthmus, sparing ships the trip round Cape Horn",
       "notes": ["Opened 1914; handed to Panama in 1999"],
       "tier": 1
     },

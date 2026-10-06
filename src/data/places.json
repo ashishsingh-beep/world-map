@@ -362,7 +362,7 @@
         45.5,
         8
       ],
-      "significance": "Africa's eastern tip, between the Gulf of Aden and the Indian Ocean — Somalia, Ethiopia, Eritrea and Djibouti",
+      "significance": "The continent's eastern tip, jutting into the Arabian Sea between the Gulf of Aden and the Indian Ocean",
       "notes": [],
       "tier": 1,
       "continent": "Africa",
@@ -1088,7 +1088,7 @@
       ],
       "type": "coast",
       "country": null,
-      "significance": "Liberia's shore, named for the melegueta pepper — 'grains of paradise' — once traded there",
+      "significance": "Liberia's shore of the Gulf of Guinea, named for a spice the Portuguese once traded there",
       "notes": [],
       "tier": 1,
       "line": [
@@ -1191,7 +1191,7 @@
       "aliases": [],
       "type": "coast",
       "country": null,
-      "significance": "Côte d'Ivoire's shore, named for the ivory once traded there",
+      "significance": "The shore between Liberia and Ghana, named for the elephant tusks once traded there",
       "notes": [],
       "tier": 1,
       "line": [
@@ -1298,7 +1298,7 @@
       "aliases": [],
       "type": "coast",
       "country": null,
-      "significance": "Ghana's shore, named for its gold — and Ghana's own name under British rule",
+      "significance": "Ghana's shore, named for the precious metal traded there — and the country's own name under British rule",
       "notes": [],
       "tier": 1,
       "line": [
@@ -1414,7 +1414,7 @@
       "aliases": [],
       "type": "coast",
       "country": null,
-      "significance": "The shore of Togo and Benin on the Bight of Benin, named for the Atlantic slave trade",
+      "significance": "The shore of Togo and Benin on the Bight of Benin, named for the Atlantic trade in captive Africans",
       "notes": [],
       "tier": 1,
       "line": [
@@ -1623,7 +1623,7 @@
         4
       ],
       "spanKm": 300,
-      "significance": "The mainland part of Malaysia, on the Malay Peninsula",
+      "significance": "The federation's mainland half, on the Malay Peninsula, home to Kuala Lumpur",
       "notes": [],
       "tier": 1,
       "continent": "Asia",
@@ -1641,7 +1641,7 @@
         4.41
       ],
       "spanKm": 400,
-      "significance": "Malaysia's share of Borneo — the states of Sabah and Sarawak",
+      "significance": "The federation's share of Borneo — the states of Sabah and Sarawak",
       "notes": [
         "Separated from West Malaysia by the South China Sea"
       ],
@@ -3122,7 +3122,7 @@
         47.9774,
         29.3759
       ],
-      "significance": "Capital of Kuwait",
+      "significance": "Capital of the oil-rich emirate at the head of the Persian Gulf, between Iraq and Saudi Arabia",
       "notes": [],
       "tier": 1,
       "continent": "Asia",
@@ -3701,7 +3701,7 @@
         54.65
       ],
       "spanKm": 80,
-      "significance": "Constituent country of the UK, in the north-east of the island of Ireland",
+      "significance": "Constituent country of the UK, holding its only land border with an EU state — capital Belfast",
       "notes": [],
       "tier": 1,
       "continent": "Europe",
@@ -5030,7 +5030,7 @@
         ]
       ],
       "spanKm": 60,
-      "significance": "The innermost and highest range, an unbroken 2,400km wall from Nanga Parbat to Namcha Barwa",
+      "significance": "The highest range, an unbroken 2,400km wall of the world's tallest peaks from Nanga Parbat to Namcha Barwa",
       "notes": [
         "Carries every peak above 8,000m in the system",
         "Its average height is about 6,000m"
@@ -5353,7 +5353,7 @@
         ]
       ],
       "spanKm": 60,
-      "significance": "The outermost and youngest Himalayan range, built from the debris the mountains shed onto the plains",
+      "significance": "The youngest and lowest of the ranges, at the edge of the plains, built from the debris the mountains shed onto them",
       "notes": [
         "The flat-floored duns — Dehradun among them — lie between it and the Lesser Himalaya"
       ],
@@ -6209,7 +6209,7 @@
         -99.13,
         19.43
       ],
-      "significance": "Capital of Mexico",
+      "significance": "Capital of the most populous Spanish-speaking country, built on the drained lakebed of Aztec Tenochtitlan",
       "notes": [],
       "tier": 1,
       "continent": "North America",
@@ -6243,7 +6243,7 @@
         -90.51,
         14.63
       ],
-      "significance": "Capital of Guatemala",
+      "significance": "Capital and largest city of Central America's most populous country",
       "notes": [],
       "tier": 1,
       "continent": "North America",
@@ -6260,7 +6260,7 @@
         -89.19,
         13.69
       ],
-      "significance": "Capital of El Salvador",
+      "significance": "Capital of Central America's smallest and most densely populated country, at the foot of a volcano",
       "notes": [],
       "tier": 1,
       "continent": "North America",
@@ -6330,7 +6330,7 @@
         -79.52,
         8.98
       ],
-      "significance": "Capital of Panama",
+      "significance": "Capital at the Pacific end of the isthmus canal, the banking hub of Central America",
       "notes": [],
       "tier": 1,
       "continent": "North America",
@@ -6518,7 +6518,7 @@
         27.5
       ],
       "spanKm": 420,
-      "significance": "Long finger of Mexico down the Pacific, cut off from the mainland by the Gulf of California",
+      "significance": "Long finger of Mexico down the Pacific, cut off from the mainland by the Sea of Cortez",
       "notes": [
         "The Gulf of California is also called the Sea of Cortés"
       ],
@@ -6589,7 +6589,7 @@
         -70.5,
         26
       ],
-      "significance": "Stretch of Atlantic between Miami, Bermuda and San Juan, where ships and aircraft are said to have vanished",
+      "significance": "Stretch of Atlantic between Miami, a British island territory and San Juan, where ships and aircraft are said to have vanished",
       "notes": [],
       "tier": 1,
       "continent": "North America",
@@ -6724,7 +6724,7 @@
         122,
         -25.5
       ],
-      "significance": "Australia's largest state, a third of the continent, and its mining heartland — Pilbara iron ore and Goldfields gold",
+      "significance": "The largest state, a third of the continent, and its mining heartland — Pilbara iron ore and Goldfields gold",
       "notes": [],
       "tier": 1,
       "continent": "Oceania",
@@ -6745,7 +6745,7 @@
         135.5,
         -30
       ],
-      "significance": "The driest state, on the Great Australian Bight — Barossa Valley wine, and the uranium of Olympic Dam",
+      "significance": "The driest state, on the great bight of the Southern Ocean — Barossa Valley wine, and the uranium of Olympic Dam",
       "notes": [],
       "tier": 1,
       "continent": "Oceania",
@@ -7331,7 +7331,7 @@
         "NGA",
         "ARG"
       ],
-      "significance": "Second largest ocean, split by the Mid-Atlantic Ridge",
+      "significance": "Second largest ocean, split down its middle by a mid-ocean ridge",
       "notes": [
         "Busiest ocean for trade between Europe and the Americas"
       ],
@@ -7430,7 +7430,7 @@
       "spanKm": 2200,
       "basin": "Ocean",
       "borders": [],
-      "significance": "Ring of water around Antarctica, carrying the Antarctic Circumpolar Current",
+      "significance": "Ring of water around the southern continent, carrying the strongest current on earth, the Circumpolar Current",
       "notes": [
         "The only ocean that circles the globe unbroken by land"
       ],
@@ -8006,7 +8006,7 @@
         "DNK",
         "NOR"
       ],
-      "significance": "Between Greenland and Svalbard, a main source of deep Atlantic water",
+      "significance": "Between the world's largest island and Svalbard, a main source of deep North Atlantic water",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -8420,7 +8420,7 @@
         "CAN",
         "DNK"
       ],
-      "significance": "Between Baffin Island and Greenland, the iceberg nursery of the Atlantic",
+      "significance": "Between Canada's largest island and Greenland, the iceberg nursery of the North Atlantic",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -8470,7 +8470,7 @@
       "borders": [
         "CAN"
       ],
-      "significance": "Arctic gulf between the Boothia Peninsula and Baffin Island",
+      "significance": "Arctic gulf in Canada's archipelago, beside the northernmost point of the North American mainland",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -8529,7 +8529,7 @@
       "borders": [
         "PAN"
       ],
-      "significance": "Pacific-side gulf where the Panama Canal comes out",
+      "significance": "Pacific-side gulf where the isthmus canal comes out",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -8559,7 +8559,7 @@
       "borders": [
         "CAN"
       ],
-      "significance": "Mouth of the St Lawrence, Canada's gateway to the Great Lakes",
+      "significance": "Mouth of Canada's great river, the sea gateway to the Great Lakes",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -8733,7 +8733,7 @@
         "IND",
         "IDN"
       ],
-      "significance": "Sea east of the Andaman Islands, opening into the Strait of Malacca",
+      "significance": "Sea between India's Bay of Bengal islands and the coast of Myanmar and Thailand, opening into the Strait of Malacca",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -8879,7 +8879,7 @@
       "borders": [
         "EGY"
       ],
-      "significance": "Western arm of the Red Sea, the approach to the Suez Canal",
+      "significance": "Western arm of the Red Sea, the southern approach to Egypt's canal",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -8986,7 +8986,7 @@
         "TLS",
         "IDN"
       ],
-      "significance": "Gas-rich sea between Timor and northern Australia",
+      "significance": "Gas-rich sea off northern Australia, where the Greater Sunrise field lies",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -9063,7 +9063,7 @@
       "borders": [
         "AUS"
       ],
-      "significance": "Long open bight along Australia's southern coast",
+      "significance": "Long open bight along the southern coast of the island continent, facing the Southern Ocean",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -9123,7 +9123,7 @@
         "KOR",
         "TWN"
       ],
-      "significance": "Sea between China and Japan, home of the disputed Senkaku Islands",
+      "significance": "Sea off Shanghai, between the mainland and the Ryukyu Islands — home of the disputed Senkaku Islands",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -9150,7 +9150,7 @@
         "KOR",
         "PRK"
       ],
-      "significance": "Named for the silt the Yellow River pours into it",
+      "significance": "Named for the silt the Huang He pours into it, between the Chinese mainland and Korea",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -9183,7 +9183,7 @@
         "PRK",
         "RUS"
       ],
-      "significance": "Marginal sea walled off from the Pacific by the Japanese islands, between Japan, Korea and Russia — its name disputed by Korea",
+      "significance": "Marginal sea walled off from the Pacific by Honshu and Hokkaido, with Korea and Russia on its other shores — its name disputed by Korea",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -9302,7 +9302,7 @@
         "PHL",
         "MYS"
       ],
-      "significance": "Deep basin between Borneo, Sulawesi and Mindanao",
+      "significance": "Deep basin between Borneo, Mindanao and Indonesia's K-shaped island",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -9378,7 +9378,7 @@
       "borders": [
         "IDN"
       ],
-      "significance": "Shallow shelf sea between Java, Sumatra and Borneo",
+      "significance": "Shallow shelf sea between Sumatra, Borneo and Indonesia's most populous island",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -9482,7 +9482,7 @@
         "AUS",
         "NZL"
       ],
-      "significance": "Stormy sea between Australia and New Zealand — the \"Tasman\"",
+      "significance": "Stormy sea between Australia and New Zealand — 'the ditch'",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -9532,7 +9532,7 @@
       "borders": [
         "PNG"
       ],
-      "significance": "Sea north of New Guinea, inside the Bismarck Archipelago",
+      "significance": "Sea north of New Guinea, enclosed by New Britain and New Ireland",
       "notes": [],
       "tier": 3,
       "continent": "World",
@@ -9558,7 +9558,7 @@
         "PNG",
         "SLB"
       ],
-      "significance": "Sea between New Guinea and the Solomon Islands",
+      "significance": "Sea between New Guinea, New Britain and Bougainville",
       "notes": [],
       "tier": 3,
       "continent": "World",
@@ -9669,7 +9669,7 @@
       "borders": [
         "USA"
       ],
-      "significance": "Storm-breeding gulf on Alaska's southern coast",
+      "significance": "Storm-breeding gulf on the southern coast of the largest US state",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -9734,7 +9734,7 @@
         "asia"
       ],
       "connects": "Black Sea ↔ Sea of Marmara",
-      "significance": "Splits Istanbul between Europe and Asia; Russia's grain route west",
+      "significance": "Splits Turkey's largest city between Europe and Asia; Russia's grain route west",
       "notes": [
         "Governed with the Dardanelles under the Montreux Convention"
       ],
@@ -9853,7 +9853,7 @@
         "TUN"
       ],
       "connects": "Western ↔ Eastern Mediterranean",
-      "significance": "The Mediterranean's own waist, between Sicily and Tunisia",
+      "significance": "The Mediterranean's own waist, between Italy's largest island and Tunisia",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -10375,7 +10375,7 @@
         "IDN"
       ],
       "connects": "Strait of Malacca ↔ South China Sea",
-      "significance": "The eastern end of the Malacca run, past the port of Singapore",
+      "significance": "The eastern end of the Malacca run, past the city-state's port",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -10482,7 +10482,7 @@
         "TWN"
       ],
       "connects": "East China Sea ↔ South China Sea",
-      "significance": "The 180 km of water between China and Taiwan",
+      "significance": "The 180 km of water between mainland China and the island it claims",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -10511,7 +10511,7 @@
         "PHL"
       ],
       "connects": "South China Sea ↔ Philippine Sea",
-      "significance": "Deep-water gate between Taiwan and Luzon, watched closely by navies",
+      "significance": "Deep-water gate between Taiwan and the Philippines' largest island, watched closely by navies",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -10540,7 +10540,7 @@
         "JPN"
       ],
       "connects": "East China Sea ↔ Sea of Japan",
-      "significance": "Between Korea and Japan, with Tsushima island in midstream",
+      "significance": "Between the peninsula's southern tip and Japan, with an island in midstream splitting it in two",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -10660,7 +10660,7 @@
         "MDG"
       ],
       "connects": "Indian Ocean ↔ Indian Ocean, around Madagascar",
-      "significance": "Between Mozambique and Madagascar, the route for ships too big for Suez",
+      "significance": "Between Madagascar and the African mainland, the route for ships too big for Suez",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -10690,7 +10690,7 @@
         "BHS"
       ],
       "connects": "Gulf of Mexico ↔ Atlantic Ocean",
-      "significance": "Where the Gulf Stream leaves the Gulf, between Florida and Cuba",
+      "significance": "Where the Gulf Stream leaves the Gulf of Mexico, between the US mainland's southern tip and Cuba",
       "notes": [],
       "tier": 1,
       "continent": "World",
@@ -10807,7 +10807,7 @@
         "CAN"
       ],
       "connects": "Labrador Sea ↔ Hudson Bay",
-      "significance": "The only sea route into Hudson Bay",
+      "significance": "The only sea route into Canada's great inland bay",
       "notes": [],
       "tier": 2,
       "continent": "World",
@@ -11022,7 +11022,7 @@
         "PAN"
       ],
       "connects": "Atlantic Ocean ↔ Pacific Ocean",
-      "significance": "Lock canal across Panama, sparing ships the trip round Cape Horn",
+      "significance": "Lock canal across the Central American isthmus, sparing ships the trip round Cape Horn",
       "notes": [
         "Opened 1914; handed to Panama in 1999"
       ],
@@ -11577,7 +11577,7 @@
         -67.56,
         -23
       ],
-      "significance": "World's largest lithium reserves, spanning Argentina, Bolivia and Chile",
+      "significance": "World's largest reserves of the battery metal, spanning Argentina, Bolivia and Chile",
       "notes": [
         "Mnemonic: ABC — Argentina, Bolivia, Chile",
         "Its corners are the salt flats of Uyuni (Bolivia), Atacama (Chile) and Hombre Muerto (Argentina)"

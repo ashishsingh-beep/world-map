@@ -185,7 +185,7 @@
       "country": "MYS",
       "point": [102.5, 4.0],
       "spanKm": 300,
-      "significance": "The mainland part of Malaysia, on the Malay Peninsula",
+      "significance": "The federation's mainland half, on the Malay Peninsula, home to Kuala Lumpur",
       "notes": [],
       "tier": 1
     },
@@ -197,7 +197,7 @@
       "country": "MYS",
       "point": [113.99, 4.41],
       "spanKm": 400,
-      "significance": "Malaysia's share of Borneo — the states of Sabah and Sarawak",
+      "significance": "The federation's share of Borneo — the states of Sabah and Sarawak",
       "notes": ["Separated from West Malaysia by the South China Sea"],
       "tier": 1
     },
@@ -1131,7 +1131,7 @@
       "type": "capital",
       "country": "KWT",
       "point": [47.9774, 29.3759],
-      "significance": "Capital of Kuwait",
+      "significance": "Capital of the oil-rich emirate at the head of the Persian Gulf, between Iraq and Saudi Arabia",
       "notes": [],
       "tier": 1
     },
