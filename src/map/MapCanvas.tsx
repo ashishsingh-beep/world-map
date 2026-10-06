@@ -28,6 +28,12 @@ const ARCHIPELAGO_THRESHOLD_PX: Partial<Record<string, number>> = { FJI: 48, SLB
 /** Padding factor when the map zooms in to reveal a country. */
 const REVEAL_PADDING = 6
 const MAX_REVEAL_SCALE = 14
+/**
+ * How far a hand can zoom in. Deep enough that the smallest land drawn —
+ * Ilhéu das Rolas on the Equator, Tuvalu's atolls — is a shape and not a
+ * speck. Automatic zooms keep their own, much lower, caps.
+ */
+const MAX_ZOOM = 400
 /** A point has no size of its own, so its reveal zoom is capped rather than fitted. */
 const POINT_REVEAL_SCALE = 5
 /** A Type-mode sea smaller than this on the unzoomed map is zoomed to while asked. */
@@ -395,7 +401,7 @@ export function MapCanvas({
     const svg = svgRef.current
     if (!svg || !size.width) return
     const behaviour = d3Zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 60])
+      .scaleExtent([1, MAX_ZOOM])
       .translateExtent([
         [0, 0],
         [size.width, size.height],
@@ -553,17 +559,36 @@ export function MapCanvas({
   }
   const pxPerDeg = ((projection.scale() * Math.PI) / 180) * k
   const gridStep = GRID_STEPS.find((s) => s * pxPerDeg >= 48) ?? GRID_STEPS[GRID_STEPS.length - 1]
+  /**
+   * Under a degree, only the cells on screen: a tenth-of-a-degree graticule
+   * of the whole globe is half a million points. Snapped outward to the step,
+   * so panning within a cell does not rebuild it.
+   */
+  const gridExtent = (() => {
+    const whole = '-180,-90,180,90'
+    if (!grid || gridStep >= 1 || !size.width) return whole
+    const corner = (x: number, y: number) => projection.invert?.(transform.invert([x, y]))
+    const nw = corner(0, 0)
+    const se = corner(size.width, size.height)
+    if (!nw || !se) return whole
+    // Across the 180th the east edge is counted on past it, as views are.
+    const east = se[0] < nw[0] ? se[0] + 360 : se[0]
+    const snap = (v: number, up: boolean) => (up ? Math.ceil(v / gridStep) + 1 : Math.floor(v / gridStep) - 1) * gridStep
+    return [snap(nw[0], false), Math.max(-90, snap(se[1], false)), snap(east, true), Math.min(90, snap(nw[1], true))].join(',')
+  })()
   const graticulePath = useMemo(() => {
     if (!grid) return null
+    const [w, s, e, n] = gridExtent.split(',').map(Number)
     const lines = geoGraticule()
       .extent([
-        [-180, -90 + 1e-6],
-        [180, 90 - 1e-6],
+        [w, Math.max(s, -90 + 1e-6)],
+        [e, Math.min(n, 90 - 1e-6)],
       ])
       .step([gridStep, gridStep])
+      .precision(Math.min(2.5, gridStep))
       .lines()
     return path({ type: 'MultiLineString', coordinates: lines.map((l) => l.coordinates) }) ?? null
-  }, [grid, gridStep, path])
+  }, [grid, gridStep, gridExtent, path])
   const referencePaths = useMemo(
     () =>
       grid
@@ -1205,13 +1230,17 @@ export function MapCanvas({
     })
     const namedYs = named.filter((n) => !n.vertical).map((n) => n.y + 5)
 
+    // Counted in whole steps, not summed, or a tenth of a degree drifts.
     const lats: number[] = []
-    for (let lat = -90 + gridStep; lat < 90; lat += gridStep) lats.push(lat)
+    for (let i = 1; i * gridStep < 180; i++) lats.push(-90 + i * gridStep)
     // A longitude is wider than the gap between its lines on a small screen:
     // every other one is named, or every third, until they stop touching.
     const lonEvery = gridStep * ([1, 2, 3, 4, 6, 12].find((m) => gridStep * m * pxPerDeg >= 40) ?? 12)
     const lons: number[] = []
-    for (let lon = -180; lon < 180; lon += gridStep) if (lon % lonEvery === 0) lons.push(lon)
+    for (let i = 0; i * gridStep < 360; i++) {
+      const lon = -180 + i * gridStep
+      if (Math.abs(lon / lonEvery - Math.round(lon / lonEvery)) < 1e-6) lons.push(lon)
+    }
 
     const halo = { stroke: '#fff', strokeWidth: 3, strokeLinejoin: 'round' as const, paintOrder: 'stroke' }
     return (

@@ -69,12 +69,24 @@ export const REFERENCE_LINES: ReferenceLine[] = [
   },
 ]
 
-/** Graticule spacings to choose from, finest first; 15° is an hour of time. */
-export const GRID_STEPS = [1, 2, 5, 10, 15, 30]
+/**
+ * Graticule spacings to choose from, finest first; 15° is an hour of time.
+ * Under a degree they go in minutes — 30′, 15′, 6′ — for the deepest zooms.
+ */
+export const GRID_STEPS = [0.1, 0.25, 0.5, 1, 2, 5, 10, 15, 30]
 
-export const formatLat = (lat: number) => (lat === 0 ? '0°' : `${Math.abs(lat)}°${lat > 0 ? 'N' : 'S'}`)
+/** 23.5 → 23°30′: a fine graticule is labelled in minutes, as an atlas is. */
+const degrees = (v: number) => {
+  const minutes = Math.round(Math.abs(v) * 60)
+  const d = Math.floor(minutes / 60)
+  const m = minutes % 60
+  return m ? `${d}°${String(m).padStart(2, '0')}′` : `${d}°`
+}
+
+export const formatLat = (lat: number) =>
+  Math.abs(lat) < 1e-9 ? '0°' : `${degrees(lat)}${lat > 0 ? 'N' : 'S'}`
 
 export const formatLon = (lon: number) => {
   const l = ((((lon + 180) % 360) + 360) % 360) - 180
-  return l === 0 || l === -180 ? `${Math.abs(l)}°` : `${Math.abs(l)}°${l > 0 ? 'E' : 'W'}`
+  return Math.abs(l) < 1e-9 || Math.abs(l + 180) < 1e-9 ? `${degrees(l)}` : `${degrees(l)}${l > 0 ? 'E' : 'W'}`
 }

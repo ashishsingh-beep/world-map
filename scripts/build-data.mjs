@@ -442,7 +442,7 @@ execFileSync(
     '-clean',
     '-filter-fields', 'iso',
     '-rename-layers', 'countries',
-    '-o', 'format=topojson', 'quantization=1e5', 'id-field=iso', topoOut,
+    '-o', 'format=topojson', 'quantization=1e6', 'id-field=iso', topoOut,
   ],
   { stdio: 'inherit' }
 )
