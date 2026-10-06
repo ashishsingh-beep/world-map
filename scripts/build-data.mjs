@@ -80,6 +80,18 @@ const GEO_LINES_URL =
 const GEO_LINES_RAW = resolve(CACHE, 'ne_10m_geographic_lines.geojson')
 
 /**
+ * Islets Natural Earth leaves out that a country's outline needs, from
+ * OpenStreetMap by way id. One so far: Ilhéu das Rolas, which is where the
+ * Equator crosses São Tomé and Príncipe — without it the country stops 3km
+ * north of the line and looks as if it never reaches it. Added to the
+ * country's own geometry, so it is São Tomé and Príncipe's land, not a place
+ * of its own. `reaches` is the latitude its southern edge must pass.
+ */
+const ISLETS = [
+  { iso: 'STP', name: 'Ilhéu das Rolas', osm: 'W146849673', reaches: 0 },
+].map((i) => ({ ...i, raw: resolve(CACHE, `osm-${i.osm}.json`) }))
+
+/**
  * Sixth: Natural Earth's admin-1 provinces, for the few regions the syllabus
  * names that are an administrative unit rather than a landform — Ethiopia's
  * Afar Region, and the Sinai Peninsula, which the physical-regions layer does
@@ -219,6 +231,22 @@ function download() {
     console.log('Downloading Natural Earth map units…')
     execFileSync('curl', ['-sSL', '-o', MAP_UNITS_RAW, MAP_UNITS_URL], { stdio: 'inherit' })
   }
+  for (const i of ISLETS) {
+    if (existsSync(i.raw)) continue
+    console.log(`Downloading ${i.name} from OpenStreetMap…`)
+    execFileSync(
+      'curl',
+      [
+        '-sSL',
+        '-A',
+        'map-practice-build',
+        '-o',
+        i.raw,
+        `https://nominatim.openstreetmap.org/lookup?osm_ids=${i.osm}&format=json&polygon_geojson=1`,
+      ],
+      { stdio: 'inherit' }
+    )
+  }
   if (!existsSync(GEO_LINES_RAW)) {
     console.log('Downloading Natural Earth geographic lines…')
     execFileSync('curl', ['-sSL', '-o', GEO_LINES_RAW, GEO_LINES_URL], { stdio: 'inherit' })
@@ -331,6 +359,32 @@ const EARTH_KM2 = 6371 * 6371
  * which simplifies at Italy's rate, and without `keep-shapes` it vanished.
  */
 const SMALL_NATION_KM2 = 30000
+
+/** Twice the planar signed area of a ring: its winding, as the source wrote it. */
+const ringWinding = (ring) =>
+  Math.sign(ring.reduce((s, [x1, y1], i) => {
+    const [x2, y2] = ring[(i + 1) % ring.length]
+    return s + (x1 * y2 - x2 * y1)
+  }, 0))
+
+for (const i of ISLETS) {
+  const [hit] = JSON.parse(readFileSync(i.raw, 'utf8'))
+  if (hit?.geojson?.type !== 'Polygon') throw new Error(`${i.name}: no polygon from OpenStreetMap`)
+  const f = picked.get(i.iso)
+  if (!f) throw new Error(`${i.name}: ${i.iso} is not in the country set`)
+  const parts = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates]
+  // Wound as Natural Earth winds its own rings, or d3 reads it as the globe
+  // less an islet and the country's area becomes the planet's.
+  const [outer] = hit.geojson.coordinates
+  const islet = ringWinding(outer) === ringWinding(parts[0][0]) ? outer : [...outer].reverse()
+  const south = Math.min(...islet.map((c) => c[1]))
+  if (south > i.reaches) throw new Error(`${i.name} stops at ${south}°, short of ${i.reaches}°`)
+  const before = geoArea(f)
+  f.geometry = { type: 'MultiPolygon', coordinates: [...parts, [islet]] }
+  const added = (geoArea(f) - before) * EARTH_KM2
+  if (added <= 0 || added > 100) throw new Error(`${i.name} added ${added.toFixed(1)} km², not an islet`)
+  console.log(`${i.name}: ${added.toFixed(1)} km² added to ${i.iso}, south to ${south.toFixed(4)}°`)
+}
 
 const meta = {}
 const features = []

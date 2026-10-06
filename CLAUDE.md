@@ -78,6 +78,13 @@ filling it would mean borrowing another worldview's geometry.
 Serbia), so the set is 196 entries, not 197. See `INCLUDE_KOSOVO` in
 `scripts/build-data.mjs`.
 
+**An islet Natural Earth leaves out can be added to its country's outline**,
+from OpenStreetMap by way id (`ISLETS` in the build), when the outline is wrong
+without it. One so far: Ilhéu das Rolas, where the Equator crosses São Tomé and
+Príncipe — Natural Earth's São Tomé stops 3km north of the line. It is the
+country's land, not a place of its own and never a question; the build fails
+unless it reaches the latitude it is there for and adds no more than an islet.
+
 **The question count picks how many; everything else picks which.** Every
 round's setup offers 10, 30, 50, 100 or All, as the reference does, drawn at
 random from whatever the other choices leave — a new draw each round, the first

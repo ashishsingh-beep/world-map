@@ -5,7 +5,7 @@
       "title": "Africa",
       "section": "places",
       "atlas": "world",
-      "count": 61
+      "count": 60
     },
     {
       "name": "Asia",
@@ -705,28 +705,6 @@
       ],
       "significance": "The northern isle of the Spice Islands, and the chief grower of their cloves",
       "notes": [],
-      "tier": 1,
-      "continent": "Africa",
-      "section": "places",
-      "atlas": "world"
-    },
-    {
-      "id": "stp-rolas",
-      "name": "Ilhéu das Rolas",
-      "aliases": [
-        "Rolas Island",
-        "Ilheu das Rolas"
-      ],
-      "type": "island",
-      "country": "STP",
-      "point": [
-        6.526,
-        -0.002
-      ],
-      "significance": "Islet off São Tomé where the Equator crosses land in the Gulf of Guinea — a monument marks the line",
-      "notes": [
-        "Too small for the map's outline of São Tomé and Príncipe: the main island ends about 3km north of the Equator"
-      ],
       "tier": 1,
       "continent": "Africa",
       "section": "places",
