@@ -44,7 +44,7 @@ import {
 export default function App() {
   const [route, navigate] = useRoute()
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, count, suggestions, kinds, region, placeKinds } = prefs
+  const { mode, timed, count, suggestions, kinds, region, placeKinds, basin } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
@@ -52,6 +52,7 @@ export default function App() {
   const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
+  const setBasin = (basin: string) => setPrefs((p) => ({ ...p, basin }))
   const setPlaceKinds = (next: (k: Record<PlaceKind, boolean>) => Record<PlaceKind, boolean>) =>
     setPrefs((p) => ({ ...p, placeKinds: next(p.placeKinds) }))
   useEffect(() => savePrefs(prefs), [prefs])
@@ -89,9 +90,19 @@ export default function App() {
    * within it. These decide which set; the question count then decides how
    * many of it.
    */
+  /**
+   * A rivers round narrows by river system — the Godavari's, the Mahanadi's —
+   * which picks the set the question count then draws from. A stored basin
+   * this round does not have plays as all of them.
+   */
+  const isRivers = roundPlaces[0]?.section === 'rivers'
+  const basins = isRivers ? [...new Set(roundPlaces.map((p) => p.basin ?? ''))].filter(Boolean) : []
+  const basinHere = basins.includes(basin) ? basin : 'all'
   const inRegion = isWaterRound
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
-    : roundPlaces
+    : isRivers
+      ? roundPlaces.filter((p) => basinHere === 'all' || p.basin === basinHere)
+      : roundPlaces
   /**
    * Why mode's clue for a country is its capital, so a country no syllabus
    * names a capital for yet has no clue to ask from, and sits out.
@@ -132,7 +143,7 @@ export default function App() {
           view: places.length ? round.view : (round.countryView ?? round.view),
         }
       : round.places
-        ? { ...round, places }
+        ? { ...round, places, backdrop: inRegion.map((p) => p.id) }
         : { ...round, askable: countries }
   // A drill lives only on its play screen: off it — the browser's back button
   // included — the round is its full set again, and every way back in through
@@ -143,7 +154,7 @@ export default function App() {
         drillIds.filter((id) => !meta[id]),
         drillIds.filter((id) => meta[id])
       )
-    : isWaterRound || isPlacesRound
+    : isWaterRound || isPlacesRound || isRivers
       ? withQuestions(
           asked.map((p) => p.id),
           askedCountries
@@ -249,7 +260,7 @@ export default function App() {
               {isPolitical
                 ? `${askIds.length} question${askIds.length === 1 ? '' : 's'} · ${round.title}`
                 : round.places
-                  ? `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? 'currents' : 'places'}`
+                  ? `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? 'currents' : isRivers ? 'rivers' : 'places'}`
                   : `${round.askable.length} countries`}
             </p>
 
@@ -297,6 +308,32 @@ export default function App() {
                 </div>
                 <p className="mt-2 text-xs font-semibold text-slate-500">
                   Tap continents to practise several together, or World for all of them.
+                </p>
+              </>
+            )}
+
+            {isRivers && basins.length > 1 && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">River system</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {['all', ...basins].map((id) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setBasin(id)}
+                      className={`cursor-pointer rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                        basinHere === id ? 'border-blue-600' : 'border-transparent'
+                      }`}
+                    >
+                      <div className="font-extrabold text-slate-900">{id === 'all' ? 'All' : id}</div>
+                      <div className="text-xs font-semibold text-slate-500">
+                        {id === 'all' ? roundPlaces.length : roundPlaces.filter((p) => p.basin === id).length}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-2 text-xs font-semibold text-slate-500">
+                  A system is its main river with every tributary and distributary that belongs to it.
                 </p>
               </>
             )}

@@ -38,8 +38,15 @@ export const QUESTION_SECONDS = 15
 const REVEAL_MS = 1400
 /** How close a tap must land to a point place to count, in screen pixels. */
 export const PIN_TOLERANCE_PX = 28
-/** How close a tap must land to a current's arrow, in screen pixels — and nearer it than any other. */
+/** How close a tap must land to a current's arrow or a river, in screen pixels — and nearer it than any other. */
 const CURRENT_TOLERANCE_PX = 24
+
+/**
+ * Lines that are all on the map from the start and answered by picking one
+ * out of the rest: the ocean currents, and the rivers. A range is a line too,
+ * but its band appears only once it has been answered.
+ */
+const isLineChoice = (p: Place | null | undefined) => p?.type === 'current' || p?.type === 'river'
 const EARTH_RADIUS_KM = 6371
 
 export interface QuizOptions {
@@ -247,6 +254,17 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
    * multiple choice, and its misspellings judged against only nine rivals.
    */
   const [pool] = useState(() => buildQuestions(round))
+  /**
+   * The lines a Pin tap chooses between, and the map draws from the start:
+   * the round's backdrop — every river of the system even in a practice of
+   * three — or, without one, its own.
+   */
+  const [choices] = useState(() =>
+    (round.backdrop ?? round.places ?? [])
+      .map((id) => placeOf(id))
+      .filter((p) => isLineChoice(p))
+      .map((p): Question => ({ id: p.id, name: p.name, label: displayName(p), aliases: p.aliases, point: p.point, iso: null, place: p }))
+  )
   const [index, setIndex] = useState(start.index)
   const [phase, setPhase] = useState<Phase>('asking')
   const [verdict, setVerdict] = useState<Verdict | null>(null)
@@ -349,14 +367,15 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
        * pixels, so the Florida Current and the Gulf Stream are as easy to tell
        * apart as the zoom makes them.
        */
-      if (current.place?.type === 'current') {
+      if (isLineChoice(current.place)) {
         const at = toScreen(lonLat)
         const offPx = (q: Question) => (at ? screenDistanceToLine(q.place?.line ?? [], toScreen, at) : Infinity)
-        const nearest = pool.reduce<Question | null>(
-          (best, q) => (q.place?.type === 'current' && (!best || offPx(q) < offPx(best)) ? q : best),
+        const kind = current.place?.type
+        const nearest = choices.reduce<Question | null>(
+          (best, q) => (q.place?.type === kind && (!best || offPx(q) < offPx(best)) ? q : best),
           null
         )
-        const line = current.place.line ?? []
+        const line = current.place?.line ?? []
         const kmOff = Math.min(...line.map((c) => geoDistance(lonLat, c) * EARTH_RADIUS_KM))
         settle(nearest?.id === current.id && offPx(current) <= CURRENT_TOLERANCE_PX, undefined, kmOff)
         return
@@ -411,7 +430,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
 
       settle(byScreen || bySpan, undefined, km)
     },
-    [phase, current, settle, queue, pool]
+    [phase, current, settle, queue, choices]
   )
 
   /**
@@ -515,19 +534,20 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
           // In Name mode the temperature is half the question, so no arrow
           // shows it until it has been answered.
           current: q.place?.type === 'current' ? (mode === 'type' ? 'unknown' : q.place.temp) : undefined,
+          river: q.place?.type === 'river' ? q.place.role : undefined,
         })
       }
     }
-    // Every current is on the map from the start: Pin mode is picking the
-    // right arrow out of all of them, as the notes' map shows them.
-    for (const q of pool) if (q.place?.type === 'current') add(q, 'idle')
+    // Every current and every river is on the map from the start: Pin mode is
+    // picking the right line out of all of them, as the notes' maps show them.
+    for (const q of choices) add(q, 'idle')
     for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
     if (phase === 'revealing' && current) {
       add(current, verdict === 'correct' ? 'correct' : 'missed')
     }
     if (mode === 'type' && phase === 'asking' && current) add(current, 'target')
     return [...out.values()]
-  }, [answers, phase, current, verdict, mode, byId, pool])
+  }, [answers, phase, current, verdict, mode, byId, choices])
 
   /** The same states as `points`, for the places drawn as regions instead. */
   const areas = useMemo(() => {

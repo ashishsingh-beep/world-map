@@ -87,6 +87,26 @@ export interface MapBand {
    * asked and the colour would answer it.
    */
   current?: 'warm' | 'cold' | 'unknown'
+  /** A river, drawn by its role: a main river, a tributary, or a distributary. */
+  river?: 'main' | 'tributary' | 'distributary'
+  /**
+   * Where the name goes: the middle of the line, or its end — a delta's
+   * branches are short and side by side, and named at their mouths they part.
+   */
+  labelAt?: 'mid' | 'end'
+}
+
+/**
+ * How each kind of river is drawn. A main river is the boldest blue, a
+ * tributary a finer one, and a distributary another thing altogether — teal,
+ * dashed, with arrowheads running out to the sea — so it reads at a glance as
+ * water leaving a river, not joining one. `RiverSwatch` in `src/ui/bits.tsx`
+ * draws the Learn legend from these.
+ */
+export const RIVER_INK: Record<'main' | 'tributary' | 'distributary', { line: string; width: number; dash?: string }> = {
+  main: { line: '#1d4ed8', width: 3.4 },
+  tributary: { line: '#3b82f6', width: 2 },
+  distributary: { line: '#0e9aa7', width: 2.4, dash: '7 4' },
 }
 
 /**
@@ -985,6 +1005,7 @@ export function MapCanvas({
               overlap both still read. */}
           {bands?.map((b) => {
             if (b.current) return currentArrow(b)
+            if (b.river) return riverLine(b)
             const d = path({ type: 'LineString', coordinates: b.line } as never)
             if (!d) return null
             const idle = b.state === 'idle'
@@ -1255,6 +1276,16 @@ export function MapCanvas({
         {grid && gridLabels()}
       </svg>
 
+      {/* Credit where the licences ask for it: OpenStreetMap's rivers (ODbL)
+          and DataMeet's state lines, both on the India map. */}
+      {atlas === 'india' && (statesOn || bands?.some((b) => b.river)) && (
+        <div className="pointer-events-none absolute bottom-1 left-2 z-[5] text-[10px] font-semibold text-slate-500">
+          {[statesOn && 'State lines: DataMeet', bands?.some((b) => b.river) && 'Rivers: © OpenStreetMap contributors']
+            .filter(Boolean)
+            .join(' · ')}
+        </div>
+      )}
+
       {atLimit && (
         <div
           role="status"
@@ -1384,6 +1415,81 @@ export function MapCanvas({
             strokeWidth={3 / k}
             paintOrder="stroke"
             textAnchor="middle"
+          >
+            {b.label}
+          </text>
+        )}
+      </g>
+    )
+  }
+
+  /**
+   * A river along its course. Labels are italic and blue, as an atlas names
+   * water; a distributary's says so, and its arrowheads point the way it
+   * carries the water — out of the river, towards the sea.
+   */
+  function riverLine(b: MapBand) {
+    const d = path({ type: 'LineString', coordinates: b.line } as never)
+    if (!d) return null
+    const role = b.river ?? 'tributary'
+    const ink = RIVER_INK[role]
+    const idle = b.state === 'idle'
+    const colour = idle ? ink.line : b.state === 'target' ? CURRENT_TARGET : FILLS[b.state]
+    const width = b.state === 'target' ? Math.max(ink.width, 3.4) + 1.2 : ink.width
+    const heads: { x: number; y: number; deg: number }[] = []
+    if (role === 'distributary') {
+      // Two heads, part-way and at the mouth, wherever the zoom puts them.
+      for (const at of [Math.floor(b.line.length * 0.55), b.line.length - 1]) {
+        const a = projection(b.line[Math.max(0, at - 2)])
+        const z = projection(b.line[at])
+        if (!a || !z) continue
+        heads.push({ x: z[0], y: z[1], deg: (Math.atan2(z[1] - a[1], z[0] - a[0]) * 180) / Math.PI })
+      }
+    }
+    const atEnd = b.labelAt === 'end'
+    const mid = b.label ? projection(b.line[atEnd ? b.line.length - 1 : Math.floor(b.line.length / 2)]) : null
+    // At the mouth, the name sits just beyond it, the way the line runs out:
+    // to its side if it runs out east or west, above or below if north or south.
+    const before = atEnd ? projection(b.line[Math.max(0, b.line.length - 4)]) : null
+    const dx = before && mid ? mid[0] - before[0] : 0
+    const dy = before && mid ? mid[1] - before[1] : -1
+    const sideways = Math.abs(dx) >= Math.abs(dy)
+    return (
+      <g key={`r-${b.id}`} data-river={b.id} pointerEvents="none">
+        <path d={d} fill="none" stroke="#fff" strokeOpacity={0.6} strokeWidth={width + 2} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+        <path
+          d={d}
+          fill="none"
+          stroke={colour}
+          strokeWidth={width}
+          strokeDasharray={ink.dash}
+          strokeLinecap={ink.dash ? 'butt' : 'round'}
+          strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
+        />
+        {heads.map((h, i) => (
+          <path
+            key={i}
+            d="M 2 0 L -8 -5 L -5.5 0 L -8 5 Z"
+            transform={`translate(${h.x} ${h.y}) rotate(${h.deg}) scale(${1 / k})`}
+            fill={colour}
+            stroke="#fff"
+            strokeWidth={0.8}
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+        {mid && (
+          <text
+            x={mid[0] + (atEnd && sideways ? Math.sign(dx || 1) * 7 : 0) / k}
+            y={mid[1] + (atEnd ? (sideways ? 4 : dy > 0 ? 15 : -8) : -6) / k}
+            fontSize={(role === 'main' ? 12 : 10.5) / k}
+            fontStyle="italic"
+            fontWeight={700}
+            fill={idle ? (role === 'distributary' ? '#0f5f66' : '#1e3a8a') : '#1f2d4d'}
+            stroke="#fff"
+            strokeWidth={3 / k}
+            paintOrder="stroke"
+            textAnchor={atEnd && sideways ? (dx >= 0 ? 'start' : 'end') : 'middle'}
           >
             {b.label}
           </text>

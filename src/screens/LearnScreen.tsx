@@ -2,11 +2,11 @@ import { useMemo, useRef, useState } from 'react'
 import { geoArea, geoContains } from 'd3-geo'
 import { featureByIso, meta, metaOf } from '../data/countries'
 import {
-  TYPE_LABEL,
   WATER_GLYPH,
   capitalsOf,
   displayName,
   distanceToLineKm,
+  kindLabel,
   groupsFor,
   placeKindOf,
   placeOf,
@@ -15,7 +15,7 @@ import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/Map
 import { areaOf } from '../data/areas'
 import { screenDistanceToLine, shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { BELTS, BeltSwatch, CurrentSwatch, KindSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, CurrentSwatch, KindSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 
@@ -37,6 +37,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     other: true,
     region: true,
   })
+  /** Which rivers are drawn, by role and by system. */
+  const [rolesShown, setRolesShown] = useState({ main: true, tributary: true, distributary: true })
+  const [basinsHidden, setBasinsHidden] = useState<string[]>([])
   /** Which currents are drawn: the warm ones, the cold ones, or both. */
   const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
   /** The country under the last tap, which a place on top of it may outrank. */
@@ -51,6 +54,10 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const isWaterRound = roundPlaces[0]?.section === 'water'
   const isPlacesSection = roundPlaces[0]?.section === 'places'
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
+  const isRivers = roundPlaces[0]?.section === 'rivers'
+  const basins = [...new Set(roundPlaces.map((p) => (p.type === 'river' ? p.basin : undefined)))].filter(
+    (b): b is string => !!b
+  )
   /**
    * A Political Map round shows its countries and its places on one map. Its
    * countries are a section of the legend like any other, so they can be put
@@ -69,9 +76,10 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         if (isWaterKind(p.type)) return shown[p.type]
         if (isPlacesSection) return placeKindsShown[placeKindOf(p.type)]
         if (p.type === 'current') return p.temp ? tempsShown[p.temp] : true
+        if (p.type === 'river') return (!p.role || rolesShown[p.role]) && !basinsHidden.includes(p.basin ?? '')
         return true
       }),
-    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown]
+    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
@@ -83,7 +91,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         // A range is a band and the band carries its own name along it; a
         // second label at the midpoint would just repeat itself.
         .filter((p) => !p.line)
-        .map((p) => ({
+        .map((p): MapPoint => ({
           id: p.id,
           point: p.point,
           state: selected === p.id ? 'target' : 'idle',
@@ -92,7 +100,20 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           // An ocean or sea is drawn as its own extent; the point only carries
           // the label. Everything else is still a marker.
           marker: !areaOf(p.id),
-        })),
+        }))
+        // Where a main river rises, as the notes mark it: a peak at the head
+        // of the line, named with the river.
+        .concat(
+          visible
+            .filter((p) => p.type === 'river' && p.source)
+            .map((p) => ({
+              id: p.id,
+              point: p.source!.point,
+              state: selected === p.id ? 'target' : 'idle',
+              shape: 'peak' as const,
+              label: showAll || selected === p.id ? p.source!.name : undefined,
+            }))
+        ),
     [visible, selected, showAll]
   )
 
@@ -120,14 +141,18 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           state: selected === p.id ? 'target' : 'idle',
           label:
             showAll || selected === p.id
-              ? p.type === 'current'
-                ? displayName(p)
+              ? p.type === 'current' || p.type === 'river'
+                ? displayName(p) + (p.role === 'distributary' ? ' (distributary)' : '')
                 : p.name.toUpperCase()
               : undefined,
           belt: p.belt,
           current: p.type === 'current' ? p.temp : undefined,
+          river: p.type === 'river' ? p.role : undefined,
+          // A delta branch that reaches the sea is named at its mouth.
+          labelAt:
+            p.role === 'distributary' && !roundPlaces.some((q) => q.joins === p.id) ? 'end' : 'mid',
         })),
-    [visible, selected, showAll]
+    [visible, selected, showAll, roundPlaces]
   )
 
   /** Tricks attached to the place itself or to the country it sits in. */
@@ -171,8 +196,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 // would make a marker in open water impossible to click.
                 let best: { id: string; px: number } | null = null
                 for (const p of visible) {
-                  // A current is its whole arrow, not the label's anchor.
-                  if (areaOf(p.id) || p.type === 'current') continue
+                  // A current or a river is its whole line, not the label's anchor.
+                  if (areaOf(p.id) || p.type === 'current' || p.type === 'river') continue
                   const a = toScreen(lonLat)
                   const b = toScreen(p.point)
                   if (!a || !b) continue
@@ -189,7 +214,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 const at = toScreen(lonLat)
                 let arrow: { id: string; px: number } | null = null
                 for (const p of visible) {
-                  if (p.type !== 'current' || !at) continue
+                  if ((p.type !== 'current' && p.type !== 'river') || !at) continue
                   const px = screenDistanceToLine(p.line as [number, number][], toScreen, at)
                   if (px <= 24 && (!arrow || px < arrow.px)) arrow = { id: p.id, px }
                 }
@@ -200,7 +225,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 // Then the nearest ridgeline within its own tolerance.
                 let ridge: { id: string; km: number } | null = null
                 for (const p of visible) {
-                  if (!p.line || p.type === 'current') continue
+                  if (!p.line || p.type === 'current' || p.type === 'river') continue
                   const km = distanceToLineKm(p.line as [number, number][], lonLat)
                   if (km <= (p.spanKm ?? 60) && (!ridge || km < ridge.km)) {
                     ridge = { id: p.id, km }
@@ -252,6 +277,67 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 {b.label}
               </span>
             ))}
+          </div>
+        )}
+
+        {isRivers && (
+          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+            {(
+              [
+                ['main', 'Main rivers'],
+                ['tributary', 'Tributaries'],
+                ['distributary', 'Distributaries'],
+              ] as const
+            ).map(([role, label]) => (
+              <label
+                key={role}
+                className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                  rolesShown[role] ? 'text-slate-700' : 'text-slate-400'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={rolesShown[role]}
+                  onChange={(e) => setRolesShown((s) => ({ ...s, [role]: e.target.checked }))}
+                  className="h-3.5 w-3.5 accent-blue-600"
+                />
+                <span className={rolesShown[role] ? '' : 'opacity-40'}>
+                  <RiverSwatch role={role} />
+                </span>
+                {label}
+                <span className="font-semibold text-slate-400">
+                  {roundPlaces.filter((p) => p.role === role).length}
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
+        {isRivers && basins.length > 1 && (
+          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+            {basins.map((b) => {
+              const on = !basinsHidden.includes(b)
+              return (
+                <label
+                  key={b}
+                  className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                    on ? 'text-slate-700' : 'text-slate-400'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={on}
+                    onChange={(e) =>
+                      setBasinsHidden((h) => (e.target.checked ? h.filter((x) => x !== b) : [...h, b]))
+                    }
+                    className="h-3.5 w-3.5 accent-blue-600"
+                  />
+                  {b} system
+                  <span className="font-semibold text-slate-400">
+                    {roundPlaces.filter((p) => p.basin === b).length}
+                  </span>
+                </label>
+              )
+            })}
           </div>
         )}
 
@@ -417,8 +503,13 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 </span>
               )}
               <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">
-                {TYPE_LABEL[place.type]}
+                {kindLabel(place)}
               </span>
+              {place.type === 'river' && (
+                <span className="text-xs font-semibold text-slate-500">
+                  {place.basin} system · {place.lengthKm?.toLocaleString()} km
+                </span>
+              )}
               {place.ocean && (
                 <span className="text-xs font-semibold text-slate-500">
                   {place.ocean} Ocean
@@ -426,7 +517,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               )}
               {/* Skipped when the place *is* the country, or the line just
                   repeats the name back. */}
-              {place.type !== 'country' && (place.country || place.sovereign) && (
+              {place.type !== 'country' && place.type !== 'river' && (place.country || place.sovereign) && (
                 <span className="text-xs font-semibold text-slate-500">
                   {metaOf((place.country ?? place.sovereign)!).name}
                 </span>
@@ -436,6 +527,31 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
             <p className="mt-1.5 text-sm leading-snug font-bold text-slate-800">
               {place.significance}
             </p>
+
+            {/* Where it sits in its system — the river it feeds, or leaves. */}
+            {place.type === 'river' && (
+              <p className="mt-1.5 text-xs font-bold text-slate-700">
+                {place.role === 'main' && place.source && (
+                  <>
+                    <span className="text-slate-400">RISES </span>
+                    {place.source.name}
+                  </>
+                )}
+                {place.role === 'tributary' && place.joins && (
+                  <>
+                    <span className="text-slate-400">FLOWS INTO </span>
+                    the {placeOf(place.joins).name}
+                    {place.bank ? ` (${place.bank} bank)` : ''}
+                  </>
+                )}
+                {place.role === 'distributary' && place.joins && (
+                  <>
+                    <span className="text-slate-400">LEAVES </span>
+                    the {placeOf(place.joins).name}, carrying its water to the sea
+                  </>
+                )}
+              </p>
+            )}
 
             {place.connects && (
               <p className="mt-1.5 text-xs font-bold text-slate-700">

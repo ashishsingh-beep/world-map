@@ -38,6 +38,8 @@ export interface Prefs {
   region: WaterRegion
   /** Which sections of a Political Map round to ask: countries, capitals, regions, other places. */
   placeKinds: Record<PlaceKind, boolean>
+  /** Which river system a rivers round asks: `all`, or a basin by name. */
+  basin: string
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -50,6 +52,7 @@ export const DEFAULT_PREFS: Prefs = {
   // Countries and capitals: the whole world with everything on is over 500
   // questions, and these two are where a political map starts.
   placeKinds: { country: true, capital: true, other: false, region: false },
+  basin: 'all',
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -120,6 +123,9 @@ export function loadPrefs(): Prefs {
       ? (raw.region as WaterRegion)
       : DEFAULT_PREFS.region,
     placeKinds,
+    // Checked against the round's own basins where it is used: a basin an
+    // edited syllabus no longer has plays as all of them.
+    basin: typeof raw.basin === 'string' ? raw.basin : DEFAULT_PREFS.basin,
   }
 }
 

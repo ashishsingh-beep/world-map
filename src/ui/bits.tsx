@@ -1,4 +1,4 @@
-import { BELT_BAND, CURRENT_INK, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
+import { BELT_BAND, CURRENT_INK, RIVER_INK, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
 import type { PlaceKind } from '../data/places'
 import type { ReactNode } from 'react'
 
@@ -173,6 +173,17 @@ export function CurrentSwatch({ temp }: { temp: 'warm' | 'cold' }) {
     <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" className="shrink-0">
       <path d="M1 6 H15" stroke={c} strokeWidth="2.6" strokeLinecap="round" />
       <path d="M21 6 L13 1.5 L15 6 L13 10.5 Z" fill={c} />
+    </svg>
+  )
+}
+
+/** A river's line for the Learn legend, drawn as the map draws it (`RIVER_INK`). */
+export function RiverSwatch({ role }: { role: 'main' | 'tributary' | 'distributary' }) {
+  const { line, width, dash } = RIVER_INK[role]
+  return (
+    <svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true" className="shrink-0">
+      <path d={role === 'distributary' ? 'M1 6 H18' : 'M1 6 H25'} stroke={line} strokeWidth={width} strokeDasharray={dash ? '4 2.5' : undefined} strokeLinecap={dash ? 'butt' : 'round'} />
+      {role === 'distributary' && <path d="M25 6 L17 1.8 L19 6 L17 10.2 Z" fill={line} />}
     </svg>
   )
 }

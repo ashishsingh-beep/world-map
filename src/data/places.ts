@@ -37,6 +37,8 @@ export type PlaceType =
   | 'strait'
   /** An ocean current — Phenomena. An arrow along its course, red warm, blue cold. */
   | 'current'
+  /** A river of the Indian map — a main river, a tributary or a distributary — from OSM. */
+  | 'river'
 
 export interface Place {
   id: string
@@ -44,7 +46,7 @@ export interface Place {
   aliases: string[]
   type: PlaceType
   /** Which menu section this belongs to. */
-  section: 'places' | 'water' | 'mountains' | 'phenomena'
+  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers'
   /** ISO3 of the country it belongs to, or null for territories and shared features. */
   country: string | null
   /** ISO3 of the governing state, when that differs from `country`. */
@@ -68,7 +70,7 @@ export interface Place {
   borderAs?: Record<string, string>
   /** What a strait joins, e.g. "Red Sea ↔ Gulf of Aden". */
   connects?: string
-  /** Ocean basin or region it is filed under. */
+  /** Ocean basin or region it is filed under; for a river, its system — Godavari, Mahanadi. */
   basin?: string
   /**
    * Practice regions this water feature belongs to, derived by the build from
@@ -83,6 +85,19 @@ export interface Place {
    * build derives from it is the label's anchor and nothing else.
    */
   line?: [number, number][]
+  /**
+   * A river's place in its system: the main river, a tributary flowing into
+   * another river, or a distributary leaving one for the sea.
+   */
+  role?: 'main' | 'tributary' | 'distributary'
+  /** The river a tributary flows into, or a distributary leaves (a place id). */
+  joins?: string
+  /** Which bank of its parent a tributary joins, looking downstream. */
+  bank?: 'left' | 'right'
+  /** Where a main river rises, as the notes mark it. */
+  source?: { name: string; point: [number, number] }
+  /** A river's length along its drawn course, in km, measured by the build. */
+  lengthKm?: number
   /** A current's temperature: what Name mode asks alongside its name. */
   temp?: 'warm' | 'cold'
   /** The ocean a current flows in — which of the three North Equatorial Currents. */
@@ -129,7 +144,7 @@ export interface PlaceGroup {
 export interface SyllabusContinent {
   name: string
   title: string
-  section: 'places' | 'water' | 'mountains' | 'phenomena'
+  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers'
   atlas: 'world' | 'india'
   count: number
 }
@@ -219,7 +234,19 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   sea: 'sea',
   strait: 'strait',
   current: 'ocean current',
+  river: 'river',
 }
+
+/** What a river is called on a prompt or a card: its role, which is the point. */
+export const RIVER_ROLE_LABEL = {
+  main: 'river',
+  tributary: 'tributary',
+  distributary: 'distributary',
+} as const
+
+/** The label for any place's kind, a river by its role. */
+export const kindLabel = (p: Place): string =>
+  p.type === 'river' && p.role ? RIVER_ROLE_LABEL[p.role] : TYPE_LABEL[p.type]
 
 /**
  * The sections a Political Map round is split into: the countries themselves

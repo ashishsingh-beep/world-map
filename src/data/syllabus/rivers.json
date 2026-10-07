@@ -1,0 +1,591 @@
+{
+  "continent": "Rivers",
+  "title": "Rivers",
+  "section": "rivers",
+  "atlas": "india",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari and Mahanadi maps",
+  "places": [
+    {
+      "id": "riv-godavari",
+      "name": "Godavari",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Godavari",
+      "osm": "R2826093",
+      "source": {
+        "name": "Trambakeshwar",
+        "point": [
+          73.53,
+          19.93
+        ]
+      },
+      "significance": "The longest river of the peninsula — the 'Dakshin Ganga' — rising in the Western Ghats near Nashik and crossing the whole Deccan to the Bay of Bengal",
+      "notes": [
+        "Rises at Trambakeshwar in the Brahmagiri hills, near Nashik (Maharashtra)",
+        "Flows through Maharashtra, Telangana and Andhra Pradesh; its basin also drains Chhattisgarh and Odisha",
+        "Splits below Rajahmundry, at Dowleswaram, into the Gautami and the Vasishta, which build its delta"
+      ],
+      "tier": 1,
+      "endsAt": [
+        81.778,
+        16.94
+      ]
+    },
+    {
+      "id": "riv-gautami",
+      "name": "Gautami Godavari",
+      "aliases": [
+        "Gautami"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "distributary",
+      "basin": "Godavari",
+      "osm": "W765911030",
+      "osmNames": [
+        "Gautami Godavari"
+      ],
+      "joins": "riv-godavari",
+      "significance": "The eastern of the two great delta branches from Dowleswaram, reaching the sea near Yanam",
+      "notes": [],
+      "tier": 1,
+      "osmBox": [
+        [
+          81.7,
+          16.6
+        ],
+        [
+          82.4,
+          17.05
+        ]
+      ]
+    },
+    {
+      "id": "riv-vasishta",
+      "name": "Vasishta Godavari",
+      "aliases": [
+        "Vasishta"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "distributary",
+      "basin": "Godavari",
+      "osm": "W795690548",
+      "osmNames": [
+        "Vasishta Godavari",
+        "Godavari"
+      ],
+      "joins": "riv-godavari",
+      "significance": "The western delta branch from Dowleswaram, reaching the sea at Antarvedi",
+      "notes": [],
+      "tier": 1,
+      "osmBox": [
+        [
+          81.6,
+          16.25
+        ],
+        [
+          81.95,
+          16.965
+        ]
+      ]
+    },
+    {
+      "id": "riv-pravara",
+      "name": "Pravara",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R2951286",
+      "joins": "riv-godavari",
+      "bank": "right",
+      "significance": "Right-bank tributary from the Western Ghats near Ratangad, dammed at Bhandardara, meeting its parent near Newasa",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-mula",
+      "name": "Mula",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R3327161",
+      "joins": "riv-pravara",
+      "bank": "right",
+      "significance": "Rises in the Harishchandragad hills and is dammed at Rahuri before joining the Pravara near Newasa",
+      "notes": [
+        "A tributary of the Pravara, not of the Godavari directly"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-manjara",
+      "name": "Manjara",
+      "aliases": [
+        "Manjira",
+        "Manjra"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R2717907",
+      "joins": "riv-godavari",
+      "bank": "right",
+      "significance": "Right-bank tributary from the Balaghat range in Beed, past Latur and the Nizam Sagar dam, joining near Kandakurthi in Telangana",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-maner",
+      "name": "Maner",
+      "aliases": [
+        "Maneru",
+        "Manair"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048886",
+      "joins": "riv-godavari",
+      "bank": "right",
+      "significance": "Telangana tributary through Karimnagar, dammed above the city, joining near Manthani",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kinnarsani",
+      "name": "Kinnarsani",
+      "aliases": [
+        "Kinnerasani"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "W158881338",
+      "osmNames": [
+        "Kinnerasani River",
+        "Kinnerasani",
+        "Kinnersani",
+        "Kinnarsani"
+      ],
+      "joins": "riv-godavari",
+      "bank": "left",
+      "significance": "Comes down from the forests of Bhadradri Kothagudem, whose wildlife sanctuary carries its name, to join near Bhadrachalam",
+      "notes": [],
+      "tier": 1,
+      "osmExtra": [
+        "W158881332",
+        "W158881293"
+      ]
+    },
+    {
+      "id": "riv-purna",
+      "name": "Purna",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R8538735",
+      "joins": "riv-godavari",
+      "bank": "left",
+      "significance": "Left-bank tributary rising in the Ajanta range and draining Marathwada through Jalna and Parbhani — not the Tapi's river of the same name",
+      "notes": [
+        "Rises in the Ajanta range"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-dudhna",
+      "name": "Dudhna",
+      "aliases": [
+        "Dudhana"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "W300857572",
+      "osmNames": [
+        "Dudhana",
+        "Dudhna"
+      ],
+      "joins": "riv-purna",
+      "bank": "left",
+      "significance": "Rises in the Ajanta hills near Aurangabad and joins the Purna in Parbhani district",
+      "notes": [
+        "A tributary of the Purna"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-penganga",
+      "name": "Penganga",
+      "aliases": [
+        "Painganga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048888",
+      "joins": "riv-wardha",
+      "bank": "left",
+      "significance": "Rises in the Ajanta range in Buldhana and forms much of the Maharashtra–Telangana border before joining the Wardha",
+      "notes": [
+        "A tributary of the Wardha"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-wardha",
+      "name": "Wardha",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048895",
+      "joins": "riv-pranhita",
+      "bank": "left",
+      "significance": "Rises in the Satpura range near Multai in Betul, gathers the Penganga, and with the Wainganga forms the Pranhita",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-wainganga",
+      "name": "Wainganga",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048894",
+      "joins": "riv-pranhita",
+      "bank": "left",
+      "significance": "Rises in the Mahadeo Hills of Seoni and flows south past Bhandara and Gadchiroli; with the Wardha it forms the Pranhita",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kanhan",
+      "name": "Kanhan",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048884",
+      "joins": "riv-wainganga",
+      "bank": "left",
+      "significance": "Flows past the north of Nagpur, gathering the Pench, into the Wainganga",
+      "notes": [
+        "A tributary of the Wainganga; the Pench reaches the Godavari through it"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-pench",
+      "name": "Pench",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048887",
+      "joins": "riv-kanhan",
+      "bank": "left",
+      "significance": "Rises in the Mahadeo Hills of Chhindwara and runs through the Seoni forests of the Jungle Book to join the Kanhan above Nagpur",
+      "notes": [
+        "A tributary of the Kanhan, and through it of the Wainganga"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-pranhita",
+      "name": "Pranhita",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R13563877",
+      "joins": "riv-godavari",
+      "bank": "left",
+      "significance": "The Wardha and the Wainganga combined — the largest tributary of all, meeting its parent at Kaleshwaram on the Maharashtra–Telangana border",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-narangi",
+      "name": "Narangi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "W264341307",
+      "osmNames": [
+        "Narangi"
+      ],
+      "joins": "riv-indravati",
+      "bank": "left",
+      "significance": "A Bastar stream from the Kondagaon plateau, joining the Indravati",
+      "notes": [
+        "A tributary of the Indravati"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-indravati",
+      "name": "Indravati",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R3328743",
+      "joins": "riv-godavari",
+      "bank": "left",
+      "significance": "Rises in Odisha's Kalahandi and crosses Bastar over the Chitrakote Falls — 'India's Niagara' — to join where Maharashtra, Telangana and Chhattisgarh meet",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-sabari",
+      "name": "Sabari",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R6048889",
+      "joins": "riv-godavari",
+      "bank": "left",
+      "significance": "Known in Odisha as the Kolab, it forms the Chhattisgarh–Odisha border and joins near Kunavaram above the Papi Hills gorge",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-sileru",
+      "name": "Sileru",
+      "aliases": [
+        "Machkund"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Godavari",
+      "osm": "R19350195",
+      "joins": "riv-sabari",
+      "bank": "left",
+      "significance": "Runs along the Andhra–Odisha border, its falls and dams harnessed for hydel power, to join the Sabari at Motu",
+      "notes": [
+        "A tributary of the Sabari"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-mahanadi",
+      "name": "Mahanadi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Mahanadi",
+      "osm": "R7517721",
+      "source": {
+        "name": "Sihawa",
+        "point": [
+          81.93,
+          20.3
+        ]
+      },
+      "significance": "Rises near Sihawa in Chhattisgarh's Dhamtari district and is held back at Hirakud — one of the world's longest earthen dams — before its delta at Cuttack",
+      "notes": [
+        "Rises near Sihawa (Dhamtari district, Chhattisgarh)",
+        "Flows through Chhattisgarh and Odisha to the Bay of Bengal"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-seonath",
+      "name": "Seonath",
+      "aliases": [
+        "Shivnath"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "R12545523",
+      "joins": "riv-mahanadi",
+      "bank": "left",
+      "significance": "The longest tributary, rising in Rajnandgaon and passing Durg to join at Shivrinarayan",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-hasdo",
+      "name": "Hasdo",
+      "aliases": [
+        "Hasdeo"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "R12559172",
+      "joins": "riv-mahanadi",
+      "bank": "left",
+      "significance": "Flows south through the Korba coalfield, dammed at Bango, to join near Shivrinarayan",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-mand",
+      "name": "Mand",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "R12559122",
+      "joins": "riv-mahanadi",
+      "bank": "left",
+      "significance": "Left-bank tributary from the Raigarh hills, joining near Chandrapur in Janjgir-Champa",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-ib",
+      "name": "Ib",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "W175447632",
+      "osmNames": [
+        "Ib River",
+        "Ib"
+      ],
+      "joins": "riv-mahanadi",
+      "bank": "left",
+      "significance": "Rises in Jashpur's hills and empties into the reservoir behind Hirakud dam; its valley holds one of Odisha's main coalfields",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-jonk",
+      "name": "Jonk",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "R11791837",
+      "joins": "riv-mahanadi",
+      "bank": "right",
+      "significance": "Right-bank tributary from the Odisha border hills, flowing north through Mahasamund to join at Shivrinarayan",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-ong",
+      "name": "Ong",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "W44599850",
+      "joins": "riv-mahanadi",
+      "bank": "right",
+      "significance": "Right-bank tributary through Bargarh district, joining above Sonepur",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Ong River",
+        "Ong"
+      ]
+    },
+    {
+      "id": "riv-tel",
+      "name": "Tel",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Mahanadi",
+      "osm": "W173788196",
+      "joins": "riv-mahanadi",
+      "bank": "right",
+      "significance": "The largest right-bank tributary, draining Kalahandi and Nabarangpur to join at Sonepur, Odisha's temple town",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Tel River",
+        "Tel"
+      ]
+    },
+    {
+      "id": "riv-kathajodi",
+      "name": "Kathajodi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "distributary",
+      "basin": "Mahanadi",
+      "osm": "W77349725",
+      "osmNames": [
+        "Kathajodi",
+        "Devi River"
+      ],
+      "joins": "riv-mahanadi",
+      "significance": "Branches off at Naraj above Cuttack and carries much of the delta's water past the city's south side",
+      "notes": [],
+      "tier": 1,
+      "osmBox": [
+        [
+          85.7,
+          20.25
+        ],
+        [
+          86.045,
+          20.5
+        ]
+      ]
+    },
+    {
+      "id": "riv-devi",
+      "name": "Devi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "distributary",
+      "basin": "Mahanadi",
+      "osm": "W77349668",
+      "osmNames": [
+        "Devi River",
+        "Devi"
+      ],
+      "joins": "riv-kathajodi",
+      "significance": "A delta branch reaching the Bay of Bengal near Astaranga, where Olive Ridley turtles come ashore to nest",
+      "notes": [
+        "Leaves the Kathajodi below Cuttack — a distributary, carrying water away from the main river to the sea"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": []
+}

@@ -26,6 +26,12 @@ export interface Round {
    */
   scope?: string
   countryView?: BBox
+  /**
+   * Lines drawn as the choices without all being asked: a practice of a
+   * rivers round's misses still shows every river of its system, or picking
+   * one out of the rest would be a choice of two.
+   */
+  backdrop?: string[]
 }
 
 const isosIn = (continent: Continent) =>
@@ -309,6 +315,8 @@ function continentPlaceRound({
     atlas,
     blurb: phenomena
       ? `All ${ps.length} currents, warm and cold, in every ocean.`
+      : ps.length && ps.every((p) => p.type === 'river')
+      ? `The ${[...new Set(ps.map((p) => p.basin))].join(' and ')} systems — ${ps.length} rivers with their tributaries and distributaries.`
       : ps.length
       ? `Every place in the set — ${ps.length} in total.`
       : 'Nothing added yet — the notes for this one are still to come.',

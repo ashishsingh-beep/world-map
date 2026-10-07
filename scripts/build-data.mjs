@@ -17,6 +17,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh } from 'topojson-client'
+import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -715,6 +716,8 @@ const PLACE_TYPES = new Set([
   'ocean', 'sea', 'strait',
   // Phenomena: an ocean current, drawn as an arrow along its course
   'current',
+  // Indian map: a river — main stem, tributary or distributary — from OSM
+  'river',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal', 'reef'])
@@ -863,9 +866,92 @@ const syllabusFiles = existsSync(SYLLABUS)
   ? readdirSync(SYLLABUS).filter((f) => f.endsWith('.json')).sort()
   : []
 
+/**
+ * The rivers' courses, from OpenStreetMap by id (`scripts/osm-rivers.mjs`),
+ * parents before their tributaries so each can be checked against the line it
+ * flows into: a tributary must end on its parent, a distributary leave it and
+ * reach the sea, and a main river start where the notes say it rises. A main
+ * river can be ended early (`endsAt`): the Godavari stops at the Dowleswaram
+ * barrage, where it divides into the Gautami and the Vasishta.
+ */
+const INDIA_FEATURE = picked.get('IND')
+const indiaRing = []
+{
+  const walk = (c) => (typeof c[0] === 'number' ? indiaRing.push(c) : c.forEach(walk))
+  walk(INDIA_FEATURE.geometry.coordinates)
+}
+function courseRivers(rivers, where) {
+  const byId = new Map(rivers.map((p) => [p.id, p]))
+  const done = new Map()
+  const run = (p) => {
+    if (done.has(p.id)) return done.get(p.id)
+    if (!['main', 'tributary', 'distributary'].includes(p.role)) errors.push(`${where(p.id)}: role is main, tributary or distributary`)
+    if (!p.basin) errors.push(`${where(p.id)}: a river needs its basin`)
+    if (!/^[RW]\d+$/.test(p.osm ?? '')) {
+      errors.push(`${where(p.id)}: a river needs "osm", a relation (R…) or a seed way (W…)`)
+      return null
+    }
+    const parentPlace = p.joins ? byId.get(p.joins) : null
+    if (p.role !== 'main' && !parentPlace) {
+      errors.push(`${where(p.id)}: a ${p.role} needs "joins", the river it meets`)
+      return null
+    }
+    const parent = parentPlace ? run(parentPlace) : null
+    if (parentPlace && !parent) return null
+    const ways = fetchRiverWays(p.osm, p.osmNames ?? [p.name], CACHE, p.osmBox ?? null, p.osmExtra ?? [])
+    if (!ways.length) {
+      errors.push(`${where(p.id)}: OSM gave no ways for ${p.osm}`)
+      return null
+    }
+    let { line } = joinCourse(ways, {
+      source: p.source?.point ?? null,
+      parent,
+      leaves: p.role === 'distributary',
+    })
+    if (p.endsAt) line = endAt(line, p.endsAt)
+    if (p.role === 'main') {
+      const km = geoDistance(line[0], p.source.point) * 6371
+      if (km > 30) errors.push(`${where(p.id)}: rises ${km.toFixed(0)}km from ${p.source.name}`)
+      // Marked where the course begins, under the notes' name for the place:
+      // Sihawa the town is 17km from the spring the line starts at.
+      else p.source = { ...p.source, point: line[0].map((v) => Number(v.toFixed(4))) }
+    }
+    if (p.role === 'tributary') {
+      const km = kmToLine(parent, line[line.length - 1])
+      if (km > 2) errors.push(`${where(p.id)}: ends ${km.toFixed(1)}km from ${parentPlace.name}, which it should join`)
+    }
+    if (p.role === 'distributary') {
+      line = leaveFrom(line, parent)
+      const head = geoDistance(line[0], line[1]) * 6371
+      if (head > 8) errors.push(`${where(p.id)}: leaves ${parentPlace.name} across a ${head.toFixed(1)}km gap`)
+      // To the sea — or into another branch that carries on to it, as the
+      // Kathajodi does into the Devi.
+      const fed = rivers.some((q) => q.joins === p.id && q.role === 'distributary')
+      const end = line[line.length - 1]
+      const sea = Math.min(...indiaRing.map((c) => geoDistance(c, end) * 6371))
+      if (!fed && sea > 15) errors.push(`${where(p.id)}: ends ${sea.toFixed(0)}km from the coast, not at the sea`)
+    }
+    if (lengthKm(line) < 20) errors.push(`${where(p.id)}: only ${lengthKm(line).toFixed(0)}km of course`)
+    const sample = line.filter((_, i) => i % 25 === 0)
+    // Off the drawn land only by the coast's own generalisation is still India.
+    const abroad = sample.filter(
+      (c) => !geoContains(INDIA_FEATURE, c) && Math.min(...indiaRing.map((v) => geoDistance(v, c) * 6371)) > 5
+    ).length
+    if (abroad > sample.length * 0.05) errors.push(`${where(p.id)}: ${abroad} of ${sample.length} sampled points outside India`)
+    const course = simplifyLine(line, 0.15)
+    done.set(p.id, course)
+    p.line = course
+    p.lengthKm = Math.round(lengthKm(line))
+    return course
+  }
+  for (const p of rivers) run(p)
+}
+
 for (const file of syllabusFiles) {
   const doc = JSON.parse(readFileSync(resolve(SYLLABUS, file), 'utf8'))
   const where = (id) => `${file}:${id}`
+  const rivers = doc.places.filter((p) => p.type === 'river')
+  if (rivers.length) courseRivers(rivers, where)
   continents.push({
     name: doc.continent,
     title: doc.title ?? doc.continent,
@@ -950,7 +1036,7 @@ for (const file of syllabusFiles) {
       }
       if (Array.isArray(p.line) && p.line.length >= 2) p.line = smoothCourse(p.line)
     }
-    if (p.type === 'range' || p.type === 'coast' || p.type === 'current') {
+    if (p.type === 'range' || p.type === 'coast' || p.type === 'current' || p.type === 'river') {
       if (!Array.isArray(p.line) || p.line.length < 2) {
         errors.push(`${where(p.id)}: a ${p.type} needs a line of at least two points`)
       } else {
@@ -969,7 +1055,7 @@ for (const file of syllabusFiles) {
 
     // The check that catches transposed or mistyped coordinates.
     const feature = p.country ? picked.get(p.country) : null
-    if (feature && point && !p.offshore && !['country', 'range', 'coast', 'current'].includes(p.type)) {
+    if (feature && point && !p.offshore && !['country', 'range', 'coast', 'current', 'river'].includes(p.type)) {
       const slack = geoContains(feature, point) ? 0 : distanceToFeatureKm(feature, point)
       if (slack > ONSHORE_SLACK_KM) {
         const km = geoDistance(point, meta[p.country].centroid) * 6371

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, countryClue, placeOf } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH, countryClue, kindLabel, placeOf } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
 import {
   QUESTION_SECONDS,
@@ -186,7 +186,7 @@ export function PlayScreen({
         focusPoints={quiz.focusPoints}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
-        countryMarkers={!isWaterRound && q?.place?.section !== 'phenomena'}
+        countryMarkers={!isWaterRound && q?.place?.section !== 'phenomena' && q?.place?.section !== 'rivers'}
         onPickPoint={isPlaceRound && mode === 'pin' && !asksCountry ? quiz.pickPoint : undefined}
         padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />
@@ -238,7 +238,7 @@ export function PlayScreen({
         {mode === 'significance' && (
           <div className="max-w-2xl rounded-2xl bg-white px-6 py-4 text-center shadow-xl">
             <div className="text-[10px] font-bold tracking-widest text-slate-400">
-              {asksCountry ? 'WHICH COUNTRY IS THIS?' : 'WHICH PLACE IS THIS?'}
+              {asksCountry ? 'WHICH COUNTRY IS THIS?' : q?.place?.type === 'river' ? 'WHICH RIVER IS THIS?' : 'WHICH PLACE IS THIS?'}
             </div>
             <div className="mt-1 text-lg leading-snug font-extrabold text-slate-900">
               {q?.place ? q.place.significance : q?.iso ? countryClue(q.iso) : null}
@@ -256,7 +256,7 @@ export function PlayScreen({
             <span className="text-2xl font-extrabold text-slate-900">{q?.label}</span>
             {q?.place && q.place.type !== 'country' && (
               <span className="text-sm font-bold tracking-wide text-slate-400 uppercase">
-                {TYPE_LABEL[q.place.type]}
+                {kindLabel(q.place)}
               </span>
             )}
             {/* Said outright in a mixed round, where Singapore or Australia
@@ -348,7 +348,9 @@ export function PlayScreen({
                 placeholder={
                   asksTemp
                     ? 'Type the current'
-                    : isMixed
+                    : q?.place?.type === 'river'
+                      ? 'Type the river'
+                      : isMixed
                     ? asksCountry
                       ? 'Type the country'
                       : `Type the ${q?.place ? TYPE_LABEL[q.place.type] : 'place'}`

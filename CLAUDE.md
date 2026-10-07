@@ -402,6 +402,43 @@ the name alone is the typed answer, but wherever one is shown — the Pin prompt
 a label, a miss — `displayName` adds its ocean. The Somali Current is warm
 because the notes' map draws it so; its note says the summer upwelling is cold.
 
+**A river is its real course, from OpenStreetMap.** The India map's Rivers
+round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
+Godavari and Mahanadi systems from the notes: each river a `role` — `main`,
+`tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
+flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
+the two main rivers and almost none of their tributaries, so the courses come
+from OSM through `scripts/osm-rivers.mjs`, by the OSM API only (the Overpass
+mirrors were found refusing for an afternoon): a relation (`R…`) gives its
+main-stream ways; a river nobody has made a relation for is walked from a seed
+way (`W…`) through the ways that share one of its `osmNames`, kept inside an
+`osmBox` where a branch is named after its parent (the Vasishta's head is
+tagged plain "Godavari"), with `osmExtra` ways for a stretch left unnamed (the
+Kinnarsani above its dam). The pieces are joined on shared nodes, gaps under
+40km bridged, and the course is the shortest path between the ends, so a
+braided stretch gives one channel. Then held to the notes: a main river must
+rise within 30km of its authored `source` (its marker is moved to where the
+line begins); a tributary must end on its parent; a distributary is cut to
+where it leaves its parent and must reach the sea, or a branch that does (the
+Kathajodi feeds the Devi); `endsAt` stops a main river early — the Godavari at
+the Dowleswaram barrage, where it divides into the Gautami and the Vasishta.
+Simplified to 150m and stored as `line` in `places.json`.
+
+Three rivers the notes do not name are there to join the network up: the
+Pranhita (the Wardha and Wainganga combined, into the Godavari), the Kanhan
+(the Pench's way to the Wainganga) and the Kathajodi (the Devi's way out of the
+Mahanadi), plus the Godavari's own delta branches, the Gautami and the
+Vasishta. They are ordinary questions.
+
+Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
+a main river bold blue, a tributary finer, and a distributary teal and dashed
+with arrowheads to the sea, labelled "(distributary)" — it must read at a
+glance as water leaving a river. Every river of the chosen system is on the map
+in Pin and Type alike, as the currents are, and a tap answers the nearest on
+screen; a practice of misses still draws the whole system (`Round.backdrop`).
+Setup narrows by river system (the `basin` pref); Learn by role and system.
+Credit for OSM's rivers and DataMeet's state lines sits at the map's foot.
+
 **A coast is a line with width too.** The Grain, Ivory, Gold and Slave Coasts
 are stretches of shoreline, so they are `type: "coast"` bands answered like a
 range, not pins and not whole countries. Their lines are not traced: the build
@@ -508,7 +545,8 @@ The whole app is one map engine plus configuration.
   lookup everything except `MapCanvas` should import.
 - `src/map/grid.ts` — the Lat/Long switch's lines; the Date Line is
   `src/data/dateline.json`, written by the build.
-- `scripts/build-data.mjs` — the only thing that touches Natural Earth.
+- `scripts/build-data.mjs` — the only thing that touches Natural Earth;
+  `scripts/osm-rivers.mjs` fetches and joins the river courses from OSM.
 
 `render` and `askable` are separate because Island Nations draws the whole
 world and asks only its own subset.
