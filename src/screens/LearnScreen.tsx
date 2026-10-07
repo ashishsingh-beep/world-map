@@ -541,6 +541,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   <>
                     <span className="text-slate-400">FLOWS INTO </span>
                     the {placeOf(place.joins).name}
+                    {place.via ? `, through the ${place.via}` : ''}
                     {place.bank ? ` (${place.bank} bank)` : ''}
                   </>
                 )}

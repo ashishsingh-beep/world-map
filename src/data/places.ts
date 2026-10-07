@@ -92,6 +92,8 @@ export interface Place {
   role?: 'main' | 'tributary' | 'distributary'
   /** The river a tributary flows into, or a distributary leaves (a place id). */
   joins?: string
+  /** A river between a tributary and its parent that the set leaves out — the Pench's Kanhan. */
+  via?: string
   /** Which bank of its parent a tributary joins, looking downstream. */
   bank?: 'left' | 'right'
   /** Where a main river rises, as the notes mark it. */

@@ -277,23 +277,6 @@
       "tier": 1
     },
     {
-      "id": "riv-kanhan",
-      "name": "Kanhan",
-      "aliases": [],
-      "type": "river",
-      "country": "IND",
-      "role": "tributary",
-      "basin": "Godavari",
-      "osm": "R6048884",
-      "joins": "riv-wainganga",
-      "bank": "left",
-      "significance": "Flows past the north of Nagpur, gathering the Pench, into the Wainganga",
-      "notes": [
-        "A tributary of the Wainganga; the Pench reaches the Godavari through it"
-      ],
-      "tier": 1
-    },
-    {
       "id": "riv-pench",
       "name": "Pench",
       "aliases": [],
@@ -302,13 +285,14 @@
       "role": "tributary",
       "basin": "Godavari",
       "osm": "R6048887",
-      "joins": "riv-kanhan",
+      "joins": "riv-wainganga",
       "bank": "left",
       "significance": "Rises in the Mahadeo Hills of Chhindwara and runs through the Seoni forests of the Jungle Book to join the Kanhan above Nagpur",
       "notes": [
-        "A tributary of the Kanhan, and through it of the Wainganga"
+        "Reaches the Wainganga through the Kanhan, which it joins above Nagpur"
       ],
-      "tier": 1
+      "tier": 1,
+      "via": "Kanhan"
     },
     {
       "id": "riv-pranhita",

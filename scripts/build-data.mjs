@@ -917,8 +917,14 @@ function courseRivers(rivers, where) {
       else p.source = { ...p.source, point: line[0].map((v) => Number(v.toFixed(4))) }
     }
     if (p.role === 'tributary') {
+      // `via` names a river between the two that the set leaves out — the
+      // Pench reaches the Wainganga through the Kanhan — so the line stops
+      // where it really does, short of its parent but not far.
       const km = kmToLine(parent, line[line.length - 1])
-      if (km > 2) errors.push(`${where(p.id)}: ends ${km.toFixed(1)}km from ${parentPlace.name}, which it should join`)
+      const limit = p.via ? 80 : 2
+      if (km > limit) {
+        errors.push(`${where(p.id)}: ends ${km.toFixed(1)}km from ${parentPlace.name}${p.via ? `, too far even through the ${p.via}` : ', which it should join'}`)
+      }
     }
     if (p.role === 'distributary') {
       line = leaveFrom(line, parent)

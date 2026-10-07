@@ -424,11 +424,15 @@ Kathajodi feeds the Devi); `endsAt` stops a main river early — the Godavari at
 the Dowleswaram barrage, where it divides into the Gautami and the Vasishta.
 Simplified to 150m and stored as `line` in `places.json`.
 
-Three rivers the notes do not name are there to join the network up: the
-Pranhita (the Wardha and Wainganga combined, into the Godavari), the Kanhan
-(the Pench's way to the Wainganga) and the Kathajodi (the Devi's way out of the
-Mahanadi), plus the Godavari's own delta branches, the Gautami and the
-Vasishta. They are ordinary questions.
+Two rivers the notes do not name are there to join the network up: the
+Pranhita (the Wardha and Wainganga combined, into the Godavari) and the
+Kathajodi (the Devi's way out of the Mahanadi), plus the Godavari's own delta
+branches, the Gautami and the Vasishta. They are ordinary questions. The
+Kanhan was one too and was taken out on request, so the Pench stops where it
+really does, at the Kanhan above Nagpur, 48km short of the Wainganga: it
+`joins` the Wainganga `via` the Kanhan, which lets the build accept the gap
+(under 80km) and the card say so. A river is never stretched to meet a parent
+it does not reach.
 
 Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
 a main river bold blue, a tributary finer, and a distributary teal and dashed
