@@ -549,6 +549,43 @@ export function MapCanvas({
 
   const k = transform.k
 
+  /**
+   * A pinch belongs to the map, never to the page. A trackpad pinch arrives as
+   * a ctrl+wheel, and d3-zoom lets one through untouched once the map is at
+   * MAX_ZOOM — so the browser took it and zoomed the whole UI, which stayed
+   * zoomed after leaving the map. Held on the document while a map is on
+   * screen, so a pinch over a card or the HUD is caught too; Safari's own
+   * gesture events, and on phones the viewport's own pinch, likewise. Pushing
+   * past the limit says so instead.
+   */
+  const [atLimit, setAtLimit] = useState(false)
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const onWheel = (e: WheelEvent) => {
+      if (e.ctrlKey) e.preventDefault()
+      const svg = svgRef.current
+      if (!svg || !(e.target instanceof Node) || !svg.contains(e.target) || e.deltaY >= 0) return
+      if (zoomTransform(svg).k < MAX_ZOOM * 0.999) return
+      setAtLimit(true)
+      clearTimeout(timer)
+      timer = setTimeout(() => setAtLimit(false), 1800)
+    }
+    const onGesture = (e: Event) => e.preventDefault()
+    document.addEventListener('wheel', onWheel, { passive: false })
+    document.addEventListener('gesturestart', onGesture)
+    document.addEventListener('gesturechange', onGesture)
+    const viewport = document.querySelector('meta[name="viewport"]')
+    const before = viewport?.getAttribute('content') ?? null
+    if (viewport && before) viewport.setAttribute('content', `${before}, maximum-scale=1, user-scalable=no`)
+    return () => {
+      clearTimeout(timer)
+      document.removeEventListener('wheel', onWheel)
+      document.removeEventListener('gesturestart', onGesture)
+      document.removeEventListener('gesturechange', onGesture)
+      if (viewport && before) viewport.setAttribute('content', before)
+    }
+  }, [])
+
   /** Already showing the round's whole frame, so Reset has nothing to do. */
   const atHome = k < 1.001 && Math.abs(transform.x) < 0.5 && Math.abs(transform.y) < 0.5
   const resetZoom = () => {
@@ -1175,6 +1212,15 @@ export function MapCanvas({
 
         {grid && gridLabels()}
       </svg>
+
+      {atLimit && (
+        <div
+          role="status"
+          className="pointer-events-none absolute top-1/2 right-[84px] z-[5] -translate-y-1/2 rounded-xl bg-[#1f2d4d] px-3 py-2 text-xs font-bold text-white shadow-lg"
+        >
+          Maximum zoom — Reset to see the whole map
+        </div>
+      )}
 
       {/* The map's own controls, at its right edge halfway down: the one
           place no screen puts anything of its own. */}
