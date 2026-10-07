@@ -63,13 +63,27 @@ export function PlayScreen({
   /** Escape hides the list without clearing the field, until the next keystroke. */
   const [dismissed, setDismissed] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  /** A current's temperature, chosen before its name in Name mode. */
+  const [temp, setTemp] = useState<'warm' | 'cold' | null>(null)
+  const tempRef = useRef<HTMLSelectElement>(null)
+  const asksTemp = mode === 'type' && quiz.current?.place?.type === 'current'
 
   useEffect(() => {
     setDraft('')
     setActive(-1)
     setDismissed(false)
-    if (mode !== 'pin' && quiz.phase === 'asking') inputRef.current?.focus()
-  }, [quiz.index, quiz.phase, mode])
+    setTemp(null)
+    if (mode !== 'pin' && quiz.phase === 'asking') (asksTemp ? tempRef.current : inputRef.current)?.focus()
+  }, [quiz.index, quiz.phase, mode, asksTemp])
+
+  /** A name is only taken with its temperature; without one, the choice is asked for first. */
+  const submit = (name: string) => {
+    if (asksTemp && !temp) {
+      tempRef.current?.focus()
+      return
+    }
+    quiz.submitName(name, temp)
+  }
 
   const { vocabulary } = quiz
   const suggestions = useMemo(() => {
@@ -114,8 +128,10 @@ export function PlayScreen({
           points: quiz.points,
           areas: quiz.areas,
           bands: quiz.bands,
-          // The water round keeps its country rings off, as it does in play.
-          countryMarkers: !(round.places?.length && placeOf(round.places[0])?.section === 'water'),
+          // The water and currents rounds keep their country rings off, as in play.
+          countryMarkers: !(
+            round.places?.length && ['water', 'phenomena'].includes(placeOf(round.places[0])?.section)
+          ),
         }}
         missed={quiz.missed}
         onPractiseMissed={
@@ -163,7 +179,7 @@ export function PlayScreen({
         focusPoints={quiz.focusPoints}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
-        countryMarkers={!isWaterRound}
+        countryMarkers={!isWaterRound && q?.place?.section !== 'phenomena'}
         onPickPoint={isPlaceRound && mode === 'pin' && !asksCountry ? quiz.pickPoint : undefined}
         padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />
@@ -230,7 +246,7 @@ export function PlayScreen({
             {q?.place && WATER_GLYPH[q.place.type] && (
               <span className="text-2xl leading-none">{WATER_GLYPH[q.place.type]}</span>
             )}
-            <span className="text-2xl font-extrabold text-slate-900">{q?.name}</span>
+            <span className="text-2xl font-extrabold text-slate-900">{q?.label}</span>
             {q?.place && q.place.type !== 'country' && (
               <span className="text-sm font-bold tracking-wide text-slate-400 uppercase">
                 {TYPE_LABEL[q.place.type]}
@@ -244,7 +260,7 @@ export function PlayScreen({
           </div>
         ) : (
           <form
-            className="pointer-events-auto flex w-full max-w-4xl gap-2"
+            className="pointer-events-auto flex w-full max-w-4xl flex-wrap gap-2 sm:flex-nowrap"
             onSubmit={(e) => {
               e.preventDefault()
               // Without suggestions Enter does nothing: the answer is taken
@@ -252,10 +268,40 @@ export function PlayScreen({
               if (!suggest) return
               // Only what was typed. Picking a suggestion is Enter *on* it,
               // handled below, so a fully typed answer is never swapped out.
-              quiz.submitName(draft)
+              submit(draft)
             }}
           >
-            <div className="relative flex-1">
+            {/* A current is warm or cold before it has a name: the first half
+                of the answer, and the arrow is drawn in neither colour. */}
+            {asksTemp && (
+              <select
+                ref={tempRef}
+                value={temp ?? ''}
+                onChange={(e) => {
+                  const next = (e.target.value || null) as 'warm' | 'cold' | null
+                  setTemp(next)
+                  inputRef.current?.focus()
+                  // The name may already be spelt out, waiting on this.
+                  if (!suggest && next) quiz.acceptIfExact(draft, next)
+                }}
+                aria-label="Warm or cold current"
+                // A row of its own on a phone, so the name keeps the width it needs.
+                className={`basis-full cursor-pointer rounded-xl px-4 py-3 text-lg font-bold shadow-xl outline-none sm:basis-auto sm:shrink-0 sm:py-0 ${
+                  temp === 'warm'
+                    ? 'bg-red-600 text-white'
+                    : temp === 'cold'
+                      ? 'bg-blue-700 text-white'
+                      : 'bg-white text-slate-500'
+                }`}
+              >
+                <option value="" disabled>
+                  Warm or cold?
+                </option>
+                <option value="warm">Warm current</option>
+                <option value="cold">Cold current</option>
+              </select>
+            )}
+            <div className="relative min-w-0 flex-1">
               <input
                 ref={inputRef}
                 value={draft}
@@ -263,7 +309,7 @@ export function PlayScreen({
                   setDraft(e.target.value)
                   setActive(-1)
                   setDismissed(false)
-                  if (!suggest) quiz.acceptIfExact(e.target.value)
+                  if (!suggest) quiz.acceptIfExact(e.target.value, temp)
                 }}
                 onKeyDown={(e) => {
                   if (!showing.length) return
@@ -279,11 +325,13 @@ export function PlayScreen({
                     setActive(-1)
                   } else if (e.key === 'Enter' && active >= 0) {
                     e.preventDefault()
-                    quiz.submitName(showing[active])
+                    submit(showing[active])
                   }
                 }}
                 placeholder={
-                  isMixed
+                  asksTemp
+                    ? 'Type the current'
+                    : isMixed
                     ? asksCountry
                       ? 'Type the country'
                       : `Type the ${q?.place ? TYPE_LABEL[q.place.type] : 'place'}`
@@ -313,7 +361,7 @@ export function PlayScreen({
                         // first and the question would advance without focus.
                         onMouseDown={(e) => {
                           e.preventDefault()
-                          quiz.submitName(name)
+                          submit(name)
                         }}
                         className={`block w-full cursor-pointer px-5 py-3 text-left text-lg font-semibold ${
                           i === active ? 'bg-blue-600 text-white' : 'text-slate-900 hover:bg-slate-100'
@@ -353,7 +401,11 @@ export function PlayScreen({
             }`}
           >
             {quiz.verdict !== 'correct' ? (
-              `✕ ${q?.name}${quiz.missKm != null ? ` — ${formatMiss(quiz.missKm)} off` : ''}`
+              q?.place?.type === 'current' && mode === 'type' ? (
+                `✕ ${q.label} — a ${q.place.temp} current`
+              ) : (
+                `✕ ${q?.name}${quiz.missKm != null ? ` — ${formatMiss(quiz.missKm)} off` : ''}`
+              )
             ) : quiz.corrected ? (
               <>
                 ✓ CORRECT

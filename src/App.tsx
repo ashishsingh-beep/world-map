@@ -8,6 +8,7 @@ import {
   politicalRoundId,
   scopesOf,
   WATER_CONTINENTS,
+  PHENOMENA_CONTINENTS,
   allPlacesRoundId,
   roundById,
 } from './game/rounds'
@@ -75,6 +76,8 @@ export default function App() {
 
   const roundPlaces = round.places?.map(placeOf) ?? []
   const isWaterRound = roundPlaces[0]?.section === 'water'
+  /** Phenomena — the ocean currents: Pin and Name only, no Why. */
+  const isPhenomena = roundPlaces[0]?.section === 'phenomena'
   /** The Political Map: countries and their places in one round. */
   const isPolitical = !!round.scope
   /** Which continents it covers — one, several, or `world`. */
@@ -154,7 +157,7 @@ export default function App() {
 
   /** A save is only offered when it is still this exact round's questions. */
   const resumable = fits(saved, roundId, askIds, size) ? saved : null
-  const playMode = !round.places?.length && mode === 'significance' ? 'type' : mode
+  const playMode = (!round.places?.length || isPhenomena) && mode === 'significance' ? 'type' : mode
 
   const onProgress = useCallback(
     (snapshot: QuizSnapshot | null) => {
@@ -246,7 +249,7 @@ export default function App() {
               {isPolitical
                 ? `${askIds.length} question${askIds.length === 1 ? '' : 's'} · ${round.title}`
                 : round.places
-                  ? `${asked.length} ${isWaterRound ? 'features' : 'places'}`
+                  ? `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? 'currents' : 'places'}`
                   : `${round.askable.length} countries`}
             </p>
 
@@ -445,22 +448,27 @@ export default function App() {
             </div>
 
             <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Mode</h2>
-            <div className={`grid gap-3 ${round.places ? 'grid-cols-3' : 'grid-cols-2'}`}>
+            <div className={`grid gap-3 ${round.places && !isPhenomena ? 'grid-cols-3' : 'grid-cols-2'}`}>
               {(
-                [
-                  ['pin', 'Pin', 'Tap the map'],
-                  ['type', 'Type', 'Enter the name'],
-                  ...(round.places
-                    ? ([['significance', 'Why', 'Name it from its fact']] as const)
-                    : []),
-                ] as const
+                isPhenomena
+                  ? ([
+                      ['pin', 'Pin', 'Tap the right arrow'],
+                      ['type', 'Name', 'Warm or cold, then its name'],
+                    ] as const)
+                  : ([
+                      ['pin', 'Pin', 'Tap the map'],
+                      ['type', 'Type', 'Enter the name'],
+                      ...(round.places
+                        ? ([['significance', 'Why', 'Name it from its fact']] as const)
+                        : []),
+                    ] as const)
               ).map(([value, label, hint]) => (
                 <button
                   key={value}
                   type="button"
                   onClick={() => setMode(value)}
                   className={`rounded-xl border-2 bg-white px-4 py-3 text-center ${
-                    mode === value ? 'border-blue-600' : 'border-transparent'
+                    playMode === value ? 'border-blue-600' : 'border-transparent'
                   }`}
                 >
                   <div className="font-extrabold text-slate-900">{label}</div>
@@ -623,7 +631,8 @@ export default function App() {
         </button>
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">World Map</h1>
         <p className="mt-1 mb-8 text-slate-600">
-          Countries and the places inside them on one map, and the seas and straits between them.
+          Countries and the places inside them on one map, the seas and straits between them, and
+          the currents that flow through them.
         </p>
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
           <button
@@ -686,6 +695,37 @@ export default function App() {
           </section>
         )}
 
+        {PHENOMENA_CONTINENTS.length > 0 && (
+          <section className="mt-10">
+            <h2 className="text-2xl font-extrabold text-slate-900">Phenomena</h2>
+            <p className="mt-1 mb-4 text-slate-600">
+              What moves across the map rather than sits on it, starting with the ocean currents —{' '}
+              <span className="font-bold text-red-600">red arrows warm</span>,{' '}
+              <span className="font-bold text-blue-700">blue arrows cold</span>.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {PHENOMENA_CONTINENTS.map((continent) => {
+                const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => navigate({ view: 'setup', roundId: r.id })}
+                    className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                  >
+                    <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
+                    <div className="mt-1 text-sm text-slate-600">
+                      Warm and cold currents of every ocean, drawn as arrows.
+                    </div>
+                    <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+                      {r.places?.length} CURRENTS
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )

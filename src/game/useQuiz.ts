@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
 import { areaOf } from '../data/areas'
-import { distanceToLineKm, placeOf, type Place } from '../data/places'
+import { displayName, distanceToLineKm, placeOf, type Place } from '../data/places'
 import { judgeName, normaliseName, type Candidate } from './matchName'
 import type {
   CountryState,
@@ -38,6 +38,8 @@ export const QUESTION_SECONDS = 15
 const REVEAL_MS = 1400
 /** How close a tap must land to a point place to count, in screen pixels. */
 export const PIN_TOLERANCE_PX = 28
+/** How close a tap must land to a current's arrow, in screen pixels — and nearer it than any other. */
+const CURRENT_TOLERANCE_PX = 24
 const EARTH_RADIUS_KM = 6371
 
 export interface QuizOptions {
@@ -80,6 +82,8 @@ export interface Answer {
 interface Question {
   id: string
   name: string
+  /** What is shown: the name, with its ocean where three currents share it. */
+  label: string
   aliases: string[]
   point: [number, number]
   iso: string | null
@@ -97,6 +101,7 @@ function buildQuestions(round: Round): Question[] {
     return {
       id,
       name: p.name,
+      label: displayName(p),
       aliases: p.aliases,
       point: p.point,
       iso: p.type === 'country' ? p.country : null,
@@ -105,7 +110,7 @@ function buildQuestions(round: Round): Question[] {
   })
   const countries = round.askable.map((iso): Question => {
     const m = metaOf(iso)
-    return { id: iso, name: m.name, aliases: m.aliases ?? [], point: m.centroid, iso, place: null }
+    return { id: iso, name: m.name, label: m.name, aliases: m.aliases ?? [], point: m.centroid, iso, place: null }
   })
   return [...places, ...countries]
 }
@@ -164,6 +169,34 @@ export interface Miss {
   frame: [number, number][]
   /** Drawn as an area or a band rather than a marker. */
   extent: boolean
+}
+
+/**
+ * Pixels from a screen point to a line drawn on the map: its vertices projected
+ * and the nearest segment measured. A step that leaps the map is where the
+ * line crosses its edge, not a segment, and is skipped.
+ */
+export function screenDistanceToLine(line: [number, number][], toScreen: ToScreen, at: [number, number]): number {
+  // The build walks every line in steps of under a degree, so a step several
+  // degrees long on screen can only be the edge.
+  const o = toScreen([0, 0])
+  const e = toScreen([1, 0])
+  const seam = o && e ? Math.hypot(e[0] - o[0], e[1] - o[1]) * 5 : Infinity
+  let best = Infinity
+  let prev = line.length ? toScreen(line[0]) : null
+  for (let i = 1; i < line.length; i++) {
+    const next = toScreen(line[i])
+    if (prev && next && Math.hypot(next[0] - prev[0], next[1] - prev[1]) < seam) {
+      const [ax, ay] = prev
+      const vx = next[0] - ax
+      const vy = next[1] - ay
+      const len2 = vx * vx + vy * vy
+      const t = len2 ? Math.max(0, Math.min(1, ((at[0] - ax) * vx + (at[1] - ay) * vy) / len2)) : 0
+      best = Math.min(best, Math.hypot(at[0] - ax - t * vx, at[1] - ay - t * vy))
+    }
+    prev = next
+  }
+  return best
 }
 
 function shuffle<T>(input: T[]): T[] {
@@ -310,6 +343,25 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
         return
       }
       /**
+       * A current is an arrow among arrows, every one of them on the map: the
+       * tap answers whichever arrow it lands nearest on screen, and counts
+       * only if that is this one and the tap is close to it. Measured in
+       * pixels, so the Florida Current and the Gulf Stream are as easy to tell
+       * apart as the zoom makes them.
+       */
+      if (current.place?.type === 'current') {
+        const at = toScreen(lonLat)
+        const offPx = (q: Question) => (at ? screenDistanceToLine(q.place?.line ?? [], toScreen, at) : Infinity)
+        const nearest = pool.reduce<Question | null>(
+          (best, q) => (q.place?.type === 'current' && (!best || offPx(q) < offPx(best)) ? q : best),
+          null
+        )
+        const line = current.place.line ?? []
+        const kmOff = Math.min(...line.map((c) => geoDistance(lonLat, c) * EARTH_RADIUS_KM))
+        settle(nearest?.id === current.id && offPx(current) <= CURRENT_TOLERANCE_PX, undefined, kmOff)
+        return
+      }
+      /**
        * A sea is judged by its own extent, exactly like a country. No rival
        * check: the Aegean is inside the Mediterranean, and a tap there is a
        * perfectly good answer to "where is the Mediterranean" — marking it
@@ -359,15 +411,26 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
 
       settle(byScreen || bySpan, undefined, km)
     },
-    [phase, current, settle, queue]
+    [phase, current, settle, queue, pool]
   )
 
+  /**
+   * A current is named twice over: warm or cold, then its name. Both must be
+   * right, and neither is taken until the temperature has been chosen — the
+   * field cannot accept a name for a question half answered.
+   */
+  const tempOk = (temp?: 'warm' | 'cold' | null) =>
+    current?.place?.type !== 'current' ? true : temp ? temp === current.place.temp : null
+
   const submitName = useCallback(
-    (text: string) => {
+    (text: string, temp?: 'warm' | 'cold' | null) => {
       if (phase !== 'asking' || !current) return
+      const warmth = tempOk(temp)
+      if (warmth === null) return
       const { correct, corrected } = judgeName(text, current, [...pool, ...COUNTRY_VOCABULARY])
-      settle(correct, undefined, undefined, corrected ?? undefined)
+      settle(correct && warmth, undefined, undefined, corrected ?? undefined)
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [phase, current, settle, pool]
   )
 
@@ -378,13 +441,16 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
    * accept a name before it had been finished.
    */
   const acceptIfExact = useCallback(
-    (text: string) => {
+    (text: string, temp?: 'warm' | 'cold' | null) => {
       if (phase !== 'asking' || !current) return
+      const warmth = tempOk(temp)
+      if (warmth === null) return
       const typed = normaliseName(text)
       if (typed && [current.name, ...current.aliases].some((n) => normaliseName(n) === typed)) {
-        settle(true)
+        settle(warmth)
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [phase, current, settle]
   )
 
@@ -441,16 +507,27 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
     const add = (q: Question | null | undefined, state: CountryState) => {
       const line = q?.place?.line
       if (q && line) {
-        out.set(q.id, { id: q.id, line: line as [number, number][], state, belt: q.place?.belt })
+        out.set(q.id, {
+          id: q.id,
+          line: line as [number, number][],
+          state,
+          belt: q.place?.belt,
+          // In Name mode the temperature is half the question, so no arrow
+          // shows it until it has been answered.
+          current: q.place?.type === 'current' ? (mode === 'type' ? 'unknown' : q.place.temp) : undefined,
+        })
       }
     }
+    // Every current is on the map from the start: Pin mode is picking the
+    // right arrow out of all of them, as the notes' map shows them.
+    for (const q of pool) if (q.place?.type === 'current') add(q, 'idle')
     for (const a of answers) add(byId.get(a.id), a.correct ? 'correct' : 'missed')
     if (phase === 'revealing' && current) {
       add(current, verdict === 'correct' ? 'correct' : 'missed')
     }
     if (mode === 'type' && phase === 'asking' && current) add(current, 'target')
     return [...out.values()]
-  }, [answers, phase, current, verdict, mode, byId])
+  }, [answers, phase, current, verdict, mode, byId, pool])
 
   /** The same states as `points`, for the places drawn as regions instead. */
   const areas = useMemo(() => {
@@ -477,7 +554,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
         .map(
           (q): Miss => ({
             id: q.id,
-            name: q.name,
+            name: q.label,
             iso: q.iso,
             point: q.point,
             frame: frameOf(q) ?? [q.point],
@@ -502,7 +579,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
    * a thing the player could mean.
    */
   const vocabulary = useMemo(
-    () => pool.map((q) => q.name).sort((a, b) => a.localeCompare(b)),
+    () => [...new Set(pool.map((q) => q.name))].sort((a, b) => a.localeCompare(b)),
     [pool]
   )
 

@@ -5,6 +5,7 @@ import {
   TYPE_LABEL,
   WATER_GLYPH,
   capitalsOf,
+  displayName,
   distanceToLineKm,
   groupsFor,
   placeKindOf,
@@ -12,9 +13,9 @@ import {
 } from '../data/places'
 import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/areas'
-import { shapeOf } from '../game/useQuiz'
+import { screenDistanceToLine, shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { BELTS, BeltSwatch, KindSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, CurrentSwatch, KindSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 
@@ -36,6 +37,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     other: true,
     region: true,
   })
+  /** Which currents are drawn: the warm ones, the cold ones, or both. */
+  const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
   /** The country under the last tap, which a place on top of it may outrank. */
   const tappedCountry = useRef<string | null>(null)
   const [tricks, setTricks] = useState(false)
@@ -47,6 +50,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const hasWater = roundPlaces.some((p) => isWaterKind(p.type))
   const isWaterRound = roundPlaces[0]?.section === 'water'
   const isPlacesSection = roundPlaces[0]?.section === 'places'
+  const isPhenomena = roundPlaces[0]?.section === 'phenomena'
   /**
    * A Political Map round shows its countries and its places on one map. Its
    * countries are a section of the legend like any other, so they can be put
@@ -64,9 +68,10 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
       roundPlaces.filter((p) => {
         if (isWaterKind(p.type)) return shown[p.type]
         if (isPlacesSection) return placeKindsShown[placeKindOf(p.type)]
+        if (p.type === 'current') return p.temp ? tempsShown[p.temp] : true
         return true
       }),
-    [roundPlaces, shown, isPlacesSection, placeKindsShown]
+    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
@@ -113,8 +118,14 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           id: p.id,
           line: p.line as [number, number][],
           state: selected === p.id ? 'target' : 'idle',
-          label: showAll || selected === p.id ? p.name.toUpperCase() : undefined,
+          label:
+            showAll || selected === p.id
+              ? p.type === 'current'
+                ? displayName(p)
+                : p.name.toUpperCase()
+              : undefined,
           belt: p.belt,
+          current: p.type === 'current' ? p.temp : undefined,
         })),
     [visible, selected, showAll]
   )
@@ -160,7 +171,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 // would make a marker in open water impossible to click.
                 let best: { id: string; px: number } | null = null
                 for (const p of visible) {
-                  if (areaOf(p.id)) continue
+                  // A current is its whole arrow, not the label's anchor.
+                  if (areaOf(p.id) || p.type === 'current') continue
                   const a = toScreen(lonLat)
                   const b = toScreen(p.point)
                   if (!a || !b) continue
@@ -173,10 +185,22 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   setSelected(best.id)
                   return
                 }
+                // Then the nearest current's arrow, measured on screen.
+                const at = toScreen(lonLat)
+                let arrow: { id: string; px: number } | null = null
+                for (const p of visible) {
+                  if (p.type !== 'current' || !at) continue
+                  const px = screenDistanceToLine(p.line as [number, number][], toScreen, at)
+                  if (px <= 24 && (!arrow || px < arrow.px)) arrow = { id: p.id, px }
+                }
+                if (arrow) {
+                  setSelected(arrow.id)
+                  return
+                }
                 // Then the nearest ridgeline within its own tolerance.
                 let ridge: { id: string; km: number } | null = null
                 for (const p of visible) {
-                  if (!p.line) continue
+                  if (!p.line || p.type === 'current') continue
                   const km = distanceToLineKm(p.line as [number, number][], lonLat)
                   if (km <= (p.spanKm ?? 60) && (!ridge || km < ridge.km)) {
                     ridge = { id: p.id, km }
@@ -205,7 +229,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               }
             : undefined
         }
-        countryMarkers={!isWaterRound}
+        countryMarkers={!isWaterRound && !isPhenomena}
         labels={isPlaceRound && !countriesShown ? 'none' : showAll ? 'all' : 'selected'}
         selectedIso={selectedCountry}
         // Constant, not conditional on `place`: refitting when a card opens
@@ -227,6 +251,33 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 <BeltSwatch belt={b.id} />
                 {b.label}
               </span>
+            ))}
+          </div>
+        )}
+
+        {isPhenomena && (
+          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+            {(['warm', 'cold'] as const).map((t) => (
+              <label
+                key={t}
+                className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                  tempsShown[t] ? 'text-slate-700' : 'text-slate-400'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={tempsShown[t]}
+                  onChange={(e) => setTempsShown((s) => ({ ...s, [t]: e.target.checked }))}
+                  className="h-3.5 w-3.5 accent-blue-600"
+                />
+                <span className={tempsShown[t] ? '' : 'opacity-40'}>
+                  <CurrentSwatch temp={t} />
+                </span>
+                {t === 'warm' ? 'Warm currents' : 'Cold currents'}
+                <span className="font-semibold text-slate-400">
+                  {roundPlaces.filter((p) => p.temp === t).length}
+                </span>
+              </label>
             ))}
           </div>
         )}
@@ -356,9 +407,23 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 {WATER_GLYPH[place.type] ? `${WATER_GLYPH[place.type]} ` : ''}
                 {place.name}
               </span>
+              {place.temp && (
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs font-extrabold text-white uppercase ${
+                    place.temp === 'warm' ? 'bg-red-600' : 'bg-blue-700'
+                  }`}
+                >
+                  {place.temp}
+                </span>
+              )}
               <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">
                 {TYPE_LABEL[place.type]}
               </span>
+              {place.ocean && (
+                <span className="text-xs font-semibold text-slate-500">
+                  {place.ocean} Ocean
+                </span>
+              )}
               {/* Skipped when the place *is* the country, or the line just
                   repeats the name back. */}
               {place.type !== 'country' && (place.country || place.sovereign) && (

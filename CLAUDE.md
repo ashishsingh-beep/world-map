@@ -109,8 +109,8 @@ islands, states, peninsulas, zones, territories — not a bucket per type.
 section a place is in; nothing else may re-derive it.
 
 **The Political Map is one round per scope, not a country round and a places
-round.** The World Map menu is the Political Map and Seas & Straits, nothing
-else. A Political Map round (`political-<scope>`, scope `world` or a continent)
+round.** The World Map menu is the Political Map, Seas & Straits and
+Phenomena, nothing else. A Political Map round (`political-<scope>`, scope `world` or a continent)
 carries the scope's countries as `askable` and its places as `places`, and a
 question is a country or a place inside the same round: "Find the country:
 Kenya" beside "Find the capital: Nairobi". The old country and places rounds
@@ -365,6 +365,32 @@ ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
 range emits no marker and no second label. A peak is a brown triangle.
 
+**An ocean current is an arrow.** The third World Map category, Phenomena,
+starts with the currents (`src/data/syllabus/currents.json`, section
+`phenomena`, type `current`): 35 of them across the four oceans, each a `line`
+in the direction it flows, a `temp` (warm or cold) and an `ocean`. Drawn red
+warm, blue cold (`CURRENT_INK` in `MapCanvas`, which `CurrentSwatch` in
+`src/ui/bits.tsx` redraws for the legend), with an arrowhead at the end and
+every ~2,600km along a long one — never closer than ~110px on screen — so a
+current the world map's edge cuts in two still shows its way on both sides.
+These lines are hand-traced like the Himalayan ridgelines: no dataset carries
+ocean currents. The build rounds their corners (Chaikin, three passes, ends
+kept), walks them in sub-degree steps so they draw as authored, and fails if any
+point lands on drawn land. A line crossing the Pacific is written east past 180
+(the North Equatorial runs 250°E to 128°E), never wrapped.
+
+Every arrow is on the map from the start, in both modes. Pin is choosing the
+right arrow out of all of them: a tap answers the arrow nearest it *on screen*,
+within 24px, so the Florida Current and the Gulf Stream are as far apart as the
+zoom makes them. Name is the Type mode with a second half: the arrows are drawn
+slate, not red or blue, the asked one fuchsia, and the answer is a Warm/Cold
+select *and* the name — both right to count, and a name spelt out before the
+temperature is chosen waits for it. There is no Why mode. Three oceans each
+have a North Equatorial, a South Equatorial and an Equatorial Counter Current:
+the name alone is the typed answer, but wherever one is shown — the Pin prompt,
+a label, a miss — `displayName` adds its ocean. The Somali Current is warm
+because the notes' map draws it so; its note says the summer upwelling is cold.
+
 **A coast is a line with width too.** The Grain, Ivory, Gold and Slave Coasts
 are stretches of shoreline, so they are `type: "coast"` bands answered like a
 range, not pins and not whole countries. Their lines are not traced: the build
@@ -457,7 +483,7 @@ The whole app is one map engine plus configuration.
 - `src/game/rounds.ts` — the rounds as config: the Political Map's scopes,
   built from the country rounds and the places syllabi, and the Seas & Straits
   and India rounds. A syllabus file's `section` decides which it feeds:
-  `places` (the Political Map), `water` or `mountains`.
+  `places` (the Political Map), `water`, `mountains` or `phenomena`.
 - `src/game/useQuiz.ts` — round state machine.
 - `src/screens/` — Play, Results, Learn.
 - `src/app/route.ts` — the URL hash, which is where the current screen lives.
@@ -477,7 +503,7 @@ The whole app is one map engine plus configuration.
 world and asks only its own subset.
 
 **There are two atlases.** The home screen picks between the World Map — the
-Political Map and Seas & Straits — and the India Map, which starts with the
+Political Map, Seas & Straits and Phenomena — and the India Map, which starts with the
 Himalaya. A syllabus declares which one it belongs to with `atlas`, a round
 carries it, and `MapCanvas` draws the state outlines when it is `india`. The
 hashes are `#/world-map` and `#/india-map` — not `#/world`, which is already the

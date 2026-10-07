@@ -1,4 +1,4 @@
-import { BELT_BAND, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
+import { BELT_BAND, CURRENT_INK, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
 import type { PlaceKind } from '../data/places'
 import type { ReactNode } from 'react'
 
@@ -163,5 +163,16 @@ export function Button({
     <button type="button" onClick={onClick} className={`${base} ${styles}`}>
       {children}
     </button>
+  )
+}
+
+/** A current's arrow for the Learn legend, in the map's own colours (`CURRENT_INK`). */
+export function CurrentSwatch({ temp }: { temp: 'warm' | 'cold' }) {
+  const c = CURRENT_INK[temp].line
+  return (
+    <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" className="shrink-0">
+      <path d="M1 6 H15" stroke={c} strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M21 6 L13 1.5 L15 6 L13 10.5 Z" fill={c} />
+    </svg>
   )
 }

@@ -189,13 +189,13 @@ function fitAround(bounds: BBox, points: [number, number][], pad = 2): BBox {
  * still listed — it shows in the menu as a placeholder rather than vanishing.
  */
 const SYLLABUS = syllabusContinents
-export const PLACE_CONTINENTS = SYLLABUS.filter(
-  (c) => c.section !== 'water' && c.section !== 'mountains'
-)
+export const PLACE_CONTINENTS = SYLLABUS.filter((c) => c.section === 'places')
 /** The Indian map's sections — mountains for now, more to come. */
 export const INDIA_CONTINENTS = SYLLABUS.filter((c) => c.atlas === 'india')
 /** The Seas & Straits section — water features, drawn with their own notation. */
 export const WATER_CONTINENTS = SYLLABUS.filter((c) => c.section === 'water')
+/** Phenomena: things that happen across the map rather than sit on it — ocean currents first. */
+export const PHENOMENA_CONTINENTS = SYLLABUS.filter((c) => c.section === 'phenomena')
 
 export const allPlacesRoundId = (continent: string) =>
   `places-${continent.toLowerCase().replace(/\s+/g, '-')}`
@@ -285,8 +285,10 @@ function continentPlaceRound({
   atlas?: 'world' | 'india'
 }): Round {
   const ps = allPlaces.filter((p) => p.continent === name)
-  // Seas and straits span the globe, so their round draws every country.
-  const worldwide = name === 'World'
+  // Seas and straits span the globe, so their round draws every country, and
+  // so do the phenomena — the ocean currents run round all of it.
+  const phenomena = ps.length > 0 && ps.every((p) => p.section === 'phenomena')
+  const worldwide = name === 'World' || phenomena
   // The Himalaya runs through five countries, so its round draws the whole
   // neighbourhood and lets the state outlines do the locating.
   // The Indian map is India plus only the neighbours that frame it — enough
@@ -305,7 +307,9 @@ function continentPlaceRound({
     id: allPlacesRoundId(name),
     title,
     atlas,
-    blurb: ps.length
+    blurb: phenomena
+      ? `All ${ps.length} currents, warm and cold, in every ocean.`
+      : ps.length
       ? `Every place in the set — ${ps.length} in total.`
       : 'Nothing added yet — the notes for this one are still to come.',
     render: [...isos, ...renderOnlyIsos],
@@ -323,11 +327,28 @@ function continentPlaceRound({
     view:
       atlas === 'india'
         ? INDIA_VIEW
-        : fitAround(
+        : phenomena
+          ? worldReaching(ps.flatMap((p) => p.line ?? [p.point]))
+          : fitAround(
             worldwide ? (VIEW_OVERRIDES.world as BBox) : (PLACE_BASE_VIEW[name] ?? fit(isos)),
             ps.map((p) => p.point)
           ),
   }
+}
+
+/**
+ * The world frame, reaching north and south as far as the lines need: the
+ * currents run past it at both ends — the West Wind Drift and the East Wind
+ * Drift down to 67°S, the Norwegian Current to 72°N. Never wider: a current
+ * written east past the frame's edge (the Pacific's run to 275°E) is the same
+ * water, already inside it.
+ */
+function worldReaching(points: [number, number][], pad = 3): BBox {
+  const lats = points.map(([, lat]) => lat)
+  return [
+    [WORLD_VIEW[0][0], Math.max(-90, Math.min(WORLD_VIEW[0][1], Math.min(...lats) - pad))],
+    [WORLD_VIEW[1][0], Math.min(90, Math.max(WORLD_VIEW[1][1], Math.max(...lats) + pad))],
+  ]
 }
 
 export const PLACE_ROUNDS: Record<string, Round> = {}

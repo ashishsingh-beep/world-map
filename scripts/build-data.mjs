@@ -600,6 +600,8 @@ const PLACE_TYPES = new Set([
   'peak', 'range',
   // Seas & Straits section
   'ocean', 'sea', 'strait',
+  // Phenomena: an ocean current, drawn as an arrow along its course
+  'current',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal', 'reef'])
@@ -703,8 +705,38 @@ const GENERIC_WORDS = new Set(
   southern eastern western great new saint san santa port state territory desert plateau
   plains plain national park republic united central upper lower little grand point head
   sound channel passage reef triangle zone depression highlands archipelago pass falls
-  basin delta corridor line fort old gate canyon crossing peak mine iron ore bight`.split(/\s+/)
+  basin delta corridor line fort old gate canyon crossing peak mine iron ore bight
+  current drift`.split(/\s+/)
 )
+
+/**
+ * An ocean current's course, as drawn: the authored corners rounded off by
+ * three passes of Chaikin's corner-cutting, which keeps both ends where they
+ * were authored and every point inside the authored outline, then walked in
+ * steps of under a degree so d3 draws the curve as authored rather than
+ * bowing each leg along a great circle.
+ */
+function smoothCourse(line) {
+  let pts = line
+  for (let pass = 0; pass < 3; pass++) {
+    const next = [pts[0]]
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [ax, ay] = pts[i]
+      const [bx, by] = pts[i + 1]
+      next.push([ax * 0.75 + bx * 0.25, ay * 0.75 + by * 0.25], [ax * 0.25 + bx * 0.75, ay * 0.25 + by * 0.75])
+    }
+    next.push(pts[pts.length - 1])
+    pts = next
+  }
+  const out = [pts[0]]
+  for (let i = 1; i < pts.length; i++) {
+    const [ax, ay] = pts[i - 1]
+    const [bx, by] = pts[i]
+    const steps = Math.ceil(Math.max(Math.abs(bx - ax), Math.abs(by - ay)))
+    for (let k = 1; k <= steps; k++) out.push([ax + ((bx - ax) * k) / steps, ay + ((by - ay) * k) / steps])
+  }
+  return out.map(([x, y]) => [Number(x.toFixed(3)), Number(y.toFixed(3))])
+}
 
 const SYLLABUS = resolve(OUT, 'syllabus')
 const places = []
@@ -793,7 +825,19 @@ for (const file of syllabusFiles) {
       if (!p.coastOf?.length) errors.push(`${where(p.id)}: a coast needs coastOf, the countries whose shore it is`)
       else p.line = coastlineOf(p.coastOf, where(p.id))
     }
-    if (p.type === 'range' || p.type === 'coast') {
+    /**
+     * A current is an arrow along its course, start to end in the direction it
+     * flows, red if warm and blue if cold. Its point, like a range's, is the
+     * middle of the line and only anchors the label.
+     */
+    if (p.type === 'current') {
+      if (!['warm', 'cold'].includes(p.temp)) errors.push(`${where(p.id)}: a current is "warm" or "cold"`)
+      if (!['Atlantic', 'Pacific', 'Indian', 'Southern'].includes(p.ocean)) {
+        errors.push(`${where(p.id)}: unknown ocean "${p.ocean}"`)
+      }
+      if (Array.isArray(p.line) && p.line.length >= 2) p.line = smoothCourse(p.line)
+    }
+    if (p.type === 'range' || p.type === 'coast' || p.type === 'current') {
       if (!Array.isArray(p.line) || p.line.length < 2) {
         errors.push(`${where(p.id)}: a ${p.type} needs a line of at least two points`)
       } else {
@@ -812,7 +856,7 @@ for (const file of syllabusFiles) {
 
     // The check that catches transposed or mistyped coordinates.
     const feature = p.country ? picked.get(p.country) : null
-    if (feature && point && !p.offshore && !['country', 'range', 'coast'].includes(p.type)) {
+    if (feature && point && !p.offshore && !['country', 'range', 'coast', 'current'].includes(p.type)) {
       const slack = geoContains(feature, point) ? 0 : distanceToFeatureKm(feature, point)
       if (slack > ONSHORE_SLACK_KM) {
         const km = geoDistance(point, meta[p.country].centroid) * 6371
@@ -901,6 +945,26 @@ for (const p of places) {
   if (p.section !== 'water' || p.type === 'canal') continue
   const land = rendered.features.find((f) => geoContains(f, p.point))
   if (land) dryErrors.push(`${p.id}: ${p.name} at ${p.point} sits on land (${land.id})`)
+}
+/**
+ * A current runs at sea: no point of its drawn course may fall on the land the
+ * player sees. Hand-traced lines are checked against the rendered countries,
+ * each bounded first so the check costs a bounding box per point, not a
+ * polygon walk.
+ */
+const landBoxes = rendered.features.map((f) => ({ f, box: geoBounds(f) }))
+const inBox = ([lon, lat], [[w, s], [e, n]]) =>
+  lat >= s && lat <= n && (w <= e ? lon >= w && lon <= e : lon >= w || lon <= e)
+for (const p of places) {
+  if (p.type !== 'current') continue
+  for (const [x, lat] of p.line) {
+    const lon = ((((x + 180) % 360) + 360) % 360) - 180
+    const land = landBoxes.find(({ f, box }) => inBox([lon, lat], box) && geoContains(f, [lon, lat]))
+    if (land) {
+      dryErrors.push(`${p.id}: ${p.name} crosses ${land.f.id} at [${lon.toFixed(2)}, ${lat.toFixed(2)}]`)
+      break
+    }
+  }
 }
 if (dryErrors.length) {
   console.error(`\nWater features on land (${dryErrors.length}):`)

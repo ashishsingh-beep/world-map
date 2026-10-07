@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
-import { geoEquirectangular, geoGraticule, geoPath } from 'd3-geo'
+import { geoDistance, geoEquirectangular, geoGraticule, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, zoomTransform, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
@@ -81,7 +81,27 @@ export interface MapBand {
   label?: string
   /** Which Himalayan belt it belongs to, which is what colours it. */
   belt?: Belt
+  /**
+   * An ocean current, drawn as an arrow rather than a band: red warm, blue
+   * cold — or `unknown`, slate, when its temperature is the question being
+   * asked and the colour would answer it.
+   */
+  current?: 'warm' | 'cold' | 'unknown'
 }
+
+/**
+ * A current's line and its label ink. `CurrentSwatch` in `src/ui/bits.tsx`
+ * draws the Learn legend from these — change one and change the other.
+ */
+export const CURRENT_INK: Record<'warm' | 'cold' | 'unknown', { line: string; ink: string }> = {
+  warm: { line: '#dc2626', ink: '#991b1b' },
+  cold: { line: '#1d4ed8', ink: '#1e3a8a' },
+  unknown: { line: '#475569', ink: '#1f2d4d' },
+}
+/** The arrow asked about in Name mode: neither red nor blue, so it gives nothing away. */
+const CURRENT_TARGET = '#c026d3'
+/** A long current gets an arrowhead every this many kilometres, as well as at its end. */
+const CURRENT_HEAD_EVERY_KM = 2600
 
 /**
  * The belts, coloured apart. Four parallel ranges drawn in one brown were a
@@ -943,6 +963,7 @@ export function MapCanvas({
               its crest, is 26km out), and faint enough that where two belts
               overlap both still read. */}
           {bands?.map((b) => {
+            if (b.current) return currentArrow(b)
             const d = path({ type: 'LineString', coordinates: b.line } as never)
             if (!d) return null
             const idle = b.state === 'idle'
@@ -1264,6 +1285,71 @@ export function MapCanvas({
       </div>
     </div>
   )
+
+  /**
+   * An ocean current: a line along its course with arrowheads showing the way
+   * it flows — at its end, and every few thousand kilometres along a long one,
+   * so a current the map's edge cuts in two (the Pacific's equatorial flows,
+   * the West Wind Drift) still says which way it runs on both sides. Heads are
+   * placed on the sphere and turned by the projected direction there; a step
+   * that leaps the map is the edge, and gets no head.
+   */
+  function currentArrow(b: MapBand) {
+    const d = path({ type: 'LineString', coordinates: b.line } as never)
+    if (!d) return null
+    const idle = b.state === 'idle'
+    const kind = b.current ?? 'unknown'
+    const colour = idle ? CURRENT_INK[kind].line : b.state === 'target' ? CURRENT_TARGET : FILLS[b.state]
+    const width = b.state === 'target' ? 4.5 : 2.6
+    const heads: { x: number; y: number; deg: number }[] = []
+    // Never closer than ~110px on screen, or a phone's world map is all heads.
+    const every = Math.max(CURRENT_HEAD_EVERY_KM, (110 * 6371) / (projection.scale() * k))
+    let run = 0
+    for (let i = 1; i < b.line.length; i++) {
+      run += geoDistance(b.line[i - 1], b.line[i]) * 6371
+      const last = i === b.line.length - 1
+      if (!last && run < every) continue
+      if (!last && b.line.length - i < 12) continue
+      run = 0
+      const a = projection(b.line[Math.max(0, i - 2)])
+      const z = projection(b.line[i])
+      if (!a || !z || Math.hypot(z[0] - a[0], z[1] - a[1]) > size.width / 4) continue
+      heads.push({ x: z[0], y: z[1], deg: (Math.atan2(z[1] - a[1], z[0] - a[0]) * 180) / Math.PI })
+    }
+    const mid = b.label ? projection(b.line[Math.floor(b.line.length / 2)]) : null
+    return (
+      <g key={`c-${b.id}`} data-current={b.id} pointerEvents="none">
+        <path d={d} fill="none" stroke="#fff" strokeOpacity={0.7} strokeWidth={width + 2.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        <path d={d} fill="none" stroke={colour} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+        {heads.map((h, i) => (
+          <path
+            key={i}
+            d="M 2 0 L -10 -6 L -7 0 L -10 6 Z"
+            transform={`translate(${h.x} ${h.y}) rotate(${h.deg}) scale(${(b.state === 'target' ? 1.3 : 1) / k})`}
+            fill={colour}
+            stroke="#fff"
+            strokeWidth={1}
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+        {mid && (
+          <text
+            x={mid[0]}
+            y={mid[1] - 7 / k}
+            fontSize={10.5 / k}
+            fontWeight={800}
+            fill={idle ? CURRENT_INK[kind].ink : '#1f2d4d'}
+            stroke="#fff"
+            strokeWidth={3 / k}
+            paintOrder="stroke"
+            textAnchor="middle"
+          >
+            {b.label}
+          </text>
+        )}
+      </g>
+    )
+  }
 
   /**
    * Names in screen space, not on the map: they hug the edges of whatever is

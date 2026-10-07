@@ -35,6 +35,8 @@ export type PlaceType =
   | 'ocean'
   | 'sea'
   | 'strait'
+  /** An ocean current — Phenomena. An arrow along its course, red warm, blue cold. */
+  | 'current'
 
 export interface Place {
   id: string
@@ -42,7 +44,7 @@ export interface Place {
   aliases: string[]
   type: PlaceType
   /** Which menu section this belongs to. */
-  section: 'places' | 'water' | 'mountains'
+  section: 'places' | 'water' | 'mountains' | 'phenomena'
   /** ISO3 of the country it belongs to, or null for territories and shared features. */
   country: string | null
   /** ISO3 of the governing state, when that differs from `country`. */
@@ -81,6 +83,10 @@ export interface Place {
    * build derives from it is the label's anchor and nothing else.
    */
   line?: [number, number][]
+  /** A current's temperature: what Name mode asks alongside its name. */
+  temp?: 'warm' | 'cold'
+  /** The ocean a current flows in — which of the three North Equatorial Currents. */
+  ocean?: 'Atlantic' | 'Pacific' | 'Indian' | 'Southern'
   /** Metres, for a peak. */
   elevationM?: number
   /** Which Himalayan belt a peak or range sits in. */
@@ -123,7 +129,7 @@ export interface PlaceGroup {
 export interface SyllabusContinent {
   name: string
   title: string
-  section: 'places' | 'water' | 'mountains'
+  section: 'places' | 'water' | 'mountains' | 'phenomena'
   atlas: 'world' | 'india'
   count: number
 }
@@ -139,6 +145,22 @@ export const places: Place[] = doc.places
 export const placeGroups: PlaceGroup[] = doc.groups
 
 export const placeById = new Map(places.map((p) => [p.id, p]))
+
+/**
+ * Three oceans each have a North Equatorial, a South Equatorial and an
+ * Equatorial Counter Current. The name is still the answer — typed, it is all
+ * that is asked — but wherever one is *shown*, a prompt or a label, the ocean
+ * goes with it, or "Find: North Equatorial Current" would have three right
+ * answers.
+ */
+const sharedCurrentNames = new Set(
+  places
+    .filter((p) => p.type === 'current')
+    .map((p) => p.name)
+    .filter((name, i, all) => all.indexOf(name) !== i)
+)
+export const displayName = (p: Place): string =>
+  p.type === 'current' && sharedCurrentNames.has(p.name) ? `${p.name} (${p.ocean})` : p.name
 
 /**
  * A country's national capitals, from the places syllabi: one for most, more
@@ -196,6 +218,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   ocean: 'ocean',
   sea: 'sea',
   strait: 'strait',
+  current: 'ocean current',
 }
 
 /**
