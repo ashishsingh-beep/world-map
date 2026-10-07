@@ -65,7 +65,8 @@ export function PlayScreen({
   const inputRef = useRef<HTMLInputElement>(null)
   /** A current's temperature, chosen before its name in Name mode. */
   const [temp, setTemp] = useState<'warm' | 'cold' | null>(null)
-  const tempRef = useRef<HTMLSelectElement>(null)
+  /** Briefly set when a name is submitted with no temperature chosen: the buttons ask for it. */
+  const [nudge, setNudge] = useState(false)
   const asksTemp = mode === 'type' && quiz.current?.place?.type === 'current'
 
   useEffect(() => {
@@ -73,13 +74,19 @@ export function PlayScreen({
     setActive(-1)
     setDismissed(false)
     setTemp(null)
-    if (mode !== 'pin' && quiz.phase === 'asking') (asksTemp ? tempRef.current : inputRef.current)?.focus()
-  }, [quiz.index, quiz.phase, mode, asksTemp])
+    if (mode !== 'pin' && quiz.phase === 'asking') inputRef.current?.focus()
+  }, [quiz.index, quiz.phase, mode])
+
+  useEffect(() => {
+    if (!nudge) return
+    const id = window.setTimeout(() => setNudge(false), 900)
+    return () => window.clearTimeout(id)
+  }, [nudge])
 
   /** A name is only taken with its temperature; without one, the choice is asked for first. */
   const submit = (name: string) => {
     if (asksTemp && !temp) {
-      tempRef.current?.focus()
+      setNudge(true)
       return
     }
     quiz.submitName(name, temp)
@@ -274,32 +281,42 @@ export function PlayScreen({
             {/* A current is warm or cold before it has a name: the first half
                 of the answer, and the arrow is drawn in neither colour. */}
             {asksTemp && (
-              <select
-                ref={tempRef}
-                value={temp ?? ''}
-                onChange={(e) => {
-                  const next = (e.target.value || null) as 'warm' | 'cold' | null
-                  setTemp(next)
-                  inputRef.current?.focus()
-                  // The name may already be spelt out, waiting on this.
-                  if (!suggest && next) quiz.acceptIfExact(draft, next)
-                }}
+              <div
+                role="radiogroup"
                 aria-label="Warm or cold current"
                 // A row of its own on a phone, so the name keeps the width it needs.
-                className={`basis-full cursor-pointer rounded-xl px-4 py-3 text-lg font-bold shadow-xl outline-none sm:basis-auto sm:shrink-0 sm:py-0 ${
-                  temp === 'warm'
-                    ? 'bg-red-600 text-white'
-                    : temp === 'cold'
-                      ? 'bg-blue-700 text-white'
-                      : 'bg-white text-slate-500'
+                className={`flex basis-full gap-2 rounded-xl transition sm:basis-auto sm:shrink-0 ${
+                  nudge ? 'ring-4 ring-amber-300' : ''
                 }`}
               >
-                <option value="" disabled>
-                  Warm or cold?
-                </option>
-                <option value="warm">Warm current</option>
-                <option value="cold">Cold current</option>
-              </select>
+                {(['warm', 'cold'] as const).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    role="radio"
+                    aria-checked={temp === t}
+                    // Keeps the caret in the name field, so typing carries on.
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => {
+                      setTemp(t)
+                      inputRef.current?.focus()
+                      // The name may already be spelt out, waiting on this.
+                      if (!suggest) quiz.acceptIfExact(draft, t)
+                    }}
+                    className={`flex-1 cursor-pointer rounded-xl px-5 py-3 text-lg font-extrabold shadow-xl transition sm:py-0 ${
+                      temp === t
+                        ? t === 'warm'
+                          ? 'bg-red-600 text-white'
+                          : 'bg-blue-700 text-white'
+                        : t === 'warm'
+                          ? 'bg-white text-red-600 hover:bg-red-50'
+                          : 'bg-white text-blue-700 hover:bg-blue-50'
+                    }`}
+                  >
+                    {t === 'warm' ? 'Warm' : 'Cold'}
+                  </button>
+                ))}
+              </div>
             )}
             <div className="relative min-w-0 flex-1">
               <input

@@ -10335,64 +10335,176 @@
       "ocean": "Pacific",
       "line": [
         [
-          165,
-          56.5
+          186,
+          62.5
         ],
         [
-          164.953,
-          56.438
+          185.922,
+          62.469
         ],
         [
-          164.859,
-          56.313
+          185.766,
+          62.406
         ],
         [
-          164.719,
-          56.125
+          185.531,
+          62.313
+        ],
+        [
+          185.219,
+          62.188
+        ],
+        [
+          184.828,
+          62.031
+        ],
+        [
+          184.359,
+          61.844
+        ],
+        [
+          183.813,
+          61.625
+        ],
+        [
+          183.188,
+          61.375
+        ],
+        [
+          182.5,
+          61.117
+        ],
+        [
+          181.75,
+          60.852
+        ],
+        [
+          180.938,
+          60.578
+        ],
+        [
+          180.063,
+          60.297
+        ],
+        [
+          179.125,
+          60.008
+        ],
+        [
+          178.125,
+          59.711
+        ],
+        [
+          177.594,
+          59.559
+        ],
+        [
+          177.063,
+          59.406
+        ],
+        [
+          176.5,
+          59.25
+        ],
+        [
+          175.938,
+          59.094
+        ],
+        [
+          175.402,
+          58.943
+        ],
+        [
+          174.867,
+          58.792
+        ],
+        [
+          174.359,
+          58.647
+        ],
+        [
+          173.852,
+          58.502
+        ],
+        [
+          172.891,
+          58.222
+        ],
+        [
+          171.984,
+          57.953
+        ],
+        [
+          171.133,
+          57.695
+        ],
+        [
+          170.336,
+          57.448
+        ],
+        [
+          169.594,
+          57.212
+        ],
+        [
+          168.906,
+          56.987
+        ],
+        [
+          168.234,
+          56.733
+        ],
+        [
+          167.578,
+          56.448
+        ],
+        [
+          166.938,
+          56.134
+        ],
+        [
+          166.313,
+          55.791
+        ],
+        [
+          165.703,
+          55.417
+        ],
+        [
+          165.109,
+          55.014
         ],
         [
           164.531,
-          55.875
+          54.581
         ],
         [
-          164.297,
-          55.563
+          163.969,
+          54.119
         ],
         [
-          164.016,
-          55.188
+          163.414,
+          53.659
         ],
         [
-          163.688,
-          54.75
+          162.867,
+          53.203
         ],
         [
-          163.313,
-          54.25
+          162.328,
+          52.75
         ],
         [
-          162.922,
-          53.758
+          161.797,
+          52.3
         ],
         [
-          162.516,
-          53.273
+          161.273,
+          51.853
         ],
         [
-          162.094,
-          52.797
-        ],
-        [
-          161.656,
-          52.328
-        ],
-        [
-          161.203,
-          51.867
-        ],
-        [
-          160.734,
-          51.414
+          160.758,
+          51.409
         ],
         [
           160.25,
@@ -10559,12 +10671,12 @@
           40
         ]
       ],
-      "significance": "Brings subarctic water south from Kamchatka to Hokkaido; where it meets the warm flow off Japan it makes one of the world's richest fishing grounds",
+      "significance": "Comes down from the Bering Strait, bringing cold Arctic water south past Kamchatka to Hokkaido; where it meets the warm flow off Japan it makes one of the world's richest fishing grounds",
       "notes": [],
       "tier": 1,
       "point": [
-        154.203,
-        46.344
+        160.758,
+        51.409
       ],
       "continent": "Ocean Currents",
       "section": "phenomena",
@@ -24101,6 +24213,16 @@
       "mnemonic": "SA (Mecca/Medina) में तो हज फरियाद करने आते हैं — to SA (Mecca/Medina) is exactly where people come pleading for Hajj",
       "continent": "Asia",
       "section": "places"
+    },
+    {
+      "id": "cur-oyashio-trick",
+      "name": "Oyashio Current (cold)",
+      "members": [
+        "cur-oyashio"
+      ],
+      "mnemonic": "O! ye to thanda hai",
+      "continent": "Ocean Currents",
+      "section": "phenomena"
     },
     {
       "id": "eur-nordic-trick",

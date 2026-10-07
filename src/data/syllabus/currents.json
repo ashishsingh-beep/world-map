@@ -939,8 +939,20 @@
       "ocean": "Pacific",
       "line": [
         [
-          165,
-          56.5
+          186,
+          62.5
+        ],
+        [
+          181,
+          60.5
+        ],
+        [
+          172,
+          58
+        ],
+        [
+          166.5,
+          56.2
         ],
         [
           162,
@@ -967,7 +979,7 @@
           40
         ]
       ],
-      "significance": "Brings subarctic water south from Kamchatka to Hokkaido; where it meets the warm flow off Japan it makes one of the world's richest fishing grounds",
+      "significance": "Comes down from the Bering Strait, bringing cold Arctic water south past Kamchatka to Hokkaido; where it meets the warm flow off Japan it makes one of the world's richest fishing grounds",
       "notes": [],
       "tier": 1
     },
@@ -1480,5 +1492,14 @@
       "tier": 1
     }
   ],
-  "groups": []
+  "groups": [
+    {
+      "id": "cur-oyashio-trick",
+      "name": "Oyashio Current (cold)",
+      "members": [
+        "cur-oyashio"
+      ],
+      "mnemonic": "O! ye to thanda hai"
+    }
+  ]
 }

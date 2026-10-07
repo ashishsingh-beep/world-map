@@ -383,9 +383,10 @@ Every arrow is on the map from the start, in both modes. Pin is choosing the
 right arrow out of all of them: a tap answers the arrow nearest it *on screen*,
 within 24px, so the Florida Current and the Gulf Stream are as far apart as the
 zoom makes them. Name is the Type mode with a second half: the arrows are drawn
-slate, not red or blue, the asked one fuchsia, and the answer is a Warm/Cold
-select *and* the name — both right to count, and a name spelt out before the
-temperature is chosen waits for it. There is no Why mode. Three oceans each
+slate, not red or blue, the asked one fuchsia, and the answer is a tap on one
+of two buttons, Warm or Cold, *and* the name — both right to count. The buttons
+keep the caret in the name field; a name spelt out before either is tapped
+waits for it, and Enter without one makes them glow rather than submit. There is no Why mode. Three oceans each
 have a North Equatorial, a South Equatorial and an Equatorial Counter Current:
 the name alone is the typed answer, but wherever one is shown — the Pin prompt,
 a label, a miss — `displayName` adds its ocean. The Somali Current is warm

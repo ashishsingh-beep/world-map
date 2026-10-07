@@ -116,7 +116,7 @@ export interface PlaceGroup {
   mnemonic: string | null
   /** The syllabus the trick was authored in. */
   continent: string
-  section: 'places' | 'water'
+  section: 'places' | 'water' | 'mountains' | 'phenomena'
   /**
    * Key into `TRICK_DIAGRAMS` in `src/ui/TrickDiagram.tsx`. Set when the trick
    * is spatial and a drawing says it better than a sentence; the mnemonic then
