@@ -42,17 +42,27 @@ export const indiaLand: StateFeature[] = layer(frameTopo, 'land')
 export const indiaDivides: StateFeature[] = layer(frameTopo, 'divides')
 
 /**
- * The state and union-territory boundaries, dissolved from an Indian district
- * source and clipped to the same India. Ladakh reaching ~37°N is asserted at
- * build time; a neutral-POV admin-1 file stops at 35.5 and would quietly redraw
- * Kashmir. See the first non-negotiable in CLAUDE.md.
+ * The state and union-territory boundaries, from DataMeet's India point-of-view
+ * state file — Jammu & Kashmir reaching ~37°N and taking in Gilgit-Baltistan
+ * and Aksai Chin is asserted at build time — with the 2019 line between Jammu
+ * & Kashmir and Ladakh from a newer file, and clipped to the same India. See
+ * the first non-negotiable in CLAUDE.md.
  *
  * Inner boundaries only. The coast and the national border are India's own
  * outline to draw, once.
  *
- * Drawn for context: a state is never a question here. The mountains are.
+ * Drawn for context, and switched off and on from the map: a state is never a
+ * question here.
  */
-export const stateLines: StateFeature[] = layer(topo, 'statelines')
+let stateLinesLoad: Promise<StateFeature[]> | null = null
+/**
+ * Fetched on first use, not bundled: at full precision they are the heaviest
+ * file the app has, and only the India map draws them.
+ */
+export function loadStateLines(): Promise<StateFeature[]> {
+  stateLinesLoad ??= import('./state-lines.topo.json').then((m) => layer(m.default, 'statelines'))
+  return stateLinesLoad
+}
 
 /** The states as areas. Nothing draws them yet; rounds about them would. */
 export const states: StateFeature[] = layer(topo, 'states')

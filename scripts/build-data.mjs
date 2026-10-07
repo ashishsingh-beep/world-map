@@ -49,6 +49,20 @@ const INDIA_URL =
   'https://raw.githubusercontent.com/udit-001/india-maps-data/main/geojson/india.geojson'
 const INDIA_RAW = resolve(CACHE, 'india-districts.geojson')
 /**
+ * The state lines themselves, from DataMeet's state boundaries: India point of
+ * view (its Jammu & Kashmir reaches 37°N and takes in Gilgit-Baltistan and
+ * Aksai Chin, which the build asserts) and some fourteen times the detail of
+ * the district source above — 360,000 points against 25,000. It predates 2019,
+ * so it has no line between Jammu & Kashmir and Ladakh; that one line comes
+ * from a 2019 state file (`LADAKH_URL`), its ends snapped onto DataMeet's.
+ */
+const STATE_LINES_URL =
+  'https://raw.githubusercontent.com/datameet/maps/master/website/docs/data/geojson/states.geojson'
+const STATE_LINES_RAW = resolve(CACHE, 'datameet-states.geojson')
+const LADAKH_URL =
+  'https://raw.githubusercontent.com/datta07/INDIAN-SHAPEFILES/master/INDIA/INDIA_STATES.geojson'
+const LADAKH_RAW = resolve(CACHE, 'india-states-2019.geojson')
+/**
  * Fourth Natural Earth layer: named physical regions, including real polygons
  * for peninsulas. A peninsula is a patch of land, not a pin — Baja California
  * is 1,200km long, and a point-and-radius marker for it is exactly the "within
@@ -222,6 +236,14 @@ function download() {
   if (!existsSync(INDIA_RAW)) {
     console.log('Downloading India districts (India POV)…')
     execFileSync('curl', ['-sSL', '-o', INDIA_RAW, INDIA_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(STATE_LINES_RAW)) {
+    console.log('Downloading DataMeet state boundaries (India POV)…')
+    execFileSync('curl', ['-sSL', '-o', STATE_LINES_RAW, STATE_LINES_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(LADAKH_RAW)) {
+    console.log('Downloading 2019 state boundaries, for the Ladakh line…')
+    execFileSync('curl', ['-sSL', '-o', LADAKH_RAW, LADAKH_URL], { stdio: 'inherit' })
   }
   if (!existsSync(LAND_RAW)) {
     console.log('Downloading Natural Earth physical regions…')
@@ -566,13 +588,104 @@ execFileSync(
     // against another's leaves a thread of slivers along the shore, and every
     // sliver shares an edge with the state behind it, so the coast comes back
     // as a state line a few kilometres inland.
-    '-innerlines', 'target=states', '+', 'name=statelines',
     '-clip', indiaClip, 'target=states',
-    '-o', 'format=topojson', 'quantization=1e5', 'id-field=state', 'target=states,statelines', indiaOut,
+    '-o', 'format=topojson', 'quantization=1e5', 'id-field=state', 'target=states', indiaOut,
   ],
   { stdio: 'inherit' }
 )
 const stateCount = JSON.parse(readFileSync(indiaOut, 'utf8')).objects.states.geometries.length
+
+/**
+ * The state lines, as precise as the sources allow: DataMeet's boundaries for
+ * every line but one, simplified only by a 30m interval — under a pixel even at
+ * full zoom — and the 2019 line between Jammu & Kashmir and Ladakh beside them.
+ * Lines, not polygons, so they can be clipped to the drawn India without the
+ * coastal slivers a polygon clip leaves (see the states above): a line that
+ * overshoots the coast is trimmed, and nothing becomes a false boundary.
+ */
+const datameet = JSON.parse(readFileSync(STATE_LINES_RAW, 'utf8'))
+const datameetJK = datameet.features.find((f) => f.properties.ST_NM === 'Jammu & Kashmir')
+if (!datameetJK) throw new Error('DataMeet states have no Jammu & Kashmir — check STATE_LINES_URL')
+{
+  const [[west], [east, north]] = geoBounds(datameetJK)
+  if (north < 36.5 || east < 79.5 || west > 73) {
+    throw new Error(
+      `DataMeet's Jammu & Kashmir spans ${west.toFixed(2)}–${east.toFixed(2)}°E to ${north.toFixed(2)}°N. ` +
+        'Expected ~72.5–80.3°E to ~37°N, with Gilgit-Baltistan and Aksai Chin. Check STATE_LINES_URL.'
+    )
+  }
+}
+const datameetLines = resolve(CACHE, 'datameet-statelines.geojson')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [STATE_LINES_RAW, '-simplify', 'interval=30', '-innerlines', '-o', 'format=geojson', datameetLines],
+  { stdio: 'inherit' }
+)
+const ladakhLineRaw = resolve(CACHE, 'ladakh-line.geojson')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [
+    LADAKH_RAW,
+    '-filter', 'STNAME === "LADAKH" || STNAME === "JAMMU & KASHMIR"',
+    '-innerlines',
+    '-o', 'format=geojson', ladakhLineRaw,
+  ],
+  { stdio: 'inherit' }
+)
+const linesOf = (file) =>
+  JSON.parse(readFileSync(file, 'utf8')).geometries.flatMap((g) =>
+    g.type === 'LineString' ? [g.coordinates] : g.type === 'MultiLineString' ? g.coordinates : []
+  )
+const ladakhLines = linesOf(ladakhLineRaw)
+if (ladakhLines.length !== 1) throw new Error(`Expected one Ladakh line, found ${ladakhLines.length}`)
+// Each end onto the nearest point of DataMeet's own outline, so the two
+// sources meet exactly where the line reaches Himachal and the border.
+{
+  const outline = []
+  const walk = (c) => (typeof c[0] === 'number' ? outline.push(c) : c.forEach(walk))
+  walk(datameetJK.geometry.coordinates)
+  const line = ladakhLines[0]
+  for (const i of [0, line.length - 1]) {
+    let best = null
+    for (const v of outline) {
+      const km = geoDistance(line[i], v) * 6371
+      if (!best || km < best.km) best = { km, v }
+    }
+    if (best.km > 2) throw new Error(`The Ladakh line ends ${best.km.toFixed(1)}km from Jammu & Kashmir's outline`)
+    line[i] = best.v
+  }
+}
+const stateLinesIn = resolve(CACHE, 'statelines-in.geojson')
+writeFileSync(
+  stateLinesIn,
+  JSON.stringify({
+    type: 'FeatureCollection',
+    features: [...linesOf(datameetLines), ...ladakhLines].map((coordinates) => ({
+      type: 'Feature',
+      properties: {},
+      geometry: { type: 'LineString', coordinates },
+    })),
+  })
+)
+const stateLinesOut = resolve(OUT, 'state-lines.topo.json')
+execFileSync(
+  resolve(ROOT, 'node_modules/.bin/mapshaper'),
+  [
+    stateLinesIn,
+    '-clip', indiaClip,
+    '-rename-layers', 'statelines',
+    '-o', 'format=topojson', 'quantization=1e6', stateLinesOut,
+  ],
+  { stdio: 'inherit' }
+)
+{
+  const t = JSON.parse(readFileSync(stateLinesOut, 'utf8'))
+  const km = topojsonFeature(t, t.objects.statelines).features.reduce((sum, f) => {
+    const parts = f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates
+    return sum + parts.reduce((a, l) => a + l.slice(1).reduce((b, c, i) => b + geoDistance(l[i], c) * 6371, 0), 0)
+  }, 0)
+  console.log(`State lines: ${km.toFixed(0)}km of them, DataMeet's with the 2019 Ladakh line`)
+}
 
 console.log(`India states: ${stateCount}, framed by the land of ${NEIGHBOURS.length} neighbours`)
 

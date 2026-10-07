@@ -7,10 +7,10 @@ import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countri
 import { areaOf as waterAreaOf } from '../data/marine'
 import { areaOf as landAreaOf } from '../data/land'
 import { placeById } from '../data/places'
-import { indiaDivides, indiaLand, indiaOutline, stateLines } from '../data/india'
+import { indiaDivides, indiaLand, indiaOutline, loadStateLines as fetchStateLines, type StateFeature } from '../data/india'
 import { outlineWithoutSeam } from './seam'
 import { formatLat, formatLon, GRID_STEPS, REFERENCE_LINES } from './grid'
-import { loadGrid, saveGrid } from '../app/storage'
+import { loadGrid, loadStateLines, saveGrid, saveStateLines } from '../app/storage'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -627,6 +627,22 @@ export function MapCanvas({
     setGrid(next)
     saveGrid(next)
   }
+  /** The India map's state lines, switched like the grid and remembered the same way. */
+  const [statesOn, setStatesOn] = useState(loadStateLines)
+  const toggleStates = () => {
+    const next = !statesOn
+    setStatesOn(next)
+    saveStateLines(next)
+  }
+  const [stateLines, setStateLines] = useState<StateFeature[]>([])
+  useEffect(() => {
+    if (atlas !== 'india') return
+    let live = true
+    fetchStateLines().then((lines) => live && setStateLines(lines))
+    return () => {
+      live = false
+    }
+  }, [atlas])
   const pxPerDeg = ((projection.scale() * Math.PI) / 180) * k
   const gridStep = GRID_STEPS.find((s) => s * pxPerDeg >= 48) ?? GRID_STEPS[GRID_STEPS.length - 1]
   /**
@@ -895,18 +911,23 @@ export function MapCanvas({
                   pointerEvents="none"
                 />
               ))}
-              {stateLines.map((f, i) => (
-                <path
-                  key={`s-${i}`}
-                  d={path(f as never) ?? undefined}
-                  fill="none"
-                  stroke="#1f2d4d"
-                  strokeOpacity={0.35}
-                  strokeWidth={0.5}
-                  vectorEffect="non-scaling-stroke"
-                  pointerEvents="none"
-                />
-              ))}
+              {/* Dashed, as an atlas draws a state line, so it never reads as
+                  the national border drawn solid over it. */}
+              {statesOn &&
+                stateLines.map((f, i) => (
+                  <path
+                    key={`s-${i}`}
+                    d={path(f as never) ?? undefined}
+                    fill="none"
+                    stroke="#1f2d4d"
+                    strokeOpacity={0.7}
+                    strokeWidth={1}
+                    strokeDasharray="5 2.5"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                    pointerEvents="none"
+                  />
+                ))}
               {indiaOutline.map((f, i) => (
                 <path
                   key={`ib-${i}`}
@@ -1246,6 +1267,26 @@ export function MapCanvas({
       {/* The map's own controls, at its right edge halfway down: the one
           place no screen puts anything of its own. */}
       <div className="absolute top-1/2 right-3 z-[5] flex -translate-y-1/2 flex-col gap-2">
+        {atlas === 'india' && (
+          <button
+            type="button"
+            onClick={toggleStates}
+            aria-pressed={statesOn}
+            title={statesOn ? 'Hide state borders' : 'Show state borders'}
+            className={`${CONTROL} ${statesOn ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path
+                d="M3 5.5 8 3l6 2.5L19 3v13.5L14 19l-6-2.5L3 19z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+              <path d="M8 3v13.5M14 5.5V19" stroke="currentColor" strokeWidth="1.3" strokeDasharray="2 1.6" />
+            </svg>
+            States
+          </button>
+        )}
         <button
           type="button"
           onClick={toggleGrid}

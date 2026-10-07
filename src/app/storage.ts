@@ -179,3 +179,18 @@ export function loadGrid(): boolean {
 export function saveGrid(on: boolean): void {
   write(GRID_KEY, on)
 }
+
+const STATE_LINES_KEY = 'map-practice:state-lines'
+
+/**
+ * The India map's state-lines switch, on unless it has been turned off. Its
+ * own key, for the same reason as the grid's: it is flipped on the map, not
+ * chosen for a round.
+ */
+export function loadStateLines(): boolean {
+  return read(STATE_LINES_KEY) !== false
+}
+
+export function saveStateLines(on: boolean): void {
+  write(STATE_LINES_KEY, on)
+}

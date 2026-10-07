@@ -28,10 +28,20 @@ The Indian map's **state** outlines have the same rule and a harder problem:
 Natural Earth publishes no India point-of-view admin-1 file at all. Its ISO
 build stops Indian territory at 35.5°N, carves out a separate "Kashmir" and
 hands Pakistan "Azad Kashmir" — using it would redraw Kashmir on our own map.
-States come from an Indian district source instead (`INDIA_URL`), dissolved to
-36 states, and the build asserts Ladakh reaches ~37°N before writing
-`india.topo.json`. Only their *inner* lines are drawn, and they are drawn for
-context: a state is never a question.
+The state polygons come from an Indian district source instead (`INDIA_URL`),
+dissolved to 36 states, and the build asserts Ladakh reaches ~37°N before
+writing `india.topo.json`. The state *lines* drawn on the map come from
+DataMeet's India point-of-view state file (`STATE_LINES_URL`), some fourteen
+times the detail — the build asserts its Jammu & Kashmir takes in
+Gilgit-Baltistan and Aksai Chin — simplified only by a 30m interval. It
+predates 2019, so the one line between Jammu & Kashmir and Ladakh comes from a
+2019 file (`LADAKH_URL`), its ends snapped onto DataMeet's outline. Inner lines
+only, clipped as lines (not polygons, so no coastal slivers) to the drawn
+India, into `state-lines.topo.json`, which is loaded only when an India map
+opens: at that precision it is the heaviest file the app has. They are drawn
+dashed, for context — a state is never a question — and the States button on
+the India map switches them off and on, remembered like Lat/Long
+(`loadStateLines`/`saveStateLines`, on by default).
 
 **The Indian map's land comes from one source, not two.** India, Pakistan,
 China and the rest of the frame are all the India-POV country file, welded in a
@@ -490,7 +500,7 @@ The whole app is one map engine plus configuration.
 - `src/app/route.ts` — the URL hash, which is where the current screen lives.
 - `src/app/storage.ts` — everything else that survives a refresh.
 - `src/data/india.ts` — the Indian map's land: India, the surround, the
-  neighbours' dividing lines, and India's own state lines.
+  neighbours' dividing lines, and India's own state lines (fetched on demand).
 - `src/data/marine.ts` / `src/data/land.ts` — real extents for area-type
   places, water and land respectively (land: peninsulas, states, islands, the
   UK's constituent countries, and Oceania's drawn regions from
