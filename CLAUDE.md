@@ -301,7 +301,12 @@ has no Sinai and no Afar, so a place can instead name admin-1 provinces within
 its own country (`admin1`: Sinai is Egypt's North and South Sinai governorates)
 or whole countries (`countries`: the Horn of Africa is the notes' SEED four,
 merged from the drawn country topology so it has one outline, on their
-borders). A `zone` with none of `land`, `admin1` or `countries` stays a marker —
+borders), or — for a territory whose border with the rest of its country is a
+parallel — everything its country holds south of it (`south`: Western Sahara is
+Morocco's land below 27°40′N, filed under Morocco, which holds most of it and
+whose outline in the India point-of-view file already contains it; Natural
+Earth has no one shape for the whole territory, calling only the Polisario's
+eastern strip "W. Sahara"). A `zone` with none of `land`, `admin1` or `countries` stays a marker —
 Nagorno-Karabakh has no polygon anywhere. Patches may nest (Afar lies inside the
 Horn), which is why the land layer is cleaned with `allow-overlaps`: plain
 `-clean` handed the overlap to the Horn and erased Afar. It is simplified by an

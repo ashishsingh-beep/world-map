@@ -26,6 +26,18 @@
       "tier": 1
     },
     {
+      "id": "mar-western-sahara",
+      "name": "Western Sahara",
+      "aliases": [],
+      "type": "territory",
+      "country": "MAR",
+      "south": 27.6667,
+      "point": [-12.9, 24.2],
+      "significance": "Disputed former Spanish colony on the Atlantic, mostly held by Morocco since 1975 and claimed by the Polisario Front's Sahrawi Republic — rich in phosphates at Bou Craa",
+      "notes": ["Morocco administers about four-fifths of it, west of its sand wall (the Berm); the Polisario Front holds the desert strip to the east", "On the UN's list of non-self-governing territories"],
+      "tier": 1
+    },
+    {
       "id": "egy-sinai",
       "admin1": ["Shamal Sina'", "Janub Sina'"],
       "spanKm": 380,

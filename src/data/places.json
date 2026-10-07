@@ -5,7 +5,7 @@
       "title": "Africa",
       "section": "places",
       "atlas": "world",
-      "count": 60
+      "count": 61
     },
     {
       "name": "Asia",
@@ -96,6 +96,28 @@
       "continent": "Africa",
       "section": "places",
       "atlas": "world"
+    },
+    {
+      "id": "mar-western-sahara",
+      "name": "Western Sahara",
+      "aliases": [],
+      "type": "territory",
+      "country": "MAR",
+      "south": 27.6667,
+      "point": [
+        -12.9,
+        24.2
+      ],
+      "significance": "Disputed former Spanish colony on the Atlantic, mostly held by Morocco since 1975 and claimed by the Polisario Front's Sahrawi Republic — rich in phosphates at Bou Craa",
+      "notes": [
+        "Morocco administers about four-fifths of it, west of its sand wall (the Berm); the Polisario Front holds the desert strip to the east",
+        "On the UN's list of non-self-governing territories"
+      ],
+      "tier": 1,
+      "continent": "Africa",
+      "section": "places",
+      "atlas": "world",
+      "clip": true
     },
     {
       "id": "egy-sinai",

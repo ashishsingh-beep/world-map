@@ -115,8 +115,8 @@ const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
  */
 const isLandArea = (p) =>
   LAND_AREA_TYPES.has(p.type) ||
-  (['zone', 'state', 'island'].includes(p.type) &&
-    Boolean(p.land?.length || p.admin1?.length || p.countries?.length))
+  (['zone', 'state', 'island', 'territory'].includes(p.type) &&
+    Boolean(p.land?.length || p.admin1?.length || p.countries?.length || p.south != null))
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
 const loose = (s) =>
@@ -1157,7 +1157,7 @@ for (const p of places) {
       parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
     }
   }
-  for (const name of p.admin1 || p.countries ? (p.land ?? []) : (p.land ?? [p.name])) {
+  for (const name of p.admin1 || p.countries || p.south != null ? (p.land ?? []) : (p.land ?? [p.name])) {
     const f = (p.type === 'constituent' ? unitByName : landByName).get(loose(name))
     if (!f) {
       errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : 'land polygon'} named "${name}"`)
@@ -1165,6 +1165,25 @@ for (const p of places) {
     }
     const g = f.geometry
     parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
+  }
+  /**
+   * A territory whose border with the rest of its country is a parallel:
+   * Western Sahara is everything Morocco holds south of 27°40′N. Natural Earth
+   * has no one shape for it — it files the Moroccan-held west inside Morocco
+   * and calls only the Polisario's eastern strip "W. Sahara" — so it is taken
+   * as the country's own land below that line, and so lies exactly inside the
+   * Morocco the map draws.
+   */
+  if (p.south != null) {
+    const country = picked.get(p.country)
+    if (!country) errors.push(`${p.id}: "south" needs a country`)
+    else {
+      const [[w, s], [e]] = geoBounds(country)
+      const box = [[w - 1, s - 1], [w - 1, p.south], [e + 1, p.south], [e + 1, s - 1], [w - 1, s - 1]]
+      const first = country.geometry.type === 'MultiPolygon' ? country.geometry.coordinates[0][0] : country.geometry.coordinates[0]
+      parts.push([ringWinding(box) === ringWinding(first) ? box : box.reverse()])
+      p.clip = true
+    }
   }
   if (!parts.length) {
     noLandPolygon.push(p.name)
