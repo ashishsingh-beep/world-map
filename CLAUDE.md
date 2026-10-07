@@ -171,6 +171,12 @@ City…). A clue word that starts with a name word of five letters or more count
 as naming it; a four-letter one (Suez, Java) has to appear whole, so "Dhar" does
 not catch Dharamshala.
 
+The one exception is a capital named for its own country — Mexico City, Kuwait
+City, Djibouti City, Luxembourg City, Singapore City, Guatemala City, Panama
+City, San Salvador, Tunis. The country already gives it away, so a riddle about
+it is wasted effort: its clue is exactly "Capital of Mexico", which the build
+requires, and whatever else is worth knowing about it sits in its `notes`.
+
 **A country does not belong in the places section, even as a fact.** A places
 round is about specific sites inside a country — its capital, a port, an
 island — never the country itself; the World Map's country round is already

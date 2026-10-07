@@ -257,8 +257,8 @@
       "type": "capital",
       "country": "MEX",
       "point": [-99.13, 19.43],
-      "significance": "Capital of the most populous Spanish-speaking country, built on the drained lakebed of Aztec Tenochtitlan",
-      "notes": [],
+      "significance": "Capital of Mexico",
+      "notes": ["Built on the drained lakebed of Aztec Tenochtitlan; Mexico is the most populous Spanish-speaking country"],
       "tier": 1
     },
     {
@@ -279,8 +279,8 @@
       "type": "capital",
       "country": "GTM",
       "point": [-90.51, 14.63],
-      "significance": "Capital and largest city of Central America's most populous country",
-      "notes": [],
+      "significance": "Capital of Guatemala",
+      "notes": ["Largest city of Central America; Guatemala is its most populous country"],
       "tier": 1
     },
     {
@@ -290,8 +290,8 @@
       "type": "capital",
       "country": "SLV",
       "point": [-89.19, 13.69],
-      "significance": "Capital of Central America's smallest and most densely populated country, at the foot of a volcano",
-      "notes": [],
+      "significance": "Capital of El Salvador",
+      "notes": ["At the foot of a volcano; El Salvador is Central America's smallest and most densely populated country"],
       "tier": 1
     },
     {
@@ -334,8 +334,8 @@
       "type": "capital",
       "country": "PAN",
       "point": [-79.52, 8.98],
-      "significance": "Capital at the Pacific end of the isthmus canal, the banking hub of Central America",
-      "notes": [],
+      "significance": "Capital of Panama",
+      "notes": ["At the Pacific end of the canal, the banking hub of Central America"],
       "tier": 1
     },
     {

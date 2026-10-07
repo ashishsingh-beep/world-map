@@ -100,8 +100,8 @@
       "type": "capital",
       "country": "TUN",
       "point": [10.1815, 36.8065],
-      "significance": "Capital of Africa's northernmost country, on a Mediterranean lagoon beside the ruins of Carthage",
-      "notes": [],
+      "significance": "Capital of Tunisia",
+      "notes": ["On a Mediterranean lagoon beside the ruins of Carthage; Tunisia is Africa's northernmost country"],
       "tier": 1
     },
     {
@@ -292,8 +292,8 @@
       "type": "capital",
       "country": "DJI",
       "point": [43.1456, 11.5721],
-      "significance": "Capital and port of the small state guarding the Bab-el-Mandeb — host to US, French and Chinese military bases, and Ethiopia's main outlet to the sea",
-      "notes": ["A port"],
+      "significance": "Capital of Djibouti",
+      "notes": ["Port guarding the Bab-el-Mandeb — host to US, French and Chinese military bases, and Ethiopia's main outlet to the sea"],
       "tier": 1
     },
     {

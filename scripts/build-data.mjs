@@ -689,6 +689,14 @@ const wordsOf = (text) =>
  * Words a name shares with a thousand others and that give nothing away:
  * "the Gulf of", "Peninsula", "City". Everything else in a name is the answer.
  */
+/** Whether a name shares a distinctive word with a country's, by the giveaway rule below. */
+const namesCountry = (name, country) => {
+  const theirs = wordsOf(country)
+  return wordsOf(name).some(
+    (w) => w.length >= 4 && !GENERIC_WORDS.has(w) && theirs.some((x) => (w.length >= 5 ? x.startsWith(w) : x === w))
+  )
+}
+
 const GENERIC_WORDS = new Set(
   `the of and city peninsula island islands isle sea gulf bay strait straits cape coast
   region canal lake river mount mountains range ocean north south east west northern
@@ -747,7 +755,16 @@ for (const file of syllabusFiles) {
     // word that starts with one counts as naming it — from five letters, so
     // that "Dhar" does not catch Dharamshala nor "Isla" catch island; a
     // four-letter word (Suez, Java) has to appear whole.
-    const said = wordsOf(p.significance ?? '')
+    // The one exception: a capital that carries its country's name — Mexico
+    // City, Kuwait City, Tunis — gives itself away in the country anyway, so
+    // its clue is simply "Capital of Mexico", and nothing more; what else is
+    // worth knowing about it goes in its notes.
+    const country = p.type === 'capital' && !p.subnational ? meta[p.country]?.name : null
+    const namedForCountry = Boolean(country && namesCountry(p.name, country))
+    if (namedForCountry && p.significance !== `Capital of ${country}`) {
+      errors.push(`${where(p.id)}: a capital named for its country is simply "Capital of ${country}"`)
+    }
+    const said = namedForCountry ? [] : wordsOf(p.significance ?? '')
     for (const w of [p.name, ...(p.aliases ?? [])].flatMap(wordsOf)) {
       if (w.length < 4 || GENERIC_WORDS.has(w)) continue
       if (said.some((x) => (w.length >= 5 ? x.startsWith(w) : x === w))) {

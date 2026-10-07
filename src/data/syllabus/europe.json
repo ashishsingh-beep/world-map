@@ -349,8 +349,8 @@
       "type": "capital",
       "country": "LUX",
       "point": [6.1319, 49.6116],
-      "significance": "Capital of the Grand Duchy and a seat of EU institutions — the Court of Justice and the European Investment Bank",
-      "notes": [],
+      "significance": "Capital of Luxembourg",
+      "notes": ["A seat of EU institutions — the Court of Justice and the European Investment Bank"],
       "tier": 1
     },
     {

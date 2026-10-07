@@ -219,8 +219,8 @@
       "type": "capital",
       "country": "SGP",
       "point": [103.8198, 1.3521],
-      "significance": "Island city-state off the southern tip of West Malaysia",
-      "notes": ["A city-state — its capital is the country itself"],
+      "significance": "Capital of Singapore",
+      "notes": ["Island city-state off the southern tip of West Malaysia", "A city-state — its capital is the country itself"],
       "tier": 1
     },
     {
@@ -1131,8 +1131,8 @@
       "type": "capital",
       "country": "KWT",
       "point": [47.9774, 29.3759],
-      "significance": "Capital of the oil-rich emirate at the head of the Persian Gulf, between Iraq and Saudi Arabia",
-      "notes": [],
+      "significance": "Capital of Kuwait",
+      "notes": ["An oil-rich emirate at the head of the Persian Gulf, between Iraq and Saudi Arabia"],
       "tier": 1
     },
     {

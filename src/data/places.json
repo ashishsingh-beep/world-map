@@ -228,8 +228,10 @@
         10.1815,
         36.8065
       ],
-      "significance": "Capital of Africa's northernmost country, on a Mediterranean lagoon beside the ruins of Carthage",
-      "notes": [],
+      "significance": "Capital of Tunisia",
+      "notes": [
+        "On a Mediterranean lagoon beside the ruins of Carthage; Tunisia is Africa's northernmost country"
+      ],
       "tier": 1,
       "continent": "Africa",
       "section": "places",
@@ -543,9 +545,9 @@
         43.1456,
         11.5721
       ],
-      "significance": "Capital and port of the small state guarding the Bab-el-Mandeb — host to US, French and Chinese military bases, and Ethiopia's main outlet to the sea",
+      "significance": "Capital of Djibouti",
       "notes": [
-        "A port"
+        "Port guarding the Bab-el-Mandeb — host to US, French and Chinese military bases, and Ethiopia's main outlet to the sea"
       ],
       "tier": 1,
       "continent": "Africa",
@@ -1677,8 +1679,9 @@
         103.8198,
         1.3521
       ],
-      "significance": "Island city-state off the southern tip of West Malaysia",
+      "significance": "Capital of Singapore",
       "notes": [
+        "Island city-state off the southern tip of West Malaysia",
         "A city-state — its capital is the country itself"
       ],
       "tier": 1,
@@ -3122,8 +3125,10 @@
         47.9774,
         29.3759
       ],
-      "significance": "Capital of the oil-rich emirate at the head of the Persian Gulf, between Iraq and Saudi Arabia",
-      "notes": [],
+      "significance": "Capital of Kuwait",
+      "notes": [
+        "An oil-rich emirate at the head of the Persian Gulf, between Iraq and Saudi Arabia"
+      ],
       "tier": 1,
       "continent": "Asia",
       "section": "places",
@@ -3988,8 +3993,10 @@
         6.1319,
         49.6116
       ],
-      "significance": "Capital of the Grand Duchy and a seat of EU institutions — the Court of Justice and the European Investment Bank",
-      "notes": [],
+      "significance": "Capital of Luxembourg",
+      "notes": [
+        "A seat of EU institutions — the Court of Justice and the European Investment Bank"
+      ],
       "tier": 1,
       "continent": "Europe",
       "section": "places",
@@ -6209,8 +6216,10 @@
         -99.13,
         19.43
       ],
-      "significance": "Capital of the most populous Spanish-speaking country, built on the drained lakebed of Aztec Tenochtitlan",
-      "notes": [],
+      "significance": "Capital of Mexico",
+      "notes": [
+        "Built on the drained lakebed of Aztec Tenochtitlan; Mexico is the most populous Spanish-speaking country"
+      ],
       "tier": 1,
       "continent": "North America",
       "section": "places",
@@ -6243,8 +6252,10 @@
         -90.51,
         14.63
       ],
-      "significance": "Capital and largest city of Central America's most populous country",
-      "notes": [],
+      "significance": "Capital of Guatemala",
+      "notes": [
+        "Largest city of Central America; Guatemala is its most populous country"
+      ],
       "tier": 1,
       "continent": "North America",
       "section": "places",
@@ -6260,8 +6271,10 @@
         -89.19,
         13.69
       ],
-      "significance": "Capital of Central America's smallest and most densely populated country, at the foot of a volcano",
-      "notes": [],
+      "significance": "Capital of El Salvador",
+      "notes": [
+        "At the foot of a volcano; El Salvador is Central America's smallest and most densely populated country"
+      ],
       "tier": 1,
       "continent": "North America",
       "section": "places",
@@ -6330,8 +6343,10 @@
         -79.52,
         8.98
       ],
-      "significance": "Capital at the Pacific end of the isthmus canal, the banking hub of Central America",
-      "notes": [],
+      "significance": "Capital of Panama",
+      "notes": [
+        "At the Pacific end of the canal, the banking hub of Central America"
+      ],
       "tier": 1,
       "continent": "North America",
       "section": "places",
