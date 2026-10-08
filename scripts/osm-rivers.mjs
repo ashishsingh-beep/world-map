@@ -49,11 +49,12 @@ function waysFrom(elements, keep) {
  * way: every way reachable from it by shared nodes that carries one of the
  * river's own names — how a river with no relation is gathered.
  */
-export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], allRoles = false) {
+export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], { allRoles = false, canal = false } = {}) {
   const key =
     (osm.startsWith('R') ? osm : `${osm}-${names.join('+')}${box ? `-${box.flat().join(',')}` : ''}`) +
     (extra.length ? `-${extra.join('+')}` : '') +
-    (allRoles ? '-all' : '')
+    (allRoles ? '-all' : '') +
+    (canal ? '-canal' : '')
   const cache = resolve(cacheDir, `osm-river-${key.replace(/[^A-Za-z0-9+,.-]/g, '_')}.json`)
   if (existsSync(cache)) return JSON.parse(readFileSync(cache, 'utf8'))
   let ways
@@ -71,7 +72,10 @@ export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], all
     ways = waysFrom(full.elements, (w) => wanted.has(w.id))
   } else {
     const allowed = new Set(names.map((n) => n.toLowerCase()))
-    const named = (w) => w.tags && /^(river|stream)$/.test(w.tags.waterway) && allowed.has((w.tags.name ?? '').toLowerCase())
+    // `canal`: a river OSM has tagged as a canal along its length — the
+    // Thirumanimuthar through Salem and Namakkal — is walked through those too.
+    const kinds = canal ? /^(river|stream|canal)$/ : /^(river|stream)$/
+    const named = (w) => w.tags && kinds.test(w.tags.waterway) && allowed.has((w.tags.name ?? '').toLowerCase())
     const inside = (way) =>
       !box || way.coords.every(([x, y]) => x >= box[0][0] && x <= box[1][0] && y >= box[0][1] && y <= box[1][1])
     const seen = new Map()

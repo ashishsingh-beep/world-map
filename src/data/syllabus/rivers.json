@@ -3,7 +3,7 @@
   "title": "Rivers",
   "section": "rivers",
   "atlas": "india",
-  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi and Krishna maps",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna and Kaveri maps",
   "places": [
     {
       "id": "riv-godavari",
@@ -886,6 +886,236 @@
       "osmNames": [
         "Munneru River",
         "Munneru"
+      ]
+    },
+    {
+      "id": "riv-kaveri",
+      "name": "Kaveri",
+      "aliases": [
+        "Cauvery"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Kaveri",
+      "osm": "R2704746",
+      "source": {
+        "name": "Talakaveri",
+        "aliases": [
+          "Brahmagiri"
+        ],
+        "point": [
+          75.49,
+          12.386
+        ],
+        "significance": "Where the Kaveri rises, a sacred spring high in the hills of Kodagu on the Western Ghats"
+      },
+      "significance": "The south's most disputed river, shared by Karnataka and Tamil Nadu: dammed at Krishnaraja Sagar and Mettur, falling at Shivanasamudra and Hogenakkal, and spreading into the Thanjavur delta",
+      "notes": [
+        "Rises at Talakaveri in the Brahmagiri hills of Kodagu (Karnataka)",
+        "Flows through Karnataka and Tamil Nadu to the Bay of Bengal"
+      ],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-hemavati",
+      "name": "Hemavati",
+      "aliases": [
+        "Hemavathi"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R3587278",
+      "joins": "riv-kaveri",
+      "bank": "left",
+      "significance": "Rises at Ballalarayanadurga in the Western Ghats of Chikkamagaluru, is dammed at Gorur, and joins near Krishnarajapete above the great reservoir",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-shimsha",
+      "name": "Shimsha",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R2889965",
+      "joins": "riv-kaveri",
+      "bank": "left",
+      "significance": "Rises in Tumakuru's Devarayanadurga hills, flows past Maddur, and drops through a hydel cascade beside Shivanasamudra to join",
+      "notes": [],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-arkavati",
+      "name": "Arkavati",
+      "aliases": [
+        "Arkavathi"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R4486881",
+      "joins": "riv-kaveri",
+      "bank": "left",
+      "significance": "Bengaluru's old water supply, dammed at Hesaraghatta and Thippagondanahalli, joining at Sangama near Mekedatu",
+      "notes": [],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-lakshmantirtha",
+      "name": "Lakshmantirtha",
+      "aliases": [
+        "Laxmantirth",
+        "Lakshmana Tirtha",
+        "Lakshmanatirtha"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R3587279",
+      "joins": "riv-kaveri",
+      "bank": "right",
+      "significance": "Tumbles over the Iruppu Falls in southern Kodagu and joins at the Krishnaraja Sagar reservoir",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kabini",
+      "name": "Kabini",
+      "aliases": [
+        "Kabani"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R3628542",
+      "joins": "riv-kaveri",
+      "bank": "right",
+      "significance": "Rises in Kerala's Wayanad and is dammed at Beechanahalli between the Nagarhole and Bandipur forests, joining at Tirumakudalu Narasipura",
+      "notes": [],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-suvarnavati",
+      "name": "Suvarnavati",
+      "aliases": [
+        "Suvarnavathi",
+        "Suwarnavati"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R5874107",
+      "joins": "riv-kaveri",
+      "bank": "right",
+      "significance": "Chamarajanagar district's river, flowing north past Yelandur to join near Kollegal",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-bhavani",
+      "name": "Bhavani",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "W25679848",
+      "joins": "riv-kaveri",
+      "bank": "right",
+      "significance": "Rises in the Nilgiris beside Kerala's Silent Valley, is held back by one of Asia's largest earthen dams, and joins at Kooduthurai in Erode",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Bhavani",
+        "Bhavani River"
+      ]
+    },
+    {
+      "id": "riv-noyyal",
+      "name": "Noyyal",
+      "aliases": [
+        "Noyal"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "W63609216",
+      "joins": "riv-kaveri",
+      "bank": "right",
+      "significance": "Coimbatore's river, and Tiruppur's — dyed by the knitwear town's factories — joining near Kodumudi",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Noyyal",
+        "Noyyal River"
+      ]
+    },
+    {
+      "id": "riv-amaravati",
+      "name": "Amaravati",
+      "aliases": [
+        "Amravati",
+        "Amaravathi"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "R11903137",
+      "joins": "riv-kaveri",
+      "bank": "right",
+      "significance": "Rises in the Anaimalai hills, flows past Dharapuram, and joins at Karur",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-thirumanimuthar",
+      "name": "Thirumanimuthar",
+      "aliases": [
+        "Thirumanimutharu",
+        "Tirumanimuthar"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Kaveri",
+      "osm": "W75502679",
+      "joins": "riv-kaveri",
+      "bank": "left",
+      "significance": "Rises in Salem's Shevaroy hills and drains the city before joining near Paramathi Velur in Namakkal",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Thirumanimuthar",
+        "Thirumanimuthar River",
+        "Thirumanimutharu"
+      ],
+      "osmCanal": true,
+      "osmExtra": [
+        "W876239827",
+        "W75502690",
+        "W1120033239",
+        "W1109082021",
+        "W1109082020",
+        "W1109082012",
+        "W1109082011",
+        "W1109082040",
+        "W1109082044",
+        "W1109082048"
       ]
     }
   ],

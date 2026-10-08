@@ -419,7 +419,7 @@ because the notes' map draws it so; its note says the summer upwelling is cold.
 
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
-Godavari, Mahanadi and Krishna systems from the notes — each with exactly the
+Godavari, Mahanadi, Krishna and Kaveri systems from the notes — each with exactly the
 tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
@@ -433,7 +433,10 @@ tagged plain "Godavari"), with `osmExtra` ways for a stretch left unnamed (the
 Kinnarsani above its dam) or left out of a relation (the Nira above Vir dam).
 A relation is read by its `main_stream` members, unless `osmAllRoles` says
 those cover only a stretch — the Malaprabha tags two ways of nineteen — and
-then by every member but its side streams. The pieces are joined on shared nodes, gaps under
+then by every member but its side streams — the Kaveri's own main stream
+stops at the Grand Anicut, 100km short of the sea at Poompuhar. A river OSM
+tags as a canal along its length, the Thirumanimuthar through Salem, sets
+`osmCanal` so its name walk takes canal ways too. The pieces are joined on shared nodes, gaps under
 40km bridged, and the course is the shortest path between the ends, so a
 braided stretch gives one channel. Then held to the notes: a main river must
 rise within 30km of its authored `source` (its marker is moved to where the
