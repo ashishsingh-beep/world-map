@@ -388,7 +388,7 @@ a repeated marine name keeps its largest polygon.
 that is neither a point nor a polygon, so they are drawn as a band along a
 ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
-range emits no marker and no second label. A peak is a little snow-capped mountain (`peakGlyph` in `MapCanvas`: slate-blue faces, white snow, green foothills and pines), and so is a river's source in Learn; in a round its faces take the quiz colour and the snow stays.
+range emits no marker and no second label. A peak is a little snow-capped mountain (`PeakGlyph` in `MapCanvas`, `PeakSwatch` in `src/ui/bits.tsx` for the legend: slate-blue faces, white snow, green foothills and pines), and so is a river's origin; in a round its faces take the quiz colour and the snow stays.
 
 **An ocean current is an arrow.** The third World Map category, Phenomena,
 starts with the currents (`src/data/syllabus/currents.json`, section
@@ -438,6 +438,16 @@ where it leaves its parent and must reach the sea, or a branch that does (the
 Kathajodi feeds the Devi); `endsAt` stops a main river early — the Godavari at
 the Dowleswaram barrage, where it divides into the Gautami and the Vasishta.
 Simplified to 150m and stored as `line` in `places.json`.
+
+Where a main river rises is a question too, beside its tributaries: "Find the
+origin: Trambakeshwar", or its marker painted and the name typed. It is
+authored on the river as `source` — name, aliases (Trimbakeshwar), the notes'
+point and a significance — and the build makes it a place of its own, `type:
+"origin"` with `river` naming its river, once the course has moved the point to
+where the line begins; authored there, the two cannot drift apart. It is drawn
+as a peak's mountain, filtered with its river system on setup, and has its own
+Origins chip in Learn. The Pin prompt says only "origin", never whose: the
+river is drawn on the map, and naming it would make the tap a give-away.
 
 Two rivers the notes do not name are there to join the network up: the
 Pranhita (the Wardha and Wainganga combined, into the Godavari) and the

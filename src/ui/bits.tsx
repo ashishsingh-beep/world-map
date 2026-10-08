@@ -1,4 +1,4 @@
-import { BELT_BAND, CURRENT_INK, RIVER_INK, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
+import { BELT_BAND, CURRENT_INK, PeakGlyph, RIVER_INK, SHAPE_FILLS, type Belt } from '../map/MapCanvas'
 import type { PlaceKind } from '../data/places'
 import type { ReactNode } from 'react'
 
@@ -184,6 +184,15 @@ export function RiverSwatch({ role }: { role: 'main' | 'tributary' | 'distributa
     <svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true" className="shrink-0">
       <path d={role === 'distributary' ? 'M1 6 H18' : 'M1 6 H25'} stroke={line} strokeWidth={width} strokeDasharray={dash ? '4 2.5' : undefined} strokeLinecap={dash ? 'butt' : 'round'} />
       {role === 'distributary' && <path d="M25 6 L17 1.8 L19 6 L17 10.2 Z" fill={line} />}
+    </svg>
+  )
+}
+
+/** The mountain a peak or a river's origin is drawn as, for the Learn legend. */
+export function PeakSwatch() {
+  return (
+    <svg width="20" height="16" viewBox="-10 -8.5 20 16" aria-hidden="true" className="shrink-0">
+      <PeakGlyph cx={0} cy={0} r={5.6} state="idle" />
     </svg>
   )
 }

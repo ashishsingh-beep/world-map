@@ -15,7 +15,7 @@ import {
 import type { Mode, QuizSnapshot } from './game/useQuiz'
 import { PlayScreen } from './screens/PlayScreen'
 import { LearnScreen } from './screens/LearnScreen'
-import { countryClue, placeKindOf, placeOf, type PlaceKind } from './data/places'
+import { countryClue, placeKindOf, placeOf, type Place, type PlaceKind } from './data/places'
 import { meta } from './data/countries'
 import {
   Button,
@@ -40,6 +40,13 @@ import {
   type QuestionCount,
   type SavedRound,
 } from './app/storage'
+
+/** A rivers round's size, its rivers and the origins asked beside them counted apart. */
+const riverTally = (asked: Place[]) => {
+  const origins = asked.filter((p) => p.type === 'origin').length
+  const rivers = asked.length - origins
+  return `${rivers} river${rivers === 1 ? '' : 's'}${origins ? ` · ${origins} origin${origins === 1 ? '' : 's'}` : ''}`
+}
 
 export default function App() {
   const [route, navigate] = useRoute()
@@ -268,7 +275,9 @@ export default function App() {
               {isPolitical
                 ? `${askIds.length} question${askIds.length === 1 ? '' : 's'} · ${round.title}`
                 : round.places
-                  ? `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? 'currents' : isRivers ? 'rivers' : 'places'}`
+                  ? isRivers
+                    ? riverTally(asked)
+                    : `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? 'currents' : 'places'}`
                   : `${round.askable.length} countries`}
             </p>
 

@@ -198,7 +198,7 @@ const PEAK_INK = {
  * the point. In a round the faces take the quiz colour and the snow stays, so
  * right, wrong and missed read as plainly as on any other marker.
  */
-function peakGlyph(cx: number, cy: number, r: number, state: CountryState) {
+export function PeakGlyph({ cx, cy, r, state }: { cx: number; cy: number; r: number; state: CountryState }) {
   const d = (pts: [number, number][]) =>
     `M ${pts.map(([x, y]) => `${cx + x * r} ${cy + y * r}`).join(' L ')} Z`
   const idle = state === 'idle'
@@ -239,7 +239,7 @@ export const SHAPE_FILLS: Record<MarkerShape, string> = {
   sea: '#1d4ed8',
   strait: '#f97316',
   canal: '#a855f7',
-  // A peak is a snow-capped mountain (see peakGlyph); this is its main face.
+  // A peak is a snow-capped mountain (see PeakGlyph); this is its main face.
   peak: PEAK_INK.face,
 }
 
@@ -1208,7 +1208,7 @@ export function MapCanvas({
                     />
                   </g>
                 ) : shape === 'peak' ? (
-                  peakGlyph(cx, cy, r, p.state)
+                  <PeakGlyph cx={cx} cy={cy} r={r} state={p.state} />
                 ) : shape === 'canal' ? (
                   <rect
                     x={cx - r * 0.85}

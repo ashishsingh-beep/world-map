@@ -128,6 +128,8 @@ function buildQuestions(round: Round): Question[] {
 export function shapeOf(q: { place: Place | null }): MarkerShape {
   const t = q.place?.type
   if (t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'peak') return t
+  // A river's origin is where it comes down from the hills: the mountain too.
+  if (t === 'origin') return 'peak'
   return t === 'capital' ? 'capital' : 'dot'
 }
 
@@ -410,9 +412,11 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
       // this place than to any other in the round, or one tap between Santos
       // and São Paulo would answer both.
       const px = screenDistance(current)
+      // Points only: a range's or a river's own point is just where its label
+      // sits, and a tap near the label is no answer to anything.
       const nearestOnScreen = queue.reduce((best, q) =>
-        !q.iso && screenDistance(q) < screenDistance(best) ? q : best
-      )
+        !q.iso && !q.place?.line && screenDistance(q) < screenDistance(best) ? q : best
+      , current)
       const byScreen = px <= PIN_TOLERANCE_PX && nearestOnScreen.id === current.id
 
       /**

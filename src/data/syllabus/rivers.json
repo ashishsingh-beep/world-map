@@ -16,10 +16,15 @@
       "osm": "R2826093",
       "source": {
         "name": "Trambakeshwar",
+        "aliases": [
+          "Trimbakeshwar",
+          "Trimbak"
+        ],
         "point": [
           73.53,
           19.93
-        ]
+        ],
+        "significance": "Where the Godavari rises, in the Brahmagiri hills of the Western Ghats near Nashik"
       },
       "significance": "The longest river of the peninsula — the 'Dakshin Ganga' — rising in the Western Ghats near Nashik and crossing the whole Deccan to the Bay of Bengal",
       "notes": [
@@ -406,10 +411,12 @@
       "osm": "R7517721",
       "source": {
         "name": "Sihawa",
+        "aliases": [],
         "point": [
           81.93,
           20.3
-        ]
+        ],
+        "significance": "Where the Mahanadi rises, in the hills of Chhattisgarh's Dhamtari district"
       },
       "significance": "Rises near Sihawa in Chhattisgarh's Dhamtari district and is held back at Hirakud — one of the world's longest earthen dams — before its delta at Cuttack",
       "notes": [

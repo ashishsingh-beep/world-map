@@ -350,7 +350,9 @@ export function PlayScreen({
                     ? 'Type the current'
                     : q?.place?.type === 'river'
                       ? 'Type the river'
-                      : isMixed
+                      : q?.place?.type === 'origin'
+                        ? 'Type the origin'
+                        : isMixed
                     ? asksCountry
                       ? 'Type the country'
                       : `Type the ${q?.place ? TYPE_LABEL[q.place.type] : 'place'}`

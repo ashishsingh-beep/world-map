@@ -15,7 +15,7 @@ import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/Map
 import { areaOf } from '../data/areas'
 import { screenDistanceToLine, shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { BELTS, BeltSwatch, CurrentSwatch, KindSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 
@@ -38,7 +38,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     region: true,
   })
   /** Which rivers are drawn, by role and by system. */
-  const [rolesShown, setRolesShown] = useState({ main: true, tributary: true, distributary: true })
+  const [rolesShown, setRolesShown] = useState({ main: true, tributary: true, distributary: true, origin: true })
   const [basinsHidden, setBasinsHidden] = useState<string[]>([])
   /** Which currents are drawn: the warm ones, the cold ones, or both. */
   const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
@@ -77,6 +77,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         if (isPlacesSection) return placeKindsShown[placeKindOf(p.type)]
         if (p.type === 'current') return p.temp ? tempsShown[p.temp] : true
         if (p.type === 'river') return (!p.role || rolesShown[p.role]) && !basinsHidden.includes(p.basin ?? '')
+        if (p.type === 'origin') return rolesShown.origin && !basinsHidden.includes(p.basin ?? '')
         return true
       }),
     [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden]
@@ -100,20 +101,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           // An ocean or sea is drawn as its own extent; the point only carries
           // the label. Everything else is still a marker.
           marker: !areaOf(p.id),
-        }))
-        // Where a main river rises, as the notes mark it: a peak at the head
-        // of the line, named with the river.
-        .concat(
-          visible
-            .filter((p) => p.type === 'river' && p.source)
-            .map((p) => ({
-              id: p.id,
-              point: p.source!.point,
-              state: selected === p.id ? 'target' : 'idle',
-              shape: 'peak' as const,
-              label: showAll || selected === p.id ? p.source!.name : undefined,
-            }))
-        ),
+        })),
     [visible, selected, showAll]
   )
 
@@ -305,6 +293,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 ['main', 'Main rivers'],
                 ['tributary', 'Tributaries'],
                 ['distributary', 'Distributaries'],
+                ['origin', 'Origins'],
               ] as const
             ).map(([role, label]) => (
               <label
@@ -320,11 +309,11 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   className="h-3.5 w-3.5 accent-blue-600"
                 />
                 <span className={rolesShown[role] ? '' : 'opacity-40'}>
-                  <RiverSwatch role={role} />
+                  {role === 'origin' ? <PeakSwatch /> : <RiverSwatch role={role} />}
                 </span>
                 {label}
                 <span className="font-semibold text-slate-400">
-                  {roundPlaces.filter((p) => p.role === role).length}
+                  {roundPlaces.filter((p) => (role === 'origin' ? p.type === 'origin' : p.role === role)).length}
                 </span>
               </label>
             ))}
@@ -545,6 +534,13 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
             <p className="mt-1.5 text-sm leading-snug font-bold text-slate-800">
               {place.significance}
             </p>
+
+            {place.type === 'origin' && place.river && (
+              <p className="mt-1.5 text-xs font-bold text-slate-700">
+                <span className="text-slate-400">SOURCE OF </span>
+                the {placeOf(place.river).name}
+              </p>
+            )}
 
             {/* Where it sits in its system — the river it feeds, or leaves. */}
             {place.type === 'river' && (

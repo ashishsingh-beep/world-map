@@ -39,6 +39,8 @@ export type PlaceType =
   | 'current'
   /** A river of the Indian map — a main river, a tributary or a distributary — from OSM. */
   | 'river'
+  /** Where a main river rises — Trambakeshwar, Sihawa — made by the build from the river's `source`. */
+  | 'origin'
 
 export interface Place {
   id: string
@@ -104,6 +106,8 @@ export interface Place {
   bank?: 'left' | 'right'
   /** Where a main river rises, as the notes mark it. */
   source?: { name: string; point: [number, number] }
+  /** The river an origin is the source of. */
+  river?: string
   /** A river's length along its drawn course, in km, measured by the build. */
   lengthKm?: number
   /** A current's temperature: what Name mode asks alongside its name. */
@@ -243,6 +247,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   strait: 'strait',
   current: 'ocean current',
   river: 'river',
+  origin: 'origin',
 }
 
 /** What a river is called on a prompt or a card: its role, which is the point. */

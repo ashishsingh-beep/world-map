@@ -951,6 +951,8 @@ const PLACE_TYPES = new Set([
   'current',
   // Indian map: a river — main stem, tributary or distributary — from OSM
   'river',
+  // …and where a main river rises, at the head of its course
+  'origin',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal', 'reef'])
@@ -1191,6 +1193,29 @@ for (const file of syllabusFiles) {
   const where = (id) => `${file}:${id}`
   const rivers = doc.places.filter((p) => p.type === 'river')
   if (rivers.length) courseRivers(rivers, where)
+  /**
+   * A main river's origin is a question of its own — "Find the origin:
+   * Trambakeshwar" — so it is a place, made here from the river's `source`
+   * once the course has put it where the line begins. Authored on the river,
+   * not beside it, so the two can never drift apart.
+   */
+  for (const r of rivers) {
+    if (r.role !== 'main' || !r.source) continue
+    if (!r.source.significance) errors.push(`${where(r.id)}: its source needs a significance, to be asked about`)
+    doc.places.push({
+      id: `origin-${r.id.replace(/^riv-/, '')}`,
+      name: r.source.name,
+      aliases: r.source.aliases ?? [],
+      type: 'origin',
+      country: r.country,
+      basin: r.basin,
+      river: r.id,
+      point: r.source.point,
+      significance: r.source.significance,
+      notes: [],
+      tier: r.tier,
+    })
+  }
   continents.push({
     name: doc.continent,
     title: doc.title ?? doc.continent,

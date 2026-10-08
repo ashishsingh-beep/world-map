@@ -54,7 +54,7 @@
       "title": "Rivers",
       "section": "rivers",
       "atlas": "india",
-      "count": 30
+      "count": 32
     },
     {
       "name": "World",
@@ -19544,10 +19544,15 @@
       "osm": "R2826093",
       "source": {
         "name": "Trambakeshwar",
+        "aliases": [
+          "Trimbakeshwar",
+          "Trimbak"
+        ],
         "point": [
           73.5322,
           19.9324
-        ]
+        ],
+        "significance": "Where the Godavari rises, in the Brahmagiri hills of the Western Ghats near Nashik"
       },
       "significance": "The longest river of the peninsula — the 'Dakshin Ganga' — rising in the Western Ghats near Nashik and crossing the whole Deccan to the Bay of Bengal",
       "notes": [
@@ -44266,10 +44271,12 @@
       "osm": "R7517721",
       "source": {
         "name": "Sihawa",
+        "aliases": [],
         "point": [
           81.7798,
           20.3063
-        ]
+        ],
+        "significance": "Where the Mahanadi rises, in the hills of Chhattisgarh's Dhamtari district"
       },
       "significance": "Rises near Sihawa in Chhattisgarh's Dhamtari district and is held back at Hirakud — one of the world's longest earthen dams — before its delta at Cuttack",
       "notes": [
@@ -52163,6 +52170,47 @@
         86.1633,
         20.0966
       ],
+      "continent": "Rivers",
+      "section": "rivers",
+      "atlas": "india"
+    },
+    {
+      "id": "origin-godavari",
+      "name": "Trambakeshwar",
+      "aliases": [
+        "Trimbakeshwar",
+        "Trimbak"
+      ],
+      "type": "origin",
+      "country": "IND",
+      "basin": "Godavari",
+      "river": "riv-godavari",
+      "point": [
+        73.5322,
+        19.9324
+      ],
+      "significance": "Where the Godavari rises, in the Brahmagiri hills of the Western Ghats near Nashik",
+      "notes": [],
+      "tier": 1,
+      "continent": "Rivers",
+      "section": "rivers",
+      "atlas": "india"
+    },
+    {
+      "id": "origin-mahanadi",
+      "name": "Sihawa",
+      "aliases": [],
+      "type": "origin",
+      "country": "IND",
+      "basin": "Mahanadi",
+      "river": "riv-mahanadi",
+      "point": [
+        81.7798,
+        20.3063
+      ],
+      "significance": "Where the Mahanadi rises, in the hills of Chhattisgarh's Dhamtari district",
+      "notes": [],
+      "tier": 1,
       "continent": "Rivers",
       "section": "rivers",
       "atlas": "india"
