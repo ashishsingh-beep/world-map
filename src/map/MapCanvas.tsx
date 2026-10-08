@@ -939,10 +939,10 @@ export function MapCanvas({
                     key={`s-${i}`}
                     d={path(f as never) ?? undefined}
                     fill="none"
-                    stroke="#1f2d4d"
-                    strokeOpacity={0.7}
-                    strokeWidth={1}
-                    strokeDasharray="5 2.5"
+                    stroke="#111827"
+                    strokeOpacity={0.95}
+                    strokeWidth={1.2}
+                    strokeDasharray="6 3"
                     strokeLinejoin="round"
                     vectorEffect="non-scaling-stroke"
                     pointerEvents="none"
