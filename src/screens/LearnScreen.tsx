@@ -130,10 +130,27 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     [visible, selected]
   )
 
+  /** Rivers drawn only to join the network up — the Kanhan. Never a card, never labelled. */
+  const context = useMemo(
+    () =>
+      (round.context ?? [])
+        .map(placeOf)
+        .filter((p) => p.line && !basinsHidden.includes(p.basin ?? '')),
+    [round.context, basinsHidden]
+  )
+
   /** Ranges, always drawn: a band is the notation, not a reveal. */
   const bands: MapBand[] = useMemo(
     () =>
-      visible
+      [
+        ...context.map((p): MapBand => ({
+          id: p.id,
+          line: p.line as [number, number][],
+          state: 'idle',
+          river: p.role,
+          quiet: true,
+        })),
+        ...visible
         .filter((p) => p.line)
         .map((p) => ({
           id: p.id,
@@ -152,7 +169,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           labelAt:
             p.role === 'distributary' && !roundPlaces.some((q) => q.joins === p.id) ? 'end' : 'mid',
         })),
-    [visible, selected, showAll, roundPlaces]
+      ] as MapBand[],
+    [visible, selected, showAll, roundPlaces, context]
   )
 
   /** Tricks attached to the place itself or to the country it sits in. */

@@ -32,6 +32,8 @@ export interface Round {
    * one out of the rest would be a choice of two.
    */
   backdrop?: string[]
+  /** Places drawn and never asked — a connecting river, the Kanhan. */
+  context?: string[]
 }
 
 const isosIn = (continent: Continent) =>
@@ -290,7 +292,10 @@ function continentPlaceRound({
   title: string
   atlas?: 'world' | 'india'
 }): Round {
-  const ps = allPlaces.filter((p) => p.continent === name)
+  const all = allPlaces.filter((p) => p.continent === name)
+  // A context place is drawn, never asked: it stays out of the questions.
+  const ps = all.filter((p) => !p.context)
+  const context = all.filter((p) => p.context).map((p) => p.id)
   // Seas and straits span the globe, so their round draws every country, and
   // so do the phenomena — the ocean currents run round all of it.
   const phenomena = ps.length > 0 && ps.every((p) => p.section === 'phenomena')
@@ -323,6 +328,7 @@ function continentPlaceRound({
     render: [...isos, ...renderOnlyIsos],
     askable: [],
     places: ps.map((p) => p.id),
+    ...(context.length ? { context } : {}),
     // Antarctic seas and the Arctic sit outside the standard world box, so the
     // water round stretches it to reach them — an unreachable question is
     // unanswerable, since panning is clamped to the starting view.

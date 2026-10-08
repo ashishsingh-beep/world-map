@@ -94,6 +94,8 @@ export interface MapBand {
    * branches are short and side by side, and named at their mouths they part.
    */
   labelAt?: 'mid' | 'end'
+  /** A connecting river, drawn and never asked: finer and fainter, never labelled. */
+  quiet?: boolean
 }
 
 /**
@@ -1435,7 +1437,7 @@ export function MapCanvas({
     const ink = RIVER_INK[role]
     const idle = b.state === 'idle'
     const colour = idle ? ink.line : b.state === 'target' ? CURRENT_TARGET : FILLS[b.state]
-    const width = b.state === 'target' ? Math.max(ink.width, 3.4) + 1.2 : ink.width
+    const width = b.quiet ? 1.4 : b.state === 'target' ? Math.max(ink.width, 3.4) + 1.2 : ink.width
     const heads: { x: number; y: number; deg: number }[] = []
     if (role === 'distributary') {
       // Two heads, part-way and at the mouth, wherever the zoom puts them.
@@ -1447,7 +1449,7 @@ export function MapCanvas({
       }
     }
     const atEnd = b.labelAt === 'end'
-    const mid = b.label ? projection(b.line[atEnd ? b.line.length - 1 : Math.floor(b.line.length / 2)]) : null
+    const mid = b.label && !b.quiet ? projection(b.line[atEnd ? b.line.length - 1 : Math.floor(b.line.length / 2)]) : null
     // At the mouth, the name sits just beyond it, the way the line runs out:
     // to its side if it runs out east or west, above or below if north or south.
     const before = atEnd ? projection(b.line[Math.max(0, b.line.length - 4)]) : null
@@ -1455,7 +1457,7 @@ export function MapCanvas({
     const dy = before && mid ? mid[1] - before[1] : -1
     const sideways = Math.abs(dx) >= Math.abs(dy)
     return (
-      <g key={`r-${b.id}`} data-river={b.id} pointerEvents="none">
+      <g key={`r-${b.id}`} data-river={b.id} pointerEvents="none" opacity={b.quiet ? 0.6 : 1}>
         <path d={d} fill="none" stroke="#fff" strokeOpacity={0.6} strokeWidth={width + 2} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
         <path
           d={d}

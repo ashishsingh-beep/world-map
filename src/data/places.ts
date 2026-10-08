@@ -94,6 +94,12 @@ export interface Place {
   joins?: string
   /** A river between a tributary and its parent that the set leaves out — the Pench's Kanhan. */
   via?: string
+  /**
+   * Drawn, never asked: a river that is only there to join the network up —
+   * the Kanhan, carrying the Pench to the Wainganga. Unlabelled, uncounted,
+   * and in no round's questions.
+   */
+  context?: boolean
   /** Which bank of its parent a tributary joins, looking downstream. */
   bank?: 'left' | 'right'
   /** Where a main river rises, as the notes mark it. */

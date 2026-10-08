@@ -143,7 +143,15 @@ export default function App() {
           view: places.length ? round.view : (round.countryView ?? round.view),
         }
       : round.places
-        ? { ...round, places, backdrop: inRegion.map((p) => p.id) }
+        ? {
+            ...round,
+            places,
+            // Context rivers ride along with their own system only.
+            backdrop: [
+              ...inRegion.map((p) => p.id),
+              ...(round.context ?? []).filter((id) => !isRivers || basinHere === 'all' || placeOf(id).basin === basinHere),
+            ],
+          }
         : { ...round, askable: countries }
   // A drill lives only on its play screen: off it — the browser's back button
   // included — the round is its full set again, and every way back in through

@@ -428,11 +428,12 @@ Two rivers the notes do not name are there to join the network up: the
 Pranhita (the Wardha and Wainganga combined, into the Godavari) and the
 Kathajodi (the Devi's way out of the Mahanadi), plus the Godavari's own delta
 branches, the Gautami and the Vasishta. They are ordinary questions. The
-Kanhan was one too and was taken out on request, so the Pench stops where it
-really does, at the Kanhan above Nagpur, 48km short of the Wainganga: it
-`joins` the Wainganga `via` the Kanhan, which lets the build accept the gap
-(under 80km) and the card say so. A river is never stretched to meet a parent
-it does not reach.
+Kanhan was one too and was taken out of the questions on request, but the
+Pench then stopped in mid-air 48km short of the Wainganga, so it is back as
+`context`: drawn, finer and fainter, never labelled, never counted and never
+asked — `Round.context` keeps it out of `places` and in the drawing. A river is
+never stretched to meet a parent it does not reach; `via` remains for a river
+whose connector is not drawn at all (under 80km).
 
 Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
 a main river bold blue, a tributary finer, and a distributary teal and dashed

@@ -260,7 +260,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
    * three — or, without one, its own.
    */
   const [choices] = useState(() =>
-    (round.backdrop ?? round.places ?? [])
+    (round.backdrop ?? [...(round.places ?? []), ...(round.context ?? [])])
       .map((id) => placeOf(id))
       .filter((p) => isLineChoice(p))
       .map((p): Question => ({ id: p.id, name: p.name, label: displayName(p), aliases: p.aliases, point: p.point, iso: null, place: p }))
@@ -535,6 +535,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
           // shows it until it has been answered.
           current: q.place?.type === 'current' ? (mode === 'type' ? 'unknown' : q.place.temp) : undefined,
           river: q.place?.type === 'river' ? q.place.role : undefined,
+          quiet: q.place?.context,
         })
       }
     }
