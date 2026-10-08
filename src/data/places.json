@@ -83135,6 +83135,19 @@
       "section": "places"
     },
     {
+      "id": "riv-kaveri-left-trick",
+      "name": "Kaveri — left-bank tributaries",
+      "members": [
+        "riv-hemavati",
+        "riv-shimsha",
+        "riv-arkavati",
+        "riv-thirumanimuthar"
+      ],
+      "mnemonic": "C̶ H S A T — CSAT with the C struck out for an H: Hemavati, Shimsha, Arkavati, Thirumanimuthar",
+      "continent": "Rivers",
+      "section": "rivers"
+    },
+    {
       "id": "w-danish-straits",
       "name": "The Danish Straits",
       "members": [
