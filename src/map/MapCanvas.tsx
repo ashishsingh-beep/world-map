@@ -170,6 +170,54 @@ export interface MapPoint {
   marker?: boolean
 }
 
+/** A mountain's colours, idle: two slate-blue faces, white snow, green foothills. */
+const PEAK_INK = {
+  face: '#4a6fa5',
+  shade: '#36598c',
+  back: '#8fb0d9',
+  snow: '#ffffff',
+  hill: '#5a9e3c',
+  tree: '#1f5f34',
+}
+
+/**
+ * A peak as a little snow-capped mountain, in the flat style of the notes: a
+ * main summit with a lit and a shaded face, a paler one behind it, snow on
+ * both and green foothills with two pines. Drawn in units of `r`, centred on
+ * the point. In a round the faces take the quiz colour and the snow stays, so
+ * right, wrong and missed read as plainly as on any other marker.
+ */
+function peakGlyph(cx: number, cy: number, r: number, state: CountryState) {
+  const d = (pts: [number, number][]) =>
+    `M ${pts.map(([x, y]) => `${cx + x * r} ${cy + y * r}`).join(' L ')} Z`
+  const idle = state === 'idle'
+  const face = idle ? PEAK_INK.face : FILLS[state]
+  const isTarget = state === 'target'
+  const edge = { stroke: '#1f2d4d', strokeWidth: isTarget ? 2 : 0.8, strokeLinejoin: 'round' as const, vectorEffect: 'non-scaling-stroke' as const }
+  const tree = (x: number) => d([[x, 0.42], [x + 0.2, 1.0], [x - 0.2, 1.0]])
+  return (
+    <g>
+      <path d={d([[0.1, 1], [0.95, -0.75], [1.6, 1]])} fill={idle ? PEAK_INK.back : face} fillOpacity={idle ? 1 : 0.6} {...edge} />
+      <path d={d([[0.95, -0.75], [1.136, -0.25], [1.0, -0.35], [0.88, -0.2], [0.707, -0.25]])} fill={PEAK_INK.snow} />
+      <path d={d([[-1.5, 1], [-0.15, -1.4], [1.2, 1]])} fill={face} {...edge} />
+      <path d={d([[-0.15, -1.4], [1.2, 1], [0.35, 1]])} fill={idle ? PEAK_INK.shade : '#000'} fillOpacity={idle ? 1 : 0.18} />
+      <path d={d([[-0.15, -1.4], [0.3, -0.6], [0.1, -0.76], [-0.08, -0.52], [-0.3, -0.74], [-0.6, -0.6]])} fill={PEAK_INK.snow} />
+      <path
+        d={`M ${cx - 1.7 * r} ${cy + 1.15 * r} Q ${cx - 0.85 * r} ${cy + 0.5 * r} ${cx} ${cy + 0.85 * r}
+            Q ${cx + 0.95 * r} ${cy + 0.5 * r} ${cx + 1.8 * r} ${cy + 1.15 * r} Z`}
+        fill={PEAK_INK.hill}
+        stroke="#1f2d4d"
+        strokeWidth={0.6}
+        strokeOpacity={0.5}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path d={tree(-0.95)} fill={PEAK_INK.tree} />
+      <path d={tree(-0.6)} fill={PEAK_INK.tree} />
+      <path d={tree(1.25)} fill={PEAK_INK.tree} />
+    </g>
+  )
+}
+
 /** Idle fills, which is where the sea/strait distinction has to carry. */
 export const SHAPE_FILLS: Record<MarkerShape, string> = {
   dot: '#ffffff',
@@ -180,8 +228,8 @@ export const SHAPE_FILLS: Record<MarkerShape, string> = {
   sea: '#1d4ed8',
   strait: '#f97316',
   canal: '#a855f7',
-  // A peak is a brown triangle: the shape of the thing itself.
-  peak: '#78350f',
+  // A peak is a snow-capped mountain (see peakGlyph); this is its main face.
+  peak: PEAK_INK.face,
 }
 
 /** An ocean outranks the seas inside it, so its marker is drawn larger. */
@@ -192,7 +240,7 @@ const SHAPE_SCALE: Record<MarkerShape, number> = {
   sea: 1,
   strait: 1,
   canal: 1,
-  peak: 1.15,
+  peak: 1,
 }
 
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
@@ -1132,16 +1180,7 @@ export function MapCanvas({
                     />
                   </g>
                 ) : shape === 'peak' ? (
-                  <path
-                    d={`M ${cx} ${cy - r * 1.3} L ${cx + r * 1.15} ${cy + r * 0.9}
-                        L ${cx - r * 1.15} ${cy + r * 0.9} Z`}
-                    fill={fill}
-                    fillOpacity={0.95}
-                    stroke="#1f2d4d"
-                    strokeWidth={isTarget ? 2.5 : 1.2}
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
+                  peakGlyph(cx, cy, r, p.state)
                 ) : shape === 'canal' ? (
                   <rect
                     x={cx - r * 0.85}

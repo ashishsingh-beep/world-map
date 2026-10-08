@@ -373,7 +373,7 @@ a repeated marine name keeps its largest polygon.
 that is neither a point nor a polygon, so they are drawn as a band along a
 ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
-range emits no marker and no second label. A peak is a brown triangle.
+range emits no marker and no second label. A peak is a little snow-capped mountain (`peakGlyph` in `MapCanvas`: slate-blue faces, white snow, green foothills and pines), and so is a river's source in Learn; in a round its faces take the quiz colour and the snow stays.
 
 **An ocean current is an arrow.** The third World Map category, Phenomena,
 starts with the currents (`src/data/syllabus/currents.json`, section
