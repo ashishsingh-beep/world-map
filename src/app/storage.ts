@@ -187,16 +187,24 @@ export function saveGrid(on: boolean): void {
 }
 
 const STATE_LINES_KEY = 'map-practice:state-lines'
+const STATES_KEY = 'map-practice:states'
 
 /**
- * The India map's state-lines switch, on unless it has been turned off. Its
- * own key, for the same reason as the grid's: it is flipped on the map, not
- * chosen for a round.
+ * How the India map draws its states: `colour` fills them so no two
+ * neighbours match, with the lines over the fill; `lines` is the lines alone;
+ * `off` neither. One switch on the map cycles through them, remembered on its
+ * own key like the grid, since it is flipped on the map and not chosen for a
+ * round. Before the fill existed the switch was on/off; someone who had turned
+ * the lines off keeps them off.
  */
-export function loadStateLines(): boolean {
-  return read(STATE_LINES_KEY) !== false
+export type StatesMode = 'colour' | 'lines' | 'off'
+
+export function loadStates(): StatesMode {
+  const v = read(STATES_KEY)
+  if (v === 'colour' || v === 'lines' || v === 'off') return v
+  return read(STATE_LINES_KEY) === false ? 'off' : 'colour'
 }
 
-export function saveStateLines(on: boolean): void {
-  write(STATE_LINES_KEY, on)
+export function saveStates(mode: StatesMode): void {
+  write(STATES_KEY, mode)
 }

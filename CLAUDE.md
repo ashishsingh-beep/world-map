@@ -35,13 +35,28 @@ DataMeet's India point-of-view state file (`STATE_LINES_URL`), some fourteen
 times the detail — the build asserts its Jammu & Kashmir takes in
 Gilgit-Baltistan and Aksai Chin — simplified only by a 30m interval. It
 predates 2019, so the one line between Jammu & Kashmir and Ladakh comes from a
-2019 file (`LADAKH_URL`), its ends snapped onto DataMeet's outline. Inner lines
-only, clipped as lines (not polygons, so no coastal slivers) to the drawn
-India, into `state-lines.topo.json`, which is loaded only when an India map
-opens: at that precision it is the heaviest file the app has. They are drawn
-dashed, for context — a state is never a question — and the States button on
-the India map switches them off and on, remembered like Lat/Long
-(`loadStateLines`/`saveStateLines`, on by default).
+2019 file (`LADAKH_URL`), its ends snapped onto DataMeet's outline.
+
+The states are areas as well as lines, so the map can colour them, and the
+lines are those areas' shared edges, so a colour always meets its dashed line.
+The areas are built from *every* edge DataMeet draws, not only the shared ones —
+its polygons do not quite meet in places (300m at Delhi and Uttar Pradesh, 4km
+where Punjab meets Rajasthan), and with inner lines alone Punjab, Tripura and
+Mizoram leaked into their neighbours — plus India's drawn outline, and each
+inner line that ends at DataMeet's coast carried on to the drawn one, so the
+strip between the two coastlines is cut at every state line instead of letting
+one state's colour creep along its neighbour's shore. Each face takes the
+DataMeet state its inside falls in; a face in none goes to the neighbour it
+shares the most edge with. The build holds each state to DataMeet's own area
+(8%) and gives each a `colour` so that no two neighbours share one (DSatur; four
+colours today, fails above five). `state-lines.topo.json` carries both,
+`statefills` and `statelines`, and is loaded only when an India map opens: at
+that precision it is the heaviest file the app has. A state is never a question
+— this is context. The States button on the India map cycles Coloured → Lines →
+Off, remembered like Lat/Long (`loadStates`/`saveStates`, coloured by default;
+someone who had switched the old lines-only toggle off stays off). The colours
+(`STATE_TINTS` in `MapCanvas`) are warm and pale — yellow, peach, pink, lime,
+tan — never blue or teal, so the rivers stay the strongest thing on the map.
 
 **The Indian map's land comes from one source, not two.** India, Pakistan,
 China and the rest of the frame are all the India-POV country file, welded in a

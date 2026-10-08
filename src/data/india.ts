@@ -42,26 +42,37 @@ export const indiaLand: StateFeature[] = layer(frameTopo, 'land')
 export const indiaDivides: StateFeature[] = layer(frameTopo, 'divides')
 
 /**
- * The state and union-territory boundaries, from DataMeet's India point-of-view
- * state file — Jammu & Kashmir reaching ~37°N and taking in Gilgit-Baltistan
- * and Aksai Chin is asserted at build time — with the 2019 line between Jammu
- * & Kashmir and Ladakh from a newer file, and clipped to the same India. See
- * the first non-negotiable in CLAUDE.md.
+ * The states and union territories, as areas and as the lines between them,
+ * from DataMeet's India point-of-view state file — Jammu & Kashmir reaching
+ * ~37°N and taking in Gilgit-Baltistan and Aksai Chin is asserted at build
+ * time — with the 2019 line between Jammu & Kashmir and Ladakh from a newer
+ * file, and closed against the same India the map draws. See the first
+ * non-negotiable in CLAUDE.md.
  *
- * Inner boundaries only. The coast and the national border are India's own
- * outline to draw, once.
+ * The lines are the areas' shared edges and nothing else: the coast and the
+ * national border are India's own outline to draw, once. Each area carries a
+ * `colour`, an index into the map's palette chosen at build time so that no
+ * two neighbours share one.
  *
- * Drawn for context, and switched off and on from the map: a state is never a
- * question here.
+ * Drawn for context, and switched between coloured, lines alone and off from
+ * the map: a state is never a question here.
  */
-let stateLinesLoad: Promise<StateFeature[]> | null = null
+export type StateFill = Feature<Geometry, { state: string; colour: number }>
+export interface IndiaStates {
+  fills: StateFill[]
+  lines: StateFeature[]
+}
+let statesLoad: Promise<IndiaStates> | null = null
 /**
  * Fetched on first use, not bundled: at full precision they are the heaviest
  * file the app has, and only the India map draws them.
  */
-export function loadStateLines(): Promise<StateFeature[]> {
-  stateLinesLoad ??= import('./state-lines.topo.json').then((m) => layer(m.default, 'statelines'))
-  return stateLinesLoad
+export function loadStates(): Promise<IndiaStates> {
+  statesLoad ??= import('./state-lines.topo.json').then((m) => ({
+    fills: layer(m.default, 'statefills') as unknown as StateFill[],
+    lines: layer(m.default, 'statelines'),
+  }))
+  return statesLoad
 }
 
 /** The states as areas. Nothing draws them yet; rounds about them would. */

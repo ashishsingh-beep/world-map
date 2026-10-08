@@ -7,10 +7,10 @@ import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countri
 import { areaOf as waterAreaOf } from '../data/marine'
 import { areaOf as landAreaOf } from '../data/land'
 import { placeById } from '../data/places'
-import { indiaDivides, indiaLand, indiaOutline, loadStateLines as fetchStateLines, type StateFeature } from '../data/india'
+import { indiaDivides, indiaLand, indiaOutline, loadStates as fetchStates, type IndiaStates } from '../data/india'
 import { outlineWithoutSeam } from './seam'
 import { formatLat, formatLon, GRID_STEPS, REFERENCE_LINES } from './grid'
-import { loadGrid, loadStateLines, saveGrid, saveStateLines } from '../app/storage'
+import { loadGrid, loadStates, saveGrid, saveStates, type StatesMode } from '../app/storage'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -169,6 +169,17 @@ export interface MapPoint {
    */
   marker?: boolean
 }
+
+/**
+ * The India map's state colours: warm and pale, so the blue and teal rivers
+ * stay the strongest thing on the map and the dashed lines still read. The
+ * build picks each state's index so that no two neighbours match (four are
+ * used; a fifth is there in case a future boundary needs it).
+ */
+const STATE_TINTS = ['#fde7a4', '#f9c6a5', '#f4b6c2', '#dde8a4', '#e7cfa8']
+
+const NEXT_STATES_MODE: Record<StatesMode, StatesMode> = { colour: 'lines', lines: 'off', off: 'colour' }
+const STATES_MODE_LABEL: Record<StatesMode, string> = { colour: 'Coloured', lines: 'Lines', off: 'Off' }
 
 /** A mountain's colours, idle: two slate-blue faces, white snow, green foothills. */
 const PEAK_INK = {
@@ -697,18 +708,21 @@ export function MapCanvas({
     setGrid(next)
     saveGrid(next)
   }
-  /** The India map's state lines, switched like the grid and remembered the same way. */
-  const [statesOn, setStatesOn] = useState(loadStateLines)
-  const toggleStates = () => {
-    const next = !statesOn
-    setStatesOn(next)
-    saveStateLines(next)
+  /**
+   * The India map's states — coloured, lines alone, or off — one switch that
+   * cycles through the three, remembered like the grid.
+   */
+  const [statesMode, setStatesMode] = useState<StatesMode>(loadStates)
+  const cycleStates = () => {
+    const next = NEXT_STATES_MODE[statesMode]
+    setStatesMode(next)
+    saveStates(next)
   }
-  const [stateLines, setStateLines] = useState<StateFeature[]>([])
+  const [indiaStates, setIndiaStates] = useState<IndiaStates | null>(null)
   useEffect(() => {
     if (atlas !== 'india') return
     let live = true
-    fetchStateLines().then((lines) => live && setStateLines(lines))
+    fetchStates().then((s) => live && setIndiaStates(s))
     return () => {
       live = false
     }
@@ -981,10 +995,24 @@ export function MapCanvas({
                   pointerEvents="none"
                 />
               ))}
+              {/* Each state its own colour, no two neighbours alike (chosen
+                  at build time), all warm so the blue rivers stay the
+                  strongest thing on the map. Under the lines, which are the
+                  same areas' shared edges, so a colour always meets its line. */}
+              {statesMode === 'colour' &&
+                indiaStates?.fills.map((f) => (
+                  <path
+                    key={`sf-${f.properties.state}`}
+                    d={path(f as never) ?? undefined}
+                    fill={STATE_TINTS[f.properties.colour % STATE_TINTS.length]}
+                    stroke="none"
+                    pointerEvents="none"
+                  />
+                ))}
               {/* Dashed, as an atlas draws a state line, so it never reads as
                   the national border drawn solid over it. */}
-              {statesOn &&
-                stateLines.map((f, i) => (
+              {statesMode !== 'off' &&
+                indiaStates?.lines.map((f, i) => (
                   <path
                     key={`s-${i}`}
                     d={path(f as never) ?? undefined}
@@ -1319,9 +1347,9 @@ export function MapCanvas({
 
       {/* Credit where the licences ask for it: OpenStreetMap's rivers (ODbL)
           and DataMeet's state lines, both on the India map. */}
-      {atlas === 'india' && (statesOn || bands?.some((b) => b.river)) && (
+      {atlas === 'india' && (statesMode !== 'off' || bands?.some((b) => b.river)) && (
         <div className="pointer-events-none absolute bottom-1 left-2 z-[5] text-[10px] font-semibold text-slate-500">
-          {[statesOn && 'State lines: DataMeet', bands?.some((b) => b.river) && 'Rivers: © OpenStreetMap contributors']
+          {[statesMode !== 'off' && 'States: DataMeet', bands?.some((b) => b.river) && 'Rivers: © OpenStreetMap contributors']
             .filter(Boolean)
             .join(' · ')}
         </div>
@@ -1342,21 +1370,31 @@ export function MapCanvas({
         {atlas === 'india' && (
           <button
             type="button"
-            onClick={toggleStates}
-            aria-pressed={statesOn}
-            title={statesOn ? 'Hide state borders' : 'Show state borders'}
-            className={`${CONTROL} ${statesOn ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
+            onClick={cycleStates}
+            aria-label={`States: ${STATES_MODE_LABEL[statesMode]}`}
+            title={`States: ${STATES_MODE_LABEL[statesMode]} — tap for ${STATES_MODE_LABEL[NEXT_STATES_MODE[statesMode]].toLowerCase()}`}
+            className={`${CONTROL} ${statesMode !== 'off' ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
           >
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              {statesMode === 'colour' && (
+                <>
+                  <path d="M3 5.5 8 3v13.5L3 19z" fill={STATE_TINTS[0]} />
+                  <path d="M8 3l6 2.5V19l-6-2.5z" fill={STATE_TINTS[1]} />
+                  <path d="M14 5.5 19 3v13.5L14 19z" fill={STATE_TINTS[2]} />
+                </>
+              )}
               <path
                 d="M3 5.5 8 3l6 2.5L19 3v13.5L14 19l-6-2.5L3 19z"
                 stroke="currentColor"
                 strokeWidth="1.5"
                 strokeLinejoin="round"
               />
-              <path d="M8 3v13.5M14 5.5V19" stroke="currentColor" strokeWidth="1.3" strokeDasharray="2 1.6" />
+              {statesMode !== 'off' && (
+                <path d="M8 3v13.5M14 5.5V19" stroke="currentColor" strokeWidth="1.3" strokeDasharray="2 1.6" />
+              )}
             </svg>
             States
+            <span className="text-[9px] font-semibold opacity-80">{STATES_MODE_LABEL[statesMode]}</span>
           </button>
         )}
         <button

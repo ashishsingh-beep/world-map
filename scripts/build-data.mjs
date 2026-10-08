@@ -16,7 +16,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
-import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh } from 'topojson-client'
+import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -656,26 +656,259 @@ if (ladakhLines.length !== 1) throw new Error(`Expected one Ladakh line, found $
     line[i] = best.v
   }
 }
+/**
+ * The states as areas, so the map can colour them, and the lines drawn from
+ * those same areas, so a colour never stops short of the dashed line beside it.
+ *
+ * Every edge DataMeet draws goes into one network, not only the shared ones:
+ * its polygons do not quite meet in places (300m between Delhi and Uttar
+ * Pradesh, 4km where Punjab meets Rajasthan), and with inner lines alone those
+ * states leaked into each other. Added to it: the 2019 Ladakh line, India's
+ * drawn outline, and every inner line that ends at DataMeet's coast or border
+ * carried on until it meets the drawn one — otherwise the strip between the two
+ * coastlines runs unbroken past a state line and one state's colour creeps
+ * along its neighbour's shore. Clipped to the drawn India and closed into
+ * faces, each face takes the DataMeet state its inside falls in (Ladakh's from
+ * the district source); a face in no state — that strip, or a gap between two
+ * states — goes to the neighbour it shares the most edge with.
+ */
 const stateLinesIn = resolve(CACHE, 'statelines-in.geojson')
-writeFileSync(
-  stateLinesIn,
-  JSON.stringify({
-    type: 'FeatureCollection',
-    features: [...linesOf(datameetLines), ...ladakhLines].map((coordinates) => ({
-      type: 'Feature',
-      properties: {},
-      geometry: { type: 'LineString', coordinates },
-    })),
+{
+  const run = (...args) => execFileSync(resolve(ROOT, 'node_modules/.bin/mapshaper'), args, { stdio: 'inherit' })
+  const read = (file) => JSON.parse(readFileSync(file, 'utf8'))
+  const turned = (f) =>
+    geoArea(f) <= 2 * Math.PI
+      ? f
+      : {
+          ...f,
+          geometry: {
+            ...f.geometry,
+            coordinates:
+              f.geometry.type === 'Polygon'
+                ? f.geometry.coordinates.map((r) => [...r].reverse())
+                : f.geometry.coordinates.map((p) => p.map((r) => [...r].reverse())),
+          },
+        }
+
+  // DataMeet's outer edge, to tell an inner line that ends at the coast or the
+  // border from the one that ends inland (the Ladakh line, at Himachal).
+  const outerFile = resolve(CACHE, 'datameet-outer.geojson')
+  run(STATE_LINES_RAW, '-dissolve', '-lines', '-o', 'format=geojson', outerFile)
+  const CELL = 0.05
+  const cellOf = (x, y) => `${Math.floor(x / CELL)},${Math.floor(y / CELL)}`
+  const outerGrid = new Map()
+  {
+    const walk = (c) => {
+      if (typeof c[0] !== 'number') return c.forEach(walk)
+      const k = cellOf(c[0], c[1])
+      if (!outerGrid.has(k)) outerGrid.set(k, [])
+      outerGrid.get(k).push(c)
+    }
+    read(outerFile).features.forEach((f) => walk(f.geometry.coordinates))
+  }
+  const toOuterKm = (p) => {
+    let best = Infinity
+    for (let i = -1; i <= 1; i++)
+      for (let j = -1; j <= 1; j++)
+        for (const v of outerGrid.get(cellOf(p[0] + i * CELL, p[1] + j * CELL)) ?? [])
+          best = Math.min(best, geoDistance(p, v) * 6371)
+    return best
+  }
+
+  const inner = [...linesOf(datameetLines), ...ladakhLines].map((l) => [...l])
+  const ends = new Map()
+  for (const l of inner) for (const p of [l[0], l.at(-1)]) ends.set(String(p), (ends.get(String(p)) ?? 0) + 1)
+  let carried = 0
+  for (const l of inner) {
+    for (const atEnd of [false, true]) {
+      const p = atEnd ? l.at(-1) : l[0]
+      if (ends.get(String(p)) !== 1 || toOuterKm(p) > 2.5) continue
+      // Onward along the line's own heading, from a point about a kilometre
+      // back, far enough (~16km) to cross any gap between the two coasts; the
+      // clip to India trims what overshoots.
+      const from = atEnd ? [...l].reverse() : l
+      const back = from.slice(1).find((q) => geoDistance(p, q) * 6371 > 1) ?? from.at(-1)
+      const dx = p[0] - back[0]
+      const dy = p[1] - back[1]
+      const n = Math.hypot(dx, dy) || 1
+      const on = [p[0] + (dx / n) * 0.15, p[1] + (dy / n) * 0.15]
+      if (atEnd) l.push(on)
+      else l.unshift(on)
+      carried++
+    }
+  }
+
+  const edgesFile = resolve(CACHE, 'datameet-edges.geojson')
+  run(STATE_LINES_RAW, '-simplify', 'interval=30', '-lines', '-o', 'format=geojson', edgesFile)
+  const networkIn = resolve(CACHE, 'state-network.geojson')
+  writeFileSync(
+    networkIn,
+    JSON.stringify({
+      type: 'FeatureCollection',
+      features: [...read(edgesFile).features.map((f) => f.geometry), ...inner.map((coordinates) => ({ type: 'LineString', coordinates }))].map(
+        (geometry) => ({ type: 'Feature', properties: {}, geometry })
+      ),
+    })
+  )
+  const networkClip = resolve(CACHE, 'state-network-clip.geojson')
+  run(networkIn, '-clip', indiaClip, '-o', 'format=geojson', networkClip)
+  const coastFile = resolve(CACHE, 'india-coast.geojson')
+  run(indiaClip, '-lines', '-o', 'format=geojson', coastFile)
+  const facesOut = resolve(CACHE, 'state-faces.topo.json')
+  run(
+    '-i', 'combine-files', networkClip, coastFile,
+    '-merge-layers', 'force',
+    '-polygons', 'gap-tolerance=0.002',
+    '-each', 'ix=this.innerX, iy=this.innerY',
+    '-rename-layers', 'faces',
+    '-o', 'format=topojson', 'quantization=1e6', facesOut
+  )
+
+  const faces = read(facesOut)
+  const geoms = faces.objects.faces.geometries
+  const shapes = topojsonFeature(faces, faces.objects.faces).features
+  const datameetStates = datameet.features.map(turned)
+  const ladakhParts = ladakh.features.map(turned)
+  // DataMeet predates the 2020 merger of the two union territories.
+  const MERGED = { 'Dadara & Nagar Havelli': 'Dadra & Nagar Haveli and Daman & Diu', 'Daman & Diu': 'Dadra & Nagar Haveli and Daman & Diu' }
+  const label = shapes.map((f) => {
+    if (!f.geometry) return null
+    const at = [f.properties.ix, f.properties.iy]
+    let name = datameetStates.find((s) => geoContains(s, at))?.properties.ST_NM ?? null
+    if (name === 'Jammu & Kashmir' && ladakhParts.some((s) => geoContains(s, at))) name = 'Ladakh'
+    return MERGED[name] ?? name
   })
-)
+
+  const { scale: [sx, sy], translate: [tx, ty] } = faces.transform
+  const arcKm = faces.arcs.map((arc) => {
+    let x = 0
+    let y = 0
+    let prev = null
+    let km = 0
+    for (const [dx, dy] of arc) {
+      x += dx
+      y += dy
+      const p = [x * sx + tx, y * sy + ty]
+      if (prev) km += geoDistance(prev, p) * 6371
+      prev = p
+    }
+    return km
+  })
+  const arcsOf = (g) => {
+    const out = new Set()
+    const walk = (a) => (typeof a === 'number' ? out.add(a < 0 ? ~a : a) : a.forEach(walk))
+    if (g.arcs) walk(g.arcs)
+    return out
+  }
+  const faceArcs = geoms.map(arcsOf)
+  const touching = topojsonNeighbors(geoms)
+  for (let changed = true; changed; ) {
+    changed = false
+    const next = [...label]
+    label.forEach((name, i) => {
+      if (name || !shapes[i].geometry) return
+      const shared = {}
+      for (const j of touching[i]) {
+        if (!label[j]) continue
+        for (const a of faceArcs[i]) if (faceArcs[j].has(a)) shared[label[j]] = (shared[label[j]] ?? 0) + arcKm[a]
+      }
+      const best = Object.entries(shared).sort((a, b) => b[1] - a[1])[0]
+      if (best) {
+        next[i] = best[0]
+        changed = true
+      }
+    })
+    label.splice(0, label.length, ...next)
+  }
+  // An island with nothing beside it: the state whose own land is nearest.
+  label.forEach((name, i) => {
+    if (name || !shapes[i].geometry) return
+    const c = geoCentroid(turned(shapes[i]))
+    label[i] = datameetStates.reduce((best, s) => {
+      const km = geoDistance(c, geoCentroid(s)) * 6371
+      return !best || km < best.km ? { km, name: MERGED[s.properties.ST_NM] ?? s.properties.ST_NM } : best
+    }, null).name
+  })
+
+  const names = [...new Set(label.filter(Boolean))].sort()
+  const stateArcs = names.map((n) => new Set(geoms.flatMap((g, i) => (label[i] === n ? [...faceArcs[i]] : []))))
+  const borders = names.map((_, i) => names.flatMap((_, j) => (i !== j && [...stateArcs[i]].some((a) => stateArcs[j].has(a)) ? [j] : [])))
+
+  // No two neighbours alike (DSatur: the state with the most differently
+  // coloured neighbours next, ties to the most neighbours), and over as few
+  // colours as that allows — four for any map, by the theorem, but a greedy
+  // pass may want five.
+  const colour = names.map(() => -1)
+  for (let k = 0; k < names.length; k++) {
+    let pick = -1
+    let key = null
+    names.forEach((_, i) => {
+      if (colour[i] !== -1) return
+      const sat = new Set(borders[i].map((j) => colour[j]).filter((c) => c !== -1)).size
+      const deg = borders[i].length
+      if (!key || sat > key[0] || (sat === key[0] && deg > key[1])) {
+        pick = i
+        key = [sat, deg]
+      }
+    })
+    const taken = new Set(borders[pick].map((j) => colour[j]))
+    let c = 0
+    while (taken.has(c)) c++
+    colour[pick] = c
+  }
+  const colours = Math.max(...colour) + 1
+  if (colours > 5) throw new Error(`State colouring needed ${colours} colours; the map has five`)
+  borders.forEach((js, i) => {
+    for (const j of js) if (colour[i] === colour[j]) throw new Error(`${names[i]} and ${names[j]} share a colour`)
+  })
+
+  // Held to DataMeet's own areas: a leak between two states shows up as one
+  // far too big and its neighbour far too small.
+  const km2 = (f) => geoArea(turned(f)) * 6371 ** 2
+  const fillKm2 = Object.fromEntries(names.map((n) => [n, label.reduce((s, l, i) => (l === n ? s + km2(shapes[i]) : s), 0)]))
+  const expect = {}
+  for (const s of datameetStates) {
+    const n = MERGED[s.properties.ST_NM] ?? s.properties.ST_NM
+    expect[n] = (expect[n] ?? 0) + km2(s)
+  }
+  expect['Jammu & Kashmir'] += expect.Ladakh ?? 0
+  const checked = { ...fillKm2, 'Jammu & Kashmir': fillKm2['Jammu & Kashmir'] + (fillKm2.Ladakh ?? 0) }
+  for (const [n, want] of Object.entries(expect)) {
+    if (n === 'Ladakh' || want < 1000) continue
+    const got = checked[n] ?? 0
+    // 8%: the drawn coast is simplified to 500m, which costs an archipelago more
+    // than a mainland state (the Andamans lose 5%); a leak costs far more.
+    if (Math.abs(got - want) / want > 0.08) {
+      throw new Error(`State fill for ${n} is ${got.toFixed(0)} km², DataMeet's is ${want.toFixed(0)} — a leak between states`)
+    }
+  }
+  if (names.length !== 36 || !names.includes('Ladakh') || !names.includes('Lakshadweep')) {
+    throw new Error(`Expected 36 states and union territories in the fill, found ${names.length}: ${names.join(', ')}`)
+  }
+
+  writeFileSync(
+    stateLinesIn,
+    JSON.stringify({
+      type: 'FeatureCollection',
+      features: names.map((state, i) => ({
+        type: 'Feature',
+        properties: { state, colour: colour[i] },
+        geometry: topojsonMerge(faces, geoms.filter((_, f) => label[f] === state)),
+      })),
+    })
+  )
+  console.log(`State fills: ${names.length}, ${colours} colours, no neighbours alike (${carried} lines carried to the coast)`)
+}
+
 const stateLinesOut = resolve(OUT, 'state-lines.topo.json')
 execFileSync(
   resolve(ROOT, 'node_modules/.bin/mapshaper'),
   [
     stateLinesIn,
-    '-clip', indiaClip,
-    '-rename-layers', 'statelines',
-    '-o', 'format=topojson', 'quantization=1e6', stateLinesOut,
+    '-rename-layers', 'statefills',
+    // The lines are the fills' own shared edges, so the two can never disagree.
+    '-innerlines', '+', 'name=statelines',
+    '-o', 'format=topojson', 'quantization=1e6', 'target=statefills,statelines', stateLinesOut,
   ],
   { stdio: 'inherit' }
 )
