@@ -51,7 +51,7 @@ const riverTally = (asked: Place[]) => {
 export default function App() {
   const [route, navigate] = useRoute()
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, count, suggestions, kinds, region, placeKinds, basin } = prefs
+  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
@@ -59,7 +59,7 @@ export default function App() {
   const setKinds = (next: (k: Record<WaterKind, boolean>) => Record<WaterKind, boolean>) =>
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
-  const setBasin = (basin: string) => setPrefs((p) => ({ ...p, basin }))
+  const setBasins = (basins: string[]) => setPrefs((p) => ({ ...p, basins }))
   const setPlaceKinds = (next: (k: Record<PlaceKind, boolean>) => Record<PlaceKind, boolean>) =>
     setPrefs((p) => ({ ...p, placeKinds: next(p.placeKinds) }))
   useEffect(() => savePrefs(prefs), [prefs])
@@ -98,17 +98,27 @@ export default function App() {
    * many of it.
    */
   /**
-   * A rivers round narrows by river system — the Godavari's, the Mahanadi's —
-   * which picks the set the question count then draws from. A stored basin
-   * this round does not have plays as all of them.
+   * A rivers round narrows by river system — the Godavari's, the Mahanadi's,
+   * any several together — which picks the set the question count then draws
+   * from. None chosen is all of them, as is every one; a stored system this
+   * round does not have is dropped.
    */
   const isRivers = roundPlaces[0]?.section === 'rivers'
   const basins = isRivers ? [...new Set(roundPlaces.map((p) => p.basin ?? ''))].filter(Boolean) : []
-  const basinHere = basins.includes(basin) ? basin : 'all'
+  const basinsHere = basinPref.filter((b) => basins.includes(b))
+  const allBasins = basinsHere.length === 0 || basinsHere.length === basins.length
+  const inBasins = (b: string | undefined) => allBasins || basinsHere.includes(b ?? '')
+  /** All stands alone; a system toggles in and out, and the last cannot be tapped away. */
+  const tapBasin = (id: string) => {
+    if (id === 'all') return setBasins([])
+    const next = allBasins ? [id] : basinsHere.includes(id) ? basinsHere.filter((b) => b !== id) : [...basinsHere, id]
+    if (!next.length) return
+    setBasins(next.length === basins.length ? [] : next)
+  }
   const inRegion = isWaterRound
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : isRivers
-      ? roundPlaces.filter((p) => basinHere === 'all' || p.basin === basinHere)
+      ? roundPlaces.filter((p) => inBasins(p.basin))
       : roundPlaces
   /**
    * Why mode's clue for a country is its capital, so a country no syllabus
@@ -156,7 +166,7 @@ export default function App() {
             // Context rivers ride along with their own system only.
             backdrop: [
               ...inRegion.map((p) => p.id),
-              ...(round.context ?? []).filter((id) => !isRivers || basinHere === 'all' || placeOf(id).basin === basinHere),
+              ...(round.context ?? []).filter((id) => !isRivers || inBasins(placeOf(id).basin)),
             ],
           }
         : { ...round, askable: countries }
@@ -337,9 +347,12 @@ export default function App() {
                     <button
                       key={id}
                       type="button"
-                      onClick={() => setBasin(id)}
+                      onClick={() => tapBasin(id)}
+                      aria-pressed={id === 'all' ? allBasins : !allBasins && basinsHere.includes(id)}
                       className={`cursor-pointer rounded-xl border-2 bg-white px-3 py-3 text-center ${
-                        basinHere === id ? 'border-blue-600' : 'border-transparent'
+                        (id === 'all' ? allBasins : !allBasins && basinsHere.includes(id))
+                          ? 'border-blue-600'
+                          : 'border-transparent'
                       }`}
                     >
                       <div className="font-extrabold text-slate-900">{id === 'all' ? 'All' : id}</div>
@@ -350,7 +363,8 @@ export default function App() {
                   ))}
                 </div>
                 <p className="mt-2 text-xs font-semibold text-slate-500">
-                  A system is its main river with every tributary and distributary that belongs to it.
+                  Tap systems to practise several together, or All for every one. A system is
+                  its main river with every tributary and distributary that belongs to it.
                 </p>
               </>
             )}

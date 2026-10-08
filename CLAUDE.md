@@ -476,7 +476,10 @@ with arrowheads to the sea, labelled "(distributary)" — it must read at a
 glance as water leaving a river. Every river of the chosen system is on the map
 in Pin and Type alike, as the currents are, and a tap answers the nearest on
 screen; a practice of misses still draws the whole system (`Round.backdrop`).
-Setup narrows by river system (the `basin` pref); Learn by role and system.
+Setup narrows by river system, several at once (the `basins` pref, none meaning
+all): the chips toggle like the Political Map's continents — All stands alone,
+ticking every system is All, and the last one ticked cannot be tapped away; a
+stored single `basin` from before carries over. Learn narrows by role and system.
 Credit for OSM's rivers and DataMeet's state lines sits at the map's foot.
 
 **A coast is a line with width too.** The Grain, Ivory, Gold and Slave Coasts

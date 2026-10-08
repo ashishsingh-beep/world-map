@@ -38,8 +38,8 @@ export interface Prefs {
   region: WaterRegion
   /** Which sections of a Political Map round to ask: countries, capitals, regions, other places. */
   placeKinds: Record<PlaceKind, boolean>
-  /** Which river system a rivers round asks: `all`, or a basin by name. */
-  basin: string
+  /** Which river systems a rivers round asks, by basin name; none means all of them. */
+  basins: string[]
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -52,7 +52,7 @@ export const DEFAULT_PREFS: Prefs = {
   // Countries and capitals: the whole world with everything on is over 500
   // questions, and these two are where a political map starts.
   placeKinds: { country: true, capital: true, other: false, region: false },
-  basin: 'all',
+  basins: [],
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -96,7 +96,7 @@ const REGIONS: WaterRegion[] = ['all', 'america', 'europe', 'asia']
 const PLACE_KIND_IDS: PlaceKind[] = ['country', 'capital', 'other', 'region']
 
 export function loadPrefs(): Prefs {
-  const raw = read(PREFS_KEY) as Partial<Prefs> | null
+  const raw = read(PREFS_KEY) as (Partial<Prefs> & { basin?: unknown }) | null
   if (!raw || typeof raw !== 'object') return DEFAULT_PREFS
   const kinds = { ...DEFAULT_PREFS.kinds }
   for (const k of KINDS) {
@@ -124,8 +124,13 @@ export function loadPrefs(): Prefs {
       : DEFAULT_PREFS.region,
     placeKinds,
     // Checked against the round's own basins where it is used: a basin an
-    // edited syllabus no longer has plays as all of them.
-    basin: typeof raw.basin === 'string' ? raw.basin : DEFAULT_PREFS.basin,
+    // edited syllabus no longer has is dropped, and none left plays as all.
+    // Before systems could be combined the choice was one `basin`, or 'all'.
+    basins: Array.isArray(raw.basins)
+      ? raw.basins.filter((b): b is string => typeof b === 'string')
+      : typeof raw.basin === 'string' && raw.basin !== 'all'
+        ? [raw.basin]
+        : DEFAULT_PREFS.basins,
   }
 }
 
