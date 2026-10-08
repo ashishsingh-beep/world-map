@@ -205,6 +205,9 @@ export const WATER_CONTINENTS = SYLLABUS.filter((c) => c.section === 'water')
 /** Phenomena: things that happen across the map rather than sit on it — ocean currents first. */
 export const PHENOMENA_CONTINENTS = SYLLABUS.filter((c) => c.section === 'phenomena')
 
+/** "A", "A and B", "A, B and C". */
+const listed = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`)
+
 export const allPlacesRoundId = (continent: string) =>
   `places-${continent.toLowerCase().replace(/\s+/g, '-')}`
 
@@ -321,7 +324,7 @@ function continentPlaceRound({
     blurb: phenomena
       ? `All ${ps.length} currents, warm and cold, in every ocean.`
       : ps.length && ps.every((p) => p.type === 'river' || p.type === 'origin')
-      ? `The ${[...new Set(ps.map((p) => p.basin))].join(' and ')} systems — ${ps.filter((p) => p.type === 'river').length} rivers with their tributaries and distributaries, and where the main rivers rise.`
+      ? `The ${listed([...new Set(ps.map((p) => p.basin ?? ''))])} systems — ${ps.filter((p) => p.type === 'river').length} rivers with their tributaries and distributaries, and where the main rivers rise.`
       : ps.length
       ? `Every place in the set — ${ps.length} in total.`
       : 'Nothing added yet — the notes for this one are still to come.',

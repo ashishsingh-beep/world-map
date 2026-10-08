@@ -49,10 +49,11 @@ function waysFrom(elements, keep) {
  * way: every way reachable from it by shared nodes that carries one of the
  * river's own names — how a river with no relation is gathered.
  */
-export function fetchRiverWays(osm, names, cacheDir, box = null, extra = []) {
+export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], allRoles = false) {
   const key =
     (osm.startsWith('R') ? osm : `${osm}-${names.join('+')}${box ? `-${box.flat().join(',')}` : ''}`) +
-    (extra.length ? `-${extra.join('+')}` : '')
+    (extra.length ? `-${extra.join('+')}` : '') +
+    (allRoles ? '-all' : '')
   const cache = resolve(cacheDir, `osm-river-${key.replace(/[^A-Za-z0-9+,.-]/g, '_')}.json`)
   if (existsSync(cache)) return JSON.parse(readFileSync(cache, 'utf8'))
   let ways
@@ -61,7 +62,12 @@ export function fetchRiverWays(osm, names, cacheDir, box = null, extra = []) {
     const rel = full.elements.find((e) => e.type === 'relation' && e.id === Number(osm.slice(1)))
     const members = rel.members.filter((m) => m.type === 'way')
     const main = members.filter((m) => m.role === 'main_stream')
-    const wanted = new Set((main.length ? main : members.filter((m) => m.role !== 'side_stream')).map((m) => m.ref))
+    // `allRoles`: a relation whose main_stream tags cover only a stretch — the
+    // Malaprabha's mark two ways of nineteen — is taken whole, side streams
+    // still left out; the course is the shortest path through it either way.
+    const wanted = new Set(
+      (main.length && !allRoles ? main : members.filter((m) => m.role !== 'side_stream')).map((m) => m.ref)
+    )
     ways = waysFrom(full.elements, (w) => wanted.has(w.id))
   } else {
     const allowed = new Set(names.map((n) => n.toLowerCase()))

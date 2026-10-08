@@ -3,7 +3,7 @@
   "title": "Rivers",
   "section": "rivers",
   "atlas": "india",
-  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari and Mahanadi maps",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi and Krishna maps",
   "places": [
     {
       "id": "riv-godavari",
@@ -593,6 +593,300 @@
         "Leaves the Kathajodi below Cuttack — a distributary, carrying water away from the main river to the sea"
       ],
       "tier": 1
+    },
+    {
+      "id": "riv-krishna",
+      "name": "Krishna",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Krishna",
+      "osm": "R337204",
+      "source": {
+        "name": "Mahabaleshwar",
+        "aliases": [],
+        "point": [
+          73.66,
+          17.99
+        ],
+        "significance": "Where the Krishna rises, a hill station high in the Western Ghats of Satara district"
+      },
+      "significance": "The peninsula's second-longest river, crossing the Deccan from the Western Ghats to the Bay of Bengal, held back at Almatti, Srisailam and Nagarjuna Sagar",
+      "notes": [
+        "Rises at Mahabaleshwar in the Western Ghats (Satara, Maharashtra)",
+        "Flows through Maharashtra, Karnataka, Telangana and Andhra Pradesh to the Bay of Bengal"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-koyna",
+      "name": "Koyna",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R2933247",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "significance": "Rises at Mahabaleshwar and powers Maharashtra's largest hydroelectric project before joining at Karad's Preeti Sangam",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-varna",
+      "name": "Varna",
+      "aliases": [
+        "Warna"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "W306392934",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "significance": "Dammed at Chandoli in the Sahyadri, it runs along the Sangli–Kolhapur border to join at Haripur near Sangli",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Warna",
+        "Warna River",
+        "Varna",
+        "Varna River"
+      ]
+    },
+    {
+      "id": "riv-panchganga",
+      "name": "Panchganga",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "W305422208",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "significance": "Five streams meeting at Prayag Chikhali give Kolhapur its river, which joins at Narsobawadi, a Dattatreya pilgrimage town",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Panchganga",
+        "Panchganga River"
+      ]
+    },
+    {
+      "id": "riv-dudhganga",
+      "name": "Dudhganga",
+      "aliases": [
+        "Dudhaganga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R4071907",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "significance": "Dammed at Kalammawadi in Kolhapur's hills, it crosses into Karnataka's Belagavi district to join",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-ghatprabha",
+      "name": "Ghatprabha",
+      "aliases": [
+        "Ghataprabha"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R3552989",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "significance": "Plunges over the Gokak Falls — the 'Niagara of Karnataka' — and is dammed at Hidkal before joining in Bagalkot",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-malprabha",
+      "name": "Malprabha",
+      "aliases": [
+        "Malaprabha"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R2713271",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "significance": "Rises near Kanakumbi in the Western Ghats, is dammed at Navilutheertha, and joins at Kudalasangama, where Basavanna rests",
+      "notes": [],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-bhima",
+      "name": "Bhima",
+      "aliases": [
+        "Chandrabhaga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R2858525",
+      "joins": "riv-krishna",
+      "bank": "left",
+      "significance": "Rises at a Jyotirlinga shrine in the Sahyadri above Pune, flows past the pilgrim town of Pandharpur, and joins near Raichur",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-nira",
+      "name": "Nira",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "W174216347",
+      "joins": "riv-bhima",
+      "significance": "Rises in the Sahyadri near Bhor and divides Pune district from Satara before joining at Narsinghpur",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Nira",
+        "Nira River"
+      ],
+      "osmExtra": [
+        "W51190750",
+        "W147252913",
+        "W202550136",
+        "W202550137"
+      ]
+    },
+    {
+      "id": "riv-man",
+      "name": "Man",
+      "aliases": [
+        "Manganga",
+        "Maan"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "W158852659",
+      "joins": "riv-bhima",
+      "significance": "Drains the drought-prone Mandesh of eastern Satara and Sangli to join near Pandharpur",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Manganga",
+        "Man",
+        "Maan",
+        "Man River"
+      ]
+    },
+    {
+      "id": "riv-sina",
+      "name": "Sina",
+      "aliases": [
+        "Seena"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R9315353",
+      "joins": "riv-bhima",
+      "significance": "Rises near Ahmednagar and flows south-east through Solapur district to join at Kudal",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-tungabhadra",
+      "name": "Tungabhadra",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R2742213",
+      "joins": "riv-krishna",
+      "bank": "right",
+      "context": true,
+      "significance": "The Tunga and the Bhadra combined from Koodli, past Hampi and the Hosapete dam, to join near Alampur",
+      "notes": [
+        "Drawn only to carry the Tunga and the Bhadra to the Krishna; never asked"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-tunga",
+      "name": "Tunga",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R2708785",
+      "joins": "riv-tungabhadra",
+      "significance": "Rises at Gangamoola in the Kudremukh hills and flows past Sringeri and Shivamogga to meet its twin at Koodli",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-bhadra",
+      "name": "Bhadra",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R2708784",
+      "joins": "riv-tungabhadra",
+      "significance": "Rises at Gangamoola beside its twin, is dammed at Lakkavalli, and meets it at Koodli to form the river that carries both to the Krishna",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-musi",
+      "name": "Musi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "R11083180",
+      "joins": "riv-krishna",
+      "bank": "left",
+      "significance": "Hyderabad's river, on whose banks the city was founded, dammed at Osman Sagar and Himayat Sagar above it, joining at Wazirabad",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-munneru",
+      "name": "Munneru",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Krishna",
+      "osm": "W263022585",
+      "joins": "riv-krishna",
+      "bank": "left",
+      "significance": "Comes down from the hills of Mahabubabad past Khammam to join above Vijayawada",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Munneru River",
+        "Munneru"
+      ]
     }
   ],
   "groups": []

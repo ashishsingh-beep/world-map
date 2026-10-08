@@ -1133,7 +1133,7 @@ function courseRivers(rivers, where) {
     }
     const parent = parentPlace ? run(parentPlace) : null
     if (parentPlace && !parent) return null
-    const ways = fetchRiverWays(p.osm, p.osmNames ?? [p.name], CACHE, p.osmBox ?? null, p.osmExtra ?? [])
+    const ways = fetchRiverWays(p.osm, p.osmNames ?? [p.name], CACHE, p.osmBox ?? null, p.osmExtra ?? [], p.osmAllRoles ?? false)
     if (!ways.length) {
       errors.push(`${where(p.id)}: OSM gave no ways for ${p.osm}`)
       return null

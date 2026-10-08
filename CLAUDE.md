@@ -419,7 +419,8 @@ because the notes' map draws it so; its note says the summer upwelling is cold.
 
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
-Godavari and Mahanadi systems from the notes: each river a `role` — `main`,
+Godavari, Mahanadi and Krishna systems from the notes — each with exactly the
+tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
 the two main rivers and almost none of their tributaries, so the courses come
@@ -429,7 +430,10 @@ main-stream ways; a river nobody has made a relation for is walked from a seed
 way (`W…`) through the ways that share one of its `osmNames`, kept inside an
 `osmBox` where a branch is named after its parent (the Vasishta's head is
 tagged plain "Godavari"), with `osmExtra` ways for a stretch left unnamed (the
-Kinnarsani above its dam). The pieces are joined on shared nodes, gaps under
+Kinnarsani above its dam) or left out of a relation (the Nira above Vir dam).
+A relation is read by its `main_stream` members, unless `osmAllRoles` says
+those cover only a stretch — the Malaprabha tags two ways of nineteen — and
+then by every member but its side streams. The pieces are joined on shared nodes, gaps under
 40km bridged, and the course is the shortest path between the ends, so a
 braided stretch gives one channel. Then held to the notes: a main river must
 rise within 30km of its authored `source` (its marker is moved to where the
@@ -456,7 +460,10 @@ branches, the Gautami and the Vasishta. They are ordinary questions. The
 Kanhan was one too and was taken out of the questions on request, but the
 Pench then stopped in mid-air 48km short of the Wainganga, so it is back as
 `context`: drawn, finer and fainter, never labelled, never counted and never
-asked — `Round.context` keeps it out of `places` and in the drawing. A river is
+asked — `Round.context` keeps it out of `places` and in the drawing. The
+Tungabhadra is the same for the Krishna: the notes name the Tunga and the
+Bhadra, which meet at Koodli some 550km short of the Krishna, so the river they
+make is drawn as context to carry them there. A river is
 never stretched to meet a parent it does not reach; `via` remains for a river
 whose connector is not drawn at all (under 80km).
 
