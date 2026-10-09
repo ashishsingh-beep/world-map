@@ -10,6 +10,7 @@ import {
   groupsFor,
   placeKindOf,
   placeOf,
+  type Place,
 } from '../data/places'
 import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/areas'
@@ -38,7 +39,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     region: true,
   })
   /** Which rivers are drawn, by role and by system. */
-  const [rolesShown, setRolesShown] = useState({ main: true, tributary: true, distributary: true, origin: true })
+  const [rolesShown, setRolesShown] = useState({ main: true, tributary: true, distributary: true, origin: true, landmark: true })
   const [basinsHidden, setBasinsHidden] = useState<string[]>([])
   /** Which currents are drawn: the warm ones, the cold ones, or both. */
   const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
@@ -55,6 +56,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const isPlacesSection = roundPlaces[0]?.section === 'places'
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
   const isRivers = roundPlaces[0]?.section === 'rivers'
+  /** A place on a rivers map that is neither a river nor an origin: Majuli, Namcha Barwa. */
+  const isLandmark = (p: Place) => p.section === 'rivers' && p.type !== 'river' && p.type !== 'origin'
   const basins = [...new Set(roundPlaces.map((p) => (p.type === 'river' ? p.basin : undefined)))].filter(
     (b): b is string => !!b
   )
@@ -78,9 +81,12 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         if (p.type === 'current') return p.temp ? tempsShown[p.temp] : true
         if (p.type === 'river') return (!p.role || rolesShown[p.role]) && !basinsHidden.includes(p.basin ?? '')
         if (p.type === 'origin') return rolesShown.origin && !basinsHidden.includes(p.basin ?? '')
+        // Anything else on a rivers map is a landmark on a river's course:
+        // Majuli, Namcha Barwa.
+        if (isRivers) return rolesShown.landmark && !basinsHidden.includes(p.basin ?? '')
         return true
       }),
-    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden]
+    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden, isRivers]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
@@ -294,8 +300,11 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 ['tributary', 'Tributaries'],
                 ['distributary', 'Distributaries'],
                 ['origin', 'Origins'],
+                ['landmark', 'Landmarks'],
               ] as const
-            ).map(([role, label]) => (
+            )
+              .filter(([role]) => role !== 'landmark' || roundPlaces.some(isLandmark))
+              .map(([role, label]) => (
               <label
                 key={role}
                 className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
@@ -309,11 +318,21 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   className="h-3.5 w-3.5 accent-blue-600"
                 />
                 <span className={rolesShown[role] ? '' : 'opacity-40'}>
-                  {role === 'origin' ? <PeakSwatch /> : <RiverSwatch role={role} />}
+                  {role === 'origin' ? (
+                    <PeakSwatch />
+                  ) : role === 'landmark' ? (
+                    <PlaceKindSwatch kind="other" />
+                  ) : (
+                    <RiverSwatch role={role} />
+                  )}
                 </span>
                 {label}
                 <span className="font-semibold text-slate-400">
-                  {roundPlaces.filter((p) => (role === 'origin' ? p.type === 'origin' : p.role === role)).length}
+                  {
+                    roundPlaces.filter((p) =>
+                      role === 'origin' ? p.type === 'origin' : role === 'landmark' ? isLandmark(p) : p.role === role
+                    ).length
+                  }
                 </span>
               </label>
             ))}
@@ -585,7 +604,10 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               <ul className="mt-1.5 space-y-0.5">
                 {place.notes.map((n) => (
                   <li key={n} className="text-xs text-slate-600">
-                    · {n}
+                    {/* A numbered note keeps its number — the Brahmaputra's run
+                        Tibet, Arunachal, Assam, Bangladesh, in order. */}
+                    {/^\d+\.\s/.test(n) ? '' : '· '}
+                    <NoteText text={n} />
                   </li>
                 ))}
               </ul>
@@ -619,5 +641,22 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         />
       )}
     </div>
+  )
+}
+
+/** A note, with **this** set bold — the one markup notes take. */
+function NoteText({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+        part.startsWith('**') && part.endsWith('**') ? (
+          <strong key={i} className="font-bold text-slate-800">
+            {part.slice(2, -2)}
+          </strong>
+        ) : (
+          part
+        )
+      )}
+    </>
   )
 }

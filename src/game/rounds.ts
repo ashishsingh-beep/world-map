@@ -323,8 +323,8 @@ function continentPlaceRound({
     atlas,
     blurb: phenomena
       ? `All ${ps.length} currents, warm and cold, in every ocean.`
-      : ps.length && ps.every((p) => p.type === 'river' || p.type === 'origin')
-      ? `The ${listed([...new Set(ps.map((p) => p.basin ?? ''))])} systems — ${ps.filter((p) => p.type === 'river').length} rivers with their tributaries and distributaries, and where the main rivers rise.`
+      : ps.length && ps.every((p) => p.section === 'rivers')
+      ? `The ${listed([...new Set(ps.map((p) => p.basin ?? ''))])} systems — ${ps.filter((p) => p.type === 'river').length} rivers with their tributaries and distributaries, where they rise, and the landmarks on their way.`
       : ps.length
       ? `Every place in the set — ${ps.length} in total.`
       : 'Nothing added yet — the notes for this one are still to come.',

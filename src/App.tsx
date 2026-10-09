@@ -43,9 +43,12 @@ import {
 
 /** A rivers round's size, its rivers and the origins asked beside them counted apart. */
 const riverTally = (asked: Place[]) => {
+  const n = (k: number, one: string) => `${k} ${one}${k === 1 ? '' : 's'}`
+  const rivers = asked.filter((p) => p.type === 'river').length
   const origins = asked.filter((p) => p.type === 'origin').length
-  const rivers = asked.length - origins
-  return `${rivers} river${rivers === 1 ? '' : 's'}${origins ? ` · ${origins} origin${origins === 1 ? '' : 's'}` : ''}`
+  // Majuli, Namcha Barwa: places on a river's course, asked beside it.
+  const landmarks = asked.length - rivers - origins
+  return [n(rivers, 'river'), origins && n(origins, 'origin'), landmarks && n(landmarks, 'landmark')].filter(Boolean).join(' · ')
 }
 
 export default function App() {

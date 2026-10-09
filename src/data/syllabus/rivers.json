@@ -1140,7 +1140,9 @@
       "source": {
         "name": "Chemayungdung Glacier",
         "aliases": [
-          "Chemayungdung"
+          "Chemayungdung",
+          "Chemyungdung Glacier",
+          "Chemyungdung"
         ],
         "point": [
           82.32,
@@ -1151,11 +1153,10 @@
       },
       "significance": "Crosses the roof of the world, bends round Namcha Barwa through the deepest gorge on Earth, and floods Assam's plain every monsoon before meeting the Padma in Bangladesh",
       "notes": [
-        "Rises in the Chemayungdung Glacier, south-east of Mansarovar in Tibet",
-        "The Yarlung Tsangpo in Tibet, the Siang or Dihang in Arunachal Pradesh, the Brahmaputra in Assam and the Jamuna in Bangladesh",
-        "Turns south round Namcha Barwa into India, and takes the Dibang and the Lohit near Sadiya",
-        "Majuli, in its course through Assam, is the largest river island in the world",
-        "Joins the Padma (the Ganga) in Bangladesh"
+        "1. **Tibet** → River: Yarlung Tsangpo, Origin: Chemayungdung Glacier",
+        "2. **Arunachal Pradesh** → Associated rivers: Dihang/Dibang, Pass: Yongyab Pass, Mountain: Namcha Barwa",
+        "3. **Assam** → Called the Sorrow of Assam, Island: Majuli",
+        "4. **Bangladesh** → Known as the **Jamuna**, which further becomes the **Meghna**, Delta: Sundarban delta"
       ],
       "tier": 1,
       "braidKm": 5
@@ -1460,6 +1461,43 @@
         "Kopili",
         "Kopili River"
       ]
+    },
+    {
+      "id": "riv-majuli",
+      "name": "Majuli",
+      "aliases": [
+        "Majuli Island"
+      ],
+      "type": "island",
+      "country": "IND",
+      "basin": "Brahmaputra",
+      "point": [
+        94.22,
+        26.96
+      ],
+      "significance": "The world's largest river island, home to Assam's Vaishnavite satras, and shrinking with every monsoon flood",
+      "notes": [
+        "In the Brahmaputra in Assam, between the main stream and the Subansiri"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-namcha-barwa",
+      "name": "Namcha Barwa",
+      "aliases": [
+        "Namchabarwa"
+      ],
+      "type": "peak",
+      "country": "CHN",
+      "basin": "Brahmaputra",
+      "point": [
+        95.06,
+        29.63
+      ],
+      "elevationM": 7782,
+      "significance": "The 7,782m summit in Tibet round which the main stream makes its great bend south into India, through the deepest gorge on Earth",
+      "notes": [],
+      "tier": 1
     }
   ],
   "groups": [

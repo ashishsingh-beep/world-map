@@ -469,6 +469,16 @@ as a peak's mountain, filtered with its river system on setup, and has its own
 Origins chip in Learn. The Pin prompt says only "origin", never whose: the
 river is drawn on the map, and naming it would make the tap a give-away.
 
+A rivers map can ask about a place on a river's course too — Majuli, the
+largest river island, and Namcha Barwa, the peak the Brahmaputra bends round —
+filed with its system's `basin` like any river. Learn calls them Landmarks,
+with their own chip; setup counts them apart from rivers and origins.
+
+A note may set words in **bold** (the Brahmaputra's **Jamuna** and
+**Meghna**), the one markup notes take, and a note that starts with a number
+keeps it in place of the bullet, for facts that run in order — the
+Brahmaputra's are by stretch, Tibet to Bangladesh.
+
 Two rivers the notes do not name are there to join the network up: the
 Pranhita (the Wardha and Wainganga combined, into the Godavari) and the
 Kathajodi (the Devi's way out of the Mahanadi), plus the Godavari's own delta
