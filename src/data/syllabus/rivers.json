@@ -3,7 +3,7 @@
   "title": "Rivers",
   "section": "rivers",
   "atlas": "india",
-  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna and Kaveri maps",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri and Brahmaputra maps",
   "places": [
     {
       "id": "riv-godavari",
@@ -1116,6 +1116,349 @@
         "W1109082040",
         "W1109082044",
         "W1109082048"
+      ]
+    },
+    {
+      "id": "riv-brahmaputra",
+      "name": "Brahmaputra",
+      "aliases": [
+        "Yarlung Tsangpo",
+        "Tsangpo",
+        "Siang",
+        "Dihang",
+        "Jamuna"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Brahmaputra",
+      "osm": "R1067987",
+      "through": [
+        "CHN",
+        "BGD"
+      ],
+      "source": {
+        "name": "Chemayungdung Glacier",
+        "aliases": [
+          "Chemayungdung"
+        ],
+        "point": [
+          82.32,
+          30.4
+        ],
+        "significance": "Where the Brahmaputra rises, in the Kailash range of Tibet south-east of Lake Mansarovar",
+        "country": "CHN"
+      },
+      "significance": "Crosses the roof of the world, bends round Namcha Barwa through the deepest gorge on Earth, and floods Assam's plain every monsoon before meeting the Padma in Bangladesh",
+      "notes": [
+        "Rises in the Chemayungdung Glacier, south-east of Mansarovar in Tibet",
+        "The Yarlung Tsangpo in Tibet, the Siang or Dihang in Arunachal Pradesh, the Brahmaputra in Assam and the Jamuna in Bangladesh",
+        "Turns south round Namcha Barwa into India, and takes the Dibang and the Lohit near Sadiya",
+        "Majuli, in its course through Assam, is the largest river island in the world",
+        "Joins the Padma (the Ganga) in Bangladesh"
+      ],
+      "tier": 1,
+      "braidKm": 5
+    },
+    {
+      "id": "riv-subansiri",
+      "name": "Subansiri",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R9310973",
+      "joins": "riv-brahmaputra",
+      "bank": "right",
+      "significance": "Its largest tributary, rising in Tibet and cutting through Arunachal to join beside Majuli; dammed at Gerukamukh for India's biggest hydro project",
+      "notes": [],
+      "tier": 1,
+      "through": [
+        "CHN"
+      ],
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-kameng",
+      "name": "Kameng",
+      "aliases": [
+        "Jia Bharali"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R12876178",
+      "joins": "riv-brahmaputra",
+      "bank": "right",
+      "significance": "Rises below Gori Chen on the Tawang border and runs past the Pakke tiger reserve, taking another name in Assam to join near Tezpur",
+      "notes": [],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-manas",
+      "name": "Manas",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R11295007",
+      "joins": "riv-brahmaputra",
+      "bank": "right",
+      "significance": "Comes down from Bhutan through a World Heritage tiger reserve on the border to join at Jogighopa",
+      "notes": [],
+      "tier": 1,
+      "through": [
+        "BTN",
+        "CHN"
+      ]
+    },
+    {
+      "id": "riv-gangadhar",
+      "name": "Gangadhar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "W28800388",
+      "joins": "riv-brahmaputra",
+      "bank": "right",
+      "context": true,
+      "through": [
+        "BGD"
+      ],
+      "significance": "The Sankosh and the Raidak combined, from the Assam–West Bengal border into Bangladesh to meet the main stream",
+      "notes": [
+        "Drawn only to carry the Sankosh and the Raidak to the Brahmaputra; never asked"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Gangadhar",
+        "Gangadhar River"
+      ],
+      "braidKm": 16
+    },
+    {
+      "id": "riv-sankosh",
+      "name": "Sankosh",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R9521061",
+      "joins": "riv-gangadhar",
+      "bank": "right",
+      "significance": "Rises in northern Bhutan, flows past Punakha's dzong, and forms the Assam–West Bengal border before joining near Bangladesh",
+      "notes": [],
+      "tier": 1,
+      "through": [
+        "BTN",
+        "BGD"
+      ]
+    },
+    {
+      "id": "riv-raidak",
+      "name": "Raidak",
+      "aliases": [
+        "Wang Chhu"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "W28800361",
+      "joins": "riv-gangadhar",
+      "bank": "right",
+      "significance": "Flows past Bhutan's capital, Thimphu, and the Chukha hydro project before crossing Alipurduar into Bangladesh",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Raidak 2",
+        "Raidak",
+        "Raidak River",
+        "Raidak I",
+        "Raidak-I",
+        "Wang Chhu",
+        "Wang Chhu River",
+        "Wangchu"
+      ],
+      "through": [
+        "BTN",
+        "BGD"
+      ]
+    },
+    {
+      "id": "riv-jaldhaka",
+      "name": "Jaldhaka",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R12420354",
+      "joins": "riv-brahmaputra",
+      "bank": "right",
+      "significance": "Rises in the lakes of eastern Sikkim and crosses the Dooars, harnessed at Jhalong, on its way into Bangladesh",
+      "notes": [],
+      "tier": 1,
+      "through": [
+        "BTN",
+        "BGD"
+      ]
+    },
+    {
+      "id": "riv-teesta",
+      "name": "Teesta",
+      "aliases": [
+        "Tista"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R13577352",
+      "joins": "riv-brahmaputra",
+      "bank": "right",
+      "through": [
+        "BGD"
+      ],
+      "source": {
+        "name": "Tso Lhamo Lake",
+        "aliases": [
+          "Zemu Glacier",
+          "Tso Lhamo",
+          "Cholamu"
+        ],
+        "point": [
+          88.76,
+          28.03
+        ],
+        "significance": "Where the Teesta rises, among the ice and high lakes of north Sikkim near the Tibet border"
+      },
+      "significance": "Sikkim's lifeline, carving the state from north to south before crossing the Siliguri plain into Bangladesh, where sharing its water is a long dispute",
+      "notes": [
+        "Rises at Zemu Glacier / Tso Lhamo Lake in north Sikkim"
+      ],
+      "tier": 1,
+      "osmExtra": [
+        "R19299440"
+      ]
+    },
+    {
+      "id": "riv-rangit",
+      "name": "Rangit",
+      "aliases": [
+        "Rangeet"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R13574088",
+      "joins": "riv-teesta",
+      "bank": "right",
+      "significance": "Sikkim's western river, from the glaciers below Kanchenjunga, meeting its parent at Melli below Darjeeling",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-dibang",
+      "name": "Dibang",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R12845674",
+      "joins": "riv-brahmaputra",
+      "bank": "left",
+      "significance": "Comes down from the Mishmi Hills of Arunachal, where India's tallest dam is being built, to meet the main stream near Sadiya",
+      "notes": [],
+      "tier": 1,
+      "through": [
+        "CHN"
+      ],
+      "via": "Lohit"
+    },
+    {
+      "id": "riv-lohit",
+      "name": "Lohit",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R12183268",
+      "joins": "riv-brahmaputra",
+      "bank": "left",
+      "significance": "The 'river of blood', named for the red earth it carries, entering India from Tibet at Kibithu and passing the pilgrim pool of Parshuram Kund",
+      "notes": [
+        "Known as the river of blood (the red river)"
+      ],
+      "tier": 1,
+      "through": [
+        "CHN"
+      ]
+    },
+    {
+      "id": "riv-burhidihing",
+      "name": "Burhi Dihing",
+      "aliases": [
+        "Buri Dihing"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "W229034221",
+      "joins": "riv-brahmaputra",
+      "bank": "left",
+      "significance": "Rises in the Patkai hills and runs past Digboi's century-old oilfield and the rainforest at Jeypore",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Burhi Dihing",
+        "Buri Dihing",
+        "Burhi Dihing River"
+      ]
+    },
+    {
+      "id": "riv-dhansiri",
+      "name": "Dhansiri",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "R16006122",
+      "joins": "riv-brahmaputra",
+      "bank": "left",
+      "significance": "Rises in Nagaland's hills and flows past Dimapur and Golaghat to join",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kopili",
+      "name": "Kopili",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Brahmaputra",
+      "osm": "W229434656",
+      "joins": "riv-brahmaputra",
+      "bank": "left",
+      "significance": "Rises in Meghalaya's Jaintia hills, is harnessed at Umrangso for hydel power, and joins in Morigaon district",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Kopili",
+        "Kopili River"
       ]
     }
   ],

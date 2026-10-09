@@ -44,6 +44,23 @@ function waysFrom(elements, keep) {
 }
 
 /**
+ * A relation's ways: its main_stream members, or — `allRoles`, for a
+ * relation whose main_stream tags cover only a stretch, as the Malaprabha's
+ * mark two ways of nineteen — every member but its side streams. The course
+ * is the shortest path through them either way.
+ */
+function relationWays(osm, allRoles) {
+  const full = get(`${API}/relation/${osm.slice(1)}/full.json`)
+  const rel = full.elements.find((e) => e.type === 'relation' && e.id === Number(osm.slice(1)))
+  const members = rel.members.filter((m) => m.type === 'way')
+  const main = members.filter((m) => m.role === 'main_stream')
+  const wanted = new Set(
+    (main.length && !allRoles ? main : members.filter((m) => m.role !== 'side_stream')).map((m) => m.ref)
+  )
+  return waysFrom(full.elements, (w) => wanted.has(w.id))
+}
+
+/**
  * The raw ways of one river, cached. `R123` is a relation: its main-stream
  * members (or, where a relation has no roles, all its ways). `W123` is a seed
  * way: every way reachable from it by shared nodes that carries one of the
@@ -59,23 +76,18 @@ export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], { a
   if (existsSync(cache)) return JSON.parse(readFileSync(cache, 'utf8'))
   let ways
   if (osm.startsWith('R')) {
-    const full = get(`${API}/relation/${osm.slice(1)}/full.json`)
-    const rel = full.elements.find((e) => e.type === 'relation' && e.id === Number(osm.slice(1)))
-    const members = rel.members.filter((m) => m.type === 'way')
-    const main = members.filter((m) => m.role === 'main_stream')
-    // `allRoles`: a relation whose main_stream tags cover only a stretch — the
-    // Malaprabha's mark two ways of nineteen — is taken whole, side streams
-    // still left out; the course is the shortest path through it either way.
-    const wanted = new Set(
-      (main.length && !allRoles ? main : members.filter((m) => m.role !== 'side_stream')).map((m) => m.ref)
-    )
-    ways = waysFrom(full.elements, (w) => wanted.has(w.id))
+    ways = relationWays(osm, allRoles)
   } else {
     const allowed = new Set(names.map((n) => n.toLowerCase()))
     // `canal`: a river OSM has tagged as a canal along its length — the
     // Thirumanimuthar through Salem and Namakkal — is walked through those too.
     const kinds = canal ? /^(river|stream|canal)$/ : /^(river|stream)$/
-    const named = (w) => w.tags && kinds.test(w.tags.waterway) && allowed.has((w.tags.name ?? '').toLowerCase())
+    // By `name` or `name:en`: the Raidak's way across the Bhutan border
+    // carries only the English one.
+    const named = (w) =>
+      w.tags &&
+      kinds.test(w.tags.waterway) &&
+      [w.tags.name, w.tags['name:en']].some((n) => allowed.has((n ?? '').toLowerCase()))
     const inside = (way) =>
       !box || way.coords.every(([x, y]) => x >= box[0][0] && x <= box[1][0] && y >= box[0][1] && y <= box[1][1])
     const seen = new Map()
@@ -97,8 +109,14 @@ export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], { a
     ways = [...seen.values()].filter(Boolean)
   }
   // Ways named by id: a stretch OSM leaves unnamed — the Kinnarsani above its
-  // dam — that no walk by name can reach.
+  // dam — that no walk by name can reach. Or a whole relation, for a river
+  // OSM calls by another name above a confluence: the Teesta is the Lachen
+  // Chu above Chungthang.
   for (const w of extra) {
+    if (w.startsWith('R')) {
+      ways.push(...relationWays(w, allRoles))
+      continue
+    }
     const id = Number(w.slice(1))
     ways.push(...waysFrom(get(`${API}/way/${id}/full.json`).elements, (e) => e.id === id))
   }

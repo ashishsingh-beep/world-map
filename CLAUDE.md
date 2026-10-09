@@ -419,7 +419,7 @@ because the notes' map draws it so; its note says the summer upwelling is cold.
 
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
-Godavari, Mahanadi, Krishna and Kaveri systems from the notes — each with exactly the
+Godavari, Mahanadi, Krishna, Kaveri and Brahmaputra systems from the notes — each with exactly the
 tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
@@ -436,7 +436,17 @@ those cover only a stretch — the Malaprabha tags two ways of nineteen — and
 then by every member but its side streams — the Kaveri's own main stream
 stops at the Grand Anicut, 100km short of the sea at Poompuhar. A river OSM
 tags as a canal along its length, the Thirumanimuthar through Salem, sets
-`osmCanal` so its name walk takes canal ways too. The pieces are joined on shared nodes, gaps under
+`osmCanal` so its name walk takes canal ways too. A walk matches `name` or
+`name:en` — the Raidak's way over the Bhutan border has only the English —
+and `osmExtra` may name a whole relation as well as a way: the Teesta is the
+Lachen Chu above Chungthang.
+
+A river may run abroad only where it says: `through` lists the countries
+besides India its course may cross — the Brahmaputra's CHN and BGD, from
+Chemayungdung to the Padma — and anywhere else is a wrong course. A braided
+parent sets `braidKm`, how far from its drawn channel a tributary may end (the
+Brahmaputra's 5km in Assam), and a tributary whose own last stretch is a braid
+may carry one too (the Gangadhar's 16km into the Jamuna). The pieces are joined on shared nodes, gaps under
 40km bridged, and the course is the shortest path between the ends, so a
 braided stretch gives one channel. Then held to the notes: a main river must
 rise within 30km of its authored `source` (its marker is moved to where the
@@ -446,7 +456,10 @@ Kathajodi feeds the Devi); `endsAt` stops a main river early — the Godavari at
 the Dowleswaram barrage, where it divides into the Gautami and the Vasishta.
 Simplified to 150m and stored as `line` in `places.json`.
 
-Where a main river rises is a question too, beside its tributaries: "Find the
+Where a river rises is a question too, beside its tributaries — a main
+river's always, a tributary's where the notes mark it (the Teesta's Tso Lhamo,
+Zemu Glacier accepted), and abroad where it is abroad (`source.country`: the
+Brahmaputra's Chemayungdung Glacier is filed under China): "Find the
 origin: Trambakeshwar", or its marker painted and the name typed. It is
 authored on the river as `source` — name, aliases (Trimbakeshwar), the notes'
 point and a significance — and the build makes it a place of its own, `type:
@@ -466,7 +479,8 @@ Pench then stopped in mid-air 48km short of the Wainganga, so it is back as
 asked — `Round.context` keeps it out of `places` and in the drawing. The
 Tungabhadra is the same for the Krishna: the notes name the Tunga and the
 Bhadra, which meet at Koodli some 550km short of the Krishna, so the river they
-make is drawn as context to carry them there. A river is
+make is drawn as context to carry them there; and the Gangadhar for the
+Brahmaputra, the Sankosh and the Raidak combined into Bangladesh. A river is
 never stretched to meet a parent it does not reach; `via` remains for a river
 whose connector is not drawn at all (under 80km).
 

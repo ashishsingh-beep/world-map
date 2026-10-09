@@ -1147,7 +1147,9 @@ function courseRivers(rivers, where) {
       leaves: p.role === 'distributary',
     })
     if (p.endsAt) line = endAt(line, p.endsAt)
-    if (p.role === 'main') {
+    if (p.role === 'main' && !p.source) errors.push(`${where(p.id)}: a main river needs its source`)
+    // A tributary may have one too, where the notes mark it: the Teesta's.
+    if (p.source) {
       const km = geoDistance(line[0], p.source.point) * 6371
       if (km > 30) errors.push(`${where(p.id)}: rises ${km.toFixed(0)}km from ${p.source.name}`)
       // Marked where the course begins, under the notes' name for the place:
@@ -1159,7 +1161,12 @@ function courseRivers(rivers, where) {
       // Pench reaches the Wainganga through the Kanhan — so the line stops
       // where it really does, short of its parent but not far.
       const km = kmToLine(parent, line[line.length - 1])
-      const limit = p.via ? 80 : 2
+      // A braided parent is a plain of channels, not a line: the Brahmaputra
+      // in Assam runs kilometres wide, and a tributary meets whichever
+      // channel OSM did not draw as the main one.
+      // A tributary can carry its own, where its last stretch is itself a
+      // braid of unnamed channels: the Gangadhar's into the Jamuna.
+      const limit = p.via ? 80 : Math.max(2, parentPlace.braidKm ?? 0, p.braidKm ?? 0)
       if (km > limit) {
         errors.push(`${where(p.id)}: ends ${km.toFixed(1)}km from ${parentPlace.name}${p.via ? `, too far even through the ${p.via}` : ', which it should join'}`)
       }
@@ -1177,11 +1184,23 @@ function courseRivers(rivers, where) {
     }
     if (lengthKm(line) < 20) errors.push(`${where(p.id)}: only ${lengthKm(line).toFixed(0)}km of course`)
     const sample = line.filter((_, i) => i % 25 === 0)
+    // `through` names the countries a river may also run in — the
+    // Brahmaputra rises in Tibet and ends in Bangladesh — and every one of
+    // them must exist; anywhere else is a wrong course.
+    const through = (p.through ?? []).map((iso) => {
+      if (!picked.has(iso)) errors.push(`${where(p.id)}: "through" names ${iso}, which is not a drawn country`)
+      return picked.get(iso)
+    }).filter(Boolean)
     // Off the drawn land only by the coast's own generalisation is still India.
     const abroad = sample.filter(
-      (c) => !geoContains(INDIA_FEATURE, c) && Math.min(...indiaRing.map((v) => geoDistance(v, c) * 6371)) > 5
+      (c) =>
+        !geoContains(INDIA_FEATURE, c) &&
+        !through.some((f) => geoContains(f, c)) &&
+        Math.min(...indiaRing.map((v) => geoDistance(v, c) * 6371)) > 5
     ).length
-    if (abroad > sample.length * 0.05) errors.push(`${where(p.id)}: ${abroad} of ${sample.length} sampled points outside India`)
+    if (abroad > sample.length * 0.05) {
+      errors.push(`${where(p.id)}: ${abroad} of ${sample.length} sampled points outside India${through.length ? ` and ${p.through.join(', ')}` : ''}`)
+    }
     const course = simplifyLine(line, 0.15)
     done.set(p.id, course)
     p.line = course
@@ -1197,20 +1216,21 @@ for (const file of syllabusFiles) {
   const rivers = doc.places.filter((p) => p.type === 'river')
   if (rivers.length) courseRivers(rivers, where)
   /**
-   * A main river's origin is a question of its own — "Find the origin:
+   * A river's origin is a question of its own — "Find the origin:
    * Trambakeshwar" — so it is a place, made here from the river's `source`
    * once the course has put it where the line begins. Authored on the river,
    * not beside it, so the two can never drift apart.
    */
   for (const r of rivers) {
-    if (r.role !== 'main' || !r.source) continue
+    if (!r.source) continue
     if (!r.source.significance) errors.push(`${where(r.id)}: its source needs a significance, to be asked about`)
     doc.places.push({
       id: `origin-${r.id.replace(/^riv-/, '')}`,
       name: r.source.name,
       aliases: r.source.aliases ?? [],
       type: 'origin',
-      country: r.country,
+      // A source abroad is filed where it is: the Brahmaputra's is in Tibet.
+      country: r.source.country ?? r.country,
       basin: r.basin,
       river: r.id,
       point: r.source.point,
