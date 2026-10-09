@@ -17,7 +17,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
-import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, simplifyLine } from './osm-rivers.mjs'
+import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -1169,6 +1169,12 @@ function courseRivers(rivers, where) {
       const limit = p.via ? 80 : Math.max(2, parentPlace.braidKm ?? 0, p.braidKm ?? 0)
       if (km > limit) {
         errors.push(`${where(p.id)}: ends ${km.toFixed(1)}km from ${parentPlace.name}${p.via ? `, too far even through the ${p.via}` : ', which it should join'}`)
+      } else if (!p.via) {
+        // Within reach, so carried the last of the way onto the parent's drawn
+        // channel: in a braid the two meet through channels OSM leaves
+        // unconnected, and a line stopping kilometres short reads as a river
+        // that never arrives. A `via` river really does stop short.
+        line = [...line, nearestOnLine(parent, line[line.length - 1])]
       }
     }
     if (p.role === 'distributary') {

@@ -125,6 +125,25 @@ export function fetchRiverWays(osm, names, cacheDir, box = null, extra = [], { a
 }
 
 /** Kilometres from a point to a line, flat within each segment. */
+/** The point of a line nearest `at`, flat within each segment as `kmToLine` measures. */
+export function nearestOnLine(line, at) {
+  let best = null
+  for (let i = 0; i < line.length - 1; i++) {
+    const [ax, ay] = line[i]
+    const [bx, by] = line[i + 1]
+    const k = Math.cos((((ay + by) / 2) * Math.PI) / 180)
+    const vx = (bx - ax) * k
+    const vy = by - ay
+    const wx = (at[0] - ax) * k
+    const wy = at[1] - ay
+    const len2 = vx * vx + vy * vy
+    const t = len2 ? Math.max(0, Math.min(1, (wx * vx + wy * vy) / len2)) : 0
+    const d = Math.hypot(wx - t * vx, wy - t * vy)
+    if (!best || d < best.d) best = { d, p: [ax + t * (bx - ax), ay + t * (by - ay)] }
+  }
+  return best.p
+}
+
 export function kmToLine(line, at) {
   let best = Infinity
   for (let i = 0; i < line.length - 1; i++) {

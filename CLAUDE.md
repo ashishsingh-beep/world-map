@@ -490,9 +490,14 @@ asked — `Round.context` keeps it out of `places` and in the drawing. The
 Tungabhadra is the same for the Krishna: the notes name the Tunga and the
 Bhadra, which meet at Koodli some 550km short of the Krishna, so the river they
 make is drawn as context to carry them there; and the Gangadhar for the
-Brahmaputra, the Sankosh and the Raidak combined into Bangladesh. A river is
-never stretched to meet a parent it does not reach; `via` remains for a river
-whose connector is not drawn at all (under 80km).
+Brahmaputra, the Sankosh and the Raidak combined into Bangladesh. A tributary
+that ends within its allowance (2km, or the braid's) is carried the rest of the
+way onto its parent's drawn channel, so it never stops visibly short — in a
+braid the two meet through channels OSM leaves unconnected. Beyond that a river
+is never stretched to meet a parent it does not reach; `via` remains for a
+river whose connector is not drawn at all (under 80km), and it alone keeps
+stopping short. The Dibang joins the Lohit, as OSM has it, just above the main
+stream.
 
 Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
 a main river bold blue, a tributary finer, and a distributary teal and dashed

@@ -1376,15 +1376,15 @@
       "role": "tributary",
       "basin": "Brahmaputra",
       "osm": "R12845674",
-      "joins": "riv-brahmaputra",
+      "joins": "riv-lohit",
       "bank": "left",
-      "significance": "Comes down from the Mishmi Hills of Arunachal, where India's tallest dam is being built, to meet the main stream near Sadiya",
+      "significance": "Comes down from the Mishmi Hills of Arunachal, where India's tallest dam is being built, to meet its neighbour near Sadiya just above the main stream",
       "notes": [],
       "tier": 1,
       "through": [
         "CHN"
       ],
-      "via": "Lohit"
+      "braidKm": 6
     },
     {
       "id": "riv-lohit",
