@@ -1130,6 +1130,16 @@
         "riv-thirumanimuthar"
       ],
       "mnemonic": "C̶ H S A T — CSAT with the C struck out for an H: Hemavati, Shimsha, Arkavati, Thirumanimuthar"
+    },
+    {
+      "id": "riv-kaveri-right-lks-trick",
+      "name": "Kaveri — right-bank tributaries (L K S)",
+      "members": [
+        "riv-lakshmantirtha",
+        "riv-kabini",
+        "riv-suvarnavati"
+      ],
+      "mnemonic": "L K S — Laksham ji Tirth se Kab aaye? Swarn hiran leke aaye: Lakshmantirtha, Kabini, Suvarnavati"
     }
   ]
 }

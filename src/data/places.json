@@ -83148,6 +83148,18 @@
       "section": "rivers"
     },
     {
+      "id": "riv-kaveri-right-lks-trick",
+      "name": "Kaveri — right-bank tributaries (L K S)",
+      "members": [
+        "riv-lakshmantirtha",
+        "riv-kabini",
+        "riv-suvarnavati"
+      ],
+      "mnemonic": "L K S — Laksham ji Tirth se Kab aaye? Swarn hiran leke aaye: Lakshmantirtha, Kabini, Suvarnavati",
+      "continent": "Rivers",
+      "section": "rivers"
+    },
+    {
       "id": "w-danish-straits",
       "name": "The Danish Straits",
       "members": [
