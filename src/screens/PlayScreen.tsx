@@ -184,6 +184,7 @@ export function PlayScreen({
         atlas={round.atlas}
         revealPoints={quiz.revealPoints}
         focusPoints={quiz.focusPoints}
+        focusAlways={quiz.focusAlways}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
         countryMarkers={!isWaterRound && q?.place?.section !== 'phenomena' && q?.place?.section !== 'rivers'}

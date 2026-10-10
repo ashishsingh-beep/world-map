@@ -46,6 +46,10 @@ const SMALL_SEA_PX = 30
 const FOCUS_CONTEXT = 4
 /** …and never less than this much of the map, so there are coasts to know it by. */
 const FOCUS_MIN_DEG = 20
+/** `focusAlways`: the least map a focused river or peak is shown with, in degrees… */
+const FOCUS_ALWAYS_MIN_DEG = 4
+/** …and the room around a long one, as a multiple of its own size. */
+const FOCUS_ALWAYS_PADDING = 1.4
 const PLACE_MARKER_PX = 7
 
 /** Screen-space clearance around the fitted geography, so it doesn't butt up
@@ -304,6 +308,12 @@ export interface MapCanvasProps {
    * only when it is too small to find on the unzoomed map.
    */
   focusPoints?: [number, number][] | null
+  /**
+   * Zoom to `focusPoints` whatever their size — the Rivers map's Type mode —
+   * fitted with room around them, and never closer than `FOCUS_ALWAYS_MIN_DEG`
+   * of map, so a peak or a short tributary still has its neighbours round it.
+   */
+  focusAlways?: boolean
   /** Drop a pin at this lon/lat — used to show where the answer actually was. */
   pinPoint?: [number, number] | null
   /** Show where the player tapped, so a near miss is visible next to the answer. */
@@ -366,6 +376,7 @@ export function MapCanvas({
   atlas = 'world',
   revealPoints = null,
   focusPoints = null,
+  focusAlways = false,
   pinPoint = null,
   markPoint = null,
   onPickPoint,
@@ -607,6 +618,22 @@ export function MapCanvas({
     // whole map first if the last reveal left the camera zoomed, so each
     // question starts from the same place.
     const fr = focusPoints?.length ? frameOf(focusPoints) : null
+    if (fr && focusAlways) {
+      const pxPerDeg = (projection.scale() * Math.PI) / 180
+      const minSpan = FOCUS_ALWAYS_MIN_DEG * pxPerDeg
+      const k = Math.max(
+        1,
+        Math.min(
+          60,
+          viewW / Math.max(fr.w * FOCUS_ALWAYS_PADDING, minSpan),
+          viewH / Math.max(fr.h * FOCUS_ALWAYS_PADDING, minSpan)
+        )
+      )
+      const t = sel.transition()
+      const from = zoomTransform(svg).k > 1.01 ? t.duration(450).call(behaviour.transform, zoomIdentity).transition() : t
+      from.duration(700).call(behaviour.transform, at(fr.cx, fr.cy, k))
+      return
+    }
     if (fr && Math.max(fr.w, fr.h) < SMALL_SEA_PX) {
       const pxPerDeg = (projection.scale() * Math.PI) / 180
       const span = Math.max(Math.max(fr.w, fr.h) * FOCUS_CONTEXT, FOCUS_MIN_DEG * pxPerDeg)
@@ -637,6 +664,7 @@ export function MapCanvas({
     revealIso,
     stableRevealPoints,
     stableFocusPoints,
+    focusAlways,
     frameOf,
     projection,
     path,

@@ -390,7 +390,7 @@ ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
 range emits no marker and no second label. A peak is a little snow-capped mountain (`PeakGlyph` in `MapCanvas`, `PeakSwatch` in `src/ui/bits.tsx` for the legend: slate-blue faces, white snow, green foothills and pines), and so is a river's origin; in a round its faces take the quiz colour and the snow stays.
 Nothing on the map pins a summit down, so a peak or an origin is answered by a
-tap anywhere within 100km of it or 48px on screen (`PEAK_REACH_KM`,
+tap anywhere within 150km of it or 48px on screen (`PEAK_REACH_KM`,
 `PEAK_TOLERANCE_PX` in `useQuiz`), against a city's 28px — so long as it is
 still the nearest point the round could ask, every one in the pool and not only
 this draw's, or one tap in Garhwal would answer three peaks.
@@ -558,7 +558,11 @@ times its own size and at least 20° of map around it so there are coasts and
 neighbours to know it by. On the Political Map a country is measured by its
 bounds, so Madagascar stays where it is and an archipelago spread over 25° —
 the Federated States of Micronesia — keeps its ring rather than a zoom; the
-Seas round still focuses seas only, never a strait's marker. Each such question starts from the
+Seas round still focuses seas only, never a strait's marker. The Rivers map
+zooms on every Type question, whatever its size (`focusAlways`): a river is
+framed by its whole course with room around it, a peak, origin or landmark
+(Majuli) by its point with at least 4° of map, because a tributary is one thin
+line among twenty and finding which is painted at India's scale is a hunt. Each such question starts from the
 whole map, so the last reveal's zoom is undone first. A wrong tap is framed with the answer so you
 see how far off it was, except on water: a tap in the Caribbean for the Arabian
 Sea framed half the world and the sea never came into view. A sea is framed by

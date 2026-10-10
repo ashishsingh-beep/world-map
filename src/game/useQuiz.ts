@@ -43,10 +43,10 @@ const CURRENT_TOLERANCE_PX = 24
 /**
  * A peak, or a river's origin, is a point in country where nothing on the map
  * says exactly where it is, so it is given far more room than a city: anywhere
- * within 100km of it, or 48px on screen, so long as it is still the nearest
+ * within 150km of it, or 48px on screen, so long as it is still the nearest
  * peak to the tap.
  */
-const PEAK_REACH_KM = 100
+const PEAK_REACH_KM = 150
 const PEAK_TOLERANCE_PX = 48
 const isPeakLike = (q: Question) => q.place?.type === 'peak' || q.place?.type === 'origin'
 
@@ -682,7 +682,17 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
           : // The Political Map: a country, or a place in the places section.
             !current.place || current.place.section === 'places'
             ? focusOf(current)
-            : null,
+            : // The Rivers map: the river's whole course, or the peak, origin
+              // or landmark's point — every one, however large (`focusAlways`).
+              current.place.section === 'rivers'
+              ? ((current.place.line as [number, number][] | undefined) ?? [current.point])
+              : null,
+    /**
+     * On the Rivers map the camera goes to every Type-mode question, not only
+     * a small one: a tributary is a thin line among twenty, and finding which
+     * is painted at India's scale is a hunt before it is a question.
+     */
+    focusAlways: mode === 'type' && phase === 'asking' && current?.place?.section === 'rivers',
     pinIso: revealing && verdict === 'incorrect' && current.iso ? current.iso : null,
     // No pin on a sea: the painted region already says where it was, and a pin
     // in the middle of it would only re-assert the point this replaced.
