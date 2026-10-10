@@ -40,6 +40,15 @@ const REVEAL_MS = 1400
 export const PIN_TOLERANCE_PX = 28
 /** How close a tap must land to a current's arrow or a river, in screen pixels — and nearer it than any other. */
 const CURRENT_TOLERANCE_PX = 24
+/**
+ * A peak, or a river's origin, is a point in country where nothing on the map
+ * says exactly where it is, so it is given far more room than a city: anywhere
+ * within 100km of it, or 48px on screen, so long as it is still the nearest
+ * peak to the tap.
+ */
+const PEAK_REACH_KM = 100
+const PEAK_TOLERANCE_PX = 48
+const isPeakLike = (q: Question) => q.place?.type === 'peak' || q.place?.type === 'origin'
 
 /**
  * Lines that are all on the map from the start and answered by picking one
@@ -409,15 +418,17 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
         return at && b ? Math.hypot(at[0] - b[0], at[1] - b[1]) : Infinity
       }
       // Being within tolerance is not enough: the tap must also be closer to
-      // this place than to any other in the round, or one tap between Santos
-      // and São Paulo would answer both.
+      // this place than to any other in the round — every one it could ask,
+      // not only this draw's — or one tap between Santos and São Paulo would
+      // answer both.
       const px = screenDistance(current)
       // Points only: a range's or a river's own point is just where its label
       // sits, and a tap near the label is no answer to anything.
-      const nearestOnScreen = queue.reduce((best, q) =>
+      const nearestOnScreen = pool.reduce((best, q) =>
         !q.iso && !q.place?.line && screenDistance(q) < screenDistance(best) ? q : best
       , current)
-      const byScreen = px <= PIN_TOLERANCE_PX && nearestOnScreen.id === current.id
+      const tolerancePx = isPeakLike(current) ? PEAK_TOLERANCE_PX : PIN_TOLERANCE_PX
+      const byScreen = px <= tolerancePx && nearestOnScreen.id === current.id
 
       /**
        * A sea is an area, not a point, so pointing anywhere inside it counts.
@@ -425,16 +436,18 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
        * in the middle of the Mediterranean scores better against the
        * Mediterranean than against the Tyrrhenian inside it, and vice versa.
        */
-      const spanScore = (q: Question) =>
-        q.place?.spanKm
-          ? (geoDistance(lonLat, q.point) * EARTH_RADIUS_KM) / q.place.spanKm
-          : Infinity
-      const nearestBySpan = queue.reduce((best, q) => (spanScore(q) < spanScore(best) ? q : best))
+      const reachKm = (q: Question) =>
+        isPeakLike(q) ? Math.max(q.place?.spanKm ?? 0, PEAK_REACH_KM) : q.place?.spanKm
+      const spanScore = (q: Question) => {
+        const reach = q.place?.line ? undefined : reachKm(q)
+        return reach ? (geoDistance(lonLat, q.point) * EARTH_RADIUS_KM) / reach : Infinity
+      }
+      const nearestBySpan = pool.reduce((best, q) => (spanScore(q) < spanScore(best) ? q : best), current)
       const bySpan = spanScore(current) <= 1 && nearestBySpan.id === current.id
 
       settle(byScreen || bySpan, undefined, km)
     },
-    [phase, current, settle, queue, choices]
+    [phase, current, settle, pool, choices]
   )
 
   /**

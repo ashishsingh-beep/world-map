@@ -389,6 +389,11 @@ that is neither a point nor a polygon, so they are drawn as a band along a
 ridgeline and answered by tapping anywhere near it (`distanceToLineKm`, against
 the range's own `spanKm`). The band carries its own name along its path, so a
 range emits no marker and no second label. A peak is a little snow-capped mountain (`PeakGlyph` in `MapCanvas`, `PeakSwatch` in `src/ui/bits.tsx` for the legend: slate-blue faces, white snow, green foothills and pines), and so is a river's origin; in a round its faces take the quiz colour and the snow stays.
+Nothing on the map pins a summit down, so a peak or an origin is answered by a
+tap anywhere within 100km of it or 48px on screen (`PEAK_REACH_KM`,
+`PEAK_TOLERANCE_PX` in `useQuiz`), against a city's 28px — so long as it is
+still the nearest point the round could ask, every one in the pool and not only
+this draw's, or one tap in Garhwal would answer three peaks.
 
 **An ocean current is an arrow.** The third World Map category, Phenomena,
 starts with the currents (`src/data/syllabus/currents.json`, section
