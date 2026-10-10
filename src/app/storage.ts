@@ -213,3 +213,17 @@ export function loadStates(): StatesMode {
 export function saveStates(mode: StatesMode): void {
   write(STATES_KEY, mode)
 }
+
+const ISOTHERM_KEY = 'map-practice:isotherms'
+
+/** Which isotherm map was last open — January, July or the range — remembered like the grid. */
+export type IsothermMap = 'january' | 'july' | 'range'
+
+export function loadIsothermMap(): IsothermMap {
+  const v = read(ISOTHERM_KEY)
+  return v === 'july' || v === 'range' ? v : 'january'
+}
+
+export function saveIsothermMap(map: IsothermMap): void {
+  write(ISOTHERM_KEY, map)
+}

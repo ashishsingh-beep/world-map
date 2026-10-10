@@ -32,12 +32,19 @@ export interface Route {
 
 export const HOME: Route = { view: 'home', roundId: 'political-world' }
 
+/**
+ * The isotherm maps: a Learn screen with no round behind it, so it has a route
+ * of its own rather than an entry in the rounds. Any screen of it is Learn.
+ */
+export const ISOTHERMS = 'isotherms'
+
 /** Always returns a route that exists — a hand-edited hash cannot crash the app. */
 export function parseHash(hash: string): Route {
   const [id, screen] = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
   if (!id) return HOME
   const atlas = ATLASES[id as keyof typeof ATLASES]
   if (atlas) return { view: 'atlas', roundId: HOME.roundId, atlas }
+  if (id === ISOTHERMS) return { view: 'learn', roundId: ISOTHERMS }
   // An old link — a country round, a continent's places — lands on its
   // Political Map scope, and the hash is tidied to say so.
   const roundId = canonicalRoundId(id)

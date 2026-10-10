@@ -422,6 +422,32 @@ the name alone is the typed answer, but wherever one is shown — the Pin prompt
 a label, a miss — `displayName` adds its ocean. The Somali Current is warm
 because the notes' map draws it so; its note says the summer upwelling is cold.
 
+**Isotherms are computed, not traced.** Phenomena's second entry is a Learn-only
+screen (`#/isotherms`, `src/screens/IsothermScreen.tsx`, no round behind it, so
+`App` answers it before anything that needs one) with three maps — January,
+July and the January–July range — at the textbook figures' own levels
+(−25, −12.5, 0, 10, 20, 30°C; 0–30°C; 3–60°C). The lines are contoured at build
+time by `scripts/isotherms.mjs` from NOAA's 1991–2020 long-term means, the
+record the figures are generalised from: January and July from the NCEP/NCAR
+reanalysis (2.5°), reduced to sea level at 6.5°C a kilometre — or Tibet and the
+Andes are cold islands — except over the Greenland and Antarctic ice, which the
+figures leave cold (Greenland is July's 0°C loop). The range takes GHCN-CAMS
+station temperatures (0.5°) over land: on the 2.5° grid Siberia peaks at 53°C,
+the stations reach Verkhoyansk's 62°C, the figure's 60°C core. Each field is
+smoothed (3° for the months, 1.25° for the range's bands, 0.4° for its 50 and
+60°C cores) and contoured by marching squares wrapping round the globe; short
+loops of the broad bands are dropped as noise, the hot cores keep theirs. The
+thermal equator is the warmest latitude within the tropics on each meridian,
+smoothed along the parallel. `npm run data` fails unless the figures' features
+come out: the thermal equator dipping over South America and Australia in
+January and riding north over Africa and India in July, Greenland's July 0°C,
+the Sahara's July 30°C and range 30°C, Canada's 40°C and Siberia's 60°C range.
+One figure feature the data does not bear out: the southern continents' 20°C
+range loops — Australia peaks at 19°C, southern Africa at 16°C — so they show
+as the 10°C loops. Lines are coloured on the currents' own blue-to-red
+(`CURRENT_INK`), lowest level to highest; the thermal equator is dashed navy.
+`MapCanvas` draws them through `isolines`, a plain line layer with labels.
+
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
 Godavari, Mahanadi, Krishna, Kaveri and Brahmaputra systems from the notes — each with exactly the

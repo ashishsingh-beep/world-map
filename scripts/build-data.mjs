@@ -17,6 +17,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
+import { annualRange, contour, readReanalysis, readStations, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -1964,6 +1965,104 @@ const dateLine = (() => {
     JSON.stringify({ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: dateLine } })
   )
   console.log(`Date Line: ${dateLine.length} points, ${sides.length} islands on their own side`)
+}
+
+/**
+ * Isotherms — Phenomena's January, July and January–July range maps — from
+ * NOAA's 1991–2020 long-term means (see scripts/isotherms.mjs for why each
+ * source, the sea-level reduction and the smoothing). Levels are the
+ * textbook figures' own. Held to what the figures show, so a wrong source or
+ * a broken contour cannot pass unnoticed.
+ */
+{
+  const PSL = 'https://downloads.psl.noaa.gov/Datasets'
+  const files = {
+    air: ['ncep-air.sig995.mon.ltm.1991-2020.nc', `${PSL}/ncep.reanalysis.derived/surface/air.sig995.mon.ltm.1991-2020.nc`],
+    height: ['ncep-hgt.sfc.nc', `${PSL}/ncep.reanalysis/surface/hgt.sfc.nc`],
+    stations: ['ghcncams-air.mon.ltm.1991-2020.nc', `${PSL}/ghcncams/Derived/air.mon.ltm.1991-2020.nc`],
+  }
+  for (const [name, url] of Object.values(files)) {
+    const at = resolve(CACHE, name)
+    if (!existsSync(at)) execFileSync('curl', ['-sSL', '-f', '-o', at, url], { stdio: 'inherit' })
+  }
+  const re = readReanalysis(resolve(CACHE, files.air[0]), resolve(CACHE, files.height[0]))
+  const stations = readStations(resolve(CACHE, files.stations[0]))
+  const janField = smooth(seaLevel(re.jan, re.height), 3)
+  const julField = smooth(seaLevel(re.jul, re.height), 3)
+  const range = annualRange(stations, re)
+  // Broad bands smoothed hard; the 50°C and 60°C cores over Siberia only
+  // lightly, or the 62°C the stations record at Verkhoyansk is averaged away.
+  const rangeBroad = smooth(range, 1.25)
+  const rangeCore = smooth(range, 0.4)
+
+  const km = (line) => line.slice(1).reduce((s, c, i) => s + geoDistance(line[i], c) * 6371, 0)
+  /** Where a line's value is written: along it every ~9,000km, once for a short one. */
+  const labelsOf = (line) => {
+    const total = km(line)
+    const n = Math.max(1, Math.round(total / 9000))
+    const out = []
+    for (let k = 0; k < n; k++) {
+      const want = (total * (k + 0.5)) / n
+      let run = 0
+      for (let i = 1; i < line.length; i++) {
+        run += geoDistance(line[i - 1], line[i]) * 6371
+        if (run >= want) {
+          out.push(line[i])
+          break
+        }
+      }
+    }
+    return out
+  }
+  const isolines = (field, levels, { minKm = () => 800, coreField = null, coreFrom = Infinity } = {}) =>
+    levels.flatMap((value) =>
+      contour(value >= coreFrom ? coreField : field, value, 85, -66)
+        .map((raw) => simplify(raw, 0.25))
+        .filter((line) => line.length >= 3 && km(line) >= (value >= coreFrom ? 150 : minKm(value)))
+        .map((line) => ({ value, line, labels: labelsOf(line) }))
+    )
+  const january = {
+    levels: [-25, -12.5, 0, 10, 20, 30],
+    lines: isolines(janField, [-25, -12.5, 0, 10, 20, 30]),
+    thermalEquator: thermalEquator(janField),
+  }
+  const july = {
+    levels: [0, 10, 20, 30],
+    lines: isolines(julField, [0, 10, 20, 30]),
+    thermalEquator: thermalEquator(julField),
+  }
+  const rangeMap = {
+    levels: [3, 10, 20, 30, 40, 50, 60],
+    // Short loops of the broad bands cut off — the coasts' small 3°C ones,
+    // off Peru and round Madagascar, are the data's noise — while the
+    // continents' hot cores keep theirs: the Sahara's 30°C, Mongolia's 40°C.
+    lines: isolines(rangeBroad, [3, 10, 20, 30, 40, 50, 60], {
+      minKm: (v) => (v >= 30 ? 600 : 1500),
+      coreField: rangeCore,
+      coreFrom: 50,
+    }),
+  }
+
+  // Held to the figures.
+  const latAt = (line, lon) => line.reduce((b, c) => (Math.abs(c[0] - lon) < Math.abs(b[0] - lon) ? c : b))[1]
+  const mean = (line, k) => line.reduce((s, c) => s + c[k], 0) / line.length
+  const has = (lines, value, test) => lines.some((l) => l.value === value && test(l.line))
+  const checks = [
+    ['January: the thermal equator dips south over South America', latAt(january.thermalEquator, -55) < -5],
+    ['January: … and over Australia', latAt(january.thermalEquator, 135) < -10],
+    ['July: the thermal equator rides north over Africa and India', latAt(july.thermalEquator, 15) > 12 && latAt(july.thermalEquator, 75) > 15],
+    ['January: a -25°C line over the far north', has(january.lines, -25, (l) => mean(l, 1) > 55)],
+    ['July: Greenland is a 0°C island', has(july.lines, 0, (l) => mean(l, 1) > 65 && mean(l, 0) > -60 && mean(l, 0) < -25)],
+    ['July: a 30°C loop over the Sahara and south-west Asia', has(july.lines, 30, (l) => l.some((c) => c[0] > 0 && c[0] < 40 && c[1] > 15 && c[1] < 35))],
+    ['Range: a 60°C core over north-east Siberia', has(rangeMap.lines, 60, (l) => mean(l, 1) > 60 && mean(l, 0) > 110 && mean(l, 0) < 150)],
+    ['Range: a 30°C loop over the Sahara', has(rangeMap.lines, 30, (l) => mean(l, 1) > 20 && mean(l, 1) < 35 && mean(l, 0) > -15 && mean(l, 0) < 20)],
+    ['Range: a 40°C loop over Canada', has(rangeMap.lines, 40, (l) => mean(l, 0) > -120 && mean(l, 0) < -70 && mean(l, 1) > 50)],
+  ]
+  const failed = checks.filter(([, ok]) => !ok).map(([what]) => what)
+  if (failed.length) throw new Error(`Isotherms do not match the figures:\n  ${failed.join('\n  ')}`)
+  writeFileSync(resolve(OUT, 'isotherms.json'), JSON.stringify({ january, july, range: rangeMap }))
+  const count = (m) => `${m.lines.length} lines`
+  console.log(`Isotherms: January ${count(january)}, July ${count(july)}, range ${count(rangeMap)}; ${checks.length} figure checks pass`)
 }
 
 writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))

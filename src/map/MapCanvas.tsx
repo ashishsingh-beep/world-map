@@ -185,6 +185,20 @@ const STATE_TINTS = ['#fde7a4', '#f9c6a5', '#f4b6c2', '#dde8a4', '#e7cfa8']
 const NEXT_STATES_MODE: Record<StatesMode, StatesMode> = { colour: 'lines', lines: 'off', off: 'colour' }
 const STATES_MODE_LABEL: Record<StatesMode, string> = { colour: 'Coloured', lines: 'Lines', off: 'Off' }
 
+/**
+ * A line drawn for what it shows — an isotherm, the thermal equator — with its
+ * text written at `labels` (or not at all).
+ */
+export interface MapIsoline {
+  id: string
+  line: [number, number][]
+  color: string
+  label?: string
+  labels?: [number, number][]
+  dashed?: boolean
+  width?: number
+}
+
 /** A mountain's colours, idle: two slate-blue faces, white snow, green foothills. */
 const PEAK_INK = {
   face: '#4a6fa5',
@@ -293,6 +307,11 @@ export interface MapCanvasProps {
   /** Mountain ranges, drawn as bands along their ridgelines. */
   bands?: MapBand[]
   /**
+   * Lines drawn over the map for what they show, never asked about: the
+   * isotherms, each in its own colour with its value written along it.
+   */
+  isolines?: MapIsoline[]
+  /**
    * Which atlas to draw. 'india' adds the state and union-territory outlines
    * over the country geography; they are context, never questions.
    */
@@ -373,6 +392,7 @@ export function MapCanvas({
   points,
   areas,
   bands,
+  isolines,
   atlas = 'world',
   revealPoints = null,
   focusPoints = null,
@@ -1101,6 +1121,47 @@ export function MapCanvas({
                 </Fragment>
               ))}
             </g>
+          )}
+
+          {/* Isotherms and the thermal equator: drawn over the land, under
+              everything that can be tapped, each value written along its line. */}
+          {isolines?.map((l) => (
+            <path
+              key={`il-${l.id}`}
+              d={path({ type: 'LineString', coordinates: l.line } as never) ?? undefined}
+              fill="none"
+              stroke={l.color}
+              strokeWidth={l.width ?? 2.2}
+              strokeDasharray={l.dashed ? '7 5' : undefined}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              vectorEffect="non-scaling-stroke"
+              pointerEvents="none"
+            />
+          ))}
+          {isolines?.flatMap((l) =>
+            (l.label ? (l.labels ?? []) : []).map((at, n) => {
+              const p = projection(at)
+              if (!p) return null
+              return (
+                <text
+                  key={`ilt-${l.id}-${n}`}
+                  x={p[0]}
+                  y={p[1]}
+                  dy="0.35em"
+                  textAnchor="middle"
+                  fontSize={11.5 / k}
+                  fontWeight={800}
+                  fill={l.color}
+                  stroke="#ffffff"
+                  strokeWidth={3 / k}
+                  paintOrder="stroke"
+                  pointerEvents="none"
+                >
+                  {l.label}
+                </text>
+              )
+            })
           )}
 
           {/* Ranges: a band along the ridgeline, under the peaks standing on

@@ -27,7 +27,8 @@ import {
   type WaterKind,
   type WaterRegion,
 } from './ui/bits'
-import { HOME, useRoute, type Atlas } from './app/route'
+import { HOME, ISOTHERMS, useRoute, type Atlas, type Route } from './app/route'
+import { IsothermScreen } from './screens/IsothermScreen'
 import {
   clearRound,
   fits,
@@ -51,8 +52,19 @@ const riverTally = (asked: Place[]) => {
   return [n(rivers, 'river'), origins && n(origins, 'origin'), landmarks && n(landmarks, 'landmark')].filter(Boolean).join(' · ')
 }
 
+/**
+ * The isotherm maps have no round behind them, so they are answered before
+ * anything that needs one.
+ */
 export default function App() {
   const [route, navigate] = useRoute()
+  if (route.roundId === ISOTHERMS) {
+    return <IsothermScreen onExit={() => navigate({ view: 'atlas', roundId: HOME.roundId, atlas: 'world' })} />
+  }
+  return <Rounds route={route} navigate={navigate} />
+}
+
+function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, replace?: boolean) => void }) {
   const [prefs, setPrefs] = useState(loadPrefs)
   const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
@@ -794,6 +806,17 @@ export default function App() {
                   </button>
                 )
               })}
+              <button
+                type="button"
+                onClick={() => navigate({ view: 'learn', roundId: ISOTHERMS })}
+                className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+              >
+                <div className="text-lg font-extrabold text-slate-900">Isotherms</div>
+                <div className="mt-1 text-sm text-slate-600">
+                  Surface air temperature in January and July, and the range between them.
+                </div>
+                <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">LEARN · 3 MAPS</div>
+              </button>
             </div>
           </section>
         )}
