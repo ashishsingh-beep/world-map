@@ -783,7 +783,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                   className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
                 >
                   <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
+                  <div className="mt-1 text-sm text-slate-600">Oceans, seas, straits and canals worldwide.</div>
                   <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
                     {r.places?.length} FEATURES
                   </div>
