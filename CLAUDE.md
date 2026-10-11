@@ -137,7 +137,11 @@ section a place is in; nothing else may re-derive it.
 round.** The World Map menu is the Political Map, the Physical Map and
 Phenomena, nothing else. The Physical Map holds Seas & Straits, with Rivers,
 Mountains, Deserts, Grasslands and Lakes named beside it as coming-soon cards
-(`PHYSICAL_TO_COME` in `App.tsx`) until their notes arrive. A Political Map round (`political-<scope>`, scope `world` or a continent)
+(`PHYSICAL_TO_COME` in `App.tsx`) until their notes arrive. The home screen
+and both atlas menus are built from one card and one section
+(`MenuCard`, `MenuSection`, `ComingSoonCard` in `src/ui/Menu.tsx`): an icon in
+its own tint, the title, a line on what is inside and a count at the foot, the
+whole card the tap target — so a new section is a new card, never a new layout. A Political Map round (`political-<scope>`, scope `world` or a continent)
 carries the scope's countries as `askable` and its places as `places`, and a
 question is a country or a place inside the same round: "Find the country:
 Kenya" beside "Find the capital: Nairobi". The old country and places rounds

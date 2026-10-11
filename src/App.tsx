@@ -27,7 +27,8 @@ import {
   type WaterKind,
   type WaterRegion,
 } from './ui/bits'
-import { HOME, ISOTHERMS, useRoute, type Atlas, type Route } from './app/route'
+import { HOME, ISOTHERMS, useRoute, type Route } from './app/route'
+import { ComingSoonCard, MenuCard, MenuSection } from './ui/Menu'
 import { IsothermScreen } from './screens/IsothermScreen'
 import {
   clearRound,
@@ -639,41 +640,39 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     )
   }
 
+  // The menus share one card and one section (`src/ui/Menu.tsx`), so the
+  // home screen and both maps read alike.
+  const backToMaps = (
+    <button
+      type="button"
+      onClick={() => navigate(HOME)}
+      className="mb-4 cursor-pointer text-sm font-bold text-slate-500 hover:text-slate-700"
+    >
+      ← Both maps
+    </button>
+  )
+
   if (route.view === 'home') {
-    const atlases: { id: Atlas; title: string; blurb: string; count: string }[] = [
-      {
-        id: 'world',
-        title: 'World Map',
-        blurb: 'Countries and capitals, the physical world — seas and straits first — and the currents and temperatures that move across it.',
-        count: `Political · Physical · Phenomena`,
-      },
-      {
-        id: 'india',
-        title: 'India Map',
-        blurb: 'The subcontinent in detail, state by state. Mountains first.',
-        count: `${INDIA_CONTINENTS.length} section${INDIA_CONTINENTS.length === 1 ? '' : 's'}`,
-      },
-    ]
     return (
       <div className="min-h-dvh bg-slate-50 px-5 py-10">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Map Practice</h1>
-          <p className="mt-1 mb-8 text-slate-600">Pick a map.</p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {atlases.map((a) => (
-              <button
-                key={a.id}
-                type="button"
-                onClick={() => navigate({ view: 'atlas', roundId, atlas: a.id })}
-                className="cursor-pointer rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition hover:shadow-md"
-              >
-                <div className="text-2xl font-extrabold text-slate-900">{a.title}</div>
-                <div className="mt-1 text-sm text-slate-600">{a.blurb}</div>
-                <div className="mt-4 text-xs font-bold tracking-wide text-slate-400 uppercase">
-                  {a.count}
-                </div>
-              </button>
-            ))}
+          <p className="mt-1 text-slate-600">Pick a map.</p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <MenuCard
+              icon="globe"
+              title="World Map"
+              blurb="Countries and capitals, seas and straits, currents and temperatures."
+              meta="Political · Physical · Phenomena"
+              onClick={() => navigate({ view: 'atlas', roundId, atlas: 'world' })}
+            />
+            <MenuCard
+              icon="india"
+              title="India Map"
+              blurb="The subcontinent in detail, state by state, on India's own borders."
+              meta="Mountains · Rivers"
+              onClick={() => navigate({ view: 'atlas', roundId, atlas: 'india' })}
+            />
           </div>
         </div>
       </div>
@@ -684,169 +683,112 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     return (
       <div className="min-h-dvh bg-slate-50 px-5 py-10">
         <div className="mx-auto max-w-3xl">
-          <button
-            type="button"
-            onClick={() => navigate(HOME)}
-            className="mb-4 cursor-pointer text-sm font-bold text-slate-500"
-          >
-            ← Both maps
-          </button>
+          {backToMaps}
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">India Map</h1>
-          <p className="mt-1 mb-8 text-slate-600">
+          <p className="mt-1 text-slate-600">
             Drawn with India's own borders: Gilgit-Baltistan and Aksai Chin are part of Ladakh.
           </p>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <MenuSection title="Physical" blurb="The mountains and rivers of the subcontinent.">
             {INDIA_CONTINENTS.map((continent) => {
               const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+              const rivers = continent.section === 'rivers'
               return (
-                <button
+                <MenuCard
                   key={r.id}
-                  type="button"
+                  icon={rivers ? 'river' : 'mountain'}
+                  title={r.title}
+                  blurb={
+                    rivers
+                      ? 'River systems with their origins, tributaries, distributaries and confluences.'
+                      : 'The Himalaya belt by belt — its ranges and peaks.'
+                  }
+                  meta={
+                    rivers
+                      ? `${new Set((r.places ?? []).map((id) => placeOf(id).basin)).size} systems · ${r.places?.length ?? 0} features`
+                      : `${r.places?.length ?? 0} features`
+                  }
                   onClick={() => navigate({ view: 'setup', roundId: r.id })}
-                  className="cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
-                >
-                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
-                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                    {r.places?.length} FEATURES
-                  </div>
-                </button>
+                />
               )
             })}
-          </div>
+          </MenuSection>
         </div>
       </div>
     )
   }
 
+  const world = POLITICAL_ROUNDS[politicalRoundId('world')]
   return (
     <div className="min-h-dvh bg-slate-50 px-5 py-10">
       <div className="mx-auto max-w-3xl">
-        <button
-          type="button"
-          onClick={() => navigate(HOME)}
-          className="mb-4 cursor-pointer text-sm font-bold text-slate-500"
-        >
-          ← Both maps
-        </button>
+        {backToMaps}
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">World Map</h1>
-        <p className="mt-1 mb-8 text-slate-600">
-          Countries and the places inside them, the physical world they sit on, and the currents
-          and temperatures that move across it.
-        </p>
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
-          <button
-            type="button"
-            onClick={() => navigate({ view: 'setup', roundId: politicalRoundId('world') })}
-            className="w-full cursor-pointer text-left"
-          >
-            <div className="text-2xl font-extrabold text-slate-900">Political Map</div>
-            <div className="mt-1 text-sm text-slate-600">
-              Countries, capitals, regions and key places — the whole world or one continent, in
-              any mix.
-            </div>
-          </button>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {POLITICAL_SCOPES.map((scope) => (
-              <button
-                key={scope.id}
-                type="button"
-                onClick={() => navigate({ view: 'setup', roundId: politicalRoundId(scope.id) })}
-                className="cursor-pointer rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200"
-              >
-                {scope.label}
-              </button>
-            ))}
-          </div>
-          <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-            {POLITICAL_ROUNDS[politicalRoundId('world')].askable.length} COUNTRIES ·{' '}
-            {POLITICAL_ROUNDS[politicalRoundId('world')].places?.length} PLACES
-          </div>
-        </div>
+        <p className="mt-1 text-slate-600">Pick a map, then practise it or learn it.</p>
 
-        {/* The physical map: the water and the land themselves. Seas & Straits
-            is the first of it; the rest are named here, ready, with nothing in
-            them yet. */}
-        <section className="mt-10">
-          <h2 className="text-2xl font-extrabold text-slate-900">Physical Map</h2>
-          <p className="mt-1 mb-4 text-slate-600">
-            The land and water themselves. In Seas &amp; Straits, oceans and seas are drawn as{' '}
-            <span className="font-bold text-sky-700">their real extent</span>, straits as{' '}
-            <span className="font-bold text-orange-500">orange diamonds</span>, canals as{' '}
-            <span className="font-bold text-purple-500">purple squares</span>.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {WATER_CONTINENTS.map((continent) => {
-              const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
-              return (
+        <MenuSection title="Political" blurb="Countries and the places inside them.">
+          <MenuCard
+            wide
+            icon="globe"
+            title="Political Map"
+            blurb="Countries, capitals, regions and key places — the whole world, one continent, or any mix."
+            meta={`${world.askable.length} countries · ${world.places?.length ?? 0} places`}
+            onClick={() => navigate({ view: 'setup', roundId: politicalRoundId('world') })}
+          >
+            <div className="flex flex-wrap gap-2">
+              {POLITICAL_SCOPES.map((scope) => (
                 <button
-                  key={r.id}
+                  key={scope.id}
                   type="button"
-                  onClick={() => navigate({ view: 'setup', roundId: r.id })}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                  onClick={() => navigate({ view: 'setup', roundId: politicalRoundId(scope.id) })}
+                  className="cursor-pointer rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200"
                 >
-                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                  <div className="mt-1 text-sm text-slate-600">Oceans, seas, straits and canals worldwide.</div>
-                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                    {r.places?.length} FEATURES
-                  </div>
+                  {scope.label}
                 </button>
-              )
-            })}
-            {PHYSICAL_TO_COME.map((title) => (
-              <div
-                key={title}
-                aria-disabled="true"
-                className="rounded-2xl border border-dashed border-slate-300 bg-white/60 p-5 text-left"
-              >
-                <div className="text-lg font-extrabold text-slate-400">{title}</div>
-                <div className="mt-3 text-xs font-bold tracking-wide text-slate-300">COMING SOON</div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </MenuCard>
+        </MenuSection>
+
+        <MenuSection title="Physical" blurb="The land and water themselves.">
+          {WATER_CONTINENTS.map((continent) => {
+            const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+            return (
+              <MenuCard
+                key={r.id}
+                icon="waves"
+                title={r.title}
+                blurb="Oceans and seas as their real extent, straits as diamonds, canals as squares."
+                meta={`${r.places?.length ?? 0} features`}
+                onClick={() => navigate({ view: 'setup', roundId: r.id })}
+              />
+            )
+          })}
+          <ComingSoonCard titles={PHYSICAL_TO_COME} />
+        </MenuSection>
 
         {PHENOMENA_CONTINENTS.length > 0 && (
-          <section className="mt-10">
-            <h2 className="text-2xl font-extrabold text-slate-900">Phenomena</h2>
-            <p className="mt-1 mb-4 text-slate-600">
-              What moves across the map rather than sits on it, starting with the ocean currents —{' '}
-              <span className="font-bold text-red-600">red arrows warm</span>,{' '}
-              <span className="font-bold text-blue-700">blue arrows cold</span>.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {PHENOMENA_CONTINENTS.map((continent) => {
-                const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
-                return (
-                  <button
-                    key={r.id}
-                    type="button"
-                    onClick={() => navigate({ view: 'setup', roundId: r.id })}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
-                  >
-                    <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                    <div className="mt-1 text-sm text-slate-600">
-                      Warm and cold currents of every ocean, drawn as arrows.
-                    </div>
-                    <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                      {r.places?.length} CURRENTS
-                    </div>
-                  </button>
-                )
-              })}
-              <button
-                type="button"
-                onClick={() => navigate({ view: 'learn', roundId: ISOTHERMS })}
-                className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
-              >
-                <div className="text-lg font-extrabold text-slate-900">Isotherms</div>
-                <div className="mt-1 text-sm text-slate-600">
-                  Surface air temperature in January and July, and the range between them.
-                </div>
-                <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">LEARN · 3 MAPS</div>
-              </button>
-            </div>
-          </section>
+          <MenuSection title="Phenomena" blurb="What moves across the map rather than sits on it.">
+            {PHENOMENA_CONTINENTS.map((continent) => {
+              const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+              return (
+                <MenuCard
+                  key={r.id}
+                  icon="currents"
+                  title={r.title}
+                  blurb="Warm and cold currents of every ocean, drawn as red and blue arrows."
+                  meta={`${r.places?.length ?? 0} currents`}
+                  onClick={() => navigate({ view: 'setup', roundId: r.id })}
+                />
+              )
+            })}
+            <MenuCard
+              icon="thermometer"
+              title="Isotherms"
+              blurb="Surface air temperature in January and July, and the range between them."
+              meta="Learn · 3 maps"
+              onClick={() => navigate({ view: 'learn', roundId: ISOTHERMS })}
+            />
+          </MenuSection>
         )}
       </div>
     </div>
