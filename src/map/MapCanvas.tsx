@@ -193,6 +193,8 @@ export interface MapPoint {
   shape?: MarkerShape
   /** Drawn beside the marker when set — used by Learn mode, never in play. */
   label?: string
+  /** Set after the label in brackets, heavier: the Gangotri Glacier's (Gaumukh). */
+  near?: string
   /**
    * False for a place drawn as an area: the polygon is the notation, and a pin
    * in the middle of it would only say the sea is there and not there. The
@@ -1380,7 +1382,16 @@ export function MapCanvas({
                     strokeLinejoin="round"
                     paintOrder="stroke"
                   >
-                    {p.label}
+                    {p.near ? (
+                      <>
+                        <tspan fontWeight={700}>{p.label} </tspan>
+                        <tspan fontWeight={900} fontSize={((isTarget ? 15 : 11) + 1.5) / k}>
+                          ({p.near})
+                        </tspan>
+                      </>
+                    ) : (
+                      p.label
+                    )}
                   </text>
                 )}
               </g>

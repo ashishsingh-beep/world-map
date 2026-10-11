@@ -523,7 +523,11 @@ point and a significance — and the build makes it a place of its own, `type:
 where the line begins; authored there, the two cannot drift apart. It is drawn
 as a peak's mountain, filtered with its river system on setup, and has its own
 Origins chip in Learn. The Pin prompt says only "origin", never whose: the
-river is drawn on the map, and naming it would make the tap a give-away.
+river is drawn on the map, and naming it would make the tap a give-away. A
+source may carry `near`, the place the notes write beside it — the Gangotri
+Glacier's Gaumukh, the Yamunotri's Bandarpunch, the Chorabari's Kedarnath, the
+Satopanth's Badrinath — which the Learn map sets in brackets after the name, in
+a heavier hand. It is the map's label only; the answer is still the name.
 
 A rivers map can ask about a place on a river's course too — Majuli, the
 largest river island, and Namcha Barwa, the peak the Brahmaputra bends round —

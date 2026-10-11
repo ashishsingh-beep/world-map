@@ -110,6 +110,12 @@ export interface Place {
   source?: { name: string; point: [number, number] }
   /** The river an origin is the source of. */
   river?: string
+  /**
+   * The place an origin is written beside on the notes' map — the Gangotri
+   * Glacier's Gaumukh, the Yamunotri's Bandarpunch — shown on the map in
+   * brackets after its name, in a heavier hand.
+   */
+  near?: string
   /** A confluence's two rivers (place ids): the one that ends there, then the one it meets. */
   meets?: [string, string]
   /**

@@ -101467,7 +101467,6 @@
       "osm": "R1236345",
       "significance": "India's most sacred river and the lifeline of the northern plains, born where two Garhwal headstreams meet and carrying Himalayan snowmelt past Varanasi and Patna to the world's largest delta",
       "notes": [
-        "Formed at **Devprayag**, where the Bhagirathi, from the **Gangotri Glacier (Gaumukh)**, meets the Alaknanda, from the **Satopanth Glacier (Badrinath)**",
         "Flows through five states: **Uttarakhand**, **Uttar Pradesh**, **Bihar**, **Jharkhand** and **West Bengal**",
         "Called the **Padma** in Bangladesh",
         "In Bangladesh the Padma meets the **Jamuna** (the Brahmaputra), then the **Meghna**, and reaches the Bay of Bengal as the Meghna"
@@ -106295,7 +106294,7 @@
       "bank": "right",
       "significance": "The headstream held to be the true source, rising above Gangotri's temple in Uttarkashi and dammed at Tehri on its way to Devprayag",
       "notes": [
-        "Rises at the **Gangotri Glacier (Gaumukh)**",
+        "Rises at the Gangotri Glacier, at Gaumukh",
         "Dammed at Tehri",
         "Meets the Alaknanda at **Devprayag**: from there the river is the Ganga"
       ],
@@ -106312,7 +106311,8 @@
           79.0818,
           30.9257
         ],
-        "significance": "Where the Bhagirathi rises: the ice-cave snout pilgrims trek to above Uttarkashi's temple town, the 'cow's mouth'"
+        "significance": "Where the Bhagirathi rises: the ice-cave snout pilgrims trek to above Uttarkashi's temple town, the 'cow's mouth'",
+        "near": "Gaumukh"
       },
       "line": [
         [
@@ -107075,7 +107075,7 @@
       "bank": "left",
       "significance": "The longer headstream, coming down past Badrinath and gathering four rivers at four of Garhwal's five sacred confluences",
       "notes": [
-        "Rises at the **Satopanth Glacier (Badrinath)**",
+        "Rises at the Satopanth Glacier, near Badrinath",
         "Joined by the Dhauliganga at **Vishnuprayag**, the Nandakini at **Nandprayag**, the Pindar at **Karnaprayag** and the Mandakini at **Rudraprayag**",
         "Meets the Bhagirathi at **Devprayag**: from there the river is the Ganga"
       ],
@@ -107090,7 +107090,8 @@
           79.4098,
           30.7712
         ],
-        "significance": "Where the Alaknanda rises, in the ice behind Badrinath and the village of Mana"
+        "significance": "Where the Alaknanda rises, in the ice behind Badrinath and the village of Mana",
+        "near": "Badrinath"
       },
       "labelAt": 0.1,
       "line": [
@@ -109056,7 +109057,7 @@
       "bank": "right",
       "significance": "Flows from Kedarnath down the valley the 2013 cloudburst flood tore through, past Sonprayag and Guptkashi",
       "notes": [
-        "Rises at the **Chorabari Glacier (Kedarnath)**",
+        "Rises at the Chorabari Glacier, near Kedarnath",
         "Joins the Alaknanda at **Rudraprayag**"
       ],
       "tier": 1,
@@ -109073,7 +109074,8 @@
           79.0635,
           30.7437
         ],
-        "significance": "Where the Mandakini rises, just above the Kedarnath temple — its lake burst in the 2013 flood"
+        "significance": "Where the Mandakini rises, just above the Kedarnath temple — its lake burst in the 2013 flood",
+        "near": "Kedarnath"
       },
       "line": [
         [
@@ -141761,7 +141763,7 @@
       "bank": "right",
       "significance": "The Ganga's longest tributary, past Delhi, Mathura and Agra's Taj Mahal, meeting it at the Sangam",
       "notes": [
-        "Rises at the **Yamunotri Glacier (Bandarpunch)**",
+        "Rises at the Yamunotri Glacier on Bandarpunch",
         "Right-bank tributaries: Chambal, Sindh, Betwa and Ken",
         "Joins the Ganga at **Prayagraj** (the Triveni Sangam)"
       ],
@@ -141777,7 +141779,8 @@
           78.4424,
           31.0274
         ],
-        "significance": "Where the Yamuna rises, on the slopes of Bandarpunch in Uttarkashi"
+        "significance": "Where the Yamuna rises, on the slopes of Bandarpunch in Uttarkashi",
+        "near": "Bandarpunch"
       },
       "line": [
         [
@@ -171981,6 +171984,7 @@
       "country": "IND",
       "basin": "Ganga",
       "river": "riv-bhagirathi",
+      "near": "Gaumukh",
       "point": [
         79.0818,
         30.9257
@@ -172002,6 +172006,7 @@
       "country": "IND",
       "basin": "Ganga",
       "river": "riv-alaknanda",
+      "near": "Badrinath",
       "point": [
         79.4098,
         30.7712
@@ -172027,6 +172032,7 @@
       "country": "IND",
       "basin": "Ganga",
       "river": "riv-mandakini",
+      "near": "Kedarnath",
       "point": [
         79.0635,
         30.7437
@@ -172095,6 +172101,7 @@
       "country": "IND",
       "basin": "Ganga",
       "river": "riv-yamuna",
+      "near": "Bandarpunch",
       "point": [
         78.4424,
         31.0274

@@ -1285,6 +1285,9 @@ for (const file of syllabusFiles) {
       country: r.source.country ?? r.country,
       basin: r.basin,
       river: r.id,
+      // The place the notes write beside it — Gaumukh, Kedarnath — shown in
+      // brackets after its name on the map.
+      ...(r.source.near && { near: r.source.near }),
       point: r.source.point,
       significance: r.source.significance,
       notes: [],
