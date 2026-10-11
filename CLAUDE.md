@@ -535,7 +535,8 @@ filed with its system's `basin` like any river. Learn calls them Landmarks,
 with their own chip; setup counts them apart from rivers and origins.
 
 A note may set words in **bold** (the Brahmaputra's **Jamuna** and
-**Meghna**), the one markup notes take, and a note that starts with a number
+**Meghna**) or, between `!!` marks, in bold red (the Ghaghra's Karnali
+line) — the only two markups notes take — and a note that starts with a number
 keeps it in place of the bullet, for facts that run in order — the
 Brahmaputra's are by stretch, Tibet to Bangladesh.
 

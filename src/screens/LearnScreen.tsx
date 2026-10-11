@@ -695,9 +695,14 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
 function NoteText({ text }: { text: string }) {
   return (
     <>
-      {text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+      {text.split(/(\*\*[^*]+\*\*|!![^!]+!!)/).map((part, i) =>
         part.startsWith('**') && part.endsWith('**') ? (
           <strong key={i} className="font-bold text-slate-800">
+            {part.slice(2, -2)}
+          </strong>
+        ) : part.startsWith('!!') && part.endsWith('!!') ? (
+          // `!!…!!`: bold and red, for a fact the notes themselves set in red.
+          <strong key={i} className="font-bold text-red-600">
             {part.slice(2, -2)}
           </strong>
         ) : (
