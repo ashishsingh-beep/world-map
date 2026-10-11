@@ -139,6 +139,7 @@ export function shapeOf(q: { place: Place | null }): MarkerShape {
   if (t === 'ocean' || t === 'sea' || t === 'strait' || t === 'canal' || t === 'peak') return t
   // A river's origin is where it comes down from the hills: the mountain too.
   if (t === 'origin') return 'peak'
+  if (t === 'confluence') return 'confluence'
   return t === 'capital' ? 'capital' : 'dot'
 }
 

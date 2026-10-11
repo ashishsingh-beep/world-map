@@ -3,7 +3,7 @@
   "title": "Rivers",
   "section": "rivers",
   "atlas": "india",
-  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri and Brahmaputra maps",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra and Ganga maps",
   "places": [
     {
       "id": "riv-godavari",
@@ -1496,6 +1496,1509 @@
       ],
       "elevationM": 7782,
       "significance": "The 7,782m summit in Tibet round which the main stream makes its great bend south into India, through the deepest gorge on Earth",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-ganga",
+      "name": "Ganga",
+      "aliases": [
+        "Ganges",
+        "Padma"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Ganga",
+      "osm": "R1236345",
+      "significance": "India's most sacred river and the lifeline of the northern plains, born where two Garhwal headstreams meet and carrying Himalayan snowmelt past Varanasi and Patna to the world's largest delta",
+      "notes": [
+        "Formed at **Devprayag**, where the Bhagirathi (from the Gangotri Glacier at Gaumukh) meets the Alaknanda (from the Satopanth Glacier near Badrinath)",
+        "Flows through five states: **Uttarakhand**, **Uttar Pradesh**, **Bihar**, **Jharkhand** and **West Bengal**",
+        "Called the **Padma** in Bangladesh",
+        "Left-bank tributaries: Ramganga, Gomti, Ghaghra, Gandak, Burhi Gandak, Kosi and Mahananda",
+        "Right-bank tributaries: Yamuna, Son, Punpun and Phalgu (through the Harohar); the Damodar joins its distributary, the Hooghly",
+        "In Bangladesh the Padma meets the **Jamuna** (the Brahmaputra), then the **Meghna**, and reaches the Bay of Bengal as the Meghna"
+      ],
+      "tier": 1,
+      "through": [
+        "BGD"
+      ],
+      "startsAt": [
+        78.597,
+        30.145
+      ],
+      "osmExtra": [
+        "R21452868",
+        "W630320743",
+        "W908091551"
+      ]
+    },
+    {
+      "id": "riv-bhagirathi",
+      "name": "Bhagirathi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R1236089",
+      "joins": "riv-ganga",
+      "bank": "right",
+      "significance": "The headstream held to be the true source, rising above Gangotri's temple in Uttarkashi and dammed at Tehri on its way to Devprayag",
+      "notes": [
+        "Rises at the Gangotri Glacier, at Gaumukh",
+        "Dammed at Tehri",
+        "Meets the Alaknanda at **Devprayag**: from there the river is the Ganga"
+      ],
+      "tier": 1,
+      "headstream": true,
+      "source": {
+        "name": "Gangotri Glacier",
+        "aliases": [
+          "Gangotri",
+          "Gaumukh",
+          "Gomukh"
+        ],
+        "point": [
+          79.082,
+          30.926
+        ],
+        "significance": "Where the Bhagirathi rises: the ice-cave snout pilgrims trek to above Uttarkashi's temple town, the 'cow's mouth'"
+      }
+    },
+    {
+      "id": "riv-alaknanda",
+      "name": "Alaknanda",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R1243393",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "The longer headstream, coming down past Badrinath and gathering four rivers at four of Garhwal's five sacred confluences",
+      "notes": [
+        "Rises at the Satopanth Glacier, near Badrinath",
+        "Joined by the Dhauliganga at **Vishnuprayag**, the Nandakini at **Nandprayag**, the Pindar at **Karnaprayag** and the Mandakini at **Rudraprayag**",
+        "Meets the Bhagirathi at **Devprayag**: from there the river is the Ganga"
+      ],
+      "tier": 1,
+      "headstream": true,
+      "source": {
+        "name": "Satopanth Glacier",
+        "aliases": [
+          "Satopanth"
+        ],
+        "point": [
+          79.41,
+          30.771
+        ],
+        "significance": "Where the Alaknanda rises, in the ice behind Badrinath and the village of Mana"
+      }
+    },
+    {
+      "id": "riv-dhauliganga",
+      "name": "Dhauliganga",
+      "aliases": [
+        "Dhauli Ganga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R12290168",
+      "joins": "riv-alaknanda",
+      "bank": "left",
+      "significance": "Comes down from the Niti pass on the Tibet border past Tapovan, the valley of the 2021 Chamoli flood",
+      "notes": [
+        "Joins the Alaknanda at **Vishnuprayag**"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-nandakini",
+      "name": "Nandakini",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W197557950",
+      "joins": "riv-alaknanda",
+      "bank": "left",
+      "significance": "A short Chamoli stream from the slopes below Trishul and Nanda Ghunti",
+      "notes": [
+        "Joins the Alaknanda at **Nandprayag**"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Nandakini"
+      ]
+    },
+    {
+      "id": "riv-pindar",
+      "name": "Pindar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R9752218",
+      "joins": "riv-alaknanda",
+      "bank": "left",
+      "significance": "Comes off a Kumaon glacier at the head of a famous trek from Bageshwar, and crosses into Garhwal",
+      "notes": [
+        "Rises at the Pindari Glacier",
+        "Joins the Alaknanda at **Karnaprayag**"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-mandakini",
+      "name": "Mandakini",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R16928223",
+      "joins": "riv-alaknanda",
+      "bank": "right",
+      "significance": "Flows from Kedarnath down the valley the 2013 cloudburst flood tore through, past Sonprayag and Guptkashi",
+      "notes": [
+        "Rises at the Chorabari Glacier, near Kedarnath",
+        "Joins the Alaknanda at **Rudraprayag**"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Chorabari Glacier",
+        "aliases": [
+          "Chorabari",
+          "Chorabari Tal",
+          "Gandhi Sarovar"
+        ],
+        "point": [
+          79.064,
+          30.744
+        ],
+        "significance": "Where the Mandakini rises, just above the Kedarnath temple — its lake burst in the 2013 flood"
+      }
+    },
+    {
+      "id": "riv-ramganga",
+      "name": "Ramganga",
+      "aliases": [
+        "Ram Ganga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R6722174",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "Rises in Garhwal's Dudhatoli hills, is dammed at Kalagarh inside Corbett National Park, and crosses Rohilkhand past Moradabad and Bareilly",
+      "notes": [
+        "Flows past **Moradabad**",
+        "Joins the Ganga near Kannauj"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-gomti",
+      "name": "Gomti",
+      "aliases": [
+        "Gomati"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R325822",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "Lucknow's river, fed by groundwater and rain rather than snow, meeting the main stream below Varanasi",
+      "notes": [
+        "Rises at Fulhar Jheel (Gomat Taal), Pilibhit",
+        "Flows past **Lucknow**",
+        "Tributary: Sai",
+        "Joins the Ganga at **Saidpur–Kaithi** (Ghazipur)"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Fulhar Jheel",
+        "aliases": [
+          "Gomat Taal",
+          "Gomat Tal",
+          "Fulhaar Jheel",
+          "Phulhar Jheel",
+          "Fulhar Lake"
+        ],
+        "point": [
+          80.145,
+          28.367
+        ],
+        "significance": "Where the Gomti rises, a lake near Madhotanda in Pilibhit district of Uttar Pradesh"
+      }
+    },
+    {
+      "id": "riv-sai",
+      "name": "Sai",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R13680779",
+      "joins": "riv-gomti",
+      "bank": "right",
+      "significance": "Rises in Hardoi and flows past Rae Bareli and Pratapgarh to meet its parent near Jaunpur",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-ghaghra",
+      "name": "Ghaghra",
+      "aliases": [
+        "Ghaghara",
+        "Karnali",
+        "Gogra"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R15793911",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "Rises in Tibet, crosses Nepal as its longest river, and flows past Ayodhya to the plain of Bihar",
+      "notes": [
+        "Rises at the Mapchachungo Glacier in Tibet",
+        "Called the **Karnali** in Nepal; tributaries there: Seti, Tila and Bheri",
+        "Joined by the Kali (Sharda), which forms the India–Nepal border, and by the Rapti",
+        "Flows past **Bahraich**",
+        "Joins the Ganga near **Chhapra**"
+      ],
+      "tier": 1,
+      "through": [
+        "CHN",
+        "NPL"
+      ],
+      "source": {
+        "name": "Mapchachungo Glacier",
+        "aliases": [
+          "Mapchachungo"
+        ],
+        "point": [
+          80.694,
+          30.446
+        ],
+        "significance": "Where the Ghaghra rises, in Tibet south-west of Lake Mansarovar, near the Indian border",
+        "country": "CHN"
+      }
+    },
+    {
+      "id": "riv-seti",
+      "name": "Seti",
+      "aliases": [],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R4597437",
+      "joins": "riv-ghaghra",
+      "significance": "Drains far-western Nepal from the Saipal Himal, joining the main stream in its gorge",
+      "notes": [
+        "In Nepal",
+        "Joins the Karnali (Ghaghra)"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ]
+    },
+    {
+      "id": "riv-tila",
+      "name": "Tila",
+      "aliases": [
+        "Tila Nadi"
+      ],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W268082730",
+      "joins": "riv-ghaghra",
+      "significance": "Flows through Jumla, home of the world's highest rice paddies, in Nepal's far west",
+      "notes": [
+        "In Nepal",
+        "Joins the Karnali (Ghaghra)"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ],
+      "osmNames": [
+        "Tila Nadi",
+        "Tila",
+        "तिला नदी",
+        "तिला"
+      ],
+      "osmBox": [
+        [
+          81,
+          28.5
+        ],
+        [
+          83,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "riv-bheri",
+      "name": "Bheri",
+      "aliases": [],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W44674786",
+      "joins": "riv-ghaghra",
+      "significance": "The largest feeder of Nepal's longest river, coming down from Dolpo through Jajarkot and Surkhet",
+      "notes": [
+        "In Nepal",
+        "Joins the Karnali (Ghaghra)"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ],
+      "osmNames": [
+        "Bheri River",
+        "Bheri",
+        "भेरी",
+        "भेरी नदी"
+      ]
+    },
+    {
+      "id": "riv-kali",
+      "name": "Kali",
+      "aliases": [
+        "Sharda",
+        "Sarda",
+        "Mahakali",
+        "Kali Ganga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W158329010",
+      "joins": "riv-ghaghra",
+      "bank": "right",
+      "significance": "The border river between Uttarakhand and Nepal from its source below the Lipulekh pass, until it reaches the plains at the Banbasa barrage",
+      "notes": [
+        "Rises at Kalapani, below the Lipulekh pass",
+        "Forms the India–Nepal border along Uttarakhand",
+        "Called the **Sharda** in the plains",
+        "Joins the Ghaghra"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ],
+      "osmNames": [
+        "Sharda",
+        "Kali",
+        "Mahakali",
+        "Mahakali River",
+        "Kali River",
+        "Sarda",
+        "शारदा",
+        "काली",
+        "महाकाली"
+      ],
+      "osmBox": [
+        [
+          79.8,
+          26.8
+        ],
+        [
+          82.2,
+          30.2
+        ]
+      ],
+      "osmExtra": [
+        "W1135252193",
+        "W295842158",
+        "W806965653",
+        "W806965651",
+        "W1248743585",
+        "W640173211"
+      ]
+    },
+    {
+      "id": "riv-rapti",
+      "name": "Rapti",
+      "aliases": [
+        "West Rapti"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W328440285",
+      "joins": "riv-ghaghra",
+      "bank": "left",
+      "significance": "Rises in Nepal's Rolpa hills and floods Gorakhpur almost every monsoon",
+      "notes": [
+        "Flows past **Gorakhpur**",
+        "Joins the Ghaghra"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ],
+      "osmNames": [
+        "Rapti",
+        "Rapti River",
+        "राप्ती नदी",
+        "राप्ती",
+        "West Rapti"
+      ]
+    },
+    {
+      "id": "riv-gandak",
+      "name": "Gandak",
+      "aliases": [
+        "Gandaki",
+        "Narayani",
+        "Kali Gandaki"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R4839382",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "Rises on the Tibetan edge of Mustang, cuts between Dhaulagiri and Annapurna, and enters India at the Valmikinagar barrage",
+      "notes": [
+        "Called the **Gandaki** and the **Narayani** in Nepal; tributary there: Trishuli",
+        "Joins the Ganga at **Sonepur**, opposite Patna"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ],
+      "osmExtra": [
+        "R4839533"
+      ]
+    },
+    {
+      "id": "riv-trishuli",
+      "name": "Trishuli",
+      "aliases": [],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R4839538",
+      "joins": "riv-gandak",
+      "significance": "Comes down from the Kyirong crossing on the Tibet border, along the main road north from Kathmandu",
+      "notes": [
+        "In Nepal",
+        "Joins the Gandaki (Gandak)"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL",
+        "CHN"
+      ]
+    },
+    {
+      "id": "riv-burhi-gandak",
+      "name": "Burhi Gandak",
+      "aliases": [
+        "Budhi Gandak"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W44636641",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "Runs parallel to its larger namesake across north Bihar, past Motihari, Muzaffarpur and Samastipur",
+      "notes": [
+        "Flows past Muzaffarpur",
+        "Joins the Ganga near **Khagaria**"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Burhi Gandak",
+        "Burhi Gandak River",
+        "बूढ़ी गंडक"
+      ]
+    },
+    {
+      "id": "riv-kosi",
+      "name": "Kosi",
+      "aliases": [
+        "Koshi",
+        "Saptakoshi",
+        "Sapta Koshi"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R5702599",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "The 'Sorrow of Bihar', which has swung its course over 100km westward in two centuries and breached its embankment at Kusaha in 2008",
+      "notes": [
+        "Called the **Sorrow of Bihar**",
+        "Formed in Nepal by the Sunkoshi, the Arun and the Tamor",
+        "Joins the Ganga near Kursela (Katihar)"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ]
+    },
+    {
+      "id": "riv-sunkoshi",
+      "name": "Sunkoshi",
+      "aliases": [
+        "Sun Koshi",
+        "Sun Kosi"
+      ],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W755910955",
+      "joins": "riv-kosi",
+      "significance": "Flows east below Nepal's Mahabharat range, gathering the rivers that drain Everest's Khumbu",
+      "notes": [
+        "In Nepal",
+        "Meets the Arun and the Tamor to form the Kosi"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ],
+      "osmNames": [
+        "Sun Koshi",
+        "Sunkoshi",
+        "Sun Kosi",
+        "सुनकोशी",
+        "सुनकोशी नदी"
+      ]
+    },
+    {
+      "id": "riv-arun",
+      "name": "Arun",
+      "aliases": [],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R7096003",
+      "joins": "riv-kosi",
+      "significance": "Rises in Tibet north of the Himalaya and cuts clean through the range between Everest and Kanchenjunga — an antecedent river, older than the mountains",
+      "notes": [
+        "Rises in Tibet; through Nepal",
+        "Meets the Sunkoshi and the Tamor to form the Kosi"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL",
+        "CHN"
+      ]
+    },
+    {
+      "id": "riv-tamor",
+      "name": "Tamor",
+      "aliases": [],
+      "type": "river",
+      "country": "NPL",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R19293709",
+      "joins": "riv-kosi",
+      "significance": "The eastern of the three headstreams, draining the Kanchenjunga massif in far-eastern Nepal",
+      "notes": [
+        "In Nepal",
+        "Meets the Sunkoshi and the Arun to form the Kosi"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ]
+    },
+    {
+      "id": "riv-mahananda",
+      "name": "Mahananda",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W1228272275",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "Rises in the Darjeeling hills near Kurseong, runs past Siliguri and Malda, and meets the main stream in Bangladesh",
+      "notes": [
+        "Tributary: Mechi",
+        "Joins the Ganga (the Padma) in Bangladesh, near Godagari"
+      ],
+      "tier": 1,
+      "through": [
+        "BGD",
+        "NPL"
+      ],
+      "osmNames": [
+        "Mahananda",
+        "Mahananda River",
+        "মহানন্দা",
+        "महानंदा"
+      ],
+      "osmBox": [
+        [
+          87.5,
+          25.1
+        ],
+        [
+          88.6,
+          27.0
+        ]
+      ],
+      "osmExtra": [
+        "R12559162"
+      ]
+    },
+    {
+      "id": "riv-mechi",
+      "name": "Mechi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R13504953",
+      "joins": "riv-mahananda",
+      "bank": "right",
+      "significance": "Marks the India–Nepal border at Nepal's eastern edge, below Kakarbhitta",
+      "notes": [
+        "Forms part of the India–Nepal border",
+        "Joins the Mahananda"
+      ],
+      "tier": 1,
+      "through": [
+        "NPL"
+      ]
+    },
+    {
+      "id": "riv-yamuna",
+      "name": "Yamuna",
+      "aliases": [
+        "Jamuna"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R326077",
+      "joins": "riv-ganga",
+      "bank": "right",
+      "significance": "The Ganga's longest tributary, past Delhi, Mathura and Agra's Taj Mahal, meeting it at the Sangam",
+      "notes": [
+        "Rises at the Yamunotri Glacier on Bandarpunch",
+        "Right-bank tributaries: Chambal, Sindh, Betwa and Ken",
+        "Joins the Ganga at **Prayagraj** (the Triveni Sangam)"
+      ],
+      "tier": 1,
+      "osmAllRoles": true,
+      "source": {
+        "name": "Yamunotri Glacier",
+        "aliases": [
+          "Yamunotri",
+          "Champasar Glacier"
+        ],
+        "point": [
+          78.442,
+          31.027
+        ],
+        "significance": "Where the Yamuna rises, on the slopes of Bandarpunch in Uttarkashi"
+      }
+    },
+    {
+      "id": "riv-chambal",
+      "name": "Chambal",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R8385364",
+      "joins": "riv-yamuna",
+      "bank": "right",
+      "significance": "Cuts the ravines of the old dacoit badlands and shelters the gharial in its own sanctuary on its way to the Pachnada",
+      "notes": [
+        "Rises at Janapav, near Mhow (Malwa Plateau)",
+        "Tributaries: Banas, Kuno, Parbati, Kali Sindh and Shipra (with the Gambhir)",
+        "Joins the Yamuna at **Bhareh**, Etawah (UP)"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Janapav",
+        "aliases": [
+          "Janapav Hill",
+          "Janapav Mountain",
+          "Janapao",
+          "Janapav Kuti"
+        ],
+        "point": [
+          75.692,
+          22.519
+        ],
+        "significance": "Where the Chambal rises, a Vindhyan summit near Mhow on the Malwa Plateau, south-west of Indore"
+      }
+    },
+    {
+      "id": "riv-banas",
+      "name": "Banas",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R11109440",
+      "joins": "riv-chambal",
+      "bank": "left",
+      "significance": "The one major river that runs its whole course inside Rajasthan, rising in the Aravallis near Kumbhalgarh",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kuno",
+      "name": "Kuno",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R11118559",
+      "joins": "riv-chambal",
+      "bank": "right",
+      "significance": "Gives its name to the national park where India brought cheetahs back in 2022",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-parbati",
+      "name": "Parbati",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R11118485",
+      "joins": "riv-chambal",
+      "bank": "right",
+      "significance": "Rises in the Vindhyas of Sehore and runs along the Rajasthan–Madhya Pradesh border before its mouth near Pali",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kali-sindh",
+      "name": "Kali Sindh",
+      "aliases": [
+        "Kalisindh"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W185951132",
+      "joins": "riv-chambal",
+      "bank": "right",
+      "significance": "Rises near Dewas on the Malwa Plateau and flows north through Jhalawar into Rajasthan's Hadoti",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Kali Sindh",
+        "Kalisindh",
+        "Kali Sindh River",
+        "काली सिंध"
+      ]
+    },
+    {
+      "id": "riv-shipra",
+      "name": "Shipra",
+      "aliases": [
+        "Kshipra"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R11117634",
+      "joins": "riv-chambal",
+      "bank": "right",
+      "significance": "Ujjain's sacred river, on whose ghats the Simhastha Kumbh is held every twelve years",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-gambhir",
+      "name": "Gambhir",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R11117633",
+      "joins": "riv-shipra",
+      "bank": "right",
+      "significance": "Rises near Indore and is dammed at Yashwant Sagar, a source of the city's water",
+      "notes": [
+        "Joins the Shipra, which carries it on to the Chambal"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-sindh",
+      "name": "Sindh",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R7540701",
+      "joins": "riv-yamuna",
+      "bank": "right",
+      "significance": "Rises on the Malwa Plateau in Vidisha and flows north past Datia to the Pachnada, the meeting of five rivers",
+      "notes": [
+        "Joins the Yamuna near Etawah, beside the Chambal's mouth"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-betwa",
+      "name": "Betwa",
+      "aliases": [
+        "Vetravati"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R6100712",
+      "joins": "riv-yamuna",
+      "bank": "right",
+      "significance": "Flows past Orchha's cenotaphs and is dammed at Rajghat and Matatila on its way through Bundelkhand",
+      "notes": [
+        "Rises in the Vindhyan Range near Bhopal",
+        "Joins the Yamuna at **Hamirpur**"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Vindhyan Range",
+        "aliases": [
+          "Vindhya Range",
+          "Vindhyas",
+          "Vindhyachal"
+        ],
+        "point": [
+          77.582,
+          23.028
+        ],
+        "significance": "Where the Betwa rises, in the hills just south of Bhopal"
+      }
+    },
+    {
+      "id": "riv-ken",
+      "name": "Ken",
+      "aliases": [
+        "Karnavati"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R13462114",
+      "joins": "riv-yamuna",
+      "bank": "right",
+      "significance": "Flows through Panna's tiger reserve, and is to be joined to the Betwa by India's first river-interlinking project",
+      "notes": [
+        "Rises in Katni district, in the Kaimur Range",
+        "Joins the Yamuna at **Chilla** village (Banda)"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Kaimur Range",
+        "aliases": [
+          "Kaimur Hills",
+          "Kaimur"
+        ],
+        "point": [
+          80.16,
+          23.898
+        ],
+        "significance": "Where the Ken rises, in the uplands of Katni district in Madhya Pradesh"
+      }
+    },
+    {
+      "id": "riv-son",
+      "name": "Son",
+      "aliases": [
+        "Sone"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W77087869",
+      "joins": "riv-ganga",
+      "bank": "right",
+      "significance": "Rises on the Amarkantak plateau beside the Narmada but flows the other way, north and then east, to the plain near Patna",
+      "notes": [
+        "Tributaries: Johilla, Rihand and North Koel",
+        "Passes Sonbhadra (UP)",
+        "Joins the Ganga near **Patna**"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Son",
+        "Son River",
+        "सोन",
+        "सोन नदी"
+      ],
+      "osmExtra": [
+        "R12559166"
+      ],
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-johilla",
+      "name": "Johilla",
+      "aliases": [
+        "Johila"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W553223439",
+      "joins": "riv-son",
+      "significance": "A short stream from the Maikal hills near Amarkantak, flowing north through Umaria",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "Johilla",
+        "Johila",
+        "जोहिला"
+      ]
+    },
+    {
+      "id": "riv-rihand",
+      "name": "Rihand",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R12559165",
+      "joins": "riv-son",
+      "bank": "right",
+      "significance": "Dammed at Pipri into the Govind Ballabh Pant Sagar, whose water cools the power stations of Singrauli",
+      "notes": [
+        "Joins the Son in **Sonbhadra** (UP)"
+      ],
+      "tier": 1,
+      "osmAllRoles": true
+    },
+    {
+      "id": "riv-north-koel",
+      "name": "North Koel",
+      "aliases": [
+        "Koel"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W77626950",
+      "joins": "riv-son",
+      "bank": "right",
+      "significance": "Drains Jharkhand's Palamu and the forests of Betla, and is dammed at Mandal",
+      "notes": [],
+      "tier": 1,
+      "osmNames": [
+        "North Koel River",
+        "North Koel",
+        "उत्तरी कोयल"
+      ]
+    },
+    {
+      "id": "riv-ganga-patna",
+      "name": "Ganga (Patna channel)",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W729102325",
+      "joins": "riv-ganga",
+      "bank": "right",
+      "context": true,
+      "significance": "The old southern channel along the Bihar capital's ghats, where the Punpun comes in",
+      "notes": [
+        "Drawn only to carry the Punpun to the main stream; never asked"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Ganga"
+      ],
+      "osmBox": [
+        [
+          85.2,
+          25.42
+        ],
+        [
+          85.7,
+          25.68
+        ]
+      ]
+    },
+    {
+      "id": "riv-harohar",
+      "name": "Harohar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W162046079",
+      "joins": "riv-ganga",
+      "bank": "right",
+      "context": true,
+      "significance": "Gathers the water of the Mokama Tal wetlands and carries it east to the main stream near Surajgarha",
+      "notes": [
+        "Drawn only to carry the Phalgu to the Ganga; never asked"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Harohar"
+      ],
+      "osmExtra": [
+        "W272558884"
+      ]
+    },
+    {
+      "id": "riv-punpun",
+      "name": "Punpun",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W247585117",
+      "joins": "riv-ganga-patna",
+      "bank": "right",
+      "significance": "A south Bihar river that waters the Patna plain's paddy and reaches the main stream at Fatuha, below the capital",
+      "notes": [
+        "Joins the Ganga at Fatuha, below Patna"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Punpun",
+        "Punpun River",
+        "पुनपुन"
+      ]
+    },
+    {
+      "id": "riv-phalgu",
+      "name": "Phalgu",
+      "aliases": [
+        "Falgu"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R3587280",
+      "joins": "riv-harohar",
+      "bank": "right",
+      "significance": "Gaya's sacred river, dry sand for most of the year, where pilgrims offer pind-daan to their ancestors",
+      "notes": [
+        "Flows past **Gaya** and Bodh Gaya",
+        "Its water reaches the Ganga through the Harohar"
+      ],
+      "tier": 1,
+      "osmExtra": [
+        "W247611455"
+      ]
+    },
+    {
+      "id": "riv-hooghly",
+      "name": "Hooghly",
+      "aliases": [
+        "Hugli"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "distributary",
+      "basin": "Ganga",
+      "osm": "R1243337",
+      "joins": "riv-ganga",
+      "significance": "Leaves the main stream in West Bengal to carry Kolkata's port traffic to the sea, kept flowing by the Farakka barrage's feeder canal",
+      "notes": [
+        "A distributary: leaves the Ganga in Murshidabad and reaches the Bay of Bengal",
+        "Kolkata stands on it",
+        "The Damodar joins it below Kolkata"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-damodar",
+      "name": "Damodar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R12559153",
+      "joins": "riv-hooghly",
+      "bank": "right",
+      "significance": "Flows through India's richest coal belt — Jharia, Bokaro, Raniganj — and was tamed by the country's first multipurpose river valley project",
+      "notes": [
+        "Rises on the Chota Nagpur Plateau",
+        "Joins the Hooghly below Kolkata"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Chota Nagpur Plateau",
+        "aliases": [
+          "Chotanagpur Plateau",
+          "Chota Nagpur",
+          "Chotanagpur"
+        ],
+        "point": [
+          84.7,
+          23.652
+        ],
+        "significance": "Where the Damodar rises, in the hills of Latehar district in Jharkhand"
+      }
+    },
+    {
+      "id": "riv-meghna",
+      "name": "Meghna",
+      "aliases": [],
+      "type": "river",
+      "country": "BGD",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R11130102",
+      "joins": "riv-ganga",
+      "bank": "left",
+      "significance": "The Surma's way on to the Padma at Chandpur",
+      "notes": [
+        "Drawn only to carry the Surma to the Padma; never asked"
+      ],
+      "tier": 1,
+      "through": [
+        "BGD"
+      ],
+      "context": true
+    },
+    {
+      "id": "riv-surma",
+      "name": "Surma",
+      "aliases": [],
+      "type": "river",
+      "country": "BGD",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R5904030",
+      "joins": "riv-meghna",
+      "significance": "Flows past Sylhet's tea gardens through north-eastern Bangladesh, the Barak's continuation from Assam",
+      "notes": [
+        "In Bangladesh: the Barak of Manipur and Assam, split at the border into the Surma and the Kushiyara",
+        "Reaches the Meghna through the Ghorautra"
+      ],
+      "tier": 1,
+      "through": [
+        "BGD"
+      ],
+      "osmExtra": [
+        "W160915837"
+      ]
+    },
+    {
+      "id": "riv-vishnuprayag",
+      "name": "Vishnuprayag",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        79.577,
+        30.563
+      ],
+      "meets": [
+        "riv-dhauliganga",
+        "riv-alaknanda"
+      ],
+      "significance": "Where the Dhauliganga joins the Alaknanda below Joshimath — the first of Garhwal's five sacred confluences",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-nandprayag",
+      "name": "Nandprayag",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        79.33,
+        30.33
+      ],
+      "meets": [
+        "riv-nandakini",
+        "riv-alaknanda"
+      ],
+      "significance": "Where the Nandakini joins the Alaknanda in Chamoli — the second of the five sacred confluences",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-karnaprayag",
+      "name": "Karnaprayag",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        79.22,
+        30.26
+      ],
+      "meets": [
+        "riv-pindar",
+        "riv-alaknanda"
+      ],
+      "significance": "Where the Pindar joins the Alaknanda — the third of the five sacred confluences, and the railhead the line from Rishikesh is being built to",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-rudraprayag",
+      "name": "Rudraprayag",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        78.98,
+        30.29
+      ],
+      "meets": [
+        "riv-mandakini",
+        "riv-alaknanda"
+      ],
+      "significance": "Where the Mandakini from Kedarnath joins the Alaknanda — the fourth of the five, once terrorised by the leopard Jim Corbett shot in 1926",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-devprayag",
+      "name": "Devprayag",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        78.597,
+        30.145
+      ],
+      "meets": [
+        "riv-bhagirathi",
+        "riv-alaknanda"
+      ],
+      "significance": "Where the Bhagirathi meets the Alaknanda and the river takes the name Ganga — the last of the five sacred confluences",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-prayagraj",
+      "name": "Prayagraj",
+      "aliases": [
+        "Allahabad",
+        "Triveni Sangam",
+        "Sangam"
+      ],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        81.89,
+        25.42
+      ],
+      "meets": [
+        "riv-yamuna",
+        "riv-ganga"
+      ],
+      "significance": "Where the Yamuna joins the Ganga with the unseen Saraswati — the three-river meeting that hosts the Kumbh Mela",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-bhareh",
+      "name": "Bhareh",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        79.25,
+        26.49
+      ],
+      "meets": [
+        "riv-chambal",
+        "riv-yamuna"
+      ],
+      "significance": "Where the Chambal joins the Yamuna in Etawah district of Uttar Pradesh, beside the Pachnada",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-hamirpur",
+      "name": "Hamirpur",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        80.215,
+        25.92
+      ],
+      "meets": [
+        "riv-betwa",
+        "riv-yamuna"
+      ],
+      "significance": "Where the Betwa joins the Yamuna, at the head of Uttar Pradesh's Bundelkhand",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-chilla",
+      "name": "Chilla",
+      "aliases": [
+        "Chilla Ghat"
+      ],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        80.527,
+        25.773
+      ],
+      "meets": [
+        "riv-ken",
+        "riv-yamuna"
+      ],
+      "significance": "Where the Ken joins the Yamuna, a village in Banda district of Uttar Pradesh",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-kaithi",
+      "name": "Kaithi",
+      "aliases": [
+        "Saidpur",
+        "Saidpur Kaithi"
+      ],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        83.173,
+        25.508
+      ],
+      "meets": [
+        "riv-gomti",
+        "riv-ganga"
+      ],
+      "significance": "Where the Gomti joins the Ganga near Ghazipur, beside the Markandeya Mahadev temple",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-chhapra",
+      "name": "Chhapra",
+      "aliases": [
+        "Chapra",
+        "Doriganj"
+      ],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        84.83,
+        25.727
+      ],
+      "meets": [
+        "riv-ghaghra",
+        "riv-ganga"
+      ],
+      "significance": "Where the Ghaghra joins the Ganga, at the headquarters of Bihar's Saran district",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-sonepur",
+      "name": "Sonepur",
+      "aliases": [
+        "Sonpur"
+      ],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        85.205,
+        25.618
+      ],
+      "meets": [
+        "riv-gandak",
+        "riv-ganga"
+      ],
+      "significance": "Where the Gandak joins the Ganga opposite Patna — the site of Asia's largest cattle fair",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-khagaria",
+      "name": "Khagaria",
+      "aliases": [],
+      "type": "confluence",
+      "country": "IND",
+      "basin": "Ganga",
+      "point": [
+        86.58,
+        25.36
+      ],
+      "meets": [
+        "riv-burhi-gandak",
+        "riv-ganga"
+      ],
+      "significance": "Where the Burhi Gandak joins the Ganga, in a flood-prone north Bihar district ringed by rivers",
       "notes": [],
       "tier": 1
     }

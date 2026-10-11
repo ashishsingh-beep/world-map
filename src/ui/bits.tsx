@@ -108,6 +108,16 @@ export function PlaceKindSwatch({ kind }: { kind: PlaceKind }) {
   )
 }
 
+/** A confluence as the map draws it: orange, with a white heart. */
+export function ConfluenceSwatch() {
+  return (
+    <svg width="14" height="14" viewBox="-7 -7 14 14" className="shrink-0" aria-hidden>
+      <circle r="5.5" fill={SHAPE_FILLS.confluence} fillOpacity={0.95} stroke="#1f2d4d" strokeWidth="1.2" />
+      <circle r="2.1" fill="#fff" />
+    </svg>
+  )
+}
+
 /** The marker as it is drawn on the map, so legend and map never drift apart. */
 export function KindSwatch({ type }: { type: WaterKind }) {
   if (type === 'strait') {

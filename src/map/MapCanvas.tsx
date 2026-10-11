@@ -71,7 +71,7 @@ const DEFAULT_PADDING: Required<MapPadding> = { top: 24, right: 24, bottom: 24, 
  * mixes capitals in with cities, ports and islands, and the one thing worth
  * finding at a glance is which pin is the capital.
  */
-export type MarkerShape = 'dot' | 'capital' | 'ocean' | 'sea' | 'strait' | 'canal' | 'peak'
+export type MarkerShape = 'dot' | 'capital' | 'ocean' | 'sea' | 'strait' | 'canal' | 'peak' | 'confluence'
 
 /**
  * A mountain range, drawn as a band along its ridgeline. Ranges are the one
@@ -259,6 +259,9 @@ export const SHAPE_FILLS: Record<MarkerShape, string> = {
   canal: '#a855f7',
   // A peak is a snow-capped mountain (see PeakGlyph); this is its main face.
   peak: PEAK_INK.face,
+  // Where two rivers meet: orange with a white heart, warm against the rivers'
+  // blue and apart from the rose a wrong answer is painted.
+  confluence: '#ea580c',
 }
 
 /** An ocean outranks the seas inside it, so its marker is drawn larger. */
@@ -270,6 +273,7 @@ const SHAPE_SCALE: Record<MarkerShape, number> = {
   strait: 1,
   canal: 1,
   peak: 1,
+  confluence: 1,
 }
 
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
@@ -1333,6 +1337,7 @@ export function MapCanvas({
                         vectorEffect="non-scaling-stroke"
                       />
                     )}
+                    {shape === 'confluence' && <circle cx={cx} cy={cy} r={r * 0.38} fill="#fff" />}
                   </>
                 )}
                 {p.label && (

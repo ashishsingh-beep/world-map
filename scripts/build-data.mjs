@@ -954,6 +954,8 @@ const PLACE_TYPES = new Set([
   'river',
   // …and where a main river rises, at the head of its course
   'origin',
+  // …and where two rivers meet: Devprayag, Prayagraj's Sangam
+  'confluence',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal', 'reef'])
@@ -1116,6 +1118,16 @@ const indiaRing = []
   const walk = (c) => (typeof c[0] === 'number' ? indiaRing.push(c) : c.forEach(walk))
   walk(INDIA_FEATURE.geometry.coordinates)
 }
+const ringCache = new Map()
+function ringOf(feature) {
+  if (!ringCache.has(feature)) {
+    const ring = []
+    const walk = (c) => (typeof c[0] === 'number' ? ring.push(c) : c.forEach(walk))
+    walk(feature.geometry.coordinates)
+    ringCache.set(feature, ring)
+  }
+  return ringCache.get(feature)
+}
 function courseRivers(rivers, where) {
   const byId = new Map(rivers.map((p) => [p.id, p]))
   const done = new Map()
@@ -1143,12 +1155,27 @@ function courseRivers(rivers, where) {
       return null
     }
     let { line } = joinCourse(ways, {
-      source: p.source?.point ?? null,
+      // A main river made by two headstreams — the Ganga, from the
+      // Bhagirathi and the Alaknanda at Devprayag — begins where they meet.
+      source: p.source?.point ?? p.startsAt ?? null,
       parent,
       leaves: p.role === 'distributary',
     })
     if (p.endsAt) line = endAt(line, p.endsAt)
-    if (p.role === 'main' && !p.source) errors.push(`${where(p.id)}: a main river needs its source`)
+    if (p.role === 'main' && !p.source && !p.startsAt) {
+      errors.push(`${where(p.id)}: a main river needs its source, or where its headstreams meet (startsAt)`)
+    }
+    if (p.startsAt) {
+      const km = geoDistance(line[0], p.startsAt) * 6371
+      if (km > 5) errors.push(`${where(p.id)}: begins ${km.toFixed(1)}km from where it should (startsAt)`)
+      if (!rivers.some((q) => q.joins === p.id && q.headstream)) {
+        errors.push(`${where(p.id)}: begins at startsAt, but no headstream is marked to form it there`)
+      }
+    }
+    // A headstream ends where its parent begins, not anywhere along it.
+    if (p.headstream && (!parent || geoDistance(line[line.length - 1], parent[0]) * 6371 > 3)) {
+      errors.push(`${where(p.id)}: a headstream must end where ${parentPlace?.name ?? 'its river'} begins`)
+    }
     // A tributary may have one too, where the notes mark it: the Teesta's.
     if (p.source) {
       const km = geoDistance(line[0], p.source.point) * 6371
@@ -1198,12 +1225,14 @@ function courseRivers(rivers, where) {
       if (!picked.has(iso)) errors.push(`${where(p.id)}: "through" names ${iso}, which is not a drawn country`)
       return picked.get(iso)
     }).filter(Boolean)
-    // Off the drawn land only by the coast's own generalisation is still India.
+    // Off the drawn land only by the coast's own generalisation is still India
+    // — or still Bangladesh, where the Meghna's estuary is wider than its coast.
+    const rings = [indiaRing, ...through.map(ringOf)]
     const abroad = sample.filter(
       (c) =>
         !geoContains(INDIA_FEATURE, c) &&
         !through.some((f) => geoContains(f, c)) &&
-        Math.min(...indiaRing.map((v) => geoDistance(v, c) * 6371)) > 5
+        !rings.some((ring) => ring.some((v) => geoDistance(v, c) * 6371 <= 5))
     ).length
     if (abroad > sample.length * 0.05) {
       errors.push(`${where(p.id)}: ${abroad} of ${sample.length} sampled points outside India${through.length ? ` and ${p.through.join(', ')}` : ''}`)
@@ -1245,6 +1274,25 @@ for (const file of syllabusFiles) {
       notes: [],
       tier: r.tier,
     })
+  }
+  /**
+   * A confluence is where its first river ends in its second — Vishnuprayag
+   * is the Dhauliganga's mouth on the Alaknanda — and it is put exactly there,
+   * on the drawn lines, once the courses are known: an authored point a few
+   * kilometres off would sit beside the junction it names.
+   */
+  for (const c of doc.places.filter((p) => p.type === 'confluence')) {
+    const [a, b] = (c.meets ?? []).map((id) => rivers.find((r) => r.id === id))
+    if (!a?.line || !b?.line || c.meets.length !== 2) {
+      errors.push(`${where(c.id)}: a confluence "meets" two drawn rivers of its own syllabus, the one that ends there first`)
+      continue
+    }
+    const mouth = a.line[a.line.length - 1]
+    const off = kmToLine(b.line, mouth)
+    if (off > 2) errors.push(`${where(c.id)}: the ${a.name} ends ${off.toFixed(1)}km from the ${b.name}`)
+    const km = geoDistance(mouth, c.point) * 6371
+    if (km > 15) errors.push(`${where(c.id)}: the ${a.name} meets the ${b.name} ${km.toFixed(0)}km from the authored point`)
+    c.point = mouth.map((v) => Number(v.toFixed(4)))
   }
   continents.push({
     name: doc.continent,

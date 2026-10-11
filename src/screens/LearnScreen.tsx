@@ -16,7 +16,7 @@ import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/Map
 import { areaOf } from '../data/areas'
 import { screenDistanceToLine, shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { BELTS, BeltSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, ConfluenceSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 
@@ -39,7 +39,14 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
     region: true,
   })
   /** Which rivers are drawn, by role and by system. */
-  const [rolesShown, setRolesShown] = useState({ main: true, tributary: true, distributary: true, origin: true, landmark: true })
+  const [rolesShown, setRolesShown] = useState({
+    main: true,
+    tributary: true,
+    distributary: true,
+    origin: true,
+    confluence: true,
+    landmark: true,
+  })
   const [basinsHidden, setBasinsHidden] = useState<string[]>([])
   /** Which currents are drawn: the warm ones, the cold ones, or both. */
   const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
@@ -56,8 +63,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const isPlacesSection = roundPlaces[0]?.section === 'places'
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
   const isRivers = roundPlaces[0]?.section === 'rivers'
-  /** A place on a rivers map that is neither a river nor an origin: Majuli, Namcha Barwa. */
-  const isLandmark = (p: Place) => p.section === 'rivers' && p.type !== 'river' && p.type !== 'origin'
+  /** A place on a rivers map that is neither a river, an origin nor a confluence: Majuli, Namcha Barwa. */
+  const isLandmark = (p: Place) =>
+    p.section === 'rivers' && p.type !== 'river' && p.type !== 'origin' && p.type !== 'confluence'
   const basins = [...new Set(roundPlaces.map((p) => (p.type === 'river' ? p.basin : undefined)))].filter(
     (b): b is string => !!b
   )
@@ -81,6 +89,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         if (p.type === 'current') return p.temp ? tempsShown[p.temp] : true
         if (p.type === 'river') return (!p.role || rolesShown[p.role]) && !basinsHidden.includes(p.basin ?? '')
         if (p.type === 'origin') return rolesShown.origin && !basinsHidden.includes(p.basin ?? '')
+        if (p.type === 'confluence') return rolesShown.confluence && !basinsHidden.includes(p.basin ?? '')
         // Anything else on a rivers map is a landmark on a river's course:
         // Majuli, Namcha Barwa.
         if (isRivers) return rolesShown.landmark && !basinsHidden.includes(p.basin ?? '')
@@ -300,10 +309,12 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 ['tributary', 'Tributaries'],
                 ['distributary', 'Distributaries'],
                 ['origin', 'Origins'],
+                ['confluence', 'Confluences'],
                 ['landmark', 'Landmarks'],
               ] as const
             )
               .filter(([role]) => role !== 'landmark' || roundPlaces.some(isLandmark))
+              .filter(([role]) => role !== 'confluence' || roundPlaces.some((p) => p.type === 'confluence'))
               .map(([role, label]) => (
               <label
                 key={role}
@@ -320,6 +331,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 <span className={rolesShown[role] ? '' : 'opacity-40'}>
                   {role === 'origin' ? (
                     <PeakSwatch />
+                  ) : role === 'confluence' ? (
+                    <ConfluenceSwatch />
                   ) : role === 'landmark' ? (
                     <PlaceKindSwatch kind="other" />
                   ) : (
@@ -330,7 +343,11 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 <span className="font-semibold text-slate-400">
                   {
                     roundPlaces.filter((p) =>
-                      role === 'origin' ? p.type === 'origin' : role === 'landmark' ? isLandmark(p) : p.role === role
+                      role === 'origin' || role === 'confluence'
+                        ? p.type === role
+                        : role === 'landmark'
+                          ? isLandmark(p)
+                          : p.role === role
                     ).length
                   }
                 </span>
@@ -561,6 +578,13 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               </p>
             )}
 
+            {place.type === 'confluence' && place.meets && (
+              <p className="mt-1.5 text-xs font-bold text-slate-700">
+                <span className="text-slate-400">MEETING OF </span>
+                the {placeOf(place.meets[0]).name} and the {placeOf(place.meets[1]).name}
+              </p>
+            )}
+
             {/* Where it sits in its system — the river it feeds, or leaves. */}
             {place.type === 'river' && (
               <p className="mt-1.5 text-xs font-bold text-slate-700">
@@ -570,7 +594,27 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                     {place.source.name}
                   </>
                 )}
-                {place.role === 'tributary' && place.joins && (
+                {/* The Ganga has no source of its own: two headstreams make it. */}
+                {place.role === 'main' && !place.source && (
+                  <>
+                    <span className="text-slate-400">FORMED BY </span>
+                    {roundPlaces
+                      .filter((p) => p.headstream && p.joins === place.id)
+                      .map((p) => `the ${p.name}`)
+                      .join(' and ')}
+                  </>
+                )}
+                {place.role === 'tributary' && place.headstream && place.joins && (
+                  <>
+                    <span className="text-slate-400">FORMS </span>
+                    the {placeOf(place.joins).name}
+                    {roundPlaces
+                      .filter((p) => p.headstream && p.joins === place.joins && p.id !== place.id)
+                      .map((p) => `, with the ${p.name}`)
+                      .join('')}
+                  </>
+                )}
+                {place.role === 'tributary' && !place.headstream && place.joins && (
                   <>
                     <span className="text-slate-400">FLOWS INTO </span>
                     the {placeOf(place.joins).name}

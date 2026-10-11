@@ -450,7 +450,7 @@ as the 10°C loops. Lines are coloured on the currents' own blue-to-red
 
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
-Godavari, Mahanadi, Krishna, Kaveri and Brahmaputra systems from the notes — each with exactly the
+Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra and Ganga systems from the notes — each with exactly the
 tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
@@ -487,6 +487,31 @@ Kathajodi feeds the Devi); `endsAt` stops a main river early — the Godavari at
 the Dowleswaram barrage, where it divides into the Gautami and the Vasishta.
 Simplified to 150m and stored as `line` in `places.json`.
 
+The Ganga has no source of its own: the Bhagirathi and the Alaknanda make it at
+Devprayag. So it sets `startsAt` (Devprayag) in place of a `source`, and those
+two are `headstream` tributaries, which must end where it begins — the
+Bhagirathi carries the Gangotri Glacier as its origin, the Alaknanda the
+Satopanth. Learn says "Formed by the Bhagirathi and the Alaknanda" on the
+Ganga's card and "Forms the Ganga" on theirs. Its course runs on through the
+Padma and the lower Meghna to the Bay (`through` BGD). The Kali is drawn from
+Kalapani, below the Lipulekh pass, as India's map has it: OSM carries its
+"Kali" up the Kuthi Yankti to Limpiyadhura, which is Nepal's claim, so the
+name walk is boxed south of it and the Lipu Gad and Kalapani stretches are
+`osmExtra`. Rivers wholly in Nepal (the Karnali's Seti, Tila and Bheri, the
+Trishuli, the Kosi's three) are filed under NPL with `through` NPL; the
+Ghaghra rises in Tibet, so its Mapchachungo Glacier is filed under China.
+
+Where two rivers meet is a question too — the five prayags of the Alaknanda and
+the confluences the Ganga map marks with a dot: Prayagraj, Bhareh, Hamirpur,
+Chilla, Kaithi, Chhapra, Sonepur, Khagaria. A `type: "confluence"` place
+`meets` two rivers, the one that ends there first, and the build puts it
+exactly at that river's drawn mouth — after checking it lies on the second
+river and within 15km of the authored point — so the marker always sits on the
+junction it names. Drawn orange with a white heart (`SHAPE_FILLS.confluence`,
+`ConfluenceSwatch` in `src/ui/bits.tsx`), judged like any point, with its own
+Confluences chip in Learn and its own tally on setup; the card says "Meeting
+of the X and the Y".
+
 Where a river rises is a question too, beside its tributaries — a main
 river's always, a tributary's where the notes mark it (the Teesta's Tso Lhamo,
 Zemu Glacier accepted), and abroad where it is abroad (`source.country`: the
@@ -521,7 +546,12 @@ asked — `Round.context` keeps it out of `places` and in the drawing. The
 Tungabhadra is the same for the Krishna: the notes name the Tunga and the
 Bhadra, which meet at Koodli some 550km short of the Krishna, so the river they
 make is drawn as context to carry them there; and the Gangadhar for the
-Brahmaputra, the Sankosh and the Raidak combined into Bangladesh. A tributary
+Brahmaputra, the Sankosh and the Raidak combined into Bangladesh. The Ganga has
+three: the upper Meghna, carrying the Surma to the Padma at Chandpur; the
+Harohar, carrying the Phalgu out of the Mokama Tal; and the Ganga's old Patna
+channel, past the city's ghats, which is where the Punpun comes in (OSM's main
+channel runs 10km north of it). The Gambhir joins the Shipra, not the Chambal
+directly, as OSM and the ground have it. A tributary
 that ends within its allowance (2km, or the braid's) is carried the rest of the
 way onto its parent's drawn channel, so it never stops visibly short — in a
 braid the two meet through channels OSM leaves unconnected. Beyond that a river

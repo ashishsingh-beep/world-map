@@ -41,6 +41,8 @@ export type PlaceType =
   | 'river'
   /** Where a main river rises — Trambakeshwar, Sihawa — made by the build from the river's `source`. */
   | 'origin'
+  /** Where two rivers meet — Vishnuprayag, Prayagraj — put by the build exactly where its first river ends. */
+  | 'confluence'
 
 export interface Place {
   id: string
@@ -108,6 +110,13 @@ export interface Place {
   source?: { name: string; point: [number, number] }
   /** The river an origin is the source of. */
   river?: string
+  /** A confluence's two rivers (place ids): the one that ends there, then the one it meets. */
+  meets?: [string, string]
+  /**
+   * A tributary that, with another, forms its river rather than flowing into
+   * it: the Bhagirathi and the Alaknanda make the Ganga at Devprayag.
+   */
+  headstream?: boolean
   /** A river's length along its drawn course, in km, measured by the build. */
   lengthKm?: number
   /** A current's temperature: what Name mode asks alongside its name. */
@@ -248,6 +257,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   current: 'ocean current',
   river: 'river',
   origin: 'origin',
+  confluence: 'confluence',
 }
 
 /** What a river is called on a prompt or a card: its role, which is the point. */

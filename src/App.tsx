@@ -47,9 +47,17 @@ const riverTally = (asked: Place[]) => {
   const n = (k: number, one: string) => `${k} ${one}${k === 1 ? '' : 's'}`
   const rivers = asked.filter((p) => p.type === 'river').length
   const origins = asked.filter((p) => p.type === 'origin').length
+  const confluences = asked.filter((p) => p.type === 'confluence').length
   // Majuli, Namcha Barwa: places on a river's course, asked beside it.
-  const landmarks = asked.length - rivers - origins
-  return [n(rivers, 'river'), origins && n(origins, 'origin'), landmarks && n(landmarks, 'landmark')].filter(Boolean).join(' · ')
+  const landmarks = asked.length - rivers - origins - confluences
+  return [
+    n(rivers, 'river'),
+    origins && n(origins, 'origin'),
+    confluences && n(confluences, 'confluence'),
+    landmarks && n(landmarks, 'landmark'),
+  ]
+    .filter(Boolean)
+    .join(' · ')
 }
 
 /**
