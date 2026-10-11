@@ -553,6 +553,8 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
           // shows it until it has been answered.
           current: q.place?.type === 'current' ? (mode === 'type' ? 'unknown' : q.place.temp) : undefined,
           river: q.place?.type === 'river' ? q.place.role : undefined,
+          rank: q.place?.rank,
+          labelAt: q.place?.labelAt,
           quiet: q.place?.context,
         })
       }

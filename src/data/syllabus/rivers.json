@@ -1530,7 +1530,8 @@
         "R21452868",
         "W630320743",
         "W908091551"
-      ]
+      ],
+      "labelAt": 0.28
     },
     {
       "id": "riv-bhagirathi",
@@ -1594,7 +1595,8 @@
           30.771
         ],
         "significance": "Where the Alaknanda rises, in the ice behind Badrinath and the village of Mana"
-      }
+      },
+      "labelAt": 0.1
     },
     {
       "id": "riv-dhauliganga",
@@ -2575,7 +2577,8 @@
           85.7,
           25.68
         ]
-      ]
+      ],
+      "channel": true
     },
     {
       "id": "riv-harohar",

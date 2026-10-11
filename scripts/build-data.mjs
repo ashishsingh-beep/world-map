@@ -1244,6 +1244,22 @@ function courseRivers(rivers, where) {
     return course
   }
   for (const p of rivers) run(p)
+  // How far down its system a river sits — the main river 0, a tributary of
+  // it 1, a tributary of that 2 — which is how heavily its name is set.
+  const rankOf = (p, seen = new Set()) => {
+    const parent = p.joins ? byId.get(p.joins) : null
+    if (!parent || seen.has(p.id)) return 0
+    seen.add(p.id)
+    // A channel of its parent is that river, not a branch of it: the Punpun
+    // joining the Ganga's Patna channel is joining the Ganga.
+    return rankOf(parent, seen) + (p.channel ? 0 : 1)
+  }
+  for (const p of rivers) {
+    p.rank = rankOf(p)
+    if (p.labelAt !== undefined && !(p.labelAt > 0 && p.labelAt < 1)) {
+      errors.push(`${where(p.id)}: labelAt is a fraction of the course, between 0 and 1`)
+    }
+  }
 }
 
 for (const file of syllabusFiles) {

@@ -563,7 +563,15 @@ stream.
 Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
 a main river bold blue, a tributary finer, and a distributary teal and dashed
 with arrowheads to the sea, labelled "(distributary)" — it must read at a
-glance as water leaving a river. Every river of the chosen system is on the map
+glance as water leaving a river. A river's *name* is set by its `rank`, which the
+build counts from the main river (0) down the `joins` chain — a tributary 1, a
+tributary of a tributary 2, and so on — each step lighter and smaller
+(`RIVER_NAME_WEIGHT`), so the main river reads first and the Gambhir last. A
+context `channel` of its parent (the Ganga's Patna channel) counts as that
+river, not a branch of it. A name sits at the middle of its course unless the
+river sets `labelAt`, a fraction of the way from its source: the Alaknanda's
+middle was Karnaprayag and the Ganga's Prayagraj, each under a confluence's
+label, so they are named near Badrinath and above Kanpur. Every river of the chosen system is on the map
 in Pin and Type alike, as the currents are, and a tap answers the nearest on
 screen; a practice of misses still draws the whole system (`Round.backdrop`).
 Setup narrows by river system, several at once (the `basins` pref, none meaning

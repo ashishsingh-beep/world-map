@@ -117,6 +117,17 @@ export interface Place {
    * it: the Bhagirathi and the Alaknanda make the Ganga at Devprayag.
    */
   headstream?: boolean
+  /**
+   * How far down its system a river sits, from the build: the main river 0, a
+   * tributary of it 1, a tributary of that 2. Its name is set lighter as it goes.
+   */
+  rank?: number
+  /**
+   * Where along its course a river is named, as a fraction from its source,
+   * when the middle is crowded: the Alaknanda's mid-course name sat on
+   * Karnaprayag, so it is named up near Badrinath instead.
+   */
+  labelAt?: number
   /** A river's length along its drawn course, in km, measured by the build. */
   lengthKm?: number
   /** A current's temperature: what Name mode asks alongside its name. */

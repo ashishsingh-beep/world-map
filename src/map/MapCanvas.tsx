@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
-import { geoDistance, geoEquirectangular, geoGraticule, geoPath } from 'd3-geo'
+import { geoDistance, geoEquirectangular, geoGraticule, geoInterpolate, geoPath } from 'd3-geo'
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, zoomTransform, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
@@ -95,9 +95,13 @@ export interface MapBand {
   river?: 'main' | 'tributary' | 'distributary'
   /**
    * Where the name goes: the middle of the line, or its end — a delta's
-   * branches are short and side by side, and named at their mouths they part.
+   * branches are short and side by side, and named at their mouths they part —
+   * or a fraction of the way along it from the source, where the middle is
+   * crowded (the Alaknanda's sat on Karnaprayag).
    */
-  labelAt?: 'mid' | 'end'
+  labelAt?: 'mid' | 'end' | number
+  /** How far down its system a river sits (main 0, its tributary 1, …): sets how heavy its name is. */
+  rank?: number
   /** A connecting river, drawn and never asked: finer and fainter, never labelled. */
   quiet?: boolean
 }
@@ -109,6 +113,29 @@ export interface MapBand {
  * water leaving a river, not joining one. `RiverSwatch` in `src/ui/bits.tsx`
  * draws the Learn legend from these.
  */
+/**
+ * A river's name by its rank in the system: the main river's the heaviest, a
+ * tributary's lighter, a tributary of a tributary lighter again — so a map of
+ * twenty names still reads as one river and its branches.
+ */
+const RIVER_NAME_WEIGHT = [
+  { size: 12.5, weight: 800 },
+  { size: 11, weight: 700 },
+  { size: 10, weight: 600 },
+  { size: 9.5, weight: 500 },
+]
+
+/** The point a fraction of the way along a line, by distance. */
+function pointAlong(line: [number, number][], fraction: number): [number, number] {
+  const legs = line.slice(1).map((c, i) => geoDistance(line[i], c))
+  let left = legs.reduce((s, d) => s + d, 0) * fraction
+  for (let i = 0; i < legs.length; i++) {
+    if (left <= legs[i]) return geoInterpolate(line[i], line[i + 1])(legs[i] ? left / legs[i] : 0)
+    left -= legs[i]
+  }
+  return line[line.length - 1]
+}
+
 export const RIVER_INK: Record<'main' | 'tributary' | 'distributary', { line: string; width: number; dash?: string }> = {
   main: { line: '#1d4ed8', width: 3.4 },
   tributary: { line: '#3b82f6', width: 2 },
@@ -1620,7 +1647,12 @@ export function MapCanvas({
       }
     }
     const atEnd = b.labelAt === 'end'
-    const mid = b.label && !b.quiet ? projection(b.line[atEnd ? b.line.length - 1 : Math.floor(b.line.length / 2)]) : null
+    const anchor =
+      typeof b.labelAt === 'number'
+        ? pointAlong(b.line, b.labelAt)
+        : b.line[atEnd ? b.line.length - 1 : Math.floor(b.line.length / 2)]
+    const mid = b.label && !b.quiet ? projection(anchor) : null
+    const name = RIVER_NAME_WEIGHT[Math.min(b.rank ?? (role === 'main' ? 0 : 1), RIVER_NAME_WEIGHT.length - 1)]
     // At the mouth, the name sits just beyond it, the way the line runs out:
     // to its side if it runs out east or west, above or below if north or south.
     const before = atEnd ? projection(b.line[Math.max(0, b.line.length - 4)]) : null
@@ -1655,9 +1687,9 @@ export function MapCanvas({
           <text
             x={mid[0] + (atEnd && sideways ? Math.sign(dx || 1) * 7 : 0) / k}
             y={mid[1] + (atEnd ? (sideways ? 4 : dy > 0 ? 15 : -8) : -6) / k}
-            fontSize={(role === 'main' ? 12 : 10.5) / k}
+            fontSize={name.size / k}
             fontStyle="italic"
-            fontWeight={700}
+            fontWeight={name.weight}
             fill={idle ? (role === 'distributary' ? '#0f5f66' : '#1e3a8a') : '#1f2d4d'}
             stroke="#fff"
             strokeWidth={3 / k}

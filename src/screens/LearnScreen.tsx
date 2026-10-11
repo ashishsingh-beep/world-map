@@ -170,7 +170,9 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           river: p.type === 'river' ? p.role : undefined,
           // A delta branch that reaches the sea is named at its mouth.
           labelAt:
-            p.role === 'distributary' && !roundPlaces.some((q) => q.joins === p.id) ? 'end' : 'mid',
+            p.labelAt ??
+            (p.role === 'distributary' && !roundPlaces.some((q) => q.joins === p.id) ? 'end' : 'mid'),
+          rank: p.rank,
         })),
       ] as MapBand[],
     [visible, selected, showAll, roundPlaces, context]
