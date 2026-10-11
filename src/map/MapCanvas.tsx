@@ -574,18 +574,30 @@ export function MapCanvas({
 
   /** Base (unzoomed) screen geometry per country: where it sits and how big. */
   const layout = useMemo(() => {
-    const out: Record<string, { cx: number; cy: number; px: number }> = {}
+    const out: Record<string, { cx: number; cy: number; lx: number; ly: number; px: number; wx: number }> = {}
     if (!size.width) return out
     for (const f of drawn) {
       const iso = f.properties.iso
       // Context geography has no meta entry, and no marker or label either.
       if (!meta[iso]) continue
-      const [x, y] = projection(metaOf(iso).centroid) ?? [NaN, NaN]
+      const m = metaOf(iso)
+      const [x, y] = projection(m.centroid) ?? [NaN, NaN]
       if (!Number.isFinite(x)) continue
-      out[iso] = { cx: x, cy: y, px: biggestPartPx(f) }
+      // The marker ring stays on the centroid; the name goes on the land.
+      const [lx, ly] = (m.label && projection(m.label)) || [x, y]
+      // How wide its largest piece is, for whether a name fits across it.
+      const parts =
+        f.geometry.type === 'MultiPolygon'
+          ? f.geometry.coordinates.map((coordinates) => ({ type: 'Polygon' as const, coordinates }))
+          : [f.geometry]
+      const wx = Math.max(...parts.map((part) => {
+        const b = path.bounds(part as never)
+        return b[1][0] - b[0][0]
+      }))
+      out[iso] = { cx: x, cy: y, lx, ly, px: biggestPartPx(f), wx }
     }
     return out
-  }, [drawn, projection, biggestPartPx, size.width])
+  }, [drawn, projection, biggestPartPx, path, size.width])
 
   // Pan and zoom by hand, same as the reference.
   useEffect(() => {
@@ -753,6 +765,7 @@ export function MapCanvas({
 
   const k = transform.k
 
+
   /**
    * A pinch belongs to the map, never to the page. A trackpad pinch arrives as
    * a ctrl+wheel, and d3-zoom lets one through untouched once the map is at
@@ -823,6 +836,32 @@ export function MapCanvas({
   }
   const plainLand = physical && !borders
   const labels = physical && borders ? 'all' : labelsProp
+
+  /**
+   * Which countries a physical map names at this zoom. A name waits until its
+   * country is wide enough on screen to hold it (its largest piece, across,
+   * not along — long Chile is narrow), and until it has room: the
+   * largest countries are placed first and a smaller one whose name would
+   * touch one already placed waits for more zoom — so Norway does not run
+   * into Sweden, nor Chile into Argentina, at the world view.
+   */
+  const physicalNamed = useMemo(() => {
+    const named = new Set<string>()
+    if (!physical || labels === 'none') return named
+    const placed: [number, number, number, number][] = []
+    const order = Object.entries(layout).sort((a, b) => metaOf(b[0]).area - metaOf(a[0]).area)
+    for (const [iso, l] of order) {
+      const width = metaOf(iso).name.length * 6.6
+      // A name may run a little past its country's edges, as an atlas's do.
+      if (l.wx * k < width * 0.8) continue
+      const [x, y] = transform.apply([l.lx, l.ly])
+      const box: [number, number, number, number] = [x - width / 2 - 3, y - 11, x + width / 2 + 3, y + 4]
+      if (placed.some((q) => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) continue
+      placed.push(box)
+      named.add(iso)
+    }
+    return named
+  }, [physical, labels, layout, k, transform])
   const [statesMode, setStatesMode] = useState<StatesMode>(loadStates)
   const cycleStates = () => {
     const next = NEXT_STATES_MODE[statesMode]
@@ -1475,7 +1514,7 @@ export function MapCanvas({
 
           {pinIso && layout[pinIso] && (
             <g
-              transform={`translate(${layout[pinIso].cx} ${layout[pinIso].cy}) scale(${1 / k})`}
+              transform={`translate(${layout[pinIso].lx} ${layout[pinIso].ly}) scale(${1 / k})`}
               pointerEvents="none"
             >
               <path
@@ -1495,16 +1534,12 @@ export function MapCanvas({
               if (!l) return null
               const isSelected = selectedIso === iso
               if (labels === 'selected' && !isSelected) return null
-              // On a physical map a name waits until its country is wide
-              // enough on screen to hold it, so the world view names the big
-              // countries and Europe's fill in as you zoom, rather than every
-              // name at once in a heap.
-              if (physical && !isSelected && l.px * k < metaOf(iso).name.length * 6.6) return null
+              if (physical && !isSelected && !physicalNamed.has(iso)) return null
               return (
                 <text
                   key={`l-${iso}`}
-                  x={l.cx}
-                  y={l.cy}
+                  x={l.lx}
+                  y={l.ly}
                   textAnchor="middle"
                   pointerEvents="none"
                   fontSize={(isSelected ? 15 : 12) / k}

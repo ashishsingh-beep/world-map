@@ -410,8 +410,68 @@ for (const i of ISLETS) {
   console.log(`${i.name}: ${added.toFixed(1)} km² added to ${i.iso}, south to ${south.toFixed(4)}°`)
 }
 
+/**
+ * Where a country's *name* goes, when its centroid is not on its own land.
+ * Croatia's crescent wraps round Bosnia and its centroid fell inside Bosnia;
+ * Greece's mainland and islands average out in the Aegean. For a country whose
+ * largest piece is most of it, the name goes to that piece's most interior
+ * point — its pole of inaccessibility, the point furthest from any edge — so
+ * it sits squarely on the land. An archipelago (no piece is most of it) keeps
+ * its centroid: its marker ring is centred there and encloses the chain, and
+ * the name belongs with the ring.
+ */
+function labelPoint(f, centroid) {
+  if (geoContains(f, centroid)) return null
+  const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates]
+  const areaOf = (rings) => geoArea({ type: 'Polygon', coordinates: rings })
+  const total = polys.reduce((s, r) => s + areaOf(r), 0)
+  const largest = polys.reduce((b, r) => (areaOf(r) > areaOf(b) ? r : b))
+  if (areaOf(largest) / total < 0.5) return null
+  const poly = { type: 'Polygon', coordinates: largest }
+  const outer = largest[0]
+  const lat0 = outer.reduce((s, c) => s + c[1], 0) / outer.length
+  const kx = Math.cos((lat0 * Math.PI) / 180)
+  // Distance to the nearest edge of any ring, flat with longitude scaled.
+  const edgeDist = ([x, y]) => {
+    let best = Infinity
+    for (const ring of largest) {
+      for (let i = 1; i < ring.length; i++) {
+        const ax = ring[i - 1][0] * kx, ay = ring[i - 1][1]
+        const bx = ring[i][0] * kx, by = ring[i][1]
+        const px = x * kx, py = y
+        const dx = bx - ax, dy = by - ay
+        const t = dx || dy ? Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy))) : 0
+        best = Math.min(best, Math.hypot(px - (ax + t * dx), py - (ay + t * dy)))
+      }
+    }
+    return best
+  }
+  let [[w, s], [e, n]] = [
+    [Math.min(...outer.map((c) => c[0])), Math.min(...outer.map((c) => c[1]))],
+    [Math.max(...outer.map((c) => c[0])), Math.max(...outer.map((c) => c[1]))],
+  ]
+  let best = null
+  // A coarse grid, then finer ones round the best point so far.
+  for (let pass = 0; pass < 4; pass++) {
+    const steps = 40
+    for (let i = 0; i <= steps; i++) {
+      for (let j = 0; j <= steps; j++) {
+        const pt = [w + ((e - w) * i) / steps, s + ((n - s) * j) / steps]
+        if (!geoContains(poly, pt)) continue
+        const d = edgeDist(pt)
+        if (!best || d > best.d) best = { pt, d }
+      }
+    }
+    if (!best) return null
+    const rx = (e - w) / 8, ry = (n - s) / 8
+    ;[w, e, s, n] = [best.pt[0] - rx, best.pt[0] + rx, best.pt[1] - ry, best.pt[1] + ry]
+  }
+  return best.pt
+}
+
 const meta = {}
 const features = []
+const relabelled = []
 for (const [iso, f] of picked) {
   const name = NAME_OVERRIDES[iso] ?? f.properties.ADMIN
   const continent = CONTINENT_OVERRIDES[iso] ?? f.properties.CONTINENT
@@ -426,6 +486,15 @@ for (const [iso, f] of picked) {
     aliases: ALIASES[iso] ?? [],
     continent,
     centroid: centroid.map((n) => +n.toFixed(4)),
+    ...((label) => {
+      if (!label) return {}
+      relabelled.push(name)
+      return { label: label.map((n) => +n.toFixed(4)) }
+      // A small island nation is drawn with a ring round its islands, and its
+      // name belongs with the ring: Fiji, Samoa, Comoros keep the centroid.
+    })(CENTROID_OVERRIDES[iso] || (f.geometry.type === 'MultiPolygon' && geoArea(f) * EARTH_KM2 < SMALL_NATION_KM2)
+      ? null
+      : labelPoint(f, centroid)),
     bounds: geoBounds(f).map((p) => p.map((n) => +n.toFixed(4))),
     // steradians; used at render time to decide when a country needs a marker
     area: +geoArea(f).toExponential(4),
@@ -441,6 +510,7 @@ for (const [iso, f] of picked) {
     geometry: f.geometry,
   })
 }
+console.log(`Names moved onto their own land (centroid off it): ${relabelled.join(', ')}`)
 
 for (const iso of RENDER_ONLY) {
   const f = renderOnly.get(iso)

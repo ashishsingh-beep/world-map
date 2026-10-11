@@ -21,6 +21,12 @@ export interface CountryMeta {
   continent: Continent
   /** [lon, lat] */
   centroid: [number, number]
+  /**
+   * Where the name is written, when the centroid is off the country's own land
+   * — Croatia's fell in Bosnia, Greece's in the Aegean. Absent, the name sits
+   * at the centroid.
+   */
+  label?: [number, number]
   /** [[west, south], [east, north]] */
   bounds: [[number, number], [number, number]]
   /** spherical area in steradians */

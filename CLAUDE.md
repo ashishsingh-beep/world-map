@@ -144,8 +144,20 @@ the coast (`coastline()` in `src/data/countries.ts`: the topology's arcs that
 belong to one country alone, less Natural Earth's cut along the 180th) — and a
 Borders switch lays the countries' borders and names over it, off by default
 and remembered like Lat/Long (`loadBorders`/`saveBorders`). There a country's
-name shows only once the country is wide enough on screen to hold it, so the
-world view names the large countries and the small ones fill in on zooming. The home screen
+name shows only once its largest piece is wide enough on screen to hold it
+(across, not along — Chile is long, not wide) and the name has room: the
+largest countries by area are placed first, and a name that would touch one
+already placed waits for more zoom (`physicalNamed`).
+
+A name is written at the country's `label` point when it has one, not its
+centroid. The build gives one wherever the centroid falls off the country's own
+land and its largest piece is most of it — Croatia's crescent put the centroid
+in Bosnia, Greece's islands in the Aegean, French Guiana dragged France's into
+the Atlantic, Svalbard Norway's — at that piece's pole of inaccessibility
+(`labelPoint`), and prints the list on every run. A small island nation keeps
+its centroid: its name belongs with the ring drawn round its islands. Markers
+stay on the centroid; the pin dropped on a revealed country goes on the label
+point, on land. The home screen
 and both atlas menus are built from one card and one section
 (`MenuCard`, `MenuSection`, `ComingSoonCard` in `src/ui/Menu.tsx`): an icon in
 its own tint, the title, a line on what is inside and a count at the foot, the
