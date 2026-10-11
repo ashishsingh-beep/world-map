@@ -101395,11 +101395,9 @@
       "osm": "R1236345",
       "significance": "India's most sacred river and the lifeline of the northern plains, born where two Garhwal headstreams meet and carrying Himalayan snowmelt past Varanasi and Patna to the world's largest delta",
       "notes": [
-        "Formed at **Devprayag**, where the Bhagirathi (from the Gangotri Glacier at Gaumukh) meets the Alaknanda (from the Satopanth Glacier near Badrinath)",
+        "Formed at **Devprayag**, where the Bhagirathi, from the **Gangotri Glacier (Gaumukh)**, meets the Alaknanda, from the **Satopanth Glacier (Badrinath)**",
         "Flows through five states: **Uttarakhand**, **Uttar Pradesh**, **Bihar**, **Jharkhand** and **West Bengal**",
         "Called the **Padma** in Bangladesh",
-        "Left-bank tributaries: Ramganga, Gomti, Ghaghra, Gandak, Burhi Gandak, Kosi and Mahananda",
-        "Right-bank tributaries: Yamuna, Son, Punpun and Phalgu (through the Harohar); the Damodar joins its distributary, the Hooghly",
         "In Bangladesh the Padma meets the **Jamuna** (the Brahmaputra), then the **Meghna**, and reaches the Bay of Bengal as the Meghna"
       ],
       "tier": 1,
@@ -106223,7 +106221,7 @@
       "bank": "right",
       "significance": "The headstream held to be the true source, rising above Gangotri's temple in Uttarkashi and dammed at Tehri on its way to Devprayag",
       "notes": [
-        "Rises at the Gangotri Glacier, at Gaumukh",
+        "Rises at the **Gangotri Glacier (Gaumukh)**",
         "Dammed at Tehri",
         "Meets the Alaknanda at **Devprayag**: from there the river is the Ganga"
       ],
@@ -107002,7 +107000,7 @@
       "bank": "left",
       "significance": "The longer headstream, coming down past Badrinath and gathering four rivers at four of Garhwal's five sacred confluences",
       "notes": [
-        "Rises at the Satopanth Glacier, near Badrinath",
+        "Rises at the **Satopanth Glacier (Badrinath)**",
         "Joined by the Dhauliganga at **Vishnuprayag**, the Nandakini at **Nandprayag**, the Pindar at **Karnaprayag** and the Mandakini at **Rudraprayag**",
         "Meets the Bhagirathi at **Devprayag**: from there the river is the Ganga"
       ],
@@ -108978,7 +108976,7 @@
       "bank": "right",
       "significance": "Flows from Kedarnath down the valley the 2013 cloudburst flood tore through, past Sonprayag and Guptkashi",
       "notes": [
-        "Rises at the Chorabari Glacier, near Kedarnath",
+        "Rises at the **Chorabari Glacier (Kedarnath)**",
         "Joins the Alaknanda at **Rudraprayag**"
       ],
       "tier": 1,
@@ -108986,6 +108984,8 @@
         "name": "Chorabari Glacier",
         "aliases": [
           "Chorabari",
+          "Chaurabari Glacier",
+          "Chaurabari",
           "Chorabari Tal",
           "Gandhi Sarovar"
         ],
@@ -141662,7 +141662,7 @@
       "bank": "right",
       "significance": "The Ganga's longest tributary, past Delhi, Mathura and Agra's Taj Mahal, meeting it at the Sangam",
       "notes": [
-        "Rises at the Yamunotri Glacier on Bandarpunch",
+        "Rises at the **Yamunotri Glacier (Bandarpunch)**",
         "Right-bank tributaries: Chambal, Sindh, Betwa and Ken",
         "Joins the Ganga at **Prayagraj** (the Triveni Sangam)"
       ],
@@ -171895,6 +171895,8 @@
       "name": "Chorabari Glacier",
       "aliases": [
         "Chorabari",
+        "Chaurabari Glacier",
+        "Chaurabari",
         "Chorabari Tal",
         "Gandhi Sarovar"
       ],
