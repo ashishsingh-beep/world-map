@@ -134,8 +134,10 @@ islands, states, peninsulas, zones, territories — not a bucket per type.
 section a place is in; nothing else may re-derive it.
 
 **The Political Map is one round per scope, not a country round and a places
-round.** The World Map menu is the Political Map, Seas & Straits and
-Phenomena, nothing else. A Political Map round (`political-<scope>`, scope `world` or a continent)
+round.** The World Map menu is the Political Map, the Physical Map and
+Phenomena, nothing else. The Physical Map holds Seas & Straits, with Rivers,
+Mountains, Deserts, Grasslands and Lakes named beside it as coming-soon cards
+(`PHYSICAL_TO_COME` in `App.tsx`) until their notes arrive. A Political Map round (`political-<scope>`, scope `world` or a continent)
 carries the scope's countries as `askable` and its places as `places`, and a
 question is a country or a place inside the same round: "Find the country:
 Kenya" beside "Find the capital: Nairobi". The old country and places rounds
@@ -710,7 +712,7 @@ The whole app is one map engine plus configuration.
 world and asks only its own subset.
 
 **There are two atlases.** The home screen picks between the World Map — the
-Political Map, Seas & Straits and Phenomena — and the India Map, which starts with the
+Political Map, the Physical Map and Phenomena — and the India Map, which starts with the
 Himalaya. A syllabus declares which one it belongs to with `atlas`, a round
 carries it, and `MapCanvas` draws the state outlines when it is `india`. The
 hashes are `#/world-map` and `#/india-map` — not `#/world`, which is already the

@@ -61,6 +61,12 @@ const riverTally = (asked: Place[]) => {
 }
 
 /**
+ * The physical map's sections still to be written: named on the menu so the
+ * shape of the map is there, and filled in as the notes for each arrive.
+ */
+const PHYSICAL_TO_COME = ['Rivers', 'Mountains', 'Deserts', 'Grasslands', 'Lakes']
+
+/**
  * The isotherm maps have no round behind them, so they are answered before
  * anything that needs one.
  */
@@ -635,8 +641,8 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
       {
         id: 'world',
         title: 'World Map',
-        blurb: 'Countries, capitals and ports, and the seas and straits between them.',
-        count: `Political Map · Seas & Straits`,
+        blurb: 'Countries and capitals, the physical world — seas and straits first — and the currents and temperatures that move across it.',
+        count: `Political · Physical · Phenomena`,
       },
       {
         id: 'india',
@@ -722,8 +728,8 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
         </button>
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">World Map</h1>
         <p className="mt-1 mb-8 text-slate-600">
-          Countries and the places inside them on one map, the seas and straits between them, and
-          the currents that flow through them.
+          Countries and the places inside them, the physical world they sit on, and the currents
+          and temperatures that move across it.
         </p>
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
           <button
@@ -755,36 +761,47 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
           </div>
         </div>
 
-        {WATER_CONTINENTS.length > 0 && (
-          <section className="mt-10">
-            <h2 className="text-2xl font-extrabold text-slate-900">Seas &amp; Straits</h2>
-            <p className="mt-1 mb-4 text-slate-600">
-              Oceans, seas, straits and canals worldwide. Oceans and seas are drawn as{' '}
-              <span className="font-bold text-sky-700">their real extent</span>, straits as{' '}
-              <span className="font-bold text-orange-500">orange diamonds</span>, canals as{' '}
-              <span className="font-bold text-purple-500">purple squares</span>.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {WATER_CONTINENTS.map((continent) => {
-                const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
-                return (
-                  <button
-                    key={r.id}
-                    type="button"
-                    onClick={() => navigate({ view: 'setup', roundId: r.id })}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
-                  >
-                    <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
-                    <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
-                    <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
-                      {r.places?.length} FEATURES
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
-          </section>
-        )}
+        {/* The physical map: the water and the land themselves. Seas & Straits
+            is the first of it; the rest are named here, ready, with nothing in
+            them yet. */}
+        <section className="mt-10">
+          <h2 className="text-2xl font-extrabold text-slate-900">Physical Map</h2>
+          <p className="mt-1 mb-4 text-slate-600">
+            The land and water themselves. In Seas &amp; Straits, oceans and seas are drawn as{' '}
+            <span className="font-bold text-sky-700">their real extent</span>, straits as{' '}
+            <span className="font-bold text-orange-500">orange diamonds</span>, canals as{' '}
+            <span className="font-bold text-purple-500">purple squares</span>.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {WATER_CONTINENTS.map((continent) => {
+              const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+              return (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => navigate({ view: 'setup', roundId: r.id })}
+                  className="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+                >
+                  <div className="text-lg font-extrabold text-slate-900">{r.title}</div>
+                  <div className="mt-1 text-sm text-slate-600">{r.blurb}</div>
+                  <div className="mt-3 text-xs font-bold tracking-wide text-slate-400">
+                    {r.places?.length} FEATURES
+                  </div>
+                </button>
+              )
+            })}
+            {PHYSICAL_TO_COME.map((title) => (
+              <div
+                key={title}
+                aria-disabled="true"
+                className="rounded-2xl border border-dashed border-slate-300 bg-white/60 p-5 text-left"
+              >
+                <div className="text-lg font-extrabold text-slate-400">{title}</div>
+                <div className="mt-3 text-xs font-bold tracking-wide text-slate-300">COMING SOON</div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {PHENOMENA_CONTINENTS.length > 0 && (
           <section className="mt-10">
