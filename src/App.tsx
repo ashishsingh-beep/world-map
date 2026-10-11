@@ -480,9 +480,12 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                     // to ask is not a round.
                     const last = on && askIds.length === n
                     return (
+                      // A tile, like the mode and count tiles beside it: the
+                      // box in its corner, then the swatch, the name and the
+                      // count stacked — four across left no room for them in a row.
                       <label
                         key={kind}
-                        className={`flex items-center justify-center gap-2 rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                        className={`relative flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl border-2 bg-white px-2 py-3 text-center ${
                           on ? 'border-blue-600' : 'border-transparent'
                         } ${last ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
                       >
@@ -499,10 +502,10 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                               return { ...next, [kind]: e.target.checked }
                             })
                           }
-                          className="h-4 w-4 accent-blue-600"
+                          className="absolute top-2 left-2 h-4 w-4 accent-blue-600"
                         />
                         <PlaceKindSwatch kind={kind} />
-                        <span className="text-sm font-extrabold text-slate-900">{label}</span>
+                        <span className="text-sm font-extrabold whitespace-nowrap text-slate-900">{label}</span>
                         <span className="text-xs font-bold text-slate-400">{n}</span>
                       </label>
                     )
