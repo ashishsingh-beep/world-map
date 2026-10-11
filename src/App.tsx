@@ -28,8 +28,10 @@ import {
   type WaterRegion,
 } from './ui/bits'
 import { HOME, ISOTHERMS, useRoute, type Route } from './app/route'
-import { ComingSoonCard, MenuCard, MenuSection } from './ui/Menu'
+import { MenuCard, MenuSection } from './ui/Menu'
 import { IsothermScreen } from './screens/IsothermScreen'
+import { PhysicalScreen } from './screens/PhysicalScreen'
+import { PHYSICAL_SECTIONS, physicalSection } from './app/physical'
 import {
   clearRound,
   fits,
@@ -62,20 +64,15 @@ const riverTally = (asked: Place[]) => {
 }
 
 /**
- * The physical map's sections still to be written: named on the menu so the
- * shape of the map is there, and filled in as the notes for each arrive.
- */
-const PHYSICAL_TO_COME = ['Rivers', 'Mountains', 'Deserts', 'Grasslands', 'Lakes']
-
-/**
  * The isotherm maps have no round behind them, so they are answered before
  * anything that needs one.
  */
 export default function App() {
   const [route, navigate] = useRoute()
-  if (route.roundId === ISOTHERMS) {
-    return <IsothermScreen onExit={() => navigate({ view: 'atlas', roundId: HOME.roundId, atlas: 'world' })} />
-  }
+  const toWorld = () => navigate({ view: 'atlas', roundId: HOME.roundId, atlas: 'world' })
+  if (route.roundId === ISOTHERMS) return <IsothermScreen onExit={toWorld} />
+  const physical = physicalSection(route.roundId)
+  if (physical) return <PhysicalScreen section={physical} onExit={toWorld} />
   return <Rounds route={route} navigate={navigate} />
 }
 
@@ -763,7 +760,16 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
               />
             )
           })}
-          <ComingSoonCard titles={PHYSICAL_TO_COME} />
+          {PHYSICAL_SECTIONS.map((section) => (
+            <MenuCard
+              key={section.id}
+              icon={section.icon}
+              title={section.title}
+              blurb="Notes to come — the world map is ready, borders and names on a switch."
+              meta="Map ready"
+              onClick={() => navigate({ view: 'learn', roundId: section.id })}
+            />
+          ))}
         </MenuSection>
 
         {PHENOMENA_CONTINENTS.length > 0 && (

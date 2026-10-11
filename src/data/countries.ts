@@ -1,5 +1,5 @@
-import { feature } from 'topojson-client'
-import type { Feature, Geometry } from 'geojson'
+import { feature, mesh } from 'topojson-client'
+import type { Feature, Geometry, MultiLineString, Position } from 'geojson'
 import topo from './countries.topo.json'
 import metaJson from './countries.meta.json'
 
@@ -59,4 +59,34 @@ export function metaOf(iso: string): CountryMeta {
   const m = meta[iso]
   if (!m) throw new Error(`Unknown country: ${iso}`)
   return m
+}
+
+/**
+ * Every coast and no border: the arcs of the country topology that belong to
+ * one country alone. A physical map draws the land with this as its only
+ * line, so the countries read as one landmass until their borders are asked
+ * for. Natural Earth's cut along the 180th — Chukotka, Fiji, Antarctica — is
+ * an arc of one country too, so those stretches are dropped, or a line would
+ * run down the Pacific.
+ */
+let coast: MultiLineString | null = null
+export function coastline(): MultiLineString {
+  if (coast) return coast
+  const objects = (topo as never as { objects: Record<string, unknown> }).objects
+  const all = mesh(topo as never, objects.countries as never, (a: unknown, b: unknown) => a === b)
+  const onMeridian = (a: Position, b: Position) =>
+    Math.abs(a[0]) > 179.99 && Math.abs(b[0]) > 179.99 && Math.sign(a[0]) === Math.sign(b[0])
+  const lines: Position[][] = []
+  for (const line of all.coordinates) {
+    let run: Position[] = [line[0]]
+    for (let i = 1; i < line.length; i++) {
+      if (onMeridian(line[i - 1], line[i])) {
+        if (run.length > 1) lines.push(run)
+        run = [line[i]]
+      } else run.push(line[i])
+    }
+    if (run.length > 1) lines.push(run)
+  }
+  coast = { type: 'MultiLineString', coordinates: lines }
+  return coast
 }

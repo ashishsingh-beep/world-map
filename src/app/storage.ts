@@ -191,6 +191,21 @@ export function saveGrid(on: boolean): void {
   write(GRID_KEY, on)
 }
 
+const BORDERS_KEY = 'map-practice:borders'
+
+/**
+ * Whether a physical map draws the political world over its land: country
+ * borders and names. Off by default — a physical map is the land and water
+ * themselves — and remembered across maps like the grid.
+ */
+export function loadBorders(): boolean {
+  return read(BORDERS_KEY) === true
+}
+
+export function saveBorders(on: boolean): void {
+  write(BORDERS_KEY, on)
+}
+
 const BARE_KEY = 'map-practice:bare'
 
 /**

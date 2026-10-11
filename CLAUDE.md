@@ -136,8 +136,16 @@ section a place is in; nothing else may re-derive it.
 **The Political Map is one round per scope, not a country round and a places
 round.** The World Map menu is the Political Map, the Physical Map and
 Phenomena, nothing else. The Physical Map holds Seas & Straits, with Rivers,
-Mountains, Deserts, Grasslands and Lakes named beside it as coming-soon cards
-(`PHYSICAL_TO_COME` in `App.tsx`) until their notes arrive. The home screen
+Mountains, Deserts, Grasslands and Lakes beside it (`PHYSICAL_SECTIONS` in
+`src/app/physical.ts`), each already a map at a route of its own
+(`#/physical-rivers/learn`, `PhysicalScreen`) waiting for its notes. A physical
+map (`physical` on `MapCanvas`) draws the land as one mass — no borders, only
+the coast (`coastline()` in `src/data/countries.ts`: the topology's arcs that
+belong to one country alone, less Natural Earth's cut along the 180th) — and a
+Borders switch lays the countries' borders and names over it, off by default
+and remembered like Lat/Long (`loadBorders`/`saveBorders`). There a country's
+name shows only once the country is wide enough on screen to hold it, so the
+world view names the large countries and the small ones fill in on zooming. The home screen
 and both atlas menus are built from one card and one section
 (`MenuCard`, `MenuSection`, `ComingSoonCard` in `src/ui/Menu.tsx`): an icon in
 its own tint, the title, a line on what is inside and a count at the foot, the

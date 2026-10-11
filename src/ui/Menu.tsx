@@ -17,7 +17,17 @@ export function MenuSection({ title, blurb, children }: { title: string; blurb: 
   )
 }
 
-export type MenuIcon = 'globe' | 'waves' | 'currents' | 'thermometer' | 'mountain' | 'river' | 'india'
+export type MenuIcon =
+  | 'globe'
+  | 'waves'
+  | 'currents'
+  | 'thermometer'
+  | 'mountain'
+  | 'river'
+  | 'india'
+  | 'desert'
+  | 'grass'
+  | 'lake'
 
 const TINTS: Record<MenuIcon, string> = {
   globe: 'bg-amber-100 text-amber-700',
@@ -27,6 +37,9 @@ const TINTS: Record<MenuIcon, string> = {
   mountain: 'bg-emerald-100 text-emerald-700',
   river: 'bg-blue-100 text-blue-700',
   india: 'bg-orange-100 text-orange-700',
+  desert: 'bg-yellow-100 text-yellow-700',
+  grass: 'bg-lime-100 text-lime-700',
+  lake: 'bg-cyan-100 text-cyan-700',
 }
 
 export function MenuCard({
@@ -75,22 +88,6 @@ export function MenuCard({
   )
 }
 
-/** Sections of a map named before they have anything in them. */
-export function ComingSoonCard({ titles }: { titles: string[] }) {
-  return (
-    <div className="rounded-2xl border border-dashed border-slate-300 bg-white/60 p-5">
-      <div className="text-xs font-bold tracking-wide text-slate-400 uppercase">Coming soon</div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {titles.map((t) => (
-          <span key={t} className="rounded-full bg-slate-100 px-3 py-1 text-sm font-bold text-slate-500">
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function Icon({ name }: { name: MenuIcon }) {
   const common = { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true }
   switch (name) {
@@ -133,6 +130,26 @@ function Icon({ name }: { name: MenuIcon }) {
       return (
         <svg {...common}>
           <path d="M6 3c4 3-3 6 1 9s-2 6 2 9M14 3c3 2.5-1 5.5 2 8.5" />
+        </svg>
+      )
+    case 'desert':
+      return (
+        <svg {...common}>
+          <circle cx="16.5" cy="7" r="2.5" />
+          <path d="M2 18c3-4 6-4 9-1.5 2.5-2.5 6-3 11 1.5M2 21h20" />
+        </svg>
+      )
+    case 'grass':
+      return (
+        <svg {...common}>
+          <path d="M3 20h18M6 20c0-4-1-7-3-9M9 20c0-5 1-9 3-12M14 20c0-4 1-7 4-9M18 20c0-3 0-5 2-7" />
+        </svg>
+      )
+    case 'lake':
+      return (
+        <svg {...common}>
+          <path d="M4 12c0-3.5 3.6-6 8-6s8 2.5 8 6-3.6 6-8 6-8-2.5-8-6z" />
+          <path d="M8 12c1-.8 2-.8 3 0s2 .8 3 0" />
         </svg>
       )
     case 'india':

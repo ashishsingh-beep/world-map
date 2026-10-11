@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { physicalSection } from './physical'
 import { canonicalRoundId, roundById } from '../game/rounds'
 
 /**
@@ -45,6 +46,8 @@ export function parseHash(hash: string): Route {
   const atlas = ATLASES[id as keyof typeof ATLASES]
   if (atlas) return { view: 'atlas', roundId: HOME.roundId, atlas }
   if (id === ISOTHERMS) return { view: 'learn', roundId: ISOTHERMS }
+  // A physical section's map, like the isotherms, has no round behind it.
+  if (physicalSection(id)) return { view: 'learn', roundId: id }
   // An old link — a country round, a continent's places — lands on its
   // Political Map scope, and the hash is tidied to say so.
   const roundId = canonicalRoundId(id)

@@ -3,14 +3,14 @@ import { geoDistance, geoEquirectangular, geoGraticule, geoInterpolate, geoPath 
 import { select } from 'd3-selection'
 import { zoom as d3Zoom, zoomIdentity, zoomTransform, type ZoomBehavior, type ZoomTransform } from 'd3-zoom'
 import 'd3-transition'
-import { featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
+import { coastline, featureByIso, meta, metaOf, type CountryFeature } from '../data/countries'
 import { areaOf as waterAreaOf } from '../data/marine'
 import { areaOf as landAreaOf } from '../data/land'
 import { placeById } from '../data/places'
 import { indiaDivides, indiaLand, indiaOutline, loadStates as fetchStates, type IndiaStates } from '../data/india'
 import { outlineWithoutSeam } from './seam'
 import { formatLat, formatLon, GRID_STEPS, REFERENCE_LINES } from './grid'
-import { loadGrid, loadStates, saveGrid, saveStates, type StatesMode } from '../app/storage'
+import { loadBorders, loadGrid, loadStates, saveBorders, saveGrid, saveStates, type StatesMode } from '../app/storage'
 
 /** How a country is painted. Drives both fill colour and hit behaviour. */
 export type CountryState = 'idle' | 'correct' | 'wrong' | 'missed' | 'target'
@@ -401,6 +401,11 @@ export interface MapCanvasProps {
    * Left out, as in play, there is no switch.
    */
   bare?: MapBare
+  /**
+   * A physical map: the land drawn as one mass with only its coast, and a
+   * Borders switch that lays the countries' borders and names over it.
+   */
+  physical?: boolean
 }
 
 const FILLS: Record<CountryState, string> = {
@@ -450,7 +455,8 @@ export function MapCanvas({
   markPoint = null,
   onPickPoint,
   countryMarkers = true,
-  labels = 'none',
+  labels: labelsProp = 'none',
+  physical = false,
   selectedIso = null,
   className,
   padding,
@@ -809,6 +815,14 @@ export function MapCanvas({
    * The India map's states — coloured, lines alone, or off — one switch that
    * cycles through the three, remembered like the grid.
    */
+  /** A physical map's political overlay: borders and names, off until asked for. */
+  const [borders, setBorders] = useState(loadBorders)
+  const toggleBorders = () => {
+    saveBorders(!borders)
+    setBorders(!borders)
+  }
+  const plainLand = physical && !borders
+  const labels = physical && borders ? 'all' : labelsProp
   const [statesMode, setStatesMode] = useState<StatesMode>(loadStates)
   const cycleStates = () => {
     const next = NEXT_STATES_MODE[statesMode]
@@ -1002,13 +1016,17 @@ export function MapCanvas({
                 <path
                   d={path(f) ?? undefined}
                   fill={FILLS[state]}
-                  stroke={seamless ? 'none' : '#1f2d4d'}
-                  strokeWidth={0.6}
+                  // A physical map's land is one mass: no border, and the
+                  // coast drawn once over all of it below. The fill's own
+                  // edge is stroked in its colour so no hairline of sea
+                  // shows between neighbours.
+                  stroke={plainLand ? FILLS[state] : seamless ? 'none' : '#1f2d4d'}
+                  strokeWidth={plainLand ? 1.2 : 0.6}
                   vectorEffect="non-scaling-stroke"
                   className={askSet.has(iso) ? 'cursor-pointer' : undefined}
                   onClick={(e) => handle(iso, e)}
                 />
-                {seamless && (
+                {seamless && !plainLand && (
                   <path
                     d={path(seamless) ?? undefined}
                     fill="none"
@@ -1021,6 +1039,16 @@ export function MapCanvas({
               </Fragment>
             )
           })}
+          {plainLand && drawn.length > 0 && (
+            <path
+              d={path(coastline()) ?? undefined}
+              fill="none"
+              stroke="#1f2d4d"
+              strokeWidth={0.6}
+              vectorEffect="non-scaling-stroke"
+              pointerEvents="none"
+            />
+          )}
 
           {/* Over the land, the opposite of a sea: a peninsula's polygon is
               solid ground, so highlighting it under the country fill would
@@ -1467,6 +1495,11 @@ export function MapCanvas({
               if (!l) return null
               const isSelected = selectedIso === iso
               if (labels === 'selected' && !isSelected) return null
+              // On a physical map a name waits until its country is wide
+              // enough on screen to hold it, so the world view names the big
+              // countries and Europe's fill in as you zoom, rather than every
+              // name at once in a heap.
+              if (physical && !isSelected && l.px * k < metaOf(iso).name.length * 6.6) return null
               return (
                 <text
                   key={`l-${iso}`}
@@ -1564,6 +1597,27 @@ export function MapCanvas({
             </svg>
             States
             <span className="text-[9px] font-semibold opacity-80">{STATES_MODE_LABEL[statesMode]}</span>
+          </button>
+        )}
+        {physical && !bare?.on && (
+          <button
+            type="button"
+            onClick={toggleBorders}
+            aria-pressed={borders}
+            title={borders ? 'Hide country borders and names' : 'Show country borders and names'}
+            className={`${CONTROL} ${borders ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path
+                d="M3 6.5 8.5 3l5 2.5L19 4v12l-5.5 3-5-2.5L3 18z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+              <path d="M8.5 3v13.5M13.5 5.5V19" stroke="currentColor" strokeWidth="1.3" strokeDasharray="2 1.6" />
+            </svg>
+            Borders
+            <span className="text-[9px] font-semibold opacity-80">{borders ? 'On' : 'Off'}</span>
           </button>
         )}
         {!bare?.on && (
