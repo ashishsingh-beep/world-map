@@ -191,6 +191,21 @@ export function saveGrid(on: boolean): void {
   write(GRID_KEY, on)
 }
 
+const BARE_KEY = 'map-practice:bare'
+
+/**
+ * Whether a Learn map is shown bare — every legend, chip and button put away
+ * but the switch itself and Reset — for studying with nothing else on screen.
+ * One setting for every map, remembered like the grid.
+ */
+export function loadBare(): boolean {
+  return read(BARE_KEY) === true
+}
+
+export function saveBare(on: boolean): void {
+  write(BARE_KEY, on)
+}
+
 const STATE_LINES_KEY = 'map-practice:state-lines'
 const STATES_KEY = 'map-practice:states'
 

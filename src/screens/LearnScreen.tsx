@@ -19,6 +19,7 @@ import type { Round } from '../game/rounds'
 import { BELTS, BeltSwatch, ConfluenceSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
+import { useBare } from '../app/useBare'
 
 /**
  * Learn mode: no timer, no scoring. Click a country to reveal its name, or a
@@ -53,6 +54,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   /** The country under the last tap, which a place on top of it may outrank. */
   const tappedCountry = useRef<string | null>(null)
   const [tricks, setTricks] = useState(false)
+  /** Everything but the map put away, for studying with nothing else on screen. */
+  const bare = useBare()
 
   const roundPlaces = useMemo(() => round.places?.map(placeOf) ?? [], [round.places])
   const isPlaceRound = roundPlaces.length > 0
@@ -284,228 +287,233 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
         // Constant, not conditional on `place`: refitting when a card opens
         // would make the whole map jump on every selection.
         padding={{ top: 88, right: 32, bottom: isPlaceRound ? 170 : 32, left: 32 }}
+        bare={bare}
       />
 
       {/* One column, not three independently positioned pills, so that if a
           round ever needs two legends they stack rather than sit on top of
           each other. */}
-      <div className="pointer-events-none absolute inset-x-0 top-20 flex flex-col items-center gap-2 px-4">
-        {belts.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-3 py-1.5 shadow-lg">
-            {belts.map((b) => (
-              <span
-                key={b.id}
-                className="flex items-center gap-1.5 px-1.5 text-xs font-bold text-slate-700"
-              >
-                <BeltSwatch belt={b.id} />
-                {b.label}
-              </span>
-            ))}
-          </div>
-        )}
+      {!bare.on && (
+        <div className="pointer-events-none absolute inset-x-0 top-20 flex flex-col items-center gap-2 px-4">
+          {belts.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-3 py-1.5 shadow-lg">
+              {belts.map((b) => (
+                <span
+                  key={b.id}
+                  className="flex items-center gap-1.5 px-1.5 text-xs font-bold text-slate-700"
+                >
+                  <BeltSwatch belt={b.id} />
+                  {b.label}
+                </span>
+              ))}
+            </div>
+          )}
 
-        {isRivers && (
-          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
-            {(
-              [
-                ['main', 'Main rivers'],
-                ['tributary', 'Tributaries'],
-                ['distributary', 'Distributaries'],
-                ['origin', 'Origins'],
-                ['confluence', 'Confluences'],
-                ['landmark', 'Landmarks'],
-              ] as const
-            )
-              .filter(([role]) => role !== 'landmark' || roundPlaces.some(isLandmark))
-              .filter(([role]) => role !== 'confluence' || roundPlaces.some((p) => p.type === 'confluence'))
-              .map(([role, label]) => (
-              <label
-                key={role}
-                className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
-                  rolesShown[role] ? 'text-slate-700' : 'text-slate-400'
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={rolesShown[role]}
-                  onChange={(e) => setRolesShown((s) => ({ ...s, [role]: e.target.checked }))}
-                  className="h-3.5 w-3.5 accent-blue-600"
-                />
-                <span className={rolesShown[role] ? '' : 'opacity-40'}>
-                  {role === 'origin' ? (
-                    <PeakSwatch />
-                  ) : role === 'confluence' ? (
-                    <ConfluenceSwatch />
-                  ) : role === 'landmark' ? (
-                    <PlaceKindSwatch kind="other" />
-                  ) : (
-                    <RiverSwatch role={role} />
-                  )}
-                </span>
-                {label}
-                <span className="font-semibold text-slate-400">
-                  {
-                    roundPlaces.filter((p) =>
-                      role === 'origin' || role === 'confluence'
-                        ? p.type === role
-                        : role === 'landmark'
-                          ? isLandmark(p)
-                          : p.role === role
-                    ).length
-                  }
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
-        {isRivers && basins.length > 1 && (
-          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
-            {basins.map((b) => {
-              const on = !basinsHidden.includes(b)
-              return (
+          {isRivers && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {(
+                [
+                  ['main', 'Main rivers'],
+                  ['tributary', 'Tributaries'],
+                  ['distributary', 'Distributaries'],
+                  ['origin', 'Origins'],
+                  ['confluence', 'Confluences'],
+                  ['landmark', 'Landmarks'],
+                ] as const
+              )
+                .filter(([role]) => role !== 'landmark' || roundPlaces.some(isLandmark))
+                .filter(([role]) => role !== 'confluence' || roundPlaces.some((p) => p.type === 'confluence'))
+                .map(([role, label]) => (
                 <label
-                  key={b}
+                  key={role}
                   className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
-                    on ? 'text-slate-700' : 'text-slate-400'
+                    rolesShown[role] ? 'text-slate-700' : 'text-slate-400'
                   }`}
                 >
                   <input
                     type="checkbox"
-                    checked={on}
-                    onChange={(e) =>
-                      setBasinsHidden((h) => (e.target.checked ? h.filter((x) => x !== b) : [...h, b]))
-                    }
+                    checked={rolesShown[role]}
+                    onChange={(e) => setRolesShown((s) => ({ ...s, [role]: e.target.checked }))}
                     className="h-3.5 w-3.5 accent-blue-600"
                   />
-                  {b} system
+                  <span className={rolesShown[role] ? '' : 'opacity-40'}>
+                    {role === 'origin' ? (
+                      <PeakSwatch />
+                    ) : role === 'confluence' ? (
+                      <ConfluenceSwatch />
+                    ) : role === 'landmark' ? (
+                      <PlaceKindSwatch kind="other" />
+                    ) : (
+                      <RiverSwatch role={role} />
+                    )}
+                  </span>
+                  {label}
                   <span className="font-semibold text-slate-400">
-                    {roundPlaces.filter((p) => p.basin === b).length}
-                  </span>
-                </label>
-              )
-            })}
-          </div>
-        )}
-
-        {isPhenomena && (
-          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
-            {(['warm', 'cold'] as const).map((t) => (
-              <label
-                key={t}
-                className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
-                  tempsShown[t] ? 'text-slate-700' : 'text-slate-400'
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  checked={tempsShown[t]}
-                  onChange={(e) => setTempsShown((s) => ({ ...s, [t]: e.target.checked }))}
-                  className="h-3.5 w-3.5 accent-blue-600"
-                />
-                <span className={tempsShown[t] ? '' : 'opacity-40'}>
-                  <CurrentSwatch temp={t} />
-                </span>
-                {t === 'warm' ? 'Warm currents' : 'Cold currents'}
-                <span className="font-semibold text-slate-400">
-                  {roundPlaces.filter((p) => p.temp === t).length}
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
-
-        {isPlacesSection && (
-          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
-            {PLACE_KINDS.map(({ kind, label }) => {
-              const n =
-                kind === 'country'
-                  ? countryCount
-                  : roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
-              if (!n) return null
-              return (
-                <label
-                  key={kind}
-                  className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
-                    placeKindsShown[kind] ? 'text-slate-700' : 'text-slate-400'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={placeKindsShown[kind]}
-                    onChange={(e) =>
-                      setPlaceKindsShown((s) => ({ ...s, [kind]: e.target.checked }))
+                    {
+                      roundPlaces.filter((p) =>
+                        role === 'origin' || role === 'confluence'
+                          ? p.type === role
+                          : role === 'landmark'
+                            ? isLandmark(p)
+                            : p.role === role
+                      ).length
                     }
-                    className="h-3.5 w-3.5 accent-blue-600"
-                  />
-                  <span className={placeKindsShown[kind] ? '' : 'opacity-40'}>
-                    <PlaceKindSwatch kind={kind} />
                   </span>
-                  {label}
-                  <span className="font-semibold text-slate-400">{n}</span>
                 </label>
-              )
-            })}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+          {isRivers && basins.length > 1 && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {basins.map((b) => {
+                const on = !basinsHidden.includes(b)
+                return (
+                  <label
+                    key={b}
+                    className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                      on ? 'text-slate-700' : 'text-slate-400'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={(e) =>
+                        setBasinsHidden((h) => (e.target.checked ? h.filter((x) => x !== b) : [...h, b]))
+                      }
+                      className="h-3.5 w-3.5 accent-blue-600"
+                    />
+                    {b} system
+                    <span className="font-semibold text-slate-400">
+                      {roundPlaces.filter((p) => p.basin === b).length}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+          )}
 
-        {hasWater && (
-          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
-            {WATER_KINDS.map(({ type, label }) => {
-              const n = roundPlaces.filter((p) => p.type === type).length
-              if (!n) return null
-              return (
+          {isPhenomena && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {(['warm', 'cold'] as const).map((t) => (
                 <label
-                  key={type}
+                  key={t}
                   className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
-                    shown[type] ? 'text-slate-700' : 'text-slate-400'
+                    tempsShown[t] ? 'text-slate-700' : 'text-slate-400'
                   }`}
                 >
                   <input
                     type="checkbox"
-                    checked={shown[type]}
-                    onChange={(e) => setShown((s) => ({ ...s, [type]: e.target.checked }))}
+                    checked={tempsShown[t]}
+                    onChange={(e) => setTempsShown((s) => ({ ...s, [t]: e.target.checked }))}
                     className="h-3.5 w-3.5 accent-blue-600"
                   />
-                  <span className={shown[type] ? '' : 'opacity-40'}>
-                    <KindSwatch type={type} />
+                  <span className={tempsShown[t] ? '' : 'opacity-40'}>
+                    <CurrentSwatch temp={t} />
                   </span>
-                  {label}
-                  <span className="font-semibold text-slate-400">{n}</span>
+                  {t === 'warm' ? 'Warm currents' : 'Cold currents'}
+                  <span className="font-semibold text-slate-400">
+                    {roundPlaces.filter((p) => p.temp === t).length}
+                  </span>
                 </label>
-              )
-            })}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )}
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-4">
-        <label className="pointer-events-auto flex cursor-pointer items-center gap-3 rounded-xl bg-white px-4 py-3 font-extrabold text-slate-900 shadow-lg">
-          <input
-            type="checkbox"
-            checked={showAll}
-            onChange={(e) => setShowAll(e.target.checked)}
-            className="h-5 w-5 accent-blue-600"
-          />
-          Show all names
-        </label>
-        <div className="pointer-events-auto flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setTricks(true)}
-            className="cursor-pointer rounded-xl bg-yellow-300 px-4 py-3 font-extrabold text-slate-900 shadow-lg"
-          >
-            Tricks
-          </button>
-          <button
-            type="button"
-            onClick={onExit}
-            aria-label="Close"
-            className="cursor-pointer rounded-xl bg-white px-4 py-3 text-lg font-bold text-slate-900 shadow-lg"
-          >
-            ✕
-          </button>
+          {isPlacesSection && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {PLACE_KINDS.map(({ kind, label }) => {
+                const n =
+                  kind === 'country'
+                    ? countryCount
+                    : roundPlaces.filter((p) => placeKindOf(p.type) === kind).length
+                if (!n) return null
+                return (
+                  <label
+                    key={kind}
+                    className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                      placeKindsShown[kind] ? 'text-slate-700' : 'text-slate-400'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={placeKindsShown[kind]}
+                      onChange={(e) =>
+                        setPlaceKindsShown((s) => ({ ...s, [kind]: e.target.checked }))
+                      }
+                      className="h-3.5 w-3.5 accent-blue-600"
+                    />
+                    <span className={placeKindsShown[kind] ? '' : 'opacity-40'}>
+                      <PlaceKindSwatch kind={kind} />
+                    </span>
+                    {label}
+                    <span className="font-semibold text-slate-400">{n}</span>
+                  </label>
+                )
+              })}
+            </div>
+          )}
+
+          {hasWater && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {WATER_KINDS.map(({ type, label }) => {
+                const n = roundPlaces.filter((p) => p.type === type).length
+                if (!n) return null
+                return (
+                  <label
+                    key={type}
+                    className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                      shown[type] ? 'text-slate-700' : 'text-slate-400'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={shown[type]}
+                      onChange={(e) => setShown((s) => ({ ...s, [type]: e.target.checked }))}
+                      className="h-3.5 w-3.5 accent-blue-600"
+                    />
+                    <span className={shown[type] ? '' : 'opacity-40'}>
+                      <KindSwatch type={type} />
+                    </span>
+                    {label}
+                    <span className="font-semibold text-slate-400">{n}</span>
+                  </label>
+                )
+              })}
+            </div>
+          )}
         </div>
-      </div>
+      )}
+
+      {!bare.on && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-4">
+          <label className="pointer-events-auto flex cursor-pointer items-center gap-3 rounded-xl bg-white px-4 py-3 font-extrabold text-slate-900 shadow-lg">
+            <input
+              type="checkbox"
+              checked={showAll}
+              onChange={(e) => setShowAll(e.target.checked)}
+              className="h-5 w-5 accent-blue-600"
+            />
+            Show all names
+          </label>
+          <div className="pointer-events-auto flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setTricks(true)}
+              className="cursor-pointer rounded-xl bg-yellow-300 px-4 py-3 font-extrabold text-slate-900 shadow-lg"
+            >
+              Tricks
+            </button>
+            <button
+              type="button"
+              onClick={onExit}
+              aria-label="Close"
+              className="cursor-pointer rounded-xl bg-white px-4 py-3 text-lg font-bold text-slate-900 shadow-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {selectedCountry && isMixed && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4">

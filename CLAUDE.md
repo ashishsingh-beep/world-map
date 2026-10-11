@@ -656,6 +656,14 @@ unless each of fourteen islands lands on its own side — Kiritimati, Samoa,
 Tokelau, Tonga and Big Diomede on Asia's date, Little Diomede, American Samoa,
 Niue, the Cooks and the Aleutians on America's.
 
+**Every Learn map can be cleared down to the map.** A Hide switch tops the
+map's own buttons (`bare` on `MapCanvas`, `useBare` in `src/app/useBare.ts`) on
+every Learn screen and the isotherm maps: on, it puts away the screen's legends,
+chips, Show all names, Tricks and ✕, and the map's States and Lat/Long, leaving
+the map, the switch (now Show) and Reset. A card still opens on a tap — that is
+asked for. One setting for every map, remembered like Lat/Long (`loadBare`/
+`saveBare`). Play has no switch: its prompt is the question.
+
 **Zoom goes to 400×** (`MAX_ZOOM` in `MapCanvas`), deep enough that Ilhéu das
 Rolas and Tuvalu's atolls are shapes rather than specks; automatic zooms keep
 their own lower caps. A Reset button under Lat/Long flies back to the round's

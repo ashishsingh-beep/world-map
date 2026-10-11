@@ -308,6 +308,16 @@ const SHAPE_SCALE: Record<MarkerShape, number> = {
 /** Projects lon/lat to current screen pixels, or null if it falls off the globe. */
 export type ToScreen = (p: [number, number]) => [number, number] | null
 
+/**
+ * The switch that clears a screen down to its map: the screen owns the setting
+ * and hides its own legends and buttons; the map hides its States and Lat/Long
+ * and keeps this switch and Reset.
+ */
+export interface MapBare {
+  on: boolean
+  toggle: () => void
+}
+
 export interface MapCanvasProps {
   /** Geography to draw. For a continent round this is just that continent. */
   render: string[]
@@ -386,6 +396,11 @@ export interface MapCanvasProps {
   className?: string
   /** Clearance around the fitted geography. Defaults to 24px on every side. */
   padding?: MapPadding
+  /**
+   * Offers the switch that clears the screen down to the map (Learn screens).
+   * Left out, as in play, there is no switch.
+   */
+  bare?: MapBare
 }
 
 const FILLS: Record<CountryState, string> = {
@@ -430,6 +445,7 @@ export function MapCanvas({
   revealPoints = null,
   focusPoints = null,
   focusAlways = false,
+  bare,
   pinPoint = null,
   markPoint = null,
   onPickPoint,
@@ -1499,7 +1515,28 @@ export function MapCanvas({
       {/* The map's own controls, at its right edge halfway down: the one
           place no screen puts anything of its own. */}
       <div className="absolute top-1/2 right-3 z-[5] flex -translate-y-1/2 flex-col gap-2">
-        {atlas === 'india' && (
+        {bare && (
+          <button
+            type="button"
+            onClick={bare.toggle}
+            aria-pressed={bare.on}
+            title={bare.on ? 'Show the controls again' : 'Hide everything but the map'}
+            className={`${CONTROL} ${bare.on ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path
+                d="M2 11s3.2-6 9-6 9 6 9 6-3.2 6-9 6-9-6-9-6z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+              <circle cx="11" cy="11" r="2.6" stroke="currentColor" strokeWidth="1.5" />
+              {!bare.on && <path d="M4 18 18 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />}
+            </svg>
+            {bare.on ? 'Show' : 'Hide'}
+          </button>
+        )}
+        {atlas === 'india' && !bare?.on && (
           <button
             type="button"
             onClick={cycleStates}
@@ -1529,21 +1566,23 @@ export function MapCanvas({
             <span className="text-[9px] font-semibold opacity-80">{STATES_MODE_LABEL[statesMode]}</span>
           </button>
         )}
-        <button
-          type="button"
-          onClick={toggleGrid}
-          aria-pressed={grid}
-          title={grid ? 'Hide latitude and longitude' : 'Show latitude and longitude'}
-          className={`${CONTROL} ${grid ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
-        >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5" />
-            <ellipse cx="11" cy="11" rx="4" ry="9" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M2 11h18M3.5 6.5h15M3.5 15.5h15" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M2 11h18" stroke="#dc2626" strokeWidth="1.8" />
-          </svg>
-          Lat/Long
-        </button>
+        {!bare?.on && (
+          <button
+            type="button"
+            onClick={toggleGrid}
+            aria-pressed={grid}
+            title={grid ? 'Hide latitude and longitude' : 'Show latitude and longitude'}
+            className={`${CONTROL} ${grid ? 'bg-[#1f2d4d] text-white' : 'bg-white text-slate-700 hover:bg-slate-100'}`}
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5" />
+              <ellipse cx="11" cy="11" rx="4" ry="9" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M2 11h18M3.5 6.5h15M3.5 15.5h15" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M2 11h18" stroke="#dc2626" strokeWidth="1.8" />
+            </svg>
+            Lat/Long
+          </button>
+        )}
         {/* Back to the round's own frame, from however far in or across
             you have gone. Greyed when you are already there. */}
         <button

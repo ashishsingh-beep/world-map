@@ -4,6 +4,7 @@ import { MapCanvas, CURRENT_INK, type MapIsoline } from '../map/MapCanvas'
 import { renderIsos } from '../data/countries'
 import { WORLD_VIEW } from '../game/rounds'
 import { loadIsothermMap, saveIsothermMap, type IsothermMap } from '../app/storage'
+import { useBare } from '../app/useBare'
 
 /**
  * The isotherm maps, for Learn only: January, July and the range between them,
@@ -83,6 +84,7 @@ export function IsothermScreen({ onExit }: { onExit: () => void }) {
     return out
   }, [map, which])
 
+  const bare = useBare()
   const caption = MAPS.find((m) => m.id === which)!.caption
 
   return (
@@ -95,43 +97,46 @@ export function IsothermScreen({ onExit }: { onExit: () => void }) {
         view={WORLD_VIEW}
         countryMarkers={false}
         isolines={isolines}
+        bare={bare}
       />
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-4">
-        <div className="pointer-events-auto rounded-xl bg-white px-4 py-3 font-extrabold text-slate-900 shadow-lg">
-          Isotherms
+      {!bare.on && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-4">
+          <div className="pointer-events-auto rounded-xl bg-white px-4 py-3 font-extrabold text-slate-900 shadow-lg">
+            Isotherms
+          </div>
+          <div
+            role="radiogroup"
+            aria-label="Which map"
+            className="pointer-events-auto flex rounded-xl bg-white p-1 shadow-lg"
+          >
+            {MAPS.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                role="radio"
+                aria-checked={which === m.id}
+                onClick={() => choose(m.id)}
+                className={`cursor-pointer rounded-lg px-3 py-2 text-sm font-extrabold transition sm:px-4 ${
+                  which === m.id ? 'bg-[#1f2d4d] text-white' : 'text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={onExit}
+            aria-label="Close"
+            className="pointer-events-auto cursor-pointer rounded-xl bg-white px-4 py-3 text-lg font-bold text-slate-900 shadow-lg"
+          >
+            ✕
+          </button>
         </div>
-        <div
-          role="radiogroup"
-          aria-label="Which map"
-          className="pointer-events-auto flex rounded-xl bg-white p-1 shadow-lg"
-        >
-          {MAPS.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              role="radio"
-              aria-checked={which === m.id}
-              onClick={() => choose(m.id)}
-              className={`cursor-pointer rounded-lg px-3 py-2 text-sm font-extrabold transition sm:px-4 ${
-                which === m.id ? 'bg-[#1f2d4d] text-white' : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              {m.label}
-            </button>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={onExit}
-          aria-label="Close"
-          className="pointer-events-auto cursor-pointer rounded-xl bg-white px-4 py-3 text-lg font-bold text-slate-900 shadow-lg"
-        >
-          ✕
-        </button>
-      </div>
+      )}
 
-      {map && (
+      {map && !bare.on && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4">
           <div className="pointer-events-auto max-w-2xl rounded-2xl bg-white/95 px-4 py-3 shadow-xl">
             <p className="text-sm font-bold text-slate-800">{caption}</p>
