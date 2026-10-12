@@ -553,7 +553,9 @@ river is drawn on the map, and naming it would make the tap a give-away. A
 source may carry `near`, the place the notes write beside it — the Gangotri
 Glacier's Gaumukh, the Yamunotri's Bandarpunch, the Chorabari's Kedarnath, the
 Satopanth's Badrinath — which the Learn map sets in brackets after the name, in
-a heavier hand. It is the map's label only; the answer is still the name.
+a heavier hand. It is the map's label only; the answer is still the name. Any
+rivers place may carry `near` the same way: the confluence Bhareh is labelled
+"Bhareh (Etawah)".
 
 A rivers map can ask about a place on a river's course too — Majuli, the
 largest river island, and Namcha Barwa, the peak the Brahmaputra bends round —
