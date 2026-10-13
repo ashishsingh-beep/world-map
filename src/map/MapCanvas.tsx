@@ -195,6 +195,8 @@ export interface MapPoint {
   label?: string
   /** Set after the label in brackets, heavier: the Gangotri Glacier's (Gaumukh). */
   near?: string
+  /** Under the marker rather than over it, where two labels would collide: Bara Bangal beside Rohtang Pass. */
+  labelBelow?: boolean
   /**
    * False for a place drawn as an area: the polygon is the notation, and a pin
    * in the middle of it would only say the sea is there and not there. The
@@ -1508,7 +1510,11 @@ export function MapCanvas({
                 {p.label && (
                   <text
                     x={cx}
-                    y={cy - (p.marker === false ? -5 : PLACE_MARKER_PX * SHAPE_SCALE[shape] + 6) / k}
+                    y={
+                      p.labelBelow && p.marker !== false
+                        ? cy + (PLACE_MARKER_PX * SHAPE_SCALE[shape] + 15) / k
+                        : cy - (p.marker === false ? -5 : PLACE_MARKER_PX * SHAPE_SCALE[shape] + 6) / k
+                    }
                     textAnchor="middle"
                     fontSize={(isTarget ? 15 : 11) / k}
                     fontWeight={800}

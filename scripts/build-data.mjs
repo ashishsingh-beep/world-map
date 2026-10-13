@@ -1011,6 +1011,8 @@ const PLACE_TYPES = new Set([
   'coast',
   // A state within a country, from admin-1; a lake; a reef, from the marine layer
   'state', 'lake', 'reef',
+  // A mountain pass — Shipki La, where the Sutlej breaks through into India
+  'pass',
   // A continent's great divisions — Melanesia, Micronesia, Polynesia
   'region',
   // A country within a sovereign state — England, Scotland, Wales, N. Ireland
@@ -1217,10 +1219,18 @@ function courseRivers(rivers, where) {
     }
     const parent = parentPlace ? run(parentPlace) : null
     if (parentPlace && !parent) return null
-    const ways = fetchRiverWays(p.osm, p.osmNames ?? [p.name], CACHE, p.osmBox ?? null, p.osmExtra ?? [], {
+    let ways = fetchRiverWays(p.osm, p.osmNames ?? [p.name], CACHE, p.osmBox ?? null, p.osmExtra ?? [], {
       allRoles: p.osmAllRoles ?? false,
       canal: p.osmCanal ?? false,
     })
+    // `osmSkip`: ways a relation runs above where the notes say the river
+    // rises — the Jhelum's relation climbs the Sandran past Verinag's spring.
+    if (p.osmSkip) {
+      const skip = new Set(p.osmSkip)
+      const before = ways.length
+      ways = ways.filter((w) => !skip.has(`W${w.id}`))
+      if (before - ways.length !== skip.size) errors.push(`${where(p.id)}: osmSkip names ways its course does not have`)
+    }
     if (!ways.length) {
       errors.push(`${where(p.id)}: OSM gave no ways for ${p.osm}`)
       return null
@@ -1359,6 +1369,7 @@ for (const file of syllabusFiles) {
       // The place the notes write beside it — Gaumukh, Kedarnath — shown in
       // brackets after its name on the map.
       ...(r.source.near && { near: r.source.near }),
+      ...(r.source.labelBelow && { labelBelow: true }),
       point: r.source.point,
       significance: r.source.significance,
       notes: [],

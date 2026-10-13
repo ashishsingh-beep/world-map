@@ -20,6 +20,8 @@ export type PlaceType =
   | 'state'
   /** A lake too small to draw as an area at continental scale — Lake Taupo. */
   | 'lake'
+  /** A mountain pass — Shipki La, where the Sutlej enters India. A point. */
+  | 'pass'
   /** A reef — the Great Barrier Reef. An area, from the marine layer. */
   | 'reef'
   /**
@@ -116,6 +118,11 @@ export interface Place {
    * brackets after its name, in a heavier hand.
    */
   near?: string
+  /**
+   * The map label goes under the marker, not over it: the Ravi rises 6km from
+   * the Beas, and Bara Bangal and Rohtang Pass were printed over each other.
+   */
+  labelBelow?: boolean
   /** A confluence's two rivers (place ids): the one that ends there, then the one it meets. */
   meets?: [string, string]
   /**
@@ -263,6 +270,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   coast: 'coast',
   state: 'state',
   lake: 'lake',
+  pass: 'pass',
   reef: 'reef',
   region: 'region',
   constituent: 'constituent country',

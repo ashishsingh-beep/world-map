@@ -117,6 +117,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           shape: shapeOf({ place: p }),
           label: showAll || selected === p.id ? p.name : undefined,
           near: p.near,
+          labelBelow: p.labelBelow,
           // An ocean or sea is drawn as its own extent; the point only carries
           // the label. Everything else is still a marker.
           marker: !areaOf(p.id),

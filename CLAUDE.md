@@ -497,7 +497,7 @@ Borders on, the borders are drawn again over the patches.
 
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
-Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra and Ganga systems from the notes — each with exactly the
+Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga and Indus systems from the notes — each with exactly the
 tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
@@ -517,7 +517,11 @@ tags as a canal along its length, the Thirumanimuthar through Salem, sets
 `osmCanal` so its name walk takes canal ways too. A walk matches `name` or
 `name:en` — the Raidak's way over the Bhutan border has only the English —
 and `osmExtra` may name a whole relation as well as a way: the Teesta is the
-Lachen Chu above Chungthang.
+Lachen Chu above Chungthang. A seed walk and a relation combine the same way:
+the Indus is walked by its Chinese names from Tibet to Demchok, where OSM's
+relation for it begins, with that relation as its `osmExtra`. `osmSkip` drops
+ways a relation runs above where the notes say the river rises: the Jhelum's
+climbs the Sandran past Verinag's spring.
 
 A river may run abroad only where it says: `through` lists the countries
 besides India its course may cross — the Brahmaputra's CHN and BGD, from
@@ -576,11 +580,15 @@ Glacier's Gaumukh, the Yamunotri's Bandarpunch, the Chorabari's Kedarnath, the
 Satopanth's Badrinath — which the Learn map sets in brackets after the name, in
 a heavier hand. It is the map's label only; the answer is still the name. Any
 rivers place may carry `near` the same way: the confluence Bhareh is labelled
-"Bhareh (Etawah)".
+"Bhareh (Etawah)". The Ravi rises 6km from the Beas, so its source sets
+`labelBelow` and "Bara Bangal" is written under its marker, clear of "Rohtang
+Pass" above the Beas's.
 
 A rivers map can ask about a place on a river's course too — Majuli, the
 largest river island, and Namcha Barwa, the peak the Brahmaputra bends round —
-filed with its system's `basin` like any river. Learn calls them Landmarks,
+filed with its system's `basin` like any river. The Indus map's are Pangong Tso
+and Tso Moriri (`type: "lake"`) and Shipki La, where the Sutlej enters India
+(`type: "pass"`). Learn calls them Landmarks,
 with their own chip; setup counts them apart from rivers and origins.
 
 A note may set words in **bold** (the Brahmaputra's **Jamuna** and
@@ -612,7 +620,11 @@ braid the two meet through channels OSM leaves unconnected. Beyond that a river
 is never stretched to meet a parent it does not reach; `via` remains for a
 river whose connector is not drawn at all (under 80km), and it alone keeps
 stopping short. The Dibang joins the Lohit, as OSM has it, just above the main
-stream.
+stream. The Dras runs on to the Indus at Marol through the stretch OSM calls
+the Shingo, so the Suru, which meets it at Kargil, is not needed to join it up.
+The five rivers of the Punjab join as they do on the ground: the Jhelum and the
+Ravi into the Chenab, the Beas into the Sutlej at Harike, the Sutlej into the
+Chenab, and the Chenab — the Panjnad, by then — into the Indus at Panchnad.
 
 Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
 a main river bold blue, a tributary finer, and a distributary teal and dashed

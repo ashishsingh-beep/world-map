@@ -3,7 +3,7 @@
   "title": "Rivers",
   "section": "rivers",
   "atlas": "india",
-  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra and Ganga maps",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga and Indus maps",
   "places": [
     {
       "id": "riv-godavari",
@@ -3006,6 +3006,550 @@
         "riv-ganga"
       ],
       "significance": "Where the Burhi Gandak joins the Ganga, in a flood-prone north Bihar district ringed by rivers",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-indus",
+      "name": "Indus",
+      "aliases": [
+        "Sindhu",
+        "Sengge Zangbo"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Indus",
+      "osm": "W75643111",
+      "significance": "The river that gave India its name, cradle of the Harappan civilisation, crossing Ladakh and Gilgit-Baltistan before it waters all of Pakistan; its system is shared under the 1960 water treaty",
+      "notes": [
+        "Rises at **Bokhar Chu** in Tibet, north of Mansarovar, as the Singhi Khamban (the Lion's Mouth)",
+        "Enters India in Ladakh at Demchok and flows past **Leh** between the Ladakh and Zaskar ranges",
+        "Bends south round Nanga Parbat in Gilgit-Baltistan",
+        "Joined at **Panchnad**, near Mithankot, by the five rivers of the Punjab as one stream",
+        "Reaches the Arabian Sea in Sindh, south-east of Karachi"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Bokhar Chu",
+        "aliases": [
+          "Bokarchu"
+        ],
+        "point": [
+          81.667,
+          31.25
+        ],
+        "significance": "Where the Indus rises, a glacier spring on the Tibetan plateau north of Mount Kailash and Lake Mansarovar",
+        "country": "CHN",
+        "near": "Singhi Khamban"
+      },
+      "through": [
+        "CHN",
+        "PAK"
+      ],
+      "osmNames": [
+        "狮泉河",
+        "森格藏布",
+        "Sengge Tsangpo",
+        "Sengge Zangbo"
+      ],
+      "osmExtra": [
+        "R1159233"
+      ]
+    },
+    {
+      "id": "riv-shyok",
+      "name": "Shyok",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R19252853",
+      "joins": "riv-indus",
+      "bank": "right",
+      "significance": "Rises at the Rimo Glacier below the Karakoram Pass and runs along the Line of Actual Control into Baltistan; the road to Daulat Beg Oldi, India's northernmost post, follows its valley",
+      "notes": [
+        "Rises at the Rimo Glacier in the Karakoram",
+        "Joined by the **Nubra** and the **Galwan**",
+        "Joins the Indus in Baltistan, above Skardu"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-nubra",
+      "name": "Nubra",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R19252989",
+      "joins": "riv-shyok",
+      "bank": "right",
+      "significance": "Carries the meltwater of the Siachen Glacier, the world's highest battlefield, through a valley of sand dunes and Bactrian camels north of the Khardung La",
+      "notes": [
+        "Rises at the snout of the Siachen Glacier",
+        "Joins the Shyok at Diskit"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-galwan",
+      "name": "Galwan",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "W288235401",
+      "joins": "riv-shyok",
+      "bank": "left",
+      "significance": "A short stream out of Aksai Chin whose valley saw the June 2020 clash between Indian and Chinese troops on the Line of Actual Control",
+      "notes": [
+        "Flows west out of Aksai Chin",
+        "Joins the Shyok"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Galwan River",
+        "加勒万河"
+      ]
+    },
+    {
+      "id": "riv-shigar",
+      "name": "Shigar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R19263659",
+      "joins": "riv-indus",
+      "bank": "right",
+      "significance": "Carries the meltwater of the Baltoro and Biafo glaciers, below K2, down a broad valley to Skardu",
+      "notes": [
+        "Fed by the Braldu, from the Baltoro Glacier below K2",
+        "Joins the Indus at Skardu"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-hunza",
+      "name": "Hunza",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R14576148",
+      "joins": "riv-gilgit",
+      "bank": "left",
+      "significance": "Flows down from the Khunjerab Pass past Karimabad, with the Karakoram Highway along its valley, and was dammed for five years by the Attabad landslide",
+      "notes": [
+        "The Karakoram Highway follows it from the Khunjerab Pass",
+        "Joins the Gilgit at Gilgit town"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-gilgit",
+      "name": "Gilgit",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R19269353",
+      "joins": "riv-indus",
+      "bank": "right",
+      "significance": "Drains the eastern Hindu Kush from the Shandur Pass and meets the main stream near Bunji, where the Himalaya, the Karakoram and the Hindu Kush meet",
+      "notes": [
+        "Rises near the Shandur Pass",
+        "Joined by the **Hunza**",
+        "Joins the Indus near Bunji"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-zanskar",
+      "name": "Zanskar",
+      "aliases": [
+        "Zaskar"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R19237508",
+      "joins": "riv-indus",
+      "bank": "left",
+      "significance": "Its frozen winter gorge is the Chadar trek, for months the only way out of Padum, before it meets the main stream at Nimmu below Leh",
+      "notes": [
+        "Joins the Indus at Nimmu, below Leh",
+        "Frozen in winter: the Chadar trek"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-dras",
+      "name": "Dras",
+      "aliases": [
+        "Drass"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R11718584",
+      "joins": "riv-indus",
+      "bank": "left",
+      "significance": "Rises near the Zoji La and flows through the town called India's coldest inhabited place, below Tololing and Tiger Hill of the 1999 Kargil war",
+      "notes": [
+        "Rises near the Zoji La",
+        "Joined by the Suru at Kargil, it meets the Indus at Marol"
+      ],
+      "tier": 1,
+      "osmExtra": [
+        "W155869446",
+        "W27055265"
+      ]
+    },
+    {
+      "id": "riv-kishanganga",
+      "name": "Kishanganga",
+      "aliases": [
+        "Neelum",
+        "Neelam",
+        "Kishan Ganga"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R19266912",
+      "joins": "riv-jhelum",
+      "bank": "left",
+      "significance": "Rises near Sonamarg, runs along and across the Line of Control past Gurez to Muzaffarabad; India's dam on it was upheld by the Hague Court of Arbitration in 2013",
+      "notes": [
+        "Called the **Neelum** in Pakistan-occupied Kashmir",
+        "Joins the Jhelum at Muzaffarabad"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-jhelum",
+      "name": "Jhelum",
+      "aliases": [
+        "Vitasta",
+        "Vyeth"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R8306691",
+      "joins": "riv-chenab",
+      "bank": "right",
+      "significance": "The river of the Kashmir Valley, winding through Srinagar and Wular Lake before it cuts a gorge to Muzaffarabad and the plains of Pakistan",
+      "notes": [
+        "Rises at **Verinag**, a spring at the foot of the Pir Panjal",
+        "Flows through **Srinagar** and Wular Lake",
+        "Joins the Chenab at Trimmu in Pakistan"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Verinag",
+        "aliases": [],
+        "point": [
+          75.249,
+          33.535
+        ],
+        "significance": "Where the Jhelum rises: a spring in an octagonal Mughal tank built by Jahangir, at the foot of the Pir Panjal in Anantnag"
+      },
+      "through": [
+        "PAK"
+      ],
+      "osmExtra": [
+        "W230499459"
+      ],
+      "osmSkip": [
+        "W1050479174",
+        "W62103654",
+        "W741806002"
+      ]
+    },
+    {
+      "id": "riv-poonch",
+      "name": "Poonch",
+      "aliases": [
+        "Punch"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R12209970",
+      "joins": "riv-jhelum",
+      "bank": "left",
+      "significance": "Rises on the Pir Panjal and crosses the Line of Control to the Mangla reservoir, where it meets the main stream",
+      "notes": [
+        "Rises on the Pir Panjal",
+        "Joins the Jhelum at the Mangla reservoir"
+      ],
+      "tier": 1,
+      "through": [
+        "PAK"
+      ]
+    },
+    {
+      "id": "riv-chenab",
+      "name": "Chenab",
+      "aliases": [
+        "Chandrabhaga",
+        "Asikni"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R6085682",
+      "joins": "riv-indus",
+      "bank": "left",
+      "significance": "The largest of the Punjab's rivers by volume, spanned at Reasi by the world's highest railway arch bridge and harnessed at Salal and Baglihar",
+      "notes": [
+        "Formed at Tandi in Lahaul by the Chandra and the Bhaga; the Bhaga rises near **Baralacha La**",
+        "Flows past **Jammu** (at Akhnoor) into Pakistan",
+        "Joined by the Jhelum, the Ravi and the Sutlej; as the **Panjnad** it joins the Indus"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Baralacha La",
+        "aliases": [
+          "Bara-lacha La",
+          "Baralacha Pass",
+          "Bara Lacha La"
+        ],
+        "point": [
+          77.42,
+          32.76
+        ],
+        "significance": "Where the Chenab rises, through its headstream the Bhaga at Suraj Tal, on the pass from Lahaul to Ladakh"
+      },
+      "through": [
+        "PAK"
+      ],
+      "osmExtra": [
+        "R11611816"
+      ]
+    },
+    {
+      "id": "riv-ravi",
+      "name": "Ravi",
+      "aliases": [
+        "Iravati",
+        "Parushni"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R8894611",
+      "joins": "riv-chenab",
+      "bank": "left",
+      "significance": "Flows past Chamba and Lahore and forms the India–Pakistan border for a stretch, held back at Thein by the Ranjit Sagar dam",
+      "notes": [
+        "Rises in the **Bara Bangal** region of Kangra",
+        "Flows past Chamba, then along the Punjab border with Pakistan",
+        "Joins the Chenab in Pakistan"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Bara Bangal",
+        "aliases": [
+          "Bara Bhangal"
+        ],
+        "point": [
+          77.0,
+          32.37
+        ],
+        "significance": "Where the Ravi rises, a remote high valley of Kangra between the Dhauladhar and the Pir Panjal",
+        "labelBelow": true
+      },
+      "through": [
+        "PAK"
+      ],
+      "osmExtra": [
+        "W71276808",
+        "W166352431"
+      ]
+    },
+    {
+      "id": "riv-beas",
+      "name": "Beas",
+      "aliases": [
+        "Vipasha",
+        "Byas"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "W801057036",
+      "joins": "riv-sutlej",
+      "bank": "right",
+      "significance": "Runs through the Kullu valley past Manali and Mandi, is dammed at Pandoh and Pong, and is the one river of the five that flows wholly in India",
+      "notes": [
+        "Rises at Beas Kund near **Rohtang Pass**",
+        "Dammed at Pandoh and at Pong (Maharana Pratap Sagar)",
+        "Joins the Sutlej at **Harike**"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Rohtang Pass",
+        "aliases": [
+          "Rohtang",
+          "Rohtang La"
+        ],
+        "point": [
+          77.247,
+          32.372
+        ],
+        "significance": "Where the Beas rises, at the Beas Kund spring below the pass from Manali over the Pir Panjal into Lahaul"
+      },
+      "osmNames": [
+        "Beas",
+        "Beas River",
+        "ब्यास",
+        "ब्यास नदी"
+      ],
+      "osmExtra": [
+        "W436653155",
+        "W407388405",
+        "W770940231",
+        "W75653701",
+        "W75653882",
+        "W407388406",
+        "W777439461"
+      ]
+    },
+    {
+      "id": "riv-sutlej",
+      "name": "Sutlej",
+      "aliases": [
+        "Satluj",
+        "Shutudri"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Indus",
+      "osm": "R325142",
+      "joins": "riv-chenab",
+      "bank": "left",
+      "significance": "Breaks through the Himalaya from Tibet and drives the Bhakra Nangal and Nathpa Jhakri projects before the Indira Gandhi Canal carries its water into the Thar",
+      "notes": [
+        "Rises at **Rakas Tal** (Langchen Khambab) beside Mansarovar in Tibet",
+        "Enters India at **Shipki La** in Kinnaur",
+        "Dammed at Bhakra (Gobind Sagar)",
+        "Joined by the Beas at Harike; joins the Chenab in Pakistan"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Rakas Tal",
+        "aliases": [
+          "Rakshastal",
+          "Rakshas Tal",
+          "Rakastal",
+          "Langa Tso"
+        ],
+        "point": [
+          81.15,
+          30.8
+        ],
+        "significance": "Where the Sutlej rises, the salt 'demons' lake' beside Mansarovar below Mount Kailash",
+        "country": "CHN",
+        "near": "Langchen Khambab"
+      },
+      "through": [
+        "CHN",
+        "PAK"
+      ]
+    },
+    {
+      "id": "riv-panchnad",
+      "name": "Panchnad",
+      "aliases": [
+        "Panjnad"
+      ],
+      "type": "confluence",
+      "country": "PAK",
+      "basin": "Indus",
+      "point": [
+        70.709,
+        29.134
+      ],
+      "meets": [
+        "riv-chenab",
+        "riv-indus"
+      ],
+      "significance": "Where the five rivers of the Punjab, gathered into one stream, join the main stream near Mithankot in Pakistan",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-pangong-tso",
+      "name": "Pangong Tso",
+      "aliases": [
+        "Pangong Lake",
+        "Pangong"
+      ],
+      "type": "lake",
+      "country": "IND",
+      "basin": "Indus",
+      "point": [
+        78.6,
+        33.73
+      ],
+      "significance": "A brackish lake 4,350m up in eastern Ladakh, two-thirds of it in Tibet, astride the Line of Actual Control — the scene of the 2020 standoff",
+      "notes": [
+        "An endorheic lake: no river leaves it"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-tso-moriri",
+      "name": "Tso Moriri",
+      "aliases": [
+        "Moriri",
+        "Lake Moriri"
+      ],
+      "type": "lake",
+      "country": "IND",
+      "basin": "Indus",
+      "point": [
+        78.31,
+        32.9
+      ],
+      "significance": "The largest high-altitude lake wholly in India, in Ladakh's Changthang at 4,500m — a Ramsar wetland where bar-headed geese breed",
+      "notes": [],
+      "tier": 1
+    },
+    {
+      "id": "riv-shipki-la",
+      "name": "Shipki La",
+      "aliases": [
+        "Shipki Pass",
+        "Shipki"
+      ],
+      "type": "pass",
+      "country": "IND",
+      "basin": "Indus",
+      "point": [
+        78.75,
+        31.82
+      ],
+      "significance": "The pass in Kinnaur where the Sutlej breaks through the Himalaya from Tibet into India, and a border trading post with China",
       "notes": [],
       "tier": 1
     }
