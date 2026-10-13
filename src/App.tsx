@@ -27,9 +27,10 @@ import {
   type WaterKind,
   type WaterRegion,
 } from './ui/bits'
-import { HOME, ISOTHERMS, useRoute, type Route } from './app/route'
+import { CLIMATE, HOME, ISOTHERMS, useRoute, type Route } from './app/route'
 import { MenuCard, MenuSection } from './ui/Menu'
 import { IsothermScreen } from './screens/IsothermScreen'
+import { ClimateScreen } from './screens/ClimateScreen'
 import { PhysicalScreen } from './screens/PhysicalScreen'
 import { PHYSICAL_SECTIONS, physicalSection } from './app/physical'
 import {
@@ -71,6 +72,7 @@ export default function App() {
   const [route, navigate] = useRoute()
   const toWorld = () => navigate({ view: 'atlas', roundId: HOME.roundId, atlas: 'world' })
   if (route.roundId === ISOTHERMS) return <IsothermScreen onExit={toWorld} />
+  if (route.roundId === CLIMATE) return <ClimateScreen onExit={toWorld} />
   const physical = physicalSection(route.roundId)
   if (physical) return <PhysicalScreen section={physical} onExit={toWorld} />
   return <Rounds route={route} navigate={navigate} />
@@ -793,6 +795,13 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
               blurb="Surface air temperature in January and July, and the range between them."
               meta="Learn · 3 maps"
               onClick={() => navigate({ view: 'learn', roundId: ISOTHERMS })}
+            />
+            <MenuCard
+              icon="climate"
+              title="Climate"
+              blurb="Where the Mediterranean, desert and Sudan-type climates are, from the Köppen map."
+              meta="Learn · 3 climates"
+              onClick={() => navigate({ view: 'learn', roundId: CLIMATE })}
             />
           </MenuSection>
         )}

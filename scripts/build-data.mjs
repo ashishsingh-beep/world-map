@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
 import { annualRange, contour, readReanalysis, readStations, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
+import { climateRegions } from './climate.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -2200,6 +2201,58 @@ const dateLine = (() => {
   writeFileSync(resolve(OUT, 'isotherms.json'), JSON.stringify({ january, july, range: rangeMap }))
   const count = (m) => `${m.lines.length} lines`
   console.log(`Isotherms: January ${count(january)}, July ${count(july)}, range ${count(rangeMap)}; ${checks.length} figure checks pass`)
+}
+
+/**
+ * Climate — Phenomena's map of the Mediterranean, desert and Sudan-type
+ * climates — from Beck et al.'s Köppen-Geiger map for 1991–2020 (see
+ * scripts/climate.mjs for the classes behind each). Clipped to the drawn land,
+ * so no patch runs a fringe into the sea, and held to places whose climate is
+ * not in doubt, so a misread raster or a wrong class code cannot pass.
+ */
+{
+  const KG_DIR = resolve(CACHE, 'kg')
+  const KG_TIF = resolve(KG_DIR, '1991_2020/koppen_geiger_0p1.tif')
+  if (!existsSync(KG_TIF)) {
+    mkdirSync(KG_DIR, { recursive: true })
+    const zip = resolve(KG_DIR, 'koppen_geiger_tif.zip')
+    execFileSync('curl', ['-sSL', '-f', '-o', zip, 'https://ndownloader.figshare.com/files/61012822'], { stdio: 'inherit' })
+    execFileSync('unzip', ['-o', '-q', zip, '1991_2020/koppen_geiger_0p1.tif', '-d', KG_DIR], { stdio: 'inherit' })
+    execFileSync('rm', ['-f', zip])
+  }
+  const raw = resolve(CACHE, 'climate-raw.geojson')
+  writeFileSync(raw, JSON.stringify(await climateRegions(KG_TIF)))
+  const climateOut = resolve(OUT, 'climate.topo.json')
+  execFileSync(
+    resolve(ROOT, 'node_modules/.bin/mapshaper'),
+    [
+      '-i', raw, 'name=climate',
+      // An absolute interval, as for India: a percentage would thin the
+      // Cape's and Chile's small Mediterranean patches as hard as the Sahara.
+      '-simplify', 'interval=3000', 'keep-shapes',
+      '-clip', topoOut,
+      '-clean',
+      '-o', 'format=topojson', 'quantization=1e5', 'id-field=id', climateOut,
+    ],
+    { stdio: 'inherit' }
+  )
+  const topo = JSON.parse(readFileSync(climateOut, 'utf8'))
+  const regions = new Map(topojsonFeature(topo, topo.objects.climate).features.map((f) => [f.id, f]))
+  const SURE = {
+    mediterranean: { Rome: [12.5, 41.9], Athens: [23.73, 37.98], 'Los Angeles': [-118.24, 34.05], 'San Francisco': [-122.42, 37.77], Valparaíso: [-71.55, -33.1], 'Cape Town': [18.47, -33.95], Perth: [115.86, -31.95], Adelaide: [138.6, -34.93] },
+    'desert-hot': { Riyadh: [46.7, 24.7], 'the central Sahara': [5, 25], 'the Thar': [71, 27], 'Alice Springs': [133.88, -23.7], 'the Namib': [15, -23], Phoenix: [-112.07, 33.45] },
+    'desert-cold': { 'the Gobi': [104.4, 43.6], 'the Taklamakan': [83, 39], 'the Karakum': [59, 39], Patagonia: [-69, -46] },
+    sudan: { Bamako: [-8, 12.65], Kaduna: [7.44, 10.52], Juba: [31.6, 4.85], Darwin: [130.84, -12.46], Brasília: [-47.9, -15.8], 'the Llanos': [-67.4, 8.9] },
+  }
+  const misses = []
+  for (const [id, sure] of Object.entries(SURE)) {
+    const f = regions.get(id)
+    if (!f) { misses.push(`${id}: no region at all`); continue }
+    for (const [where, at] of Object.entries(sure)) if (!geoContains(f, at)) misses.push(`${id}: ${where} is outside it`)
+  }
+  if (misses.length) throw new Error(`Climate regions do not hold:\n  ${misses.join('\n  ')}`)
+  const mkm2 = (f) => ((geoArea(f) * 6371 * 6371) / 1e6).toFixed(1)
+  console.log(`Climate: ${[...regions].map(([id, f]) => `${id} ${mkm2(f)}M km²`).join(', ')}; ${Object.values(SURE).reduce((n, s) => n + Object.keys(s).length, 0)} places check out`)
 }
 
 writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))

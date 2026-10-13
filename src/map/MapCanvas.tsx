@@ -313,6 +313,17 @@ export type ToScreen = (p: [number, number]) => [number, number] | null
  * and hides its own legends and buttons; the map hides its States and Lat/Long
  * and keeps this switch and Reset.
  */
+/**
+ * An area drawn over the land in its own colour — a climate region. Tapping
+ * one calls `onPatch`; the picked one is drawn stronger and outlined.
+ */
+export interface MapPatch {
+  id: string
+  feature: GeoJSON.Feature | GeoJSON.Geometry
+  fill: string
+  selected?: boolean
+}
+
 export interface MapBare {
   on: boolean
   toggle: () => void
@@ -406,6 +417,11 @@ export interface MapCanvasProps {
    * Borders switch that lays the countries' borders and names over it.
    */
   physical?: boolean
+  /** Areas drawn over the land in their own colours: the climate regions. */
+  patches?: MapPatch[]
+  onPatch?: (id: string) => void
+  /** A line of credit at the map's foot, for data whose licence asks for one. */
+  credit?: string
 }
 
 const FILLS: Record<CountryState, string> = {
@@ -451,6 +467,9 @@ export function MapCanvas({
   focusPoints = null,
   focusAlways = false,
   bare,
+  patches,
+  onPatch,
+  credit,
   pinPoint = null,
   markPoint = null,
   onPickPoint,
@@ -1078,6 +1097,40 @@ export function MapCanvas({
               </Fragment>
             )
           })}
+          {/* Over the land, under the coast: each patch in its own colour,
+              light enough that the land and the other patches still read. */}
+          {patches?.map((p) => (
+            <path
+              key={`pt-${p.id}`}
+              d={path(p.feature as never) ?? undefined}
+              fill={p.fill}
+              fillOpacity={p.selected ? 0.92 : 0.72}
+              stroke={p.selected ? '#1f2d4d' : 'none'}
+              strokeWidth={1.6}
+              vectorEffect="non-scaling-stroke"
+              className={onPatch ? 'cursor-pointer' : undefined}
+              onClick={(e) => {
+                if (!onPatch) return
+                e.stopPropagation()
+                onPatch(p.id)
+              }}
+            />
+          ))}
+          {/* The borders, if the map has them, go back over the patches. */}
+          {patches &&
+            !plainLand &&
+            drawn.map((f) => (
+              <path
+                key={`pb-${f.properties.iso}`}
+                d={path((outlineWithoutSeam(f.geometry) ?? f) as never) ?? undefined}
+                fill="none"
+                stroke="#1f2d4d"
+                strokeWidth={0.6}
+                strokeOpacity={0.8}
+                vectorEffect="non-scaling-stroke"
+                pointerEvents="none"
+              />
+            ))}
           {plainLand && drawn.length > 0 && (
             <path
               d={path(coastline()) ?? undefined}
@@ -1568,6 +1621,12 @@ export function MapCanvas({
           {[statesMode !== 'off' && 'States: DataMeet', bands?.some((b) => b.river) && 'Rivers: © OpenStreetMap contributors']
             .filter(Boolean)
             .join(' · ')}
+        </div>
+      )}
+
+      {credit && (
+        <div className="pointer-events-none absolute bottom-1 left-2 z-[5] text-[10px] font-semibold text-slate-500">
+          {credit}
         </div>
       )}
 

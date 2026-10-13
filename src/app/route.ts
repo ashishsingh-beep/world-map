@@ -39,6 +39,9 @@ export const HOME: Route = { view: 'home', roundId: 'political-world' }
  */
 export const ISOTHERMS = 'isotherms'
 
+/** The climate map: Learn only, like the isotherms. */
+export const CLIMATE = 'climate'
+
 /** Always returns a route that exists — a hand-edited hash cannot crash the app. */
 export function parseHash(hash: string): Route {
   const [id, screen] = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
@@ -46,6 +49,7 @@ export function parseHash(hash: string): Route {
   const atlas = ATLASES[id as keyof typeof ATLASES]
   if (atlas) return { view: 'atlas', roundId: HOME.roundId, atlas }
   if (id === ISOTHERMS) return { view: 'learn', roundId: ISOTHERMS }
+  if (id === CLIMATE) return { view: 'learn', roundId: CLIMATE }
   // A physical section's map, like the isotherms, has no round behind it.
   if (physicalSection(id)) return { view: 'learn', roundId: id }
   // An old link — a country round, a continent's places — lands on its

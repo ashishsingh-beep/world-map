@@ -32,6 +32,8 @@
     "@types/react-dom": "^19.2.7",
     "@types/topojson-client": "^3.1.5",
     "@vitejs/plugin-react": "^6.1.1",
+    "d3-contour": "^4.0.2",
+    "geotiff": "^3.0.5",
     "jsfive": "^0.4.2",
     "mapshaper": "^0.7.61",
     "netcdfjs": "^4.0.0",

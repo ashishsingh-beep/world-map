@@ -474,6 +474,27 @@ as the 10°C loops. Lines are coloured on the currents' own blue-to-red
 (`CURRENT_INK`), lowest level to highest; the thermal equator is dashed navy.
 `MapCanvas` draws them through `isolines`, a plain line layer with labels.
 
+**Climates are Köppen's, not traced.** Phenomena's third entry is a
+Learn-only climate map (`#/climate`, `src/screens/ClimateScreen.tsx`, answered
+in `App` like the isotherms): the Mediterranean, hot desert, cold desert and
+Sudan-type climates as patches over a physical world map, a legend chip each to
+put it away, and a card of the textbook's account on a tap. The regions are the
+Köppen-Geiger classes of Beck et al. (2023), *Scientific Data* 10, 724 (CC BY
+4.0) — its present-day map, 1991–2020, at 0.1° — made into polygons at build
+time by `scripts/climate.mjs`: Mediterranean is Csa + Csb, hot desert BWh,
+cold desert BWk, Sudan type Aw (Leong's "Savanna or Sudan climate"). Each class
+is a mask contoured by marching squares (`d3-contour`), specks under 20 cells
+dropped, simplified by an absolute 3km and clipped to the drawn land, into
+`src/data/climate.topo.json`, loaded only when the map opens. Köppen also classes
+a few tropical highlands Cs — Ethiopia, Kenya — and those are tropical highland
+climates, not the Mediterranean of the west coasts at 30°–45°, so Mediterranean
+is taken outside the tropics only. `npm run data` fails unless 24 places whose
+climate is not in doubt fall inside their own region (Rome, Cape Town, Perth;
+Riyadh, the Thar, Alice Springs; the Gobi, the Taklamakan, Patagonia; Bamako,
+Darwin, the Llanos…). `MapCanvas` draws them through `patches` (with `onPatch`
+and a `credit` line at the foot), over the land and under the coast; with
+Borders on, the borders are drawn again over the patches.
+
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
 Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra and Ganga systems from the notes — each with exactly the
