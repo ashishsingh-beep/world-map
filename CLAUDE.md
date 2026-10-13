@@ -495,6 +495,32 @@ Darwin, the Llanos…). `MapCanvas` draws them through `patches` (with `onPatch`
 and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
 
+The climate map also has a Pressure belts switch and a Trade winds switch, and
+a time of year both follow — the equinoxes (March and September averaged),
+July and January, the three times the trades behave differently: meeting near
+the Equator; the south-east trades crossing it to become the south-west
+monsoon; the north-east trades crossing the other way, the north-east monsoon
+over India and the north-west monsoon in northern Australia. Nothing is
+traced: `scripts/winds.mjs` takes NOAA's 1991–2020 means. The subtropical
+highs and subpolar lows are each season's ridge and trough of sea-level
+pressure averaged round the parallel, drawn as a band 5° either side; the
+polar highs are the zone poleward of 80°, not traced, because pressure over the
+ice caps cannot be read reliably. The ITCZ is where the trades meet and the
+rain their meeting brings — surface convergence and GPCP rainfall, equally
+weighted, because rain alone misses July's dry heat lows over the Sahara and
+Arabia and convergence alone misses January's dip over southern Africa —
+traced as one continuous path round the globe, or the South Pacific's own
+convergence zone breaks it up. The arrows are the near-surface wind between
+the season's two subtropical ridges, on a 7.5° by 5° grid that `MapCanvas`
+thins as the map zooms out (`winds`); each named wind is written where `npm run
+data` checks it blows from the quarter its name says, and the build fails
+unless the ITCZ rides north over India, West Africa and Arabia in July and south
+over southern Africa and northern Australia in January. The belts are
+`patches` drawn in quarters (a ring all the way round closes on itself), so
+they are picked by fill alone (`outline: false`) and their edges drawn as
+dashed `isolines`; names go through `notes`, placed in order and dropped where
+they would touch one already placed.
+
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
 Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga, Indus, Narmada, Tapi,

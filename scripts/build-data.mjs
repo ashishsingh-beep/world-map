@@ -17,7 +17,8 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
-import { annualRange, contour, readReanalysis, readStations, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
+import { annualRange, contour, readReanalysis, readStations, sample, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
+import { windsAndBelts } from './winds.mjs'
 import { climateRegions } from './climate.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
@@ -2212,6 +2213,82 @@ const dateLine = (() => {
   writeFileSync(resolve(OUT, 'isotherms.json'), JSON.stringify({ january, july, range: rangeMap }))
   const count = (m) => `${m.lines.length} lines`
   console.log(`Isotherms: January ${count(january)}, July ${count(july)}, range ${count(rangeMap)}; ${checks.length} figure checks pass`)
+}
+
+/**
+ * The pressure belts, the ITCZ and the trade winds for the Climate map, at
+ * the equinoxes, in July and in January — from NOAA's 1991–2020 means (see
+ * scripts/winds.mjs). Held to what the textbook says the trades do in each, so
+ * a wrong file or a broken trace cannot pass unnoticed. Each named wind is
+ * written on the map where it is checked here.
+ */
+{
+  const PSL = 'https://downloads.psl.noaa.gov/Datasets'
+  const files = {
+    uFile: ['ncep-uwnd.sig995.mon.ltm.1991-2020.nc', `${PSL}/ncep.reanalysis.derived/surface/uwnd.sig995.mon.ltm.1991-2020.nc`],
+    vFile: ['ncep-vwnd.sig995.mon.ltm.1991-2020.nc', `${PSL}/ncep.reanalysis.derived/surface/vwnd.sig995.mon.ltm.1991-2020.nc`],
+    slpFile: ['ncep-slp.mon.ltm.1991-2020.nc', `${PSL}/ncep.reanalysis.derived/surface/slp.mon.ltm.1991-2020.nc`],
+    rainFile: ['gpcp-precip.mon.ltm.1991-2020.nc', `${PSL}/gpcp/precip.mon.ltm.1991-2020.nc`],
+  }
+  for (const [name, url] of Object.values(files)) {
+    const at = resolve(CACHE, name)
+    if (!existsSync(at)) execFileSync('curl', ['-sSL', '-f', '-o', at, url], { stdio: 'inherit' })
+  }
+  const seasons = windsAndBelts(Object.fromEntries(Object.entries(files).map(([k, [name]]) => [k, resolve(CACHE, name)])))
+  // Which way a wind blows *from*, as its name says it: a north-east wind
+  // blows towards the south-west, so both its components are negative.
+  const FROM = { NE: [-1, -1], SE: [-1, 1], SW: [1, 1], NW: [1, -1] }
+  const named = (text, from, at) => ({ text, from, at })
+  const trades = [
+    named('NE trades', 'NE', [-40, 15]),
+    named('NE trades', 'NE', [-140, 12]),
+    named('SE trades', 'SE', [-20, -12]),
+    named('SE trades', 'SE', [-110, -12]),
+    named('SE trades', 'SE', [80, -15]),
+  ]
+  const names = {
+    equinox: trades,
+    // The south-east trades cross the Equator and turn: the south-west monsoon.
+    july: [...trades, named('SW monsoon', 'SW', [65, 13])],
+    // The north-east trades cross it the other way, and reach northern
+    // Australia from the north-west.
+    january: [...trades, named('NE monsoon', 'NE', [88, 14]), named('NW monsoon', 'NW', [128, -11])],
+  }
+  const latAt = (line, lon) => line.reduce((b, c) => (Math.abs(c[0] - lon) < Math.abs(b[0] - lon) ? c : b))[1]
+  const { equinox, july, january } = seasons
+  const checks = [
+    ['July: the ITCZ rides north over India', latAt(july.itcz, 80) > 12],
+    ['July: … and over West Africa', latAt(july.itcz, 0) > 5],
+    ['July: … and over Arabia, to the heat lows', latAt(july.itcz, 45) > 10],
+    ['January: the ITCZ swings south over southern Africa', latAt(january.itcz, 25) < -5],
+    ['January: … and over northern Australia', latAt(january.itcz, 130) < -5],
+    ['Equinox: the ITCZ lies near the Equator over the Atlantic', Math.abs(latAt(equinox.itcz, -30)) < 10],
+    ['July: the northern subtropical high lies further north than in January', july.belts.subtropicalNorth > january.belts.subtropicalNorth],
+    ['January: the southern subtropical high lies further south than in July', january.belts.subtropicalSouth < july.belts.subtropicalSouth],
+    ...Object.entries(seasons).flatMap(([id, d]) => [
+      [`${id}: subtropical highs at 25°–40°`, [d.belts.subtropicalNorth, -d.belts.subtropicalSouth].every((l) => l >= 25 && l <= 40)],
+      [`${id}: subpolar lows at 55°–70°`, [d.belts.subpolarNorth, -d.belts.subpolarSouth].every((l) => l >= 55 && l <= 70)],
+      ...names[id].map(({ text, from, at }) => {
+        const [su, sv] = FROM[from]
+        const u = sample(d.u, at[1], at[0])
+        const v = sample(d.v, at[1], at[0])
+        return [`${id}: the ${text} blow from the ${from} at ${at}`, u * su > 0.5 && v * sv > 0.5]
+      }),
+    ]),
+  ]
+  const failed = checks.filter(([, ok]) => !ok).map(([what]) => what)
+  if (failed.length) throw new Error(`Winds and belts do not match the textbook:\n  ${failed.join('\n  ')}`)
+  const out = Object.fromEntries(
+    Object.entries(seasons).map(([id, d]) => [
+      id,
+      { belts: d.belts, itcz: d.itcz, winds: d.winds, names: names[id].map(({ text, at }) => ({ text, at })) },
+    ])
+  )
+  writeFileSync(resolve(OUT, 'winds.json'), JSON.stringify(out))
+  const b = (d) => `${d.belts.subtropicalNorth}°/${d.belts.subtropicalSouth}°`
+  console.log(
+    `Winds: subtropical highs ${b(equinox)} at the equinoxes, ${b(july)} in July, ${b(january)} in January; ${checks.length} checks pass`
+  )
 }
 
 /**

@@ -326,6 +326,29 @@ export interface MapPatch {
   feature: GeoJSON.Feature | GeoJSON.Geometry
   fill: string
   selected?: boolean
+  /** How strongly it is filled when not picked: a pressure belt is a faint wash, a climate solid. */
+  opacity?: number
+  /**
+   * False to show it picked by its fill alone: a pressure belt is drawn in
+   * quarters round the globe, and an outline would stroke the seams.
+   */
+  outline?: boolean
+}
+
+/**
+ * A wind arrow: `i` and `j` its place on a regular grid, so the map can thin
+ * the arrows evenly as it zooms out; then where it is and the wind there, in
+ * metres a second east (`u`) and north (`v`).
+ */
+export type MapWind = [i: number, j: number, lon: number, lat: number, u: number, v: number]
+
+/** A name written on the map by itself: a wind's, a pressure belt's. */
+export interface MapLabel {
+  at: [number, number]
+  text: string
+  color: string
+  /** Set across the whole of a band, in small capitals: a belt's name. */
+  caps?: boolean
 }
 
 export interface MapBare {
@@ -369,6 +392,10 @@ export interface MapCanvasProps {
    * isotherms, each in its own colour with its value written along it.
    */
   isolines?: MapIsoline[]
+  /** Wind arrows, drawn over everything but the labels, thinned to stay apart on screen. */
+  winds?: MapWind[]
+  /** Free-standing names, written over the winds. */
+  notes?: MapLabel[]
   /**
    * Which atlas to draw. 'india' adds the state and union-territory outlines
    * over the country geography; they are context, never questions.
@@ -474,6 +501,8 @@ export function MapCanvas({
   patches,
   onPatch,
   credit,
+  winds,
+  notes: freeLabels,
   pinPoint = null,
   markPoint = null,
   onPickPoint,
@@ -1108,8 +1137,8 @@ export function MapCanvas({
               key={`pt-${p.id}`}
               d={path(p.feature as never) ?? undefined}
               fill={p.fill}
-              fillOpacity={p.selected ? 0.92 : 0.72}
-              stroke={p.selected ? '#1f2d4d' : 'none'}
+              fillOpacity={p.selected ? Math.min(0.92, (p.opacity ?? 0.72) + 0.2) : (p.opacity ?? 0.72)}
+              stroke={p.selected && p.outline !== false ? '#1f2d4d' : 'none'}
               strokeWidth={1.6}
               vectorEffect="non-scaling-stroke"
               className={onPatch ? 'cursor-pointer' : undefined}
@@ -1336,6 +1365,80 @@ export function MapCanvas({
               )
             })
           )}
+
+          {/* Winds: an arrow the way each blows, its length by its strength,
+              kept a steady distance apart on screen — every grid point when
+              zoomed in, every second or third on the whole world. */}
+          {winds &&
+            (() => {
+              const perDeg = ((projection.scale() * Math.PI) / 180) * k
+              const strideI = Math.max(1, Math.ceil(36 / (7.5 * perDeg)))
+              const strideJ = Math.max(1, Math.ceil(30 / (5 * perDeg)))
+              const room = Math.min(7.5 * strideI, 5 * strideJ) * perDeg
+              const full = Math.min(30, room * 0.8)
+              return (
+                <g pointerEvents="none">
+                  {winds.map(([i, j, lon, lat, u, v]) => {
+                    if (i % strideI || j % strideJ) return null
+                    const p = projection([lon, lat])
+                    if (!p) return null
+                    const speed = Math.hypot(u, v)
+                    const half = (full * (0.5 + 0.5 * Math.min(speed, 8) / 8)) / 2 / k
+                    const dx = u / speed
+                    const dy = -v / speed
+                    const tip = [p[0] + dx * half, p[1] + dy * half]
+                    const head = 5.5 / k
+                    const side = (a: number) => [
+                      tip[0] - head * (dx * Math.cos(a) - dy * Math.sin(a)),
+                      tip[1] - head * (dy * Math.cos(a) + dx * Math.sin(a)),
+                    ]
+                    const [l, r] = [side(0.5), side(-0.5)]
+                    const d = `M${p[0] - dx * half},${p[1] - dy * half}L${tip[0]},${tip[1]}M${l[0]},${l[1]}L${tip[0]},${tip[1]}L${r[0]},${r[1]}`
+                    return (
+                      <Fragment key={`w-${i}-${j}`}>
+                        <path d={d} fill="none" stroke="#fff" strokeOpacity={0.8} strokeWidth={3.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+                        <path d={d} fill="none" stroke="#0f172a" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+                      </Fragment>
+                    )
+                  })}
+                </g>
+              )
+            })()}
+          {(() => {
+            // Placed in order, each only if it keeps clear of those already
+            // placed, measured on screen: on a phone's world map the belts'
+            // names would otherwise run into one another.
+            const placed: [number, number, number, number][] = []
+            return freeLabels?.map((l, n) => {
+            const p = projection(l.at)
+            if (!p) return null
+            // Its width with room to spare, so two names never sit end to end.
+            const w = l.text.length * (l.caps ? 8.4 : 7) + 28
+            const box: [number, number, number, number] = [p[0] * k - w / 2, p[1] * k - 9, p[0] * k + w / 2, p[1] * k + 9]
+            if (placed.some((b) => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1])) return null
+            placed.push(box)
+            return (
+              <text
+                key={`fl-${n}`}
+                x={p[0]}
+                y={p[1]}
+                dy="0.35em"
+                textAnchor="middle"
+                fontSize={(l.caps ? 10.5 : 12) / k}
+                fontWeight={800}
+                letterSpacing={l.caps ? 1.2 / k : undefined}
+                fill={l.color}
+                stroke="#ffffff"
+                strokeWidth={3.2 / k}
+                strokeLinejoin="round"
+                paintOrder="stroke"
+                pointerEvents="none"
+              >
+                {l.caps ? l.text.toUpperCase() : l.text}
+              </text>
+            )
+            })
+          })()}
 
           {/* Ranges: a band along the ridgeline, under the peaks standing on
               them. Width is in screen pixels, so a band stays a band at every
