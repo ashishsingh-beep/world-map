@@ -104,6 +104,8 @@ export interface MapBand {
   rank?: number
   /** A connecting river, drawn and never asked: finer and fainter, never labelled. */
   quiet?: boolean
+  /** Drawn at a tributary's width whatever its role: the Luni. */
+  thin?: boolean
 }
 
 /**
@@ -1839,7 +1841,8 @@ export function MapCanvas({
     const ink = RIVER_INK[role]
     const idle = b.state === 'idle'
     const colour = idle ? ink.line : b.state === 'target' ? CURRENT_TARGET : FILLS[b.state]
-    const width = b.quiet ? 1.4 : b.state === 'target' ? Math.max(ink.width, 3.4) + 1.2 : ink.width
+    const base = b.thin ? RIVER_INK.tributary.width : ink.width
+    const width = b.quiet ? 1.4 : b.state === 'target' ? Math.max(base, 3.4) + 1.2 : base
     const heads: { x: number; y: number; deg: number }[] = []
     if (role === 'distributary') {
       // Two heads, part-way and at the mouth, wherever the zoom puts them.

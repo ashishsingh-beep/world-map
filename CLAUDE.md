@@ -497,7 +497,8 @@ Borders on, the borders are drawn again over the patches.
 
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
-Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga and Indus systems from the notes — each with exactly the
+Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga, Indus, Narmada, Tapi,
+Mahi and Luni systems from the notes — each with exactly the
 tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has
@@ -627,7 +628,8 @@ Ravi into the Chenab, the Beas into the Sutlej at Harike, the Sutlej into the
 Chenab, and the Chenab — the Panjnad, by then — into the Indus at Panchnad.
 
 Drawn by role (`RIVER_INK` in `MapCanvas`, `RiverSwatch` in `src/ui/bits.tsx`):
-a main river bold blue, a tributary finer, and a distributary teal and dashed
+a main river bold blue (the Luni, which dries into the Rann of Kutch, sets
+`thin` and is drawn at a tributary's width), a tributary finer, and a distributary teal and dashed
 with arrowheads to the sea, labelled "(distributary)" — it must read at a
 glance as water leaving a river. A river's *name* is set by its `rank`, which the
 build counts from the main river (0) down the `joins` chain — a tributary 1, a

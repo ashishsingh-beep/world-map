@@ -3,7 +3,7 @@
   "title": "Rivers",
   "section": "rivers",
   "atlas": "india",
-  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga and Indus maps",
+  "source": "Courses from OpenStreetMap (relations and named ways, by id); tributaries and distributaries after the notes' Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga, Indus, Narmada, Tapi, Mahi and Luni maps",
   "places": [
     {
       "id": "riv-godavari",
@@ -3552,6 +3552,263 @@
       "significance": "The pass in Kinnaur where the Sutlej breaks through the Himalaya from Tibet into India, and a border trading post with China",
       "notes": [],
       "tier": 1
+    },
+    {
+      "id": "riv-narmada",
+      "name": "Narmada",
+      "aliases": [
+        "Narbada",
+        "Rewa",
+        "Reva"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Narmada",
+      "osm": "R5405552",
+      "significance": "The holiest river of central India, flowing west through a rift valley between the Vindhyas and the Satpuras to the Arabian Sea, and dammed at Sardar Sarovar",
+      "notes": [
+        "Rises at **Amarkantak** on the Maikal Range",
+        "Flows west through a rift valley between the Vindhyas and the Satpuras",
+        "Cuts the Marble Rocks gorge and falls at Dhuandhar at Bhedaghat, near Jabalpur",
+        "Sardar Sarovar dam in Gujarat",
+        "!!Bharuch!! stands on its estuary, on the Gulf of Khambhat"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Amarkantak",
+        "aliases": [],
+        "point": [
+          81.75,
+          22.67
+        ],
+        "significance": "Where the Narmada rises, a temple tank on the Maikal plateau where the Vindhyas meet the Satpuras, and where the Son rises too"
+      }
+    },
+    {
+      "id": "riv-banjar",
+      "name": "Banjar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R11114123",
+      "joins": "riv-narmada",
+      "bank": "left",
+      "significance": "Drains Kanha, the tiger reserve of the Maikal hills, before joining the main stream at Mandla",
+      "notes": [
+        "Rises in the Maikal hills",
+        "Joins the Narmada at Mandla"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-sher",
+      "name": "Sher",
+      "aliases": [
+        "Shar"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R11114776",
+      "joins": "riv-narmada",
+      "bank": "left",
+      "significance": "A Satpura stream from Seoni across the sugarcane country of Narsinghpur to the main stream",
+      "notes": [
+        "Rises on the Satpura plateau in Seoni",
+        "Joins the Narmada in Narsinghpur district"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-shakkar",
+      "name": "Shakkar",
+      "aliases": [
+        "Shakar",
+        "Sakkar"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R6048890",
+      "joins": "riv-narmada",
+      "bank": "left",
+      "significance": "Comes down from the Satpuras of Chhindwara across Gadarwara's pulse and sugarcane fields to the main stream",
+      "notes": [
+        "Rises in the Satpuras of Chhindwara",
+        "Joins the Narmada in Narsinghpur district"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-tawa",
+      "name": "Tawa",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R6048893",
+      "joins": "riv-narmada",
+      "bank": "left",
+      "significance": "The longest tributary, rising near Pachmarhi in the Satpuras and dammed near Itarsi to irrigate the Hoshangabad plain",
+      "notes": [
+        "Rises near Pachmarhi in the Satpuras",
+        "Joins the Narmada at Bandrabhan, near Hoshangabad (Narmadapuram)"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-barna",
+      "name": "Barna",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R11115127",
+      "joins": "riv-narmada",
+      "bank": "right",
+      "significance": "Rises in the Vindhyas of Raisen district and is dammed at Bari to irrigate the wheat fields above the main stream's valley",
+      "notes": [
+        "Rises in the Vindhyas",
+        "Joins the Narmada in Raisen district"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-kolar",
+      "name": "Kolar",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R11115974",
+      "joins": "riv-narmada",
+      "bank": "right",
+      "significance": "Rises in the Vindhyas of Sehore and is dammed to give Bhopal its drinking water before it joins the main stream",
+      "notes": [
+        "Rises in the Vindhyas",
+        "Supplies Bhopal from its dam",
+        "Joins the Narmada in Sehore district"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-hiran",
+      "name": "Hiran",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Narmada",
+      "osm": "R11114240",
+      "joins": "riv-narmada",
+      "bank": "right",
+      "significance": "A right-bank stream from the Kaimur hills near Kundam, draining the Jabalpur–Narsinghpur plain below the Bhanrer range",
+      "notes": [
+        "Rises in the Kaimur hills of Jabalpur district",
+        "Joins the Narmada in Narsinghpur district"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "riv-tapi",
+      "name": "Tapi",
+      "aliases": [
+        "Tapti"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Tapi",
+      "osm": "R6048892",
+      "significance": "Runs west in a rift valley of its own south of the Satpuras, parallel to its larger northern neighbour, to the Gulf of Khambhat",
+      "notes": [
+        "Rises at **Multai** in Betul district, on the Satpura Range",
+        "Flows west through a rift valley, south of the Satpuras",
+        "Ukai dam in Gujarat",
+        "!!Surat!! stands on its estuary, on the Gulf of Khambhat"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Multai",
+        "aliases": [
+          "Multapi"
+        ],
+        "point": [
+          78.25,
+          21.77
+        ],
+        "significance": "Where the Tapi rises, a sacred tank in Betul district on the Satpura plateau of Madhya Pradesh"
+      }
+    },
+    {
+      "id": "riv-mahi",
+      "name": "Mahi",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Mahi",
+      "osm": "R11891250",
+      "significance": "The one river crossed twice by the Tropic of Cancer, looping north through Rajasthan's Banswara before turning back south into Gujarat to the Gulf of Khambhat",
+      "notes": [
+        "Rises at Minda in Dhar district of Madhya Pradesh, on the Vindhyas",
+        "Crosses the **Tropic of Cancer** twice",
+        "Mahi Bajaj Sagar dam at Banswara in Rajasthan; Kadana dam in Gujarat",
+        "Reaches the Gulf of Khambhat"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Minda",
+        "aliases": [
+          "Mehad Lake"
+        ],
+        "point": [
+          75.0,
+          22.63
+        ],
+        "significance": "Where the Mahi rises, by a village on the western Vindhyas in Dhar district of Madhya Pradesh"
+      }
+    },
+    {
+      "id": "riv-luni",
+      "name": "Luni",
+      "aliases": [
+        "Lavanavari",
+        "Sagarmati"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Luni",
+      "osm": "R6590126",
+      "significance": "The Thar's only sizeable river, fresh near its source and salt below Balotra, and lost not in the sea but in the Rann of Kutch",
+      "notes": [
+        "Rises near Pushkar in the Aravalli, west of Ajmer",
+        "The only big river of the Thar; its water turns saline below Balotra",
+        "An inland river: it never reaches the sea, but ends in the Rann of Kutch"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Pushkar",
+        "aliases": [
+          "Naga Hills",
+          "Pushkar Valley"
+        ],
+        "point": [
+          74.6,
+          26.42
+        ],
+        "significance": "Where the Luni rises, in the Aravalli west of Ajmer, beside the lake town of the Brahma temple and the camel fair"
+      },
+      "thin": true
     }
   ],
   "groups": [

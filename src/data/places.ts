@@ -141,6 +141,12 @@ export interface Place {
    * Karnaprayag, so it is named up near Badrinath instead.
    */
   labelAt?: number
+  /**
+   * A main river drawn at a tributary's width: the Luni, which dries into the
+   * Rann of Kutch rather than reaching the sea, is a main river by system but
+   * not the Narmada's equal on the map.
+   */
+  thin?: boolean
   /** A river's length along its drawn course, in km, measured by the build. */
   lengthKm?: number
   /** A current's temperature: what Name mode asks alongside its name. */

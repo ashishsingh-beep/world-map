@@ -173,6 +173,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           belt: p.belt,
           current: p.type === 'current' ? p.temp : undefined,
           river: p.type === 'river' ? p.role : undefined,
+          thin: p.thin,
           // A delta branch that reaches the sea is named at its mouth.
           labelAt:
             p.labelAt ??
