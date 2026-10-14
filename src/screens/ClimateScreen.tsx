@@ -79,7 +79,7 @@ const CLIMATES: Climate[] = [
       'Named for the Sudan belt of Africa, where it is best developed',
       'Tall grass — elephant grass — with scattered trees such as acacia and baobab; the big-game country of Africa',
       'The Sudan belt and East Africa, the Llanos of the Orinoco and the Campos of Brazil, northern Australia',
-      'On the Köppen map also much of peninsular India and mainland South-East Asia, which the textbook treats as monsoon lands',
+      'Not peninsular India or mainland South-East Asia: Köppen classes much of them Aw too, but the textbook treats them as the Tropical Monsoon climate, with its own seasonal reversal of the winds',
     ],
   },
 ]

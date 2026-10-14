@@ -2455,15 +2455,22 @@ const dateLine = (() => {
     'desert-cold': { 'the Gobi': [104.4, 43.6], 'the Taklamakan': [83, 39], 'the Karakum': [59, 39], Patagonia: [-69, -46] },
     sudan: { Bamako: [-8, 12.65], Kaduna: [7.44, 10.52], Juba: [31.6, 4.85], Darwin: [130.84, -12.46], Brasília: [-47.9, -15.8], 'the Llanos': [-67.4, 8.9] },
   }
+  // And places that are surely *not* in a region: the monsoon lands Köppen
+  // calls Aw and the textbook does not call Sudan type (see scripts/climate.mjs).
+  const NOT = {
+    sudan: { Nagpur: [79.09, 21.15], Hyderabad: [78.48, 17.39], Kolkata: [88.36, 22.57], Yangon: [96.16, 16.8], Bangkok: [100.5, 13.75], 'Ho Chi Minh City': [106.66, 10.78] },
+  }
   const misses = []
   for (const [id, sure] of Object.entries(SURE)) {
     const f = regions.get(id)
     if (!f) { misses.push(`${id}: no region at all`); continue }
     for (const [where, at] of Object.entries(sure)) if (!geoContains(f, at)) misses.push(`${id}: ${where} is outside it`)
+    for (const [where, at] of Object.entries(NOT[id] ?? {})) if (geoContains(f, at)) misses.push(`${id}: ${where} is inside it`)
   }
   if (misses.length) throw new Error(`Climate regions do not hold:\n  ${misses.join('\n  ')}`)
   const mkm2 = (f) => ((geoArea(f) * 6371 * 6371) / 1e6).toFixed(1)
-  console.log(`Climate: ${[...regions].map(([id, f]) => `${id} ${mkm2(f)}M km²`).join(', ')}; ${Object.values(SURE).reduce((n, s) => n + Object.keys(s).length, 0)} places check out`)
+  const checked = [...Object.values(SURE), ...Object.values(NOT)].reduce((n, s) => n + Object.keys(s).length, 0)
+  console.log(`Climate: ${[...regions].map(([id, f]) => `${id} ${mkm2(f)}M km²`).join(', ')}; ${checked} places check out`)
 }
 
 writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))

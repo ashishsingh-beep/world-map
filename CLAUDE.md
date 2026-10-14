@@ -488,10 +488,15 @@ dropped, simplified by an absolute 3km and clipped to the drawn land, into
 `src/data/climate.topo.json`, loaded only when the map opens. Köppen also classes
 a few tropical highlands Cs — Ethiopia, Kenya — and those are tropical highland
 climates, not the Mediterranean of the west coasts at 30°–45°, so Mediterranean
-is taken outside the tropics only. `npm run data` fails unless 24 places whose
+is taken outside the tropics only. Köppen's Aw also covers peninsular India,
+Myanmar, Thailand and Indochina, which the textbook classes as the Tropical
+Monsoon climate, not the Sudan type — so Aw is not taken in monsoon Asia, north
+of the Equator between 60°E and 150°E (`MONSOON_ASIA`); northern Australia's
+and Timor's savanna stays. `npm run data` fails unless 24 places whose
 climate is not in doubt fall inside their own region (Rome, Cape Town, Perth;
 Riyadh, the Thar, Alice Springs; the Gobi, the Taklamakan, Patagonia; Bamako,
-Darwin, the Llanos…). `MapCanvas` draws them through `patches` (with `onPatch`
+Darwin, the Llanos…), and six — Nagpur, Hyderabad, Kolkata, Yangon, Bangkok,
+Ho Chi Minh City — fall outside the Sudan type. `MapCanvas` draws them through `patches` (with `onPatch`
 and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
 

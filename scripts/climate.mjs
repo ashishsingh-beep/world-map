@@ -36,6 +36,20 @@ export const CLIMATE_CLASSES = {
 const TROPIC = 23.44
 const OUTSIDE_TROPICS_ONLY = new Set(['mediterranean'])
 
+/**
+ * Köppen's Aw — tropical wet and dry — covers peninsular India, Myanmar,
+ * Thailand and Indochina as well as the Sudan, the Llanos and the Campos. The
+ * textbook does not: Leong keeps those Asian lands as the Tropical Monsoon
+ * climate, with its own reversal of the winds, and the Sudan (savanna) type
+ * for Africa, South America and northern Australia. So the Sudan type is not
+ * taken in monsoon Asia: north of the Equator, between MONSOON_ASIA's two
+ * meridians — east of Africa's savanna, which stops short of 52°E at the
+ * Horn, and taking in the Philippines. Northern Australia's and Timor's, south
+ * of the Equator, stay.
+ */
+const MONSOON_ASIA = [60, 150]
+const NOT_IN_MONSOON_ASIA = new Set(['sudan'])
+
 /** About 2,500km² at the equator: anything smaller is a speck, not a region. */
 const MIN_CELLS = 20
 
@@ -59,9 +73,13 @@ export async function climateRegions(tifPath) {
     const wanted = new Set(codes)
     const mask = new Float64Array(width * height)
     const extratropical = OUTSIDE_TROPICS_ONLY.has(id)
+    const notMonsoon = NOT_IN_MONSOON_ASIA.has(id)
     for (let i = 0; i < raster.length; i++) {
       const lat = north + (Math.floor(i / width) + 0.5) * dy
-      mask[i] = wanted.has(raster[i]) && (!extratropical || Math.abs(lat) >= TROPIC) ? 1 : 0
+      const lon = west + ((i % width) + 0.5) * dx
+      const monsoonAsia = lat > 0 && lon > MONSOON_ASIA[0] && lon < MONSOON_ASIA[1]
+      mask[i] =
+        wanted.has(raster[i]) && (!extratropical || Math.abs(lat) >= TROPIC) && !(notMonsoon && monsoonAsia) ? 1 : 0
     }
     const [shape] = contours().size([width, height]).thresholds([0.5]).smooth(true)(mask)
     const toLonLat = ([x, y]) => [+(west + x * dx).toFixed(4), +(north + y * dy).toFixed(4)]
