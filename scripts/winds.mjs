@@ -1,12 +1,18 @@
 /**
  * The planetary pressure belts and the trade winds, for the Climate map, at
- * the three times of year the trades behave differently: the equinoxes
- * (March and September averaged), when the two trade systems meet near the
- * Equator; July, when the ITCZ rides north and the south-east trades cross the
- * Equator and turn into the south-west monsoon; and January, when it swings
- * south and the north-east trades cross the other way, to arrive in northern
- * Australia as the north-west monsoon. Every month between is one of these
- * shading into another.
+ * the three times of year the trades behave differently: March, the equinox,
+ * when the two trade systems blow towards an ITCZ near the Equator; July, when
+ * the ITCZ rides north and the south-east trades cross the Equator and turn
+ * into the south-west monsoon; and January, when it swings south and the
+ * north-east trades cross the other way, to arrive in northern Australia as
+ * the north-west monsoon.
+ *
+ * Each is one month, never an average of two. March and September were once
+ * averaged as "the equinoxes", and over South Asia they are opposites — in
+ * September the south-west monsoon is still blowing, at 6 m/s in the Bay of
+ * Bengal, while March has the last of the north-east winds and the rain belt
+ * south of the Equator. The average drew September's south-westerlies
+ * blowing away from March's ITCZ: a picture of neither month.
  *
  * All from NOAA's 1991–2020 long-term means, the record the isotherms come
  * from:
@@ -16,12 +22,16 @@
  *   pressure, averaged round each parallel — the ridge between 15° and 50°,
  *   the trough between 45° and 80°, in each hemisphere. Belts are a
  *   latitude, so they are drawn as one, the season's own.
- * - The ITCZ: where the trades meet, and the rain belt their meeting brings —
- *   the reanalysis's surface convergence and GPCP rainfall (2.5°), equally
- *   weighted. Either alone is wrong somewhere: rain misses July's dry
- *   convergence over the Sahara and Arabia, where the line rides north to the
- *   heat lows, and convergence misses January's dip over southern Africa.
- *   Traced as one continuous path round the globe — the best line that cannot
+ * - The ITCZ: where the trades meet — the equatorial trough — so where the
+ *   drawn arrows converge: the reanalysis's surface convergence (weight 1)
+ *   and its lowest sea-level pressure (0.75), with GPCP rainfall (2.5°, 0.25)
+ *   the light third. Rain cannot lead: July's heaviest falls on the Bay of
+ *   Bengal's coast at 20°N, south of the monsoon trough where the
+ *   south-westerlies meet the Bay branch's south-easterlies, and the Sahara's
+ *   and Arabia's heat lows, where the July line rides north, are dry. Nor can
+ *   pressure alone: it is reduced to sea level from southern Africa's high
+ *   plateau and misses January's meeting over Zambia, which the winds and the
+ *   rain both find. Traced as one continuous path round the globe — the best line that cannot
  *   leap between latitudes from one meridian to the next — or the South
  *   Pacific's own convergence zone and the Indian Ocean's southern branch pull
  *   it into pieces.
@@ -38,7 +48,7 @@ function open(file, key) {
 }
 
 /** The seasons, as months of the year (0 = January) averaged together. */
-export const SEASONS = { equinox: [2, 8], july: [6], january: [0] }
+export const SEASONS = { march: [2], july: [6], january: [0] }
 
 const mean = (values, months, n) =>
   Float64Array.from({ length: n }, (_, k) => months.reduce((s, m) => s + values[m * n + k], 0) / months.length)
@@ -75,12 +85,12 @@ function beltLatitude(slp, from, to, highest) {
 
 /**
  * The ITCZ: a path, one latitude per meridian between 25°S and 35°N, scored
- * on each meridian by its rain and its convergence (the northward wind south
- * of it less the northward wind north of it), each as a share of that
- * meridian's range, less a cost for every step north or south. Run three
+ * on each meridian by its convergence (the northward wind south of it less the
+ * northward wind north of it), its low pressure and its rain, each as a share
+ * of that meridian's range, less a cost for every step north or south. Run three
  * times round the globe and the middle lap kept, so it closes on itself.
  */
-function itczPath(rain, v) {
+function itczPath(rain, v, slp) {
   const rows = []
   for (let j = 1; j < v.h - 1; j++) {
     const lat = v.lat0 - j * v.step
@@ -94,7 +104,8 @@ function itczPath(rain, v) {
   const scores = Array.from({ length: v.w }, (_, i) => {
     const wet = share(rows.map((j) => sample(rain, v.lat0 - j * v.step, v.lon0 + i * v.step)))
     const meet = share(rows.map((j) => v.v[(j + 1) * v.w + i] - v.v[(j - 1) * v.w + i]))
-    return wet.map((x, k) => x + meet[k])
+    const low = share(rows.map((j) => -slp.v[j * v.w + i]))
+    return meet.map((x, k) => x + 0.75 * low[k] + 0.25 * wet[k])
   })
   const COST = 0.6
   const laps = v.w * 3
@@ -187,7 +198,11 @@ export function windsAndBelts({ uFile, vFile, slpFile, rainFile }) {
     for (let j = 0; j < 72; j++) for (let i = 0; i < 144; i++) flipped[j * 144 + i] = r[(71 - j) * 144 + i]
     const uu = smooth(grid(mean(u, months, N)), 2)
     const vv = smooth(grid(mean(v, months, N)), 2)
-    const itcz = itczPath(smooth({ w: 144, h: 72, step: 2.5, lat0: 88.75, lon0: 1.25, v: flipped }, 3), smooth(grid(mean(v, months, N)), 3))
+    const itcz = itczPath(
+      smooth({ w: 144, h: 72, step: 2.5, lat0: 88.75, lon0: 1.25, v: flipped }, 3),
+      smooth(grid(mean(v, months, N)), 3),
+      smooth(grid(p), 3)
+    )
     out[id] = { belts, itcz, winds: tradeArrows(uu, vv, belts.subtropicalSouth, belts.subtropicalNorth), u: uu, v: vv }
   }
   return out

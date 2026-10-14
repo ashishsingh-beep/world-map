@@ -90,7 +90,7 @@ const CLIMATES: Climate[] = [
  * means (scripts/winds.mjs): the belts' latitudes from sea-level pressure, the
  * ITCZ from the tropical rain belt, the arrows from the surface wind.
  */
-type SeasonId = 'equinox' | 'july' | 'january'
+type SeasonId = 'march' | 'july' | 'january'
 interface Season {
   belts: { subtropicalNorth: number; subtropicalSouth: number; subpolarNorth: number; subpolarSouth: number }
   itcz: [number, number][]
@@ -100,10 +100,10 @@ interface Season {
 
 const SEASONS: { id: SeasonId; name: string; caption: string }[] = [
   {
-    id: 'equinox',
-    name: 'March · September',
+    id: 'march',
+    name: 'March',
     caption:
-      'At the equinoxes the sun is overhead at the Equator. The north-east and south-east trades blow from the subtropical highs and meet near it, at the ITCZ.',
+      "In March, at the equinox, the sun is overhead at the Equator. The north-east and south-east trades blow from the subtropical highs towards the ITCZ — just north of the Equator over the open oceans, still south of it over the Indian Ocean. September is the other equinox but not the same picture: over South Asia the south-west monsoon is still blowing, so its winds look like a weaker July.",
   },
   {
     id: 'july',
@@ -129,9 +129,9 @@ const BELTS: Record<BeltKind, { name: string; fill: string; ink: string; summary
     summary:
       'The Inter-Tropical Convergence Zone: the equatorial low, where the trade winds of the two hemispheres meet, the hot air rises, and heavy convectional rain falls most afternoons. Calm and sultry — the doldrums of the sailing ships.',
     notes: [
-      'Traced where the trades meet and the rain belt their meeting brings',
+      'Traced where the trades meet: where the surface winds converge and the pressure is lowest, with the rain their meeting brings',
       'Follows the overhead sun, a little behind it: north in July, south in January',
-      'Swings furthest over the continents, which heat and cool faster than the sea — to near 20°N over South Asia in July, and well south of the Equator over southern Africa and northern Australia in January',
+      'Swings furthest over the continents, which heat and cool faster than the sea — in July to the monsoon trough across northern India and to the heat lows of the Sahara and Arabia, in January well south of the Equator over southern Africa and northern Australia',
     ],
   },
   subtropical: {
@@ -242,7 +242,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
   const [seasons, setSeasons] = useState<Record<SeasonId, Season> | null>(null)
   const [beltsOn, setBeltsOn] = useState(false)
   const [tradesOn, setTradesOn] = useState(false)
-  const [seasonId, setSeasonId] = useState<SeasonId>('equinox')
+  const [seasonId, setSeasonId] = useState<SeasonId>('march')
 
   useEffect(() => {
     let live = true

@@ -2216,8 +2216,8 @@ const dateLine = (() => {
 }
 
 /**
- * The pressure belts, the ITCZ and the trade winds for the Climate map, at
- * the equinoxes, in July and in January — from NOAA's 1991–2020 means (see
+ * The pressure belts, the ITCZ and the trade winds for the Climate map, in
+ * March, July and January — from NOAA's 1991–2020 means (see
  * scripts/winds.mjs). Held to what the textbook says the trades do in each, so
  * a wrong file or a broken trace cannot pass unnoticed. Each named wind is
  * written on the map where it is checked here.
@@ -2247,7 +2247,7 @@ const dateLine = (() => {
     named('SE trades', 'SE', [80, -15]),
   ]
   const names = {
-    equinox: trades,
+    march: trades,
     // The south-east trades cross the Equator and turn: the south-west monsoon.
     july: [...trades, named('SW monsoon', 'SW', [65, 13])],
     // The north-east trades cross it the other way, and reach northern
@@ -2255,17 +2255,34 @@ const dateLine = (() => {
     january: [...trades, named('NE monsoon', 'NE', [88, 14]), named('NW monsoon', 'NW', [128, -11])],
   }
   const latAt = (line, lon) => line.reduce((b, c) => (Math.abs(c[0] - lon) < Math.abs(b[0] - lon) ? c : b))[1]
-  const { equinox, july, january } = seasons
+  const { march, july, january } = seasons
+  /**
+   * Across the north Indian Ocean the wind must blow towards the side the ITCZ
+   * lies on — south to it in March and January, north to it in July. The
+   * averaged March-and-September panel this replaced failed in four of these
+   * five: September's south-westerlies blowing north, away from March's ITCZ
+   * south of the Equator.
+   */
+  const SOUTH_ASIA_SEAS = [['the Arabian Sea', [65, 13]], ['the Bay of Bengal', [88, 14]], ['off Sri Lanka', [78, 4]], ['the Andaman Sea', [95, 8]], ['off Somalia', [55, 5]]]
+  const towardsItcz = (id, d) =>
+    SOUTH_ASIA_SEAS.map(([where, [lon, lat]]) => {
+      const v = sample(d.v, lat, lon)
+      const south = latAt(d.itcz, lon) < lat
+      return [`${id}: ${where}, the wind blows ${south ? 'south' : 'north'} to the ITCZ`, south ? v < -0.3 : v > 0.3]
+    })
   const checks = [
     ['July: the ITCZ rides north over India', latAt(july.itcz, 80) > 12],
     ['July: … and over West Africa', latAt(july.itcz, 0) > 5],
     ['July: … and over Arabia, to the heat lows', latAt(july.itcz, 45) > 10],
+    ['July: over India it lies on the monsoon trough, north of 21°N', latAt(july.itcz, 80) > 21],
     ['January: the ITCZ swings south over southern Africa', latAt(january.itcz, 25) < -5],
     ['January: … and over northern Australia', latAt(january.itcz, 130) < -5],
-    ['Equinox: the ITCZ lies near the Equator over the Atlantic', Math.abs(latAt(equinox.itcz, -30)) < 10],
+    ['March: the ITCZ lies near the Equator over the Atlantic', Math.abs(latAt(march.itcz, -30)) < 10],
+    ['March: … and south of it over the Indian Ocean, with the sun', latAt(march.itcz, 80) < 0],
     ['July: the northern subtropical high lies further north than in January', july.belts.subtropicalNorth > january.belts.subtropicalNorth],
     ['January: the southern subtropical high lies further south than in July', january.belts.subtropicalSouth < july.belts.subtropicalSouth],
     ...Object.entries(seasons).flatMap(([id, d]) => [
+      ...towardsItcz(id, d),
       [`${id}: subtropical highs at 25°–40°`, [d.belts.subtropicalNorth, -d.belts.subtropicalSouth].every((l) => l >= 25 && l <= 40)],
       [`${id}: subpolar lows at 55°–70°`, [d.belts.subpolarNorth, -d.belts.subpolarSouth].every((l) => l >= 55 && l <= 70)],
       ...names[id].map(({ text, from, at }) => {
@@ -2287,7 +2304,7 @@ const dateLine = (() => {
   writeFileSync(resolve(OUT, 'winds.json'), JSON.stringify(out))
   const b = (d) => `${d.belts.subtropicalNorth}°/${d.belts.subtropicalSouth}°`
   console.log(
-    `Winds: subtropical highs ${b(equinox)} at the equinoxes, ${b(july)} in July, ${b(january)} in January; ${checks.length} checks pass`
+    `Winds: subtropical highs ${b(march)} in March, ${b(july)} in July, ${b(january)} in January; ${checks.length} checks pass`
   )
 }
 

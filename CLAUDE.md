@@ -496,26 +496,38 @@ and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
 
 The climate map also has a Pressure belts switch and a Trade winds switch, and
-a time of year both follow — the equinoxes (March and September averaged),
-July and January, the three times the trades behave differently: meeting near
-the Equator; the south-east trades crossing it to become the south-west
-monsoon; the north-east trades crossing the other way, the north-east monsoon
-over India and the north-west monsoon in northern Australia. Nothing is
-traced: `scripts/winds.mjs` takes NOAA's 1991–2020 means. The subtropical
-highs and subpolar lows are each season's ridge and trough of sea-level
-pressure averaged round the parallel, drawn as a band 5° either side; the
-polar highs are the zone poleward of 80°, not traced, because pressure over the
-ice caps cannot be read reliably. The ITCZ is where the trades meet and the
-rain their meeting brings — surface convergence and GPCP rainfall, equally
-weighted, because rain alone misses July's dry heat lows over the Sahara and
-Arabia and convergence alone misses January's dip over southern Africa —
-traced as one continuous path round the globe, or the South Pacific's own
-convergence zone breaks it up. The arrows are the near-surface wind between
-the season's two subtropical ridges, on a 7.5° by 5° grid that `MapCanvas`
-thins as the map zooms out (`winds`); each named wind is written where `npm run
-data` checks it blows from the quarter its name says, and the build fails
-unless the ITCZ rides north over India, West Africa and Arabia in July and south
-over southern Africa and northern Australia in January. The belts are
+a month both follow — March, July and January, the three times the trades
+behave differently: blowing towards an ITCZ near the Equator at the equinox;
+the south-east trades crossing it to become the south-west monsoon; the
+north-east trades crossing the other way, the north-east monsoon over India
+and the north-west monsoon in northern Australia. Each is one month, never an
+average: March and September were once averaged as "the equinoxes", and over
+South Asia they are opposites — September still has the south-west monsoon,
+March the last north-easterlies and its rain belt south of the Equator — so
+the panel drew September's south-westerlies blowing away from March's ITCZ.
+`npm run data` now checks that in each month the wind over the Arabian Sea,
+the Bay of Bengal, off Sri Lanka, the Andaman Sea and off Somalia blows towards
+the side the ITCZ lies on; the averaged panel failed four of the five.
+
+Nothing is traced: `scripts/winds.mjs` takes NOAA's 1991–2020 means. The
+subtropical highs and subpolar lows are each month's ridge and trough of
+sea-level pressure averaged round the parallel, drawn as a band 5° either
+side; the polar highs are the zone poleward of 80°, not traced, because
+pressure over the ice caps cannot be read reliably. The ITCZ is where the
+trades meet — surface convergence (weight 1) and lowest sea-level pressure
+(0.75), with GPCP rainfall (0.25) a light third. Rain cannot lead: July's
+heaviest falls on the Bay of Bengal's coast at 20°N, south of the monsoon
+trough where the winds actually meet, and the Sahara's and Arabia's heat lows,
+where July's line rides north, are dry. Nor can pressure alone: reduced to sea
+level from southern Africa's plateau, it misses January's meeting over Zambia.
+It is traced as one continuous path round the globe, or the South Pacific's own
+convergence zone breaks it up. The arrows are the near-surface wind between the
+month's two subtropical ridges, on a 7.5° by 5° grid that `MapCanvas` thins as
+the map zooms out (`winds`); each named wind is written where `npm run data`
+checks it blows from the quarter its name says, and the build fails unless the
+ITCZ rides north over India (to the monsoon trough, past 21°N), West Africa and
+Arabia in July, lies south of the Equator over the Indian Ocean in March, and
+dips over southern Africa and northern Australia in January. The belts are
 `patches` drawn in quarters (a ring all the way round closes on itself), so
 they are picked by fill alone (`outline: false`) and their edges drawn as
 dashed `isolines`; names go through `notes`, placed in order and dropped where
