@@ -532,7 +532,20 @@ level from southern Africa's plateau, it misses January's meeting over Zambia.
 It is traced as one continuous path round the globe, or the South Pacific's own
 convergence zone breaks it up. The arrows are the near-surface wind between the
 month's two subtropical ridges, on a 7.5° by 5° grid that `MapCanvas` thins as
-the map zooms out (`winds`); each named wind is written where `npm run data`
+the map zooms out (`winds`). They were audited, every arrow of every month,
+against ICOADS — the winds ships and buoys measured, 1° monthly means averaged
+over 1991–2020, observation where the reanalysis is a model — and `npm run
+data` now repeats that audit on every run: each month's ~300 sea arrows must be
+95% within 30° of the ships and none past 60° (they come out median 3°–4°,
+worst 32°–36°), compared where both winds reach 1.5 m/s. The audit is why two
+kinds of point get no arrow: calm under 1.5 m/s (`CALM` — the doldrums, where
+agreement with the ships fell to 82%; from 3 m/s it is 99–100%, and the
+textbook draws them calm) and ground the reanalysis puts over 1,500m
+(`HIGHLAND` — Tibet and the Himalaya, the Altiplano, the Mexican plateau, where
+the air on a plateau is no trade wind). Over land there are no ships; there
+the check is the textbook's, region by region, and all held. One that looked
+wrong and is not: southern Arabia in March blows from the south-east, light and
+onshore, which the ships off Oman confirm. each named wind is written where `npm run data`
 checks it blows from the quarter its name says, and the build fails unless the
 ITCZ rides north over India (to the monsoon trough, past 21°N), West Africa and
 Arabia in July, lies south of the Equator over the Indian Ocean in March, is

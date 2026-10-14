@@ -46,6 +46,7 @@
  */
 import { readFileSync } from 'node:fs'
 import * as hdf5 from 'jsfive'
+import { NetCDFReader } from 'netcdfjs'
 import { sample, smooth } from './isotherms.mjs'
 
 const N = 73 * 144
@@ -210,8 +211,21 @@ function itczPath(rain, v, slp) {
  * subtropical ridges, the near-surface wind, smoothed over 2° so an arrow
  * shows the wind of its region rather than one grid cell's. `i` and `j` are
  * the arrow's place on the grid, so the map can thin it evenly as it zooms out.
+ *
+ * Two kinds of point get no arrow, found by auditing every arrow against
+ * ships' and buoys' own observations (ICOADS, which the build now checks):
+ * - Calm, under CALM m/s: the doldrums, where the wind has no steady way to
+ *   blow. Under 1.5 m/s the reanalysis and the ships agree within 30° only
+ *   82% of the time; from 3 m/s up, 99–100%. The textbook draws them calm too.
+ * - High ground, over HIGHLAND metres on the reanalysis's own terrain: Tibet
+ *   and the Himalaya, the Altiplano, the Mexican plateau. A wind there is the
+ *   air on a plateau — monsoon air drawn up the Himalaya's slopes — not a trade
+ *   wind, and a 2.5° model's terrain is at its least trustworthy.
  */
-function tradeArrows(u, v, south, north) {
+const CALM = 1.5
+const HIGHLAND = 1500
+
+function tradeArrows(u, v, height, south, north) {
   const out = []
   for (let j = 0; ; j++) {
     const lat = 27.5 - j * 5
@@ -221,14 +235,15 @@ function tradeArrows(u, v, south, north) {
       const lon = -176.25 + i * 7.5
       const uu = sample(u, lat, lon)
       const vv = sample(v, lat, lon)
-      if (Math.hypot(uu, vv) < 1) continue
+      if (Math.hypot(uu, vv) < CALM || sample(height, lat, lon) > HIGHLAND) continue
       out.push([i, j, lon, lat, Number(uu.toFixed(1)), Number(vv.toFixed(1))])
     }
   }
   return out
 }
 
-export function windsAndBelts({ uFile, vFile, slpFile, rainFile }) {
+export function windsAndBelts({ uFile, vFile, slpFile, rainFile, heightFile }) {
+  const height = grid(Float64Array.from(open(heightFile, 'hgt')))
   const u = open(uFile, 'uwnd')
   const v = open(vFile, 'vwnd')
   const slp = open(slpFile, 'slp')
@@ -254,7 +269,75 @@ export function windsAndBelts({ uFile, vFile, slpFile, rainFile }) {
       smooth(grid(mean(v, months, N)), 3),
       smooth(grid(p), 3)
     )
-    out[id] = { belts, itcz, winds: tradeArrows(uu, vv, belts.subtropicalSouth, belts.subtropicalNorth), u: uu, v: vv }
+    out[id] = { belts, itcz, winds: tradeArrows(uu, vv, height, belts.subtropicalSouth, belts.subtropicalNorth), u: uu, v: vv }
+  }
+  return out
+}
+
+/**
+ * Every arrow over the sea held to what ships and buoys measured: ICOADS
+ * (1° enhanced monthly means), averaged over 1991–2020 for the arrow's month
+ * and over the 5° box around it, wherever at least six of its 1° cells have
+ * ten years or more of observations. The reanalysis is a model; this is
+ * observation, so it is the independent referee. Compared only where both
+ * winds blow at CALM or more — under that neither has a direction to speak of.
+ * Returns, per month, how many arrows were compared and how far each is off.
+ */
+export function againstShips({ uFile, vFile, landFile }, seasons) {
+  const read = (file, name) => {
+    const r = new NetCDFReader(readFileSync(file))
+    const attrs = r.variables.find((x) => x.name === name).attributes
+    const num = (key) => Number([].concat(attrs.find((a) => a.name === key).value)[0])
+    return { raw: r.getDataVariable(name), time: r.getDataVariable('time'), offset: num('add_offset'), scale: num('scale_factor') }
+  }
+  const U = read(uFile, 'uwnd')
+  const V = read(vFile, 'vwnd')
+  const land = open(landFile, 'land')
+  const CELLS = 180 * 360
+  const MISSING = 32766
+  const out = {}
+  for (const [id, months] of Object.entries(SEASONS)) {
+    const su = new Float64Array(CELLS)
+    const sv = new Float64Array(CELLS)
+    const count = new Uint16Array(CELLS)
+    U.time.forEach((days, k) => {
+      const when = new Date(Date.UTC(1800, 0, 1) + days * 864e5)
+      if (!months.includes(when.getUTCMonth()) || when.getUTCFullYear() < 1991 || when.getUTCFullYear() > 2020) return
+      const a = U.raw[k]
+      const b = V.raw[k]
+      for (let c = 0; c < CELLS; c++) {
+        if (a[c] === MISSING || b[c] === MISSING) continue
+        su[c] += a[c] * U.scale + U.offset
+        sv[c] += b[c] * V.scale + V.offset
+        count[c]++
+      }
+    })
+    const observed = (lon, lat) => {
+      let u = 0
+      let v = 0
+      let n = 0
+      for (let y = lat - 2; y <= lat + 2; y++) {
+        for (let x = lon - 2; x <= lon + 2; x++) {
+          const c = Math.round(89.5 - y) * 360 + ((Math.floor(x) % 360) + 360) % 360
+          if (count[c] < 10) continue
+          u += su[c] / count[c]
+          v += sv[c] / count[c]
+          n++
+        }
+      }
+      return n >= 6 ? [u / n, v / n] : null
+    }
+    const sea = (lon, lat) => land[Math.round((90 - lat) / 2.5) * 144 + (Math.round((((lon % 360) + 360) % 360) / 2.5) % 144)] !== 1
+    const off = []
+    for (const [, , lon, lat, u, v] of seasons[id].winds) {
+      if (!sea(lon, lat)) continue
+      const o = observed(lon, lat)
+      if (!o || Math.hypot(...o) < CALM) continue
+      let d = Math.abs(Math.atan2(v, u) - Math.atan2(o[1], o[0])) * (180 / Math.PI)
+      if (d > 180) d = 360 - d
+      off.push({ at: [lon, lat], degrees: d })
+    }
+    out[id] = off
   }
   return out
 }

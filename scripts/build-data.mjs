@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
 import { annualRange, contour, readReanalysis, readStations, sample, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
-import { windsAndBelts } from './winds.mjs'
+import { againstShips, windsAndBelts } from './winds.mjs'
 import { climateRegions } from './climate.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
@@ -2229,6 +2229,18 @@ const dateLine = (() => {
     vFile: ['ncep-vwnd.sig995.mon.ltm.1991-2020.nc', `${PSL}/ncep.reanalysis.derived/surface/vwnd.sig995.mon.ltm.1991-2020.nc`],
     slpFile: ['ncep-slp.mon.ltm.1991-2020.nc', `${PSL}/ncep.reanalysis.derived/surface/slp.mon.ltm.1991-2020.nc`],
     rainFile: ['gpcp-precip.mon.ltm.1991-2020.nc', `${PSL}/gpcp/precip.mon.ltm.1991-2020.nc`],
+    heightFile: ['ncep-hgt.sfc.nc', `${PSL}/ncep.reanalysis/surface/hgt.sfc.nc`],
+  }
+  // Ships' and buoys' own winds, the referee for the arrows over the sea, and
+  // the reanalysis's land-sea mask to tell which arrows those are.
+  const shipFiles = {
+    uFile: ['icoads-uwnd.mean.nc', `${PSL}/icoads/1degree/global/enh/uwnd.mean.nc`],
+    vFile: ['icoads-vwnd.mean.nc', `${PSL}/icoads/1degree/global/enh/vwnd.mean.nc`],
+    landFile: ['ncep-land.nc', `${PSL}/ncep.reanalysis/surface/land.nc`],
+  }
+  for (const [name, url] of Object.values(shipFiles)) {
+    const at = resolve(CACHE, name)
+    if (!existsSync(at)) execFileSync('curl', ['-sSL', '-f', '-o', at, url], { stdio: 'inherit' })
   }
   for (const [name, url] of Object.values(files)) {
     const at = resolve(CACHE, name)
@@ -2274,7 +2286,24 @@ const dateLine = (() => {
       const south = latAt(d.itcz, lon) < lat
       return [`${id}: ${where}, the wind blows ${south ? 'south' : 'north'} to the ITCZ`, south ? v < -0.3 : v > 0.3]
     })
+  /**
+   * Every arrow over the sea agrees with the ships: an audit of all four
+   * months found the median arrow 3°–4° off them, the few far off all light
+   * winds in the doldrums — which is why those are calm now — or the Gulf of
+   * Aden in September, where a 2.5° cell is half Yemen and Somalia and the
+   * ships record near-calm. Each month: 95% within 30°, none past 60°.
+   */
+  const ships = againstShips(Object.fromEntries(Object.entries(shipFiles).map(([k, [name]]) => [k, resolve(CACHE, name)])), seasons)
+  const shipChecks = Object.entries(ships).flatMap(([id, off]) => {
+    const near = off.filter((o) => o.degrees <= 30).length / off.length
+    const worst = off.reduce((w, o) => (o.degrees > w.degrees ? o : w), { degrees: 0 })
+    return [
+      [`${id}: ${off.length} sea arrows, ${(near * 100).toFixed(0)}% within 30° of the ships`, off.length > 250 && near >= 0.95],
+      [`${id}: no arrow past 60° from the ships (worst ${worst.degrees.toFixed(0)}° at ${worst.at})`, worst.degrees <= 60],
+    ]
+  })
   const checks = [
+    ...shipChecks,
     ['July: the ITCZ rides north over India', latAt(july.itcz, 80) > 12],
     ['July: … and over West Africa', latAt(july.itcz, 0) > 5],
     ['July: … and over Arabia, to the heat lows', latAt(july.itcz, 45) > 10],
@@ -2309,6 +2338,10 @@ const dateLine = (() => {
   )
   writeFileSync(resolve(OUT, 'winds.json'), JSON.stringify(out))
   const b = (d) => `${d.belts.subtropicalNorth}°/${d.belts.subtropicalSouth}°`
+  for (const [id, off] of Object.entries(ships)) {
+    const sorted = off.map((o) => o.degrees).sort((a, b) => a - b)
+    console.log(`Winds against ships, ${id}: ${off.length} sea arrows, median ${sorted[Math.floor(sorted.length / 2)].toFixed(0)}° off, worst ${sorted.at(-1).toFixed(0)}°`)
+  }
   console.log(
     `Winds: subtropical highs ${b(january)} in January, ${b(march)} in March, ${b(july)} in July, ${b(september)} in September; ${checks.length} checks pass`
   )
