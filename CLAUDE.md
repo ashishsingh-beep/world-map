@@ -545,7 +545,31 @@ textbook draws them calm) and ground the reanalysis puts over 1,500m
 the air on a plateau is no trade wind). Over land there are no ships; there
 the check is the textbook's, region by region, and all held. One that looked
 wrong and is not: southern Arabia in March blows from the south-east, light and
-onshore, which the ships off Oman confirm. each named wind is written where `npm run data`
+onshore, which the ships off Oman confirm.
+
+The Trade winds switch has two siblings, Westerlies and Polar easterlies, each
+its own switch and ink (`WIND_BELTS` in `ClimateScreen`: navy, forest green,
+violet). The arrows run from 82.5°N to 82.5°S, each tagged in the build with
+the belt it stands in — trades between the subtropical ridges, westerlies out
+to the subpolar troughs, polar beyond — never with the way it points: an arrow
+shows what the wind does there, and in places that is not what its belt's name
+says. Rows within 2.5° of a ridge (the horse latitudes) or 1.25° of a trough
+(the polar front, which round Antarctica lies only a few degrees off the coast)
+are left calm; the pressure belts mark them. What the averages show, and the
+build holds them to: the southern westerlies blow from the west on every
+meridian in every month and outblow the North Atlantic's; the northern ones
+blow hardest in January, and north of about 47.5°N in the Pacific the winds
+circle the Aleutian low instead, north-easterly over the Bering Sea; the polar
+easterlies blow from the east along East Antarctica's coast (80% or more), but
+the Amundsen and Bellingshausen Seas have westerlies, the Amundsen Sea Low
+pulling the trough south. The Arctic's are patchy: north-easterly over the
+Chukchi Sea in January and March, where they are named, while the Siberian
+Arctic's winter air pours north off Siberia's cold high and the Atlantic's
+south-westerlies reach past Norway; in summer the Arctic is too light to show.
+Against the ships the westerlies come out median 6°–8° off and are held to 90%
+within 30° — they are an average of passing storms, which ships steer round —
+and the polar belt, with few ships in the ice, to 85% within 45°; its worst,
+78°, is the Denmark Strait's January barrier wind down Greenland's coast. each named wind is written where `npm run data`
 checks it blows from the quarter its name says, and the build fails unless the
 ITCZ rides north over India (to the monsoon trough, past 21°N), West Africa and
 Arabia in July, lies south of the Equator over the Indian Ocean in March, is

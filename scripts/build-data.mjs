@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
 import { annualRange, contour, readReanalysis, readStations, sample, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
-import { againstShips, windsAndBelts } from './winds.mjs'
+import { POLAR, TRADES, WESTERLIES, againstShips, windsAndBelts } from './winds.mjs'
 import { climateRegions } from './climate.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
@@ -2248,26 +2248,43 @@ const dateLine = (() => {
   }
   const seasons = windsAndBelts(Object.fromEntries(Object.entries(files).map(([k, [name]]) => [k, resolve(CACHE, name)])))
   // Which way a wind blows *from*, as its name says it: a north-east wind
-  // blows towards the south-west, so both its components are negative.
-  const FROM = { NE: [-1, -1], SE: [-1, 1], SW: [1, 1], NW: [1, -1] }
-  const named = (text, from, at) => ({ text, from, at })
-  const trades = [
+  // blows towards the south-west, so both its components are negative. A
+  // westerly or an easterly is held to its east-west part alone.
+  const FROM = { NE: [-1, -1], SE: [-1, 1], SW: [1, 1], NW: [1, -1], W: [1, 0], E: [-1, 0] }
+  const named = (text, from, at, belt = TRADES) => ({ text, from, at, belt })
+  const year = [
     named('NE trades', 'NE', [-40, 15]),
     named('NE trades', 'NE', [-140, 12]),
     named('SE trades', 'SE', [-20, -12]),
     named('SE trades', 'SE', [-110, -12]),
     named('SE trades', 'SE', [80, -15]),
+    named('Westerlies', 'W', [-40, 47.5], WESTERLIES),
+    named('Westerlies', 'W', [-150, 42.5], WESTERLIES),
+    named('Westerlies', 'W', [-120, -47.5], WESTERLIES),
+    // The southern westerlies over the unbroken Southern Ocean, by their
+    // sailors' name.
+    named('Roaring Forties', 'W', [75, -42.5], WESTERLIES),
+    named('Polar easterlies', 'E', [40, -67.5], POLAR),
+    named('Polar easterlies', 'E', [120, -66], POLAR),
   ]
+  // The Arctic's polar easterlies are patchy in the averages: north-easterly
+  // over the Chukchi Sea in winter and spring, too light to show in summer.
+  // Not over the Siberian Arctic, where the winter air pours north off
+  // Siberia's cold high, from the south and south-east.
+  const arctic = named('Polar easterlies', 'E', [-152, 72.5], POLAR)
   const names = {
-    march: trades,
+    january: [...year, arctic, named('NE monsoon', 'NE', [88, 14]), named('NW monsoon', 'NW', [128, -11])],
+    march: [...year, arctic],
+    // The south-east trades cross the Equator and turn: the south-west monsoon.
+    july: [...year, named('SW monsoon', 'SW', [65, 13])],
     // At the autumn equinox the south-west monsoon is still blowing over the
     // Bay of Bengal, beginning its retreat.
-    september: [...trades, named('SW monsoon', 'SW', [88, 14])],
-    // The south-east trades cross the Equator and turn: the south-west monsoon.
-    july: [...trades, named('SW monsoon', 'SW', [65, 13])],
-    // The north-east trades cross it the other way, and reach northern
-    // Australia from the north-west.
-    january: [...trades, named('NE monsoon', 'NE', [88, 14]), named('NW monsoon', 'NW', [128, -11])],
+    september: [...year, named('SW monsoon', 'SW', [88, 14])],
+  }
+  /** The share of a belt's arrows in a box that blow from the west (+1) or the east (−1). */
+  const blowing = (d, belt, sign, box) => {
+    const inBox = d.winds.filter(([, , lon, lat, , , b]) => b === belt && lon >= box[0] && lon <= box[2] && lat >= box[1] && lat <= box[3])
+    return { share: inBox.filter(([, , , , u]) => u * sign > 0).length / (inBox.length || 1), n: inBox.length }
   }
   const latAt = (line, lon) => line.reduce((b, c) => (Math.abs(c[0] - lon) < Math.abs(b[0] - lon) ? c : b))[1]
   const { march, july, september, january } = seasons
@@ -2294,16 +2311,44 @@ const dateLine = (() => {
    * ships record near-calm. Each month: 95% within 30°, none past 60°.
    */
   const ships = againstShips(Object.fromEntries(Object.entries(shipFiles).map(([k, [name]]) => [k, resolve(CACHE, name)])), seasons)
-  const shipChecks = Object.entries(ships).flatMap(([id, off]) => {
-    const near = off.filter((o) => o.degrees <= 30).length / off.length
-    const worst = off.reduce((w, o) => (o.degrees > w.degrees ? o : w), { degrees: 0 })
-    return [
-      [`${id}: ${off.length} sea arrows, ${(near * 100).toFixed(0)}% within 30° of the ships`, off.length > 250 && near >= 0.95],
-      [`${id}: no arrow past 60° from the ships (worst ${worst.degrees.toFixed(0)}° at ${worst.at})`, worst.degrees <= 60],
-    ]
-  })
+  // The trades to the bar above. The westerlies to 90% within 30°, none past
+  // 60°: an average of the storms that pass, which ships steer round — March's
+  // were 128 of 135 within 30°, the rest off Patagonia, by New Zealand and in
+  // the Drake Passage. The polar belt more loosely, 85% within 45°: in winter few ships sail there, and those keep to
+  // the ice edge — the Denmark Strait's January northerly, the barrier wind
+  // down Greenland's coast, is 78° from their thin record.
+  const BELT_NAME = { [TRADES]: 'trade-wind', [WESTERLIES]: 'westerly', [POLAR]: 'polar' }
+  const shipChecks = Object.entries(ships).flatMap(([id, all]) =>
+    [TRADES, WESTERLIES, POLAR].flatMap((belt) => {
+      const off = all.filter((o) => o.belt === belt)
+      const within = (deg) => off.filter((o) => o.degrees <= deg).length / (off.length || 1)
+      const worst = off.reduce((w, o) => (o.degrees > w.degrees ? o : w), { degrees: 0 })
+      const what = `${id}: ${off.length} ${BELT_NAME[belt]} sea arrows`
+      return belt === POLAR
+        ? [[`${what}, ${(within(45) * 100).toFixed(0)}% within 45° of the ships`, within(45) >= 0.85]]
+        : [
+            [`${what}, ${(within(30) * 100).toFixed(0)}% within 30° of the ships`, off.length > 100 && within(30) >= (belt === TRADES ? 0.95 : 0.9)],
+            [`${what}, none past 60° (worst ${worst.degrees.toFixed(0)}° at ${worst.at})`, worst.degrees <= 60],
+          ]
+    })
+  )
+  // The northern westerlies blow hardest in winter; the Southern Ocean's are
+  // the strongest of all, all year.
+  const strength = (d, box) => {
+    const a = d.winds.filter(([, , lon, lat, , , b]) => b === WESTERLIES && lon >= box[0] && lon <= box[2] && lat >= box[1] && lat <= box[3])
+    return a.reduce((t, [, , , , u, v]) => t + Math.hypot(u, v), 0) / (a.length || 1)
+  }
+  const NORTH_ATLANTIC = [-70, 40, -10, 57.5]
+  const NORTH_PACIFIC = [140, 37.5, 180, 47.5]
+  const SOUTHERN_OCEAN = [-180, -60, 180, -40]
   const checks = [
     ...shipChecks,
+    ['January: the North Atlantic westerlies blow harder than in July', strength(january, NORTH_ATLANTIC) > strength(july, NORTH_ATLANTIC)],
+    ['January: … and the North Pacific', strength(january, NORTH_PACIFIC) > strength(july, NORTH_PACIFIC)],
+    ...Object.entries(seasons).map(([id, d]) => [
+      `${id}: the Southern Ocean's westerlies outblow the North Atlantic's`,
+      strength(d, SOUTHERN_OCEAN) > strength(d, NORTH_ATLANTIC),
+    ]),
     ['July: the ITCZ rides north over India', latAt(july.itcz, 80) > 12],
     ['July: … and over West Africa', latAt(july.itcz, 0) > 5],
     ['July: … and over Arabia, to the heat lows', latAt(july.itcz, 45) > 10],
@@ -2316,6 +2361,25 @@ const dateLine = (() => {
     ['September: the northern subtropical highs still lie as far north as in July', september.belts.subtropicalNorth >= july.belts.subtropicalNorth - 1],
     ['July: the northern subtropical high lies further north than in January', july.belts.subtropicalNorth > january.belts.subtropicalNorth],
     ['January: the southern subtropical high lies further south than in July', january.belts.subtropicalSouth < july.belts.subtropicalSouth],
+    ...Object.entries(seasons).flatMap(([id, d]) => {
+      const south = blowing(d, WESTERLIES, 1, [-180, -60, 180, -40])
+      const atlantic = blowing(d, WESTERLIES, 1, [-70, 40, -10, 57.5])
+      // The North Pacific's westerlies below the Aleutian low, which sits at
+      // about 52°N in winter — north of it the winds circle the low,
+      // north-easterly over the Bering Sea.
+      const pacific = blowing(d, WESTERLIES, 1, [150, 37.5, 180, 47.5])
+      const pacificEast = blowing(d, WESTERLIES, 1, [-180, 37.5, -130, 47.5])
+      // East Antarctica's coast. Not the Amundsen and Bellingshausen Seas,
+      // where the Amundsen Sea Low pulls the trough south and the coast has
+      // westerlies.
+      const antarctic = blowing(d, POLAR, -1, [0, -72.5, 180, -62.5])
+      return [
+        [`${id}: the southern westerlies blow from the west (${(south.share * 100).toFixed(0)}% of ${south.n})`, south.n > 150 && south.share >= 0.95],
+        [`${id}: … and the North Atlantic's (${(atlantic.share * 100).toFixed(0)}% of ${atlantic.n})`, atlantic.n >= 8 && atlantic.share >= 0.85],
+        [`${id}: … and the North Pacific's (${(((pacific.share * pacific.n + pacificEast.share * pacificEast.n) / (pacific.n + pacificEast.n)) * 100).toFixed(0)}% of ${pacific.n + pacificEast.n})`, (pacific.share * pacific.n + pacificEast.share * pacificEast.n) / (pacific.n + pacificEast.n) >= 0.85],
+        [`${id}: along East Antarctica the polar easterlies blow from the east (${(antarctic.share * 100).toFixed(0)}% of ${antarctic.n})`, antarctic.n >= 15 && antarctic.share >= 0.8],
+      ]
+    }),
     ...Object.entries(seasons).flatMap(([id, d]) => [
       ...towardsItcz(id, d),
       [`${id}: subtropical highs at 25°–40°`, [d.belts.subtropicalNorth, -d.belts.subtropicalSouth].every((l) => l >= 25 && l <= 40)],
@@ -2324,7 +2388,7 @@ const dateLine = (() => {
         const [su, sv] = FROM[from]
         const u = sample(d.u, at[1], at[0])
         const v = sample(d.v, at[1], at[0])
-        return [`${id}: the ${text} blow from the ${from} at ${at}`, u * su > 0.5 && v * sv > 0.5]
+        return [`${id}: the ${text} blow from the ${from} at ${at}`, u * su > 0.5 && (sv === 0 || v * sv > 0.5)]
       }),
     ]),
   ]
@@ -2333,14 +2397,17 @@ const dateLine = (() => {
   const out = Object.fromEntries(
     Object.entries(seasons).map(([id, d]) => [
       id,
-      { belts: d.belts, itcz: d.itcz, winds: d.winds, names: names[id].map(({ text, at }) => ({ text, at })) },
+      { belts: d.belts, itcz: d.itcz, winds: d.winds, names: names[id].map(({ text, at, belt }) => ({ text, at, belt })) },
     ])
   )
   writeFileSync(resolve(OUT, 'winds.json'), JSON.stringify(out))
   const b = (d) => `${d.belts.subtropicalNorth}°/${d.belts.subtropicalSouth}°`
-  for (const [id, off] of Object.entries(ships)) {
-    const sorted = off.map((o) => o.degrees).sort((a, b) => a - b)
-    console.log(`Winds against ships, ${id}: ${off.length} sea arrows, median ${sorted[Math.floor(sorted.length / 2)].toFixed(0)}° off, worst ${sorted.at(-1).toFixed(0)}°`)
+  for (const [id, all] of Object.entries(ships)) {
+    const parts = [TRADES, WESTERLIES, POLAR].map((belt) => {
+      const sorted = all.filter((o) => o.belt === belt).map((o) => o.degrees).sort((a, b) => a - b)
+      return `${BELT_NAME[belt]} ${sorted.length} (median ${sorted[Math.floor(sorted.length / 2)]?.toFixed(0)}°, worst ${sorted.at(-1)?.toFixed(0)}°)`
+    })
+    console.log(`Winds against ships, ${id}: ${parts.join(', ')}`)
   }
   console.log(
     `Winds: subtropical highs ${b(january)} in January, ${b(march)} in March, ${b(july)} in July, ${b(september)} in September; ${checks.length} checks pass`

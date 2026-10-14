@@ -91,12 +91,40 @@ const CLIMATES: Climate[] = [
  * ITCZ from the tropical rain belt, the arrows from the surface wind.
  */
 type SeasonId = 'january' | 'march' | 'july' | 'september'
+/** Which planetary wind belt an arrow blows in, as the build tags it. */
+type WindBelt = 0 | 1 | 2
 interface Season {
   belts: { subtropicalNorth: number; subtropicalSouth: number; subpolarNorth: number; subpolarSouth: number }
   itcz: [number, number][]
-  winds: MapWind[]
-  names: { text: string; at: [number, number] }[]
+  /** [i, j, lon, lat, u, v, belt] */
+  winds: [number, number, number, number, number, number, WindBelt][]
+  names: { text: string; at: [number, number]; belt: WindBelt }[]
 }
+
+/**
+ * The three planetary wind belts, each in its own ink. An arrow takes the ink
+ * of the belt it stands in, never of the way it points: the arrows show what
+ * the wind does there, even where that is not what the belt's name says. Navy
+ * trades; the westerlies a forest green and the polar easterlies a violet,
+ * apart from the climates' colours where they share ground.
+ */
+const WIND_BELTS: { belt: WindBelt; name: string; ink: string; account: string }[] = [
+  { belt: 0, name: 'Trade winds', ink: '#0f172a', account: '' },
+  {
+    belt: 1,
+    name: 'Westerlies',
+    ink: '#166534',
+    account:
+      "From the subtropical highs towards the subpolar lows, turned east by the Earth's rotation: south-westerly in the north, north-westerly in the south. Over the unbroken Southern Ocean they blow from the west all the way round, the strongest winds of any belt, all year: the Roaring Forties. In the north the continents break them up; over the oceans they blow hardest in winter, and round the Aleutian and Icelandic lows the winds circle the lows.",
+  },
+  {
+    belt: 2,
+    name: 'Polar easterlies',
+    ink: '#6d28d9',
+    account:
+      "Cold air flowing out of the polar highs towards the subpolar lows, turned west. Along East Antarctica's coast they blow from the east and south-east all year; in the Amundsen and Bellingshausen Seas the trough lies further south, and that coast has westerlies. The Arctic's are weak and broken: north-easterly over the Chukchi Sea in winter and spring, while in winter the air pours north off Siberia's cold high and the Atlantic's south-westerlies reach on past Norway. In summer the Arctic's winds are too light to show.",
+  },
+]
 
 const SEASONS: { id: SeasonId; name: string; caption: string }[] = [
   {
@@ -247,7 +275,8 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
   const [selected, setSelected] = useState<string | null>(null)
   const [seasons, setSeasons] = useState<Record<SeasonId, Season> | null>(null)
   const [beltsOn, setBeltsOn] = useState(false)
-  const [tradesOn, setTradesOn] = useState(false)
+  const [windsOn, setWindsOn] = useState<Record<WindBelt, boolean>>({ 0: false, 1: false, 2: false })
+  const anyWinds = windsOn[0] || windsOn[1] || windsOn[2]
   const [seasonId, setSeasonId] = useState<SeasonId>('march')
 
   useEffect(() => {
@@ -259,13 +288,13 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
   }, [])
   // The winds are loaded the first time either switch is turned on.
   useEffect(() => {
-    if (!beltsOn && !tradesOn) return
+    if (!beltsOn && !anyWinds) return
     let live = true
     loadWinds().then((w) => live && setSeasons(w))
     return () => {
       live = false
     }
-  }, [beltsOn, tradesOn])
+  }, [beltsOn, anyWinds])
 
   const season = seasons?.[seasonId] ?? null
   const seasonInfo = SEASONS.find((x) => x.id === seasonId)!
@@ -344,7 +373,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
     if (!season) return []
     const out: MapLabel[] = []
     // The winds' names first: where room is short, they are the ones kept.
-    if (tradesOn) for (const n of season.names) out.push({ at: n.at, text: n.text, color: '#0f172a' })
+    for (const n of season.names) if (windsOn[n.belt]) out.push({ at: n.at, text: n.text, color: WIND_BELTS[n.belt].ink })
     if (beltsOn) {
       const { belts, itcz } = season
       const at = along(itcz)
@@ -360,7 +389,15 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
       }
     }
     return out
-  }, [season, beltsOn, tradesOn])
+  }, [season, beltsOn, windsOn])
+
+  const arrows: MapWind[] | undefined = useMemo(
+    () =>
+      season && anyWinds
+        ? season.winds.filter((w) => windsOn[w[6]]).map(([i, j, lon, lat, u, v, b]) => [i, j, lon, lat, u, v, WIND_BELTS[b].ink])
+        : undefined,
+    [season, windsOn, anyWinds]
+  )
 
   const card = CLIMATES.find((c) => c.id === selected && shown[c.id])
   const beltKind = selected && beltsOn ? BELT_IDS[selected] : undefined
@@ -377,13 +414,14 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
             : `${seasonInfo.name}: from ${fmtLat(Math.min(...season.itcz.map((c) => c[1])))} to ${fmtLat(Math.max(...season.itcz.map((c) => c[1])))}`
       : null
 
-  const toggle = (on: boolean, set: (v: boolean) => void, label: string) => (
+  const toggle = (on: boolean, set: (v: boolean) => void, label: string, ink?: string) => (
     <label
       className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
         on ? 'text-slate-800' : 'text-slate-500'
       }`}
     >
       <input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} className="h-3.5 w-3.5 accent-blue-600" />
+      {ink && <span aria-hidden className="inline-block h-0.5 w-4 rounded" style={{ background: ink, opacity: on ? 1 : 0.4 }} />}
       {label}
     </label>
   )
@@ -400,11 +438,11 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
         physical
         patches={[...beltPatches, ...climatePatches]}
         isolines={beltLines}
-        winds={tradesOn && season ? season.winds : undefined}
+        winds={arrows}
         notes={notes}
         onPatch={(id) => setSelected((s) => (s === id ? null : id))}
         onDeselect={() => setSelected(null)}
-        credit={`Climate: Köppen-Geiger, Beck et al. (2023), 1991–2020${beltsOn || tradesOn ? ' · Winds and pressure: NCEP/NCAR reanalysis; rain: GPCP (NOAA PSL), 1991–2020' : ''}`}
+        credit={`Climate: Köppen-Geiger, Beck et al. (2023), 1991–2020${beltsOn || anyWinds ? ' · Winds and pressure: NCEP/NCAR reanalysis; rain: GPCP (NOAA PSL), 1991–2020' : ''}`}
         bare={bare}
       />
 
@@ -448,8 +486,10 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
           </div>
           <div className="pointer-events-auto mx-auto flex flex-wrap items-center justify-center gap-1 rounded-2xl bg-white/95 px-2 py-1.5 shadow-lg">
             {toggle(beltsOn, setBeltsOn, 'Pressure belts')}
-            {toggle(tradesOn, setTradesOn, 'Trade winds')}
-            {(beltsOn || tradesOn) && (
+            {WIND_BELTS.map((w) =>
+              <span key={w.belt}>{toggle(windsOn[w.belt], (on) => setWindsOn((s) => ({ ...s, [w.belt]: on })), w.name, w.ink)}</span>
+            )}
+            {(beltsOn || anyWinds) && (
               <div role="radiogroup" aria-label="Time of year" className="flex rounded-full bg-slate-100 p-0.5">
                 {SEASONS.map((x) => (
                   <button
@@ -471,7 +511,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
         </div>
       )}
 
-      {(card || belt || (tradesOn && season && !bare.on)) && (
+      {(card || belt || (anyWinds && season && !bare.on)) && (
         // Clear of the credit line at the map's foot.
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-4 pb-10">
           <div className="pointer-events-auto w-full max-w-lg rounded-2xl bg-white p-4 shadow-xl">
@@ -505,8 +545,17 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
               </>
             ) : (
               <>
-                <div className="text-xs font-bold tracking-wide text-slate-400 uppercase">Trade winds · {seasonInfo.name}</div>
-                <p className="mt-1 text-sm leading-snug text-slate-700">{seasonInfo.caption}</p>
+                <div className="text-xs font-bold tracking-wide text-slate-400 uppercase">Winds · {seasonInfo.name}</div>
+                <div className="mt-1 max-h-36 space-y-1.5 overflow-y-auto text-[13px] leading-snug text-slate-700">
+                  {WIND_BELTS.filter((w) => windsOn[w.belt]).map((w) => (
+                    <p key={w.belt}>
+                      <span className="font-bold" style={{ color: w.ink }}>
+                        {w.name}.{' '}
+                      </span>
+                      {w.belt === 0 ? seasonInfo.caption : w.account}
+                    </p>
+                  ))}
+                </div>
               </>
             )}
           </div>

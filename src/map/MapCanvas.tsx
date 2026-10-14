@@ -338,9 +338,9 @@ export interface MapPatch {
 /**
  * A wind arrow: `i` and `j` its place on a regular grid, so the map can thin
  * the arrows evenly as it zooms out; then where it is and the wind there, in
- * metres a second east (`u`) and north (`v`).
+ * metres a second east (`u`) and north (`v`); and the ink of its wind belt.
  */
-export type MapWind = [i: number, j: number, lon: number, lat: number, u: number, v: number]
+export type MapWind = [i: number, j: number, lon: number, lat: number, u: number, v: number, ink?: string]
 
 /** A name written on the map by itself: a wind's, a pressure belt's. */
 export interface MapLabel {
@@ -1378,7 +1378,7 @@ export function MapCanvas({
               const full = Math.min(30, room * 0.8)
               return (
                 <g pointerEvents="none">
-                  {winds.map(([i, j, lon, lat, u, v]) => {
+                  {winds.map(([i, j, lon, lat, u, v, ink]) => {
                     if (i % strideI || j % strideJ) return null
                     const p = projection([lon, lat])
                     if (!p) return null
@@ -1397,7 +1397,7 @@ export function MapCanvas({
                     return (
                       <Fragment key={`w-${i}-${j}`}>
                         <path d={d} fill="none" stroke="#fff" strokeOpacity={0.8} strokeWidth={3.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-                        <path d={d} fill="none" stroke="#0f172a" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+                        <path d={d} fill="none" stroke={ink ?? '#0f172a'} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
                       </Fragment>
                     )
                   })}

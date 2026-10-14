@@ -207,36 +207,60 @@ function itczPath(rain, v, slp) {
 }
 
 /**
- * Trade-wind arrows: on a 7.5° by 5° grid between the season's two
- * subtropical ridges, the near-surface wind, smoothed over 2° so an arrow
- * shows the wind of its region rather than one grid cell's. `i` and `j` are
- * the arrow's place on the grid, so the map can thin it evenly as it zooms out.
+ * The planetary winds' arrows: on a 7.5° by 5° grid from 82.5°N to 82.5°S,
+ * the near-surface wind, smoothed over 2° so an arrow shows the wind of its
+ * region rather than one grid cell's, each tagged with the belt it blows in —
+ * TRADES between the two subtropical ridges, WESTERLIES from a ridge to its
+ * hemisphere's subpolar trough, POLAR poleward of the trough. The belt is
+ * where the arrow is, never which way it points: the arrows say what the wind
+ * does there, westerly in the Barents Sea or not. `i` and `j` are the arrow's
+ * place on the grid, so the map can thin it evenly as it zooms out.
  *
- * Two kinds of point get no arrow, found by auditing every arrow against
+ * Three kinds of point get no arrow, found by auditing every arrow against
  * ships' and buoys' own observations (ICOADS, which the build now checks):
  * - Calm, under CALM m/s: the doldrums, where the wind has no steady way to
  *   blow. Under 1.5 m/s the reanalysis and the ships agree within 30° only
  *   82% of the time; from 3 m/s up, 99–100%. The textbook draws them calm too.
  * - High ground, over HIGHLAND metres on the reanalysis's own terrain: Tibet
- *   and the Himalaya, the Altiplano, the Mexican plateau. A wind there is the
- *   air on a plateau — monsoon air drawn up the Himalaya's slopes — not a trade
- *   wind, and a 2.5° model's terrain is at its least trustworthy.
+ *   and the Himalaya, the Altiplano, the Mexican plateau, Greenland's and
+ *   Antarctica's ice. A wind there is the air on a plateau — monsoon air drawn
+ *   up the Himalaya's slopes — not a planetary wind, and a 2.5° model's
+ *   terrain is at its least trustworthy.
+ * - The meeting places: within MEETING degrees of a subtropical ridge, the
+ *   horse latitudes, and within TROUGH of a subpolar trough, the polar front,
+ *   where two belts' winds meet and the average is a muddle of both. The map
+ *   draws them as the pressure belts themselves. The trough's margin is the
+ *   narrower: round Antarctica it lies at 64°–66°S, a few degrees off the
+ *   coast, and the 2.5° one left no row of sea for the polar easterlies.
  */
 const CALM = 1.5
 const HIGHLAND = 1500
+const MEETING = 2.5
+const TROUGH = 1.25
+export const TRADES = 0
+export const WESTERLIES = 1
+export const POLAR = 2
 
-function tradeArrows(u, v, height, south, north) {
+function planetaryArrows(u, v, height, belts) {
+  const ridges = [belts.subtropicalNorth, belts.subtropicalSouth]
+  const troughs = [belts.subpolarNorth, belts.subpolarSouth]
   const out = []
   for (let j = 0; ; j++) {
-    const lat = 27.5 - j * 5
-    if (lat < -27.5) break
-    if (lat > north - 2.5 || lat < south + 2.5) continue
+    const lat = 82.5 - j * 5
+    if (lat < -82.5) break
+    if (ridges.some((r) => Math.abs(lat - r) < MEETING) || troughs.some((t) => Math.abs(lat - t) < TROUGH)) continue
+    const belt =
+      lat < belts.subtropicalNorth && lat > belts.subtropicalSouth
+        ? TRADES
+        : lat < belts.subpolarNorth && lat > belts.subpolarSouth
+          ? WESTERLIES
+          : POLAR
     for (let i = 0; i < 48; i++) {
       const lon = -176.25 + i * 7.5
       const uu = sample(u, lat, lon)
       const vv = sample(v, lat, lon)
       if (Math.hypot(uu, vv) < CALM || sample(height, lat, lon) > HIGHLAND) continue
-      out.push([i, j, lon, lat, Number(uu.toFixed(1)), Number(vv.toFixed(1))])
+      out.push([i, j, lon, lat, Number(uu.toFixed(1)), Number(vv.toFixed(1)), belt])
     }
   }
   return out
@@ -269,7 +293,7 @@ export function windsAndBelts({ uFile, vFile, slpFile, rainFile, heightFile }) {
       smooth(grid(mean(v, months, N)), 3),
       smooth(grid(p), 3)
     )
-    out[id] = { belts, itcz, winds: tradeArrows(uu, vv, height, belts.subtropicalSouth, belts.subtropicalNorth), u: uu, v: vv }
+    out[id] = { belts, itcz, winds: planetaryArrows(uu, vv, height, belts), u: uu, v: vv }
   }
   return out
 }
@@ -329,13 +353,13 @@ export function againstShips({ uFile, vFile, landFile }, seasons) {
     }
     const sea = (lon, lat) => land[Math.round((90 - lat) / 2.5) * 144 + (Math.round((((lon % 360) + 360) % 360) / 2.5) % 144)] !== 1
     const off = []
-    for (const [, , lon, lat, u, v] of seasons[id].winds) {
+    for (const [, , lon, lat, u, v, belt] of seasons[id].winds) {
       if (!sea(lon, lat)) continue
       const o = observed(lon, lat)
       if (!o || Math.hypot(...o) < CALM) continue
       let d = Math.abs(Math.atan2(v, u) - Math.atan2(o[1], o[0])) * (180 / Math.PI)
       if (d > 180) d = 360 - d
-      off.push({ at: [lon, lat], degrees: d })
+      off.push({ at: [lon, lat], degrees: d, belt })
     }
     out[id] = off
   }
