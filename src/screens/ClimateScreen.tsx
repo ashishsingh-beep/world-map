@@ -90,7 +90,7 @@ const CLIMATES: Climate[] = [
  * means (scripts/winds.mjs): the belts' latitudes from sea-level pressure, the
  * ITCZ from the tropical rain belt, the arrows from the surface wind.
  */
-type SeasonId = 'march' | 'july' | 'january'
+type SeasonId = 'january' | 'march' | 'july' | 'september'
 interface Season {
   belts: { subtropicalNorth: number; subtropicalSouth: number; subpolarNorth: number; subpolarSouth: number }
   itcz: [number, number][]
@@ -100,10 +100,16 @@ interface Season {
 
 const SEASONS: { id: SeasonId; name: string; caption: string }[] = [
   {
+    id: 'january',
+    name: 'January',
+    caption:
+      'In January the ITCZ swings south. The north-east trades cross the Equator the other way — over India they are the north-east monsoon — and arrive in northern Australia from the north-west: the north-west monsoon.',
+  },
+  {
     id: 'march',
     name: 'March',
     caption:
-      "In March, at the equinox, the sun is overhead at the Equator. The north-east and south-east trades blow from the subtropical highs towards the ITCZ — just north of the Equator over the open oceans, still south of it over the Indian Ocean. September is the other equinox but not the same picture: over South Asia the south-west monsoon is still blowing, so its winds look like a weaker July.",
+      'In March, at the spring equinox, the sun is overhead at the Equator. The north-east and south-east trades blow from the subtropical highs towards the ITCZ — just north of the Equator over the open oceans, still south of it over the Indian Ocean.',
   },
   {
     id: 'july',
@@ -112,10 +118,10 @@ const SEASONS: { id: SeasonId; name: string; caption: string }[] = [
       "In July the ITCZ follows the sun north, furthest over the land. The south-east trades cross the Equator and, turned by the Earth's rotation, reach South Asia from the south-west: the south-west monsoon.",
   },
   {
-    id: 'january',
-    name: 'January',
+    id: 'september',
+    name: 'September',
     caption:
-      'In January the ITCZ swings south. The north-east trades cross the Equator the other way — over India they are the north-east monsoon — and arrive in northern Australia from the north-west: the north-west monsoon.',
+      'In September, at the autumn equinox, the sun is again overhead at the Equator, but the land and the sea lag behind it: the ITCZ still lies north over South Asia, and the south-west monsoon is still blowing there, only beginning to retreat. It is not the mirror of March.',
   },
 ]
 

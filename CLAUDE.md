@@ -496,23 +496,32 @@ and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
 
 The climate map also has a Pressure belts switch and a Trade winds switch, and
-a month both follow — March, July and January, the three times the trades
-behave differently: blowing towards an ITCZ near the Equator at the equinox;
-the south-east trades crossing it to become the south-west monsoon; the
-north-east trades crossing the other way, the north-east monsoon over India
-and the north-west monsoon in northern Australia. Each is one month, never an
+a month both follow — January, March, July and September: the north-east
+trades crossing the Equator, the north-east monsoon over India and the
+north-west monsoon in northern Australia; blowing towards an ITCZ near the
+Equator at the spring equinox; the south-east trades crossing it to become the
+south-west monsoon; and the autumn equinox, when over South Asia that monsoon
+is still blowing, only beginning to retreat. Each is one month, never an
 average: March and September were once averaged as "the equinoxes", and over
 South Asia they are opposites — September still has the south-west monsoon,
 March the last north-easterlies and its rain belt south of the Equator — so
 the panel drew September's south-westerlies blowing away from March's ITCZ.
+They are separate months now, and September's caption says it is not the
+mirror of March.
 `npm run data` now checks that in each month the wind over the Arabian Sea,
 the Bay of Bengal, off Sri Lanka, the Andaman Sea and off Somalia blows towards
 the side the ITCZ lies on; the averaged panel failed four of the five.
 
 Nothing is traced: `scripts/winds.mjs` takes NOAA's 1991–2020 means. The
-subtropical highs and subpolar lows are each month's ridge and trough of
-sea-level pressure averaged round the parallel, drawn as a band 5° either
-side; the polar highs are the zone poleward of 80°, not traced, because
+subtropical highs are each month's ridge of sea-level pressure in the oceans'
+own anticyclones — the North Pacific and Azores highs, and the South Pacific,
+St Helena and Mascarene highs — averaged per hemisphere (28°N in January to
+35°N in July and September), not the pressure averaged round the whole
+parallel, which in September is flat from 35° to 42.5°N and was lifted to
+40.5°N by the Siberian high building over Asia and pressure reduced to sea
+level from Central Asia's plateaus. The subpolar lows are the trough of
+pressure averaged round the parallel, the same all the way round. Both are
+drawn as a band 5° either side; the polar highs are the zone poleward of 80°, not traced, because
 pressure over the ice caps cannot be read reliably. The ITCZ is where the
 trades meet — surface convergence (weight 1) and lowest sea-level pressure
 (0.75), with GPCP rainfall (0.25) a light third. Rain cannot lead: July's
@@ -526,8 +535,9 @@ month's two subtropical ridges, on a 7.5° by 5° grid that `MapCanvas` thins as
 the map zooms out (`winds`); each named wind is written where `npm run data`
 checks it blows from the quarter its name says, and the build fails unless the
 ITCZ rides north over India (to the monsoon trough, past 21°N), West Africa and
-Arabia in July, lies south of the Equator over the Indian Ocean in March, and
-dips over southern Africa and northern Australia in January. The belts are
+Arabia in July, lies south of the Equator over the Indian Ocean in March, is
+still north of 12°N over India in September, and dips over southern Africa
+and northern Australia in January. The belts are
 `patches` drawn in quarters (a ring all the way round closes on itself), so
 they are picked by fill alone (`outline: false`) and their edges drawn as
 dashed `isolines`; names go through `notes`, placed in order and dropped where

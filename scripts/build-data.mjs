@@ -2217,7 +2217,7 @@ const dateLine = (() => {
 
 /**
  * The pressure belts, the ITCZ and the trade winds for the Climate map, in
- * March, July and January — from NOAA's 1991–2020 means (see
+ * January, March, July and September — from NOAA's 1991–2020 means (see
  * scripts/winds.mjs). Held to what the textbook says the trades do in each, so
  * a wrong file or a broken trace cannot pass unnoticed. Each named wind is
  * written on the map where it is checked here.
@@ -2248,6 +2248,9 @@ const dateLine = (() => {
   ]
   const names = {
     march: trades,
+    // At the autumn equinox the south-west monsoon is still blowing over the
+    // Bay of Bengal, beginning its retreat.
+    september: [...trades, named('SW monsoon', 'SW', [88, 14])],
     // The south-east trades cross the Equator and turn: the south-west monsoon.
     july: [...trades, named('SW monsoon', 'SW', [65, 13])],
     // The north-east trades cross it the other way, and reach northern
@@ -2255,10 +2258,11 @@ const dateLine = (() => {
     january: [...trades, named('NE monsoon', 'NE', [88, 14]), named('NW monsoon', 'NW', [128, -11])],
   }
   const latAt = (line, lon) => line.reduce((b, c) => (Math.abs(c[0] - lon) < Math.abs(b[0] - lon) ? c : b))[1]
-  const { march, july, january } = seasons
+  const { march, july, september, january } = seasons
   /**
    * Across the north Indian Ocean the wind must blow towards the side the ITCZ
-   * lies on — south to it in March and January, north to it in July. The
+   * lies on — south to it in March and January, north to it in July and
+   * September. The
    * averaged March-and-September panel this replaced failed in four of these
    * five: September's south-westerlies blowing north, away from March's ITCZ
    * south of the Equator.
@@ -2279,6 +2283,8 @@ const dateLine = (() => {
     ['January: … and over northern Australia', latAt(january.itcz, 130) < -5],
     ['March: the ITCZ lies near the Equator over the Atlantic', Math.abs(latAt(march.itcz, -30)) < 10],
     ['March: … and south of it over the Indian Ocean, with the sun', latAt(march.itcz, 80) < 0],
+    ['September: over India the ITCZ is still north, the monsoon not yet withdrawn', latAt(september.itcz, 80) > 12],
+    ['September: the northern subtropical highs still lie as far north as in July', september.belts.subtropicalNorth >= july.belts.subtropicalNorth - 1],
     ['July: the northern subtropical high lies further north than in January', july.belts.subtropicalNorth > january.belts.subtropicalNorth],
     ['January: the southern subtropical high lies further south than in July', january.belts.subtropicalSouth < july.belts.subtropicalSouth],
     ...Object.entries(seasons).flatMap(([id, d]) => [
@@ -2304,7 +2310,7 @@ const dateLine = (() => {
   writeFileSync(resolve(OUT, 'winds.json'), JSON.stringify(out))
   const b = (d) => `${d.belts.subtropicalNorth}°/${d.belts.subtropicalSouth}°`
   console.log(
-    `Winds: subtropical highs ${b(march)} in March, ${b(july)} in July, ${b(january)} in January; ${checks.length} checks pass`
+    `Winds: subtropical highs ${b(january)} in January, ${b(march)} in March, ${b(july)} in July, ${b(september)} in September; ${checks.length} checks pass`
   )
 }
 

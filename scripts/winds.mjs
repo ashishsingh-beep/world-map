@@ -1,11 +1,12 @@
 /**
- * The planetary pressure belts and the trade winds, for the Climate map, at
- * the three times of year the trades behave differently: March, the equinox,
+ * The planetary pressure belts and the trade winds, for the Climate map, in
+ * the four months the trades behave differently: January, when the ITCZ
+ * swings south and the north-east trades cross the Equator, to arrive in
+ * northern Australia as the north-west monsoon; March, the spring equinox,
  * when the two trade systems blow towards an ITCZ near the Equator; July, when
  * the ITCZ rides north and the south-east trades cross the Equator and turn
- * into the south-west monsoon; and January, when it swings south and the
- * north-east trades cross the other way, to arrive in northern Australia as
- * the north-west monsoon.
+ * into the south-west monsoon; and September, the autumn equinox, when over
+ * South Asia that monsoon is still blowing and only beginning to retreat.
  *
  * Each is one month, never an average of two. March and September were once
  * averaged as "the equinoxes", and over South Asia they are opposites — in
@@ -18,10 +19,17 @@
  * from:
  *
  * - Winds: NCEP/NCAR reanalysis near-surface wind (sigma 0.995), 2.5°.
- * - Subtropical highs and subpolar lows: the same reanalysis's sea-level
- *   pressure, averaged round each parallel — the ridge between 15° and 50°,
- *   the trough between 45° and 80°, in each hemisphere. Belts are a
- *   latitude, so they are drawn as one, the season's own.
+ * - Subtropical highs: the same reanalysis's sea-level pressure, as the ridge
+ *   of each ocean's own anticyclone between 15° and 50° — the North Pacific
+ *   and Azores highs in the north, the South Pacific, St Helena and
+ *   Mascarene highs in the south — averaged per hemisphere. Not the
+ *   pressure averaged round the whole parallel: in September that is flat
+ *   from 35° to 42.5°N and peaks at 40.5°N, lifted by the Siberian high
+ *   building over Asia and by pressure reduced to sea level from Central
+ *   Asia's plateaus, while both ocean highs ride at 35°N.
+ * - Subpolar lows: the trough of pressure averaged round each parallel
+ *   between 45° and 80°, the same all the way round. Belts are a latitude, so
+ *   they are drawn as one, the month's own.
  * - The ITCZ: where the trades meet — the equatorial trough — so where the
  *   drawn arrows converge: the reanalysis's surface convergence (weight 1)
  *   and its lowest sea-level pressure (0.75), with GPCP rainfall (2.5°, 0.25)
@@ -48,7 +56,17 @@ function open(file, key) {
 }
 
 /** The seasons, as months of the year (0 = January) averaged together. */
-export const SEASONS = { march: [2], july: [6], january: [0] }
+export const SEASONS = { january: [0], march: [2], july: [6], september: [8] }
+
+/**
+ * The oceans' subtropical anticyclones, as spans of longitude (degrees east,
+ * written past 360 where one crosses Greenwich): the North Pacific and Azores
+ * highs; the South Pacific, St Helena and Mascarene highs.
+ */
+const OCEAN_HIGHS = {
+  north: [[150, 230], [300, 350]],
+  south: [[180, 280], [320, 370], [50, 100]],
+}
 
 const mean = (values, months, n) =>
   Float64Array.from({ length: n }, (_, k) => months.reduce((s, m) => s + values[m * n + k], 0) / months.length)
@@ -81,6 +99,39 @@ function beltLatitude(slp, from, to, highest) {
     if (highest ? v > zonal[at] : v < zonal[at]) at = k
   })
   return Number(refine(lats, zonal, at).toFixed(1))
+}
+
+/**
+ * The subtropical high of one hemisphere: each ocean anticyclone's ridge — the
+ * highest pressure averaged across its span of longitude — between two
+ * parallels, the ridges then averaged.
+ */
+function subtropicalLatitude(slp, spans, from, to) {
+  const ridges = spans.map(([west, east]) => {
+    const lats = []
+    const values = []
+    for (let j = 0; j < 73; j++) {
+      const lat = 90 - j * 2.5
+      if (lat > Math.max(from, to) || lat < Math.min(from, to)) continue
+      let s = 0
+      let c = 0
+      for (let i = 0; i < 144; i++) {
+        const lon = i * 2.5 < west ? i * 2.5 + 360 : i * 2.5
+        if (lon >= west && lon < east) {
+          s += slp[j * 144 + i]
+          c++
+        }
+      }
+      lats.push(lat)
+      values.push(s / c)
+    }
+    let at = 0
+    values.forEach((v, k) => {
+      if (v > values[at]) at = k
+    })
+    return refine(lats, values, at)
+  })
+  return Number((ridges.reduce((a, b) => a + b, 0) / ridges.length).toFixed(1))
 }
 
 /**
@@ -187,8 +238,8 @@ export function windsAndBelts({ uFile, vFile, slpFile, rainFile }) {
   for (const [id, months] of Object.entries(SEASONS)) {
     const p = mean(slp, months, N)
     const belts = {
-      subtropicalNorth: beltLatitude(p, 15, 50, true),
-      subtropicalSouth: beltLatitude(p, -15, -50, true),
+      subtropicalNorth: subtropicalLatitude(p, OCEAN_HIGHS.north, 15, 50),
+      subtropicalSouth: subtropicalLatitude(p, OCEAN_HIGHS.south, -15, -50),
       subpolarNorth: beltLatitude(p, 45, 80, false),
       subpolarSouth: beltLatitude(p, -45, -80, false),
     }
