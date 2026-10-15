@@ -14,7 +14,7 @@ import { useBare } from '../app/useBare'
  * polygons at build time (scripts/climate.mjs); what each card says is the
  * textbook's account of the climate.
  */
-type ClimateId = 'mediterranean' | 'desert-hot' | 'desert-cold' | 'sudan'
+type ClimateId = 'equatorial' | 'mediterranean' | 'desert-hot' | 'desert-cold' | 'sudan'
 
 interface Climate {
   id: ClimateId
@@ -26,6 +26,22 @@ interface Climate {
 }
 
 const CLIMATES: Climate[] = [
+  {
+    id: 'equatorial',
+    name: 'Equatorial',
+    koppen: 'Af',
+    fill: '#047857',
+    summary:
+      'Hot and wet every month of the year: no dry season, a thunderstorm most afternoons, and temperatures that barely change — the monotony of the equatorial lands.',
+    notes: [
+      'Within about 5°–10° of the Equator, under the ITCZ the whole year',
+      'The Amazon Basin, the heart of the Congo Basin, the east coast of Madagascar, and the Indo-Malaysian lands — Malaysia, Indonesia, the southern Philippines and New Guinea',
+      "Around them the Guinea coast, the outer Amazon and coastal Myanmar are monsoon rainforest (Köppen Am): forest still, but with a short dry season, so not shaded here",
+      'About 27°C all year, an annual range of only 2°–3°C; over 1,500mm of rain, often 2,000mm or more, spread through the year (Köppen: at least 60mm even in the driest month)',
+      'Convectional rain: the hot, moist air rises by midday and breaks in heavy afternoon thunderstorms',
+      'The tropical rainforest, the selvas: tall evergreen hardwoods such as mahogany, ebony and greenheart, in layers, laced with lianas and epiphytes',
+    ],
+  },
   {
     id: 'mediterranean',
     name: 'Mediterranean',
@@ -255,6 +271,17 @@ const NAME_LONS = [-150, -35, 75]
 const ITCZ_NAME_LONS = [-115, 20, 150]
 const fmtLat = (lat: number) => `${Math.abs(lat).toFixed(0)}°${lat >= 0 ? 'N' : 'S'}`
 
+/**
+ * The equatorial regions' names, written on the patch as the textbook's map
+ * names them. `npm run data` checks each point lies inside the Af patch.
+ */
+const EQUATORIAL_LABELS: { at: [number, number]; text: string }[] = [
+  { at: [-63, -3], text: 'Amazon Basin' },
+  { at: [21, 0.5], text: 'Congo Basin' },
+  { at: [112, 1], text: 'Indo-Malaysian' },
+]
+const EQUATORIAL_INK = '#064e3b'
+
 let load: Promise<Map<ClimateId, Feature>> | null = null
 const loadClimate = () =>
   (load ??= import('../data/climate.topo.json').then((m) => {
@@ -267,6 +294,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
   const bare = useBare()
   const [regions, setRegions] = useState<Map<ClimateId, Feature> | null>(null)
   const [shown, setShown] = useState<Record<ClimateId, boolean>>({
+    equatorial: true,
     mediterranean: true,
     'desert-hot': true,
     'desert-cold': true,
@@ -370,11 +398,12 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
   }, [beltsOn, season])
 
   const notes: MapLabel[] = useMemo(() => {
-    if (!season) return []
     const out: MapLabel[] = []
     // The winds' names first: where room is short, they are the ones kept.
-    for (const n of season.names) if (windsOn[n.belt]) out.push({ at: n.at, text: n.text, color: WIND_BELTS[n.belt].ink })
-    if (beltsOn) {
+    if (season) for (const n of season.names) if (windsOn[n.belt]) out.push({ at: n.at, text: n.text, color: WIND_BELTS[n.belt].ink })
+    // Then the equatorial regions' names, as the textbook's map writes them.
+    if (shown.equatorial && regions) for (const l of EQUATORIAL_LABELS) out.push({ ...l, color: EQUATORIAL_INK, caps: true })
+    if (beltsOn && season) {
       const { belts, itcz } = season
       const at = along(itcz)
       // Clear of the trades' own names, which sit at the checked points.
@@ -389,7 +418,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
       }
     }
     return out
-  }, [season, beltsOn, windsOn])
+  }, [season, beltsOn, windsOn, shown.equatorial, regions])
 
   const arrows: MapWind[] | undefined = useMemo(
     () =>

@@ -2454,6 +2454,9 @@ const dateLine = (() => {
     'desert-hot': { Riyadh: [46.7, 24.7], 'the central Sahara': [5, 25], 'the Thar': [71, 27], 'Alice Springs': [133.88, -23.7], 'the Namib': [15, -23], Phoenix: [-112.07, 33.45] },
     'desert-cold': { 'the Gobi': [104.4, 43.6], 'the Taklamakan': [83, 39], 'the Karakum': [59, 39], Patagonia: [-69, -46] },
     sudan: { Bamako: [-8, 12.65], Kaduna: [7.44, 10.52], Juba: [31.6, 4.85], Darwin: [130.84, -12.46], Brasília: [-47.9, -15.8], 'the Llanos': [-67.4, 8.9] },
+    // The map's own labels for it too (EQUATORIAL_LABELS in ClimateScreen),
+    // which must sit on the patch they name.
+    equatorial: { Manaus: [-60.02, -3.12], Iquitos: [-73.25, -3.75], Kisangani: [25.19, 0.52], Mbandaka: [18.26, 0.05], Singapore: [103.82, 1.35], Pontianak: [109.33, -0.03], 'the Amazon Basin label': [-63, -3], 'the Congo Basin label': [21, 0.5], 'the Indo-Malaysian label': [112, 1] },
   }
   // And places that are surely *not* in a region: the monsoon lands Köppen
   // calls Aw and the textbook does not call Sudan type (see scripts/climate.mjs).

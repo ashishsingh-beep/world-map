@@ -476,13 +476,17 @@ as the 10°C loops. Lines are coloured on the currents' own blue-to-red
 
 **Climates are Köppen's, not traced.** Phenomena's third entry is a
 Learn-only climate map (`#/climate`, `src/screens/ClimateScreen.tsx`, answered
-in `App` like the isotherms): the Mediterranean, hot desert, cold desert and
-Sudan-type climates as patches over a physical world map, a legend chip each to
+in `App` like the isotherms): the equatorial, Mediterranean, hot desert, cold
+desert and Sudan-type climates as patches over a physical world map, a legend chip each to
 put it away, and a card of the textbook's account on a tap. The regions are the
 Köppen-Geiger classes of Beck et al. (2023), *Scientific Data* 10, 724 (CC BY
 4.0) — its present-day map, 1991–2020, at 0.1° — made into polygons at build
 time by `scripts/climate.mjs`: Mediterranean is Csa + Csb, hot desert BWh,
-cold desert BWk, Sudan type Aw (Leong's "Savanna or Sudan climate"). Each class
+cold desert BWk, Sudan type Aw (Leong's "Savanna or Sudan climate"), equatorial
+Af (the hot, wet equatorial climate: at least 60mm of rain even in the driest
+month). The equatorial patch carries its regions' names as the textbook's map
+writes them — Amazon Basin, Congo Basin, Indo-Malaysian (`EQUATORIAL_LABELS`
+in `ClimateScreen`) — and the build checks each label sits on the patch. Each class
 is a mask contoured by marching squares (`d3-contour`), specks under 20 cells
 dropped, simplified by an absolute 3km and clipped to the drawn land, into
 `src/data/climate.topo.json`, loaded only when the map opens. Köppen also classes
@@ -496,7 +500,12 @@ and Timor's savanna stays. `npm run data` fails unless 24 places whose
 climate is not in doubt fall inside their own region (Rome, Cape Town, Perth;
 Riyadh, the Thar, Alice Springs; the Gobi, the Taklamakan, Patagonia; Bamako,
 Darwin, the Llanos…), and six — Nagpur, Hyderabad, Kolkata, Yangon, Bangkok,
-Ho Chi Minh City — fall outside the Sudan type. `MapCanvas` draws them through `patches` (with `onPatch`
+Ho Chi Minh City — fall outside the Sudan type. Af is Köppen's strict
+rainforest class, so it is narrower than a textbook's "equatorial rainforest"
+sketch: the southern and eastern Amazon (Santarém, Porto Velho), most of the
+Guinea coast (Freetown, Abidjan, Douala) and Myanmar's coast are Am, monsoon
+rainforest with a short dry season, and Thailand and southern Vietnam Aw, so
+none of them is in the patch. `MapCanvas` draws them through `patches` (with `onPatch`
 and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
 

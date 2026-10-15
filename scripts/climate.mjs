@@ -10,7 +10,9 @@
  *     (Csc, a cold-summer highland variant of a few cells, is left out);
  *   Desert — BWh, the hot deserts, and BWk, the mid-latitude (cold) ones,
  *     kept apart so the map can tell the Sahara from the Gobi;
- *   Sudan type — Aw, the tropical wet-and-dry savanna.
+ *   Sudan type — Aw, the tropical wet-and-dry savanna;
+ *   Equatorial — Af, the tropical rainforest: hot and wet every month, at
+ *     least 60mm of rain in the driest.
  *
  * Each class becomes a mask and the mask a polygon by marching squares
  * (d3-contour), so a region's edge is the class boundary itself, not a hand
@@ -25,6 +27,7 @@ export const CLIMATE_CLASSES = {
   'desert-hot': [4], // BWh
   'desert-cold': [5], // BWk
   sudan: [3], // Aw
+  equatorial: [1], // Af
 }
 
 /**
