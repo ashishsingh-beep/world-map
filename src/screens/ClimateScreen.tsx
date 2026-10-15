@@ -8,13 +8,15 @@ import { WORLD_VIEW } from '../game/rounds'
 import { useBare } from '../app/useBare'
 
 /**
- * The climate map, for Learn only: where the Mediterranean, desert and
- * Sudan-type climates are, as patches over a physical world map. The regions
- * are the Köppen-Geiger classes of Beck et al. (2023) for 1991–2020, made into
- * polygons at build time (scripts/climate.mjs); what each card says is the
- * textbook's account of the climate.
+ * The climate map, for Learn only: where the equatorial, monsoon,
+ * Mediterranean, desert and Sudan-type climates are, as patches over a
+ * physical world map. The regions are the Köppen-Geiger classes of Beck et al.
+ * (2023) for 1991–2020, made into polygons at build time (scripts/climate.mjs),
+ * except the monsoon's, which is traced from the reference map it was asked
+ * for and overwrites the Köppen-drawn patches where they meet; what each card
+ * says is the textbook's account of the climate.
  */
-type ClimateId = 'equatorial' | 'mediterranean' | 'desert-hot' | 'desert-cold' | 'sudan'
+type ClimateId = 'equatorial' | 'monsoon' | 'mediterranean' | 'desert-hot' | 'desert-cold' | 'sudan'
 
 interface Climate {
   id: ClimateId
@@ -36,10 +38,27 @@ const CLIMATES: Climate[] = [
     notes: [
       'Within about 5°–10° of the Equator, under the ITCZ the whole year',
       'The Amazon Basin, the heart of the Congo Basin, the east coast of Madagascar, and the Indo-Malaysian lands — Malaysia, Indonesia, the southern Philippines and New Guinea',
-      "Around them the Guinea coast, the outer Amazon and coastal Myanmar are monsoon rainforest (Köppen Am): forest still, but with a short dry season, so not shaded here",
+      'Around them the Guinea coast, the outer Amazon and coastal Myanmar are monsoon rainforest (Köppen Am): forest still, but with a short dry season, so not equatorial',
       'About 27°C all year, an annual range of only 2°–3°C; over 1,500mm of rain, often 2,000mm or more, spread through the year (Köppen: at least 60mm even in the driest month)',
       'Convectional rain: the hot, moist air rises by midday and breaks in heavy afternoon thunderstorms',
       'The tropical rainforest, the selvas: tall evergreen hardwoods such as mahogany, ebony and greenheart, in layers, laced with lianas and epiphytes',
+    ],
+  },
+  {
+    id: 'monsoon',
+    name: 'Tropical monsoon',
+    koppen: 'Am',
+    fill: '#eab308',
+    summary:
+      'Hot, wet summers and dry winters, because the winds reverse with the seasons: onshore and rain-bearing in summer, offshore and dry in winter.',
+    notes: [
+      'In the tropics, about 5°–30° north and south of the Equator, best developed in South and South-East Asia',
+      'The Indian subcontinent, Myanmar, Thailand, Indochina and the Philippines; northern Australia; the East African coast and western Madagascar; the Guinea lands of West Africa; the Caribbean shores of Colombia and Venezuela; the Gulf coast of Mexico and the United States',
+      'Caused by the unequal heating of land and sea: in summer a low forms over the hot land and draws in moist air from the sea — the south-west monsoon over India; in winter the cold land sends dry air out to sea — the north-east monsoon',
+      "Three seasons: cool and dry (October to February), hot and dry (March to mid-June), and the rains (mid-June to September), when the monsoon 'bursts'",
+      'Rain depends on relief: windward slopes such as the Western Ghats and the Khasi Hills (Cherrapunji, Mawsynram) are drenched, while the rain-shadow interiors get little',
+      'Monsoon (tropical deciduous) forest that sheds its leaves in the dry season — teak, sal and bamboo — thinning to thorn scrub where it is drier',
+      'Drawn as the reference map draws it: where Köppen would say otherwise, the monsoon patch wins',
     ],
   },
   {
@@ -94,8 +113,8 @@ const CLIMATES: Climate[] = [
       'About 5°–20° north and south of the Equator',
       'Named for the Sudan belt of Africa, where it is best developed',
       'Tall grass — elephant grass — with scattered trees such as acacia and baobab; the big-game country of Africa',
-      'The Sudan belt and East Africa, the Llanos of the Orinoco and the Campos of Brazil, northern Australia',
-      'Not peninsular India or mainland South-East Asia: Köppen classes much of them Aw too, but the textbook treats them as the Tropical Monsoon climate, with its own seasonal reversal of the winds',
+      'The Sudan belt and East Africa, the Llanos of the Orinoco and the Campos of Brazil',
+      'Not peninsular India or mainland South-East Asia: Köppen classes much of them Aw too, but the textbook treats them as the Tropical Monsoon climate, with its own seasonal reversal of the winds — the monsoon patch',
     ],
   },
 ]
@@ -295,6 +314,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
   const [regions, setRegions] = useState<Map<ClimateId, Feature> | null>(null)
   const [shown, setShown] = useState<Record<ClimateId, boolean>>({
     equatorial: true,
+    monsoon: true,
     mediterranean: true,
     'desert-hot': true,
     'desert-cold': true,
@@ -471,7 +491,7 @@ export function ClimateScreen({ onExit }: { onExit: () => void }) {
         notes={notes}
         onPatch={(id) => setSelected((s) => (s === id ? null : id))}
         onDeselect={() => setSelected(null)}
-        credit={`Climate: Köppen-Geiger, Beck et al. (2023), 1991–2020${beltsOn || anyWinds ? ' · Winds and pressure: NCEP/NCAR reanalysis; rain: GPCP (NOAA PSL), 1991–2020' : ''}`}
+        credit={`Climate: Köppen-Geiger, Beck et al. (2023), 1991–2020; monsoon traced from a reference map${beltsOn || anyWinds ? ' · Winds and pressure: NCEP/NCAR reanalysis; rain: GPCP (NOAA PSL), 1991–2020' : ''}`}
         bare={bare}
       />
 

@@ -474,10 +474,10 @@ as the 10°C loops. Lines are coloured on the currents' own blue-to-red
 (`CURRENT_INK`), lowest level to highest; the thermal equator is dashed navy.
 `MapCanvas` draws them through `isolines`, a plain line layer with labels.
 
-**Climates are Köppen's, not traced.** Phenomena's third entry is a
+**Climates are Köppen's, unless a reference map is.** Phenomena's third entry is a
 Learn-only climate map (`#/climate`, `src/screens/ClimateScreen.tsx`, answered
-in `App` like the isotherms): the equatorial, Mediterranean, hot desert, cold
-desert and Sudan-type climates as patches over a physical world map, a legend chip each to
+in `App` like the isotherms): the equatorial, tropical monsoon, Mediterranean,
+hot desert, cold desert and Sudan-type climates as patches over a physical world map, a legend chip each to
 put it away, and a card of the textbook's account on a tap. The regions are the
 Köppen-Geiger classes of Beck et al. (2023), *Scientific Data* 10, 724 (CC BY
 4.0) — its present-day map, 1991–2020, at 0.1° — made into polygons at build
@@ -495,11 +495,11 @@ climates, not the Mediterranean of the west coasts at 30°–45°, so Mediterran
 is taken outside the tropics only. Köppen's Aw also covers peninsular India,
 Myanmar, Thailand and Indochina, which the textbook classes as the Tropical
 Monsoon climate, not the Sudan type — so Aw is not taken in monsoon Asia, north
-of the Equator between 60°E and 150°E (`MONSOON_ASIA`); northern Australia's
-and Timor's savanna stays. `npm run data` fails unless 24 places whose
-climate is not in doubt fall inside their own region (Rome, Cape Town, Perth;
-Riyadh, the Thar, Alice Springs; the Gobi, the Taklamakan, Patagonia; Bamako,
-Darwin, the Llanos…), and six — Nagpur, Hyderabad, Kolkata, Yangon, Bangkok,
+of the Equator between 60°E and 150°E (`MONSOON_ASIA`); Timor's savanna
+stays, and northern Australia's did until the monsoon patch (below) took it. `npm run data` fails unless 52 places whose
+climate is not in doubt fall inside their own region and no other (Rome, Cape
+Town, Perth; Riyadh, Jacobabad, Alice Springs; the Gobi, the Taklamakan,
+Patagonia; Bamako, the Campos; Mumbai, Darwin, Lagos, Houston…), and six — Nagpur, Hyderabad, Kolkata, Yangon, Bangkok,
 Ho Chi Minh City — fall outside the Sudan type. Af is Köppen's strict
 rainforest class, so it is narrower than a textbook's "equatorial rainforest"
 sketch: the southern and eastern Amazon (Santarém, Porto Velho), most of the
@@ -508,6 +508,25 @@ rainforest with a short dry season, and Thailand and southern Vietnam Aw, so
 none of them is in the patch. `MapCanvas` draws them through `patches` (with `onPatch`
 and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
+
+A climate asked for from a reference map is drawn as that map draws it, not as
+Köppen does, and **it overwrites the Mediterranean, desert and Sudan-type
+patches wherever they meet** — those three are Köppen's only until a reference
+replaces them too. The tropical monsoon (Am) is the first: traced from the
+reference "Distribution of monsoon climate area" by `scripts/trace-climate.mjs`
+into `scripts/climate-reference/monsoon.geojson`, which `scripts/climate.mjs`
+(`REFERENCE`, `OVERWRITTEN`) fills onto the Köppen grid and cuts out of the
+three before they are contoured. So it reaches the US Gulf coast and north-east
+Mexico, which Köppen calls humid subtropical; it takes the eastern Thar and the
+Llanos, so those are no longer the hot desert's and Sudan type's checks; and
+Darwin is monsoon, no longer Sudan type. The equatorial patch is not overwritten: it keeps its ground and the
+monsoon is cut out of it, Af specks too small to draw excepted, or they would
+leave holes. The tracer fits the picture's projection against the Köppen
+raster's land (a Miller map stretched north–south, 96% of pixels agreeing),
+grows the colour across the grey fringe the reference leaves at each coast and
+a few pixels out to sea — never across land it left grey, so its inland edges
+stand — and leaves out Sri Lanka, which the reference leaves out and growth off
+India's tip would reach. Each new reference is an entry in its `REFERENCES`.
 
 The climate map also has a Pressure belts switch and a Trade winds switch, and
 a month both follow — January, March, July and September: the north-east
