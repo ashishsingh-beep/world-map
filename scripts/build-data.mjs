@@ -2418,7 +2418,8 @@ const dateLine = (() => {
  * Climate — Phenomena's map of the equatorial, monsoon, Mediterranean, desert
  * and Sudan-type climates — from Beck et al.'s Köppen-Geiger map for 1991–2020
  * (see scripts/climate.mjs for the classes behind each), but for the monsoon,
- * traced from its reference map, which overwrites the others where they meet. Clipped to the drawn land,
+ * traced from its reference map, which overwrites the Mediterranean and Sudan
+ * type where they meet and gives way to the deserts. Clipped to the drawn land,
  * so no patch runs a fringe into the sea, and held to places whose climate is
  * not in doubt, so a misread raster or a wrong class code cannot pass.
  */
@@ -2452,11 +2453,12 @@ const dateLine = (() => {
   const regions = new Map(topojsonFeature(topo, topo.objects.climate).features.map((f) => [f.id, f]))
   const SURE = {
     mediterranean: { Rome: [12.5, 41.9], Athens: [23.73, 37.98], 'Los Angeles': [-118.24, 34.05], 'San Francisco': [-122.42, 37.77], Valparaíso: [-71.55, -33.1], 'Cape Town': [18.47, -33.95], Perth: [115.86, -31.95], Adelaide: [138.6, -34.93] },
-    'desert-hot': { Riyadh: [46.7, 24.7], 'the central Sahara': [5, 25], Jacobabad: [68.45, 28.28], Kuwait: [47.98, 29.37], 'Alice Springs': [133.88, -23.7], 'the Namib': [15, -23], Phoenix: [-112.07, 33.45] },
+    'desert-hot': { Riyadh: [46.7, 24.7], 'the central Sahara': [5, 25], 'the Thar': [71, 27], Jacobabad: [68.45, 28.28], Kuwait: [47.98, 29.37], Karachi: [67.0, 24.86], 'Alice Springs': [133.88, -23.7], 'the Namib': [15, -23], Phoenix: [-112.07, 33.45] },
     'desert-cold': { 'the Gobi': [104.4, 43.6], 'the Taklamakan': [83, 39], 'the Karakum': [59, 39], Patagonia: [-69, -46] },
     sudan: { Bamako: [-8, 12.65], Kaduna: [7.44, 10.52], Juba: [31.6, 4.85], Brasília: [-47.9, -15.8], 'the Campos at Cuiabá': [-56.1, -15.6], Kano: [8.52, 12] },
     // The reference map's monsoon lands, each in this patch and no other: it
-    // overwrote the Köppen-drawn patches it met (Darwin was Sudan type).
+    // overwrote the Mediterranean and Sudan-type patches it met (Darwin was
+    // Sudan type), and gave way to the deserts (the Thar and Karachi, above).
     monsoon: { Mumbai: [72.88, 19.08], Nagpur: [79.09, 21.15], Kolkata: [88.36, 22.57], Chennai: [80.27, 13.08], Dhaka: [90.4, 23.8], Yangon: [96.16, 16.8], Bangkok: [100.5, 13.75], Hanoi: [105.85, 21.03], 'Ho Chi Minh City': [106.66, 10.78], Manila: [120.98, 14.6], Darwin: [130.84, -12.46], Cairns: [145.77, -16.92], Lagos: [3.38, 6.52], Accra: [-0.19, 5.6], Mombasa: [39.67, -4.04], 'Dar es Salaam': [39.28, -6.8], Houston: [-95.37, 29.76], 'New Orleans': [-90.07, 29.95] },
     // The map's own labels for it too (EQUATORIAL_LABELS in ClimateScreen),
     // which must sit on the patch they name.

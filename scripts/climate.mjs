@@ -16,7 +16,8 @@
  *
  * The Tropical Monsoon climate is not Köppen's: it is drawn from the reference
  * map it was asked for (REFERENCE, below), and wherever it and the
- * Mediterranean, desert or Sudan-type patches meet, the reference wins.
+ * Mediterranean or Sudan-type patches meet, the reference wins. The deserts
+ * are BWh and BWk wherever Köppen puts them, and the reference gives way.
  *
  * Each class becomes a mask and the mask a polygon by marching squares
  * (d3-contour), so a region's edge is the class boundary itself, not a hand
@@ -62,12 +63,14 @@ const NOT_IN_MONSOON_ASIA = new Set(['sudan'])
  * Climates drawn from a reference map rather than from Köppen, each a lon/lat
  * outline in scripts/climate-reference/. The reference is the authority for
  * the climates it was asked for, so each overwrites the Köppen-drawn classes
- * in OVERWRITTEN where they meet. The equatorial (Af) patch is not one of
- * those, and keeps its ground: a reference climate is cut out of it.
+ * in OVERWRITTEN where they meet. The classes in KEEP are not overwritten —
+ * the equatorial (Af), and the hot and cold deserts, which are drawn as
+ * Köppen's BWh and BWk exactly, as asked — and keep their ground: a reference
+ * climate is cut out of them.
  */
 const REFERENCE = { monsoon: 'monsoon.geojson' }
-const OVERWRITTEN = new Set(['mediterranean', 'desert-hot', 'desert-cold', 'sudan'])
-const KEEPS = 'equatorial'
+const OVERWRITTEN = new Set(['mediterranean', 'sudan'])
+const KEEP = ['equatorial', 'desert-hot', 'desert-cold']
 
 /**
  * Fills a lon/lat (Multi)Polygon onto the raster's grid, even-odd by scanline:
@@ -138,10 +141,14 @@ export async function climateRegions(tifPath) {
   const [dx, dy] = image.getResolution()
   const [raster] = await image.readRasters()
 
-  // The ground KEEPS holds is what it draws, so its specks are not held back:
-  // dropped from its own patch, they would leave holes in the reference's.
-  const keeps = new Set(CLIMATE_CLASSES[KEEPS])
-  const kept = drawnCells(Uint8Array.from(raster, (v) => (keeps.has(v) ? 1 : 0)), width)
+  // The ground a KEEP class holds is what it draws, so its specks are not held
+  // back: dropped from its own patch, they would leave holes in the reference's.
+  const kept = new Uint8Array(width * height)
+  for (const id of KEEP) {
+    const codes = new Set(CLIMATE_CLASSES[id])
+    const drawn = drawnCells(Uint8Array.from(raster, (v) => (codes.has(v) ? 1 : 0)), width)
+    for (let i = 0; i < kept.length; i++) kept[i] |= drawn[i]
+  }
   const references = Object.entries(REFERENCE).map(([id, file]) => {
     const { geometry } = JSON.parse(readFileSync(new URL(`climate-reference/${file}`, import.meta.url), 'utf8'))
     const mask = rasterize(geometry, width, height, west, north, dx, dy)

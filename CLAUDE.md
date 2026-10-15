@@ -496,9 +496,9 @@ is taken outside the tropics only. Köppen's Aw also covers peninsular India,
 Myanmar, Thailand and Indochina, which the textbook classes as the Tropical
 Monsoon climate, not the Sudan type — so Aw is not taken in monsoon Asia, north
 of the Equator between 60°E and 150°E (`MONSOON_ASIA`); Timor's savanna
-stays, and northern Australia's did until the monsoon patch (below) took it. `npm run data` fails unless 52 places whose
+stays, and northern Australia's did until the monsoon patch (below) took it. `npm run data` fails unless 54 places whose
 climate is not in doubt fall inside their own region and no other (Rome, Cape
-Town, Perth; Riyadh, Jacobabad, Alice Springs; the Gobi, the Taklamakan,
+Town, Perth; Riyadh, the Thar, Alice Springs; the Gobi, the Taklamakan,
 Patagonia; Bamako, the Campos; Mumbai, Darwin, Lagos, Houston…), and six — Nagpur, Hyderabad, Kolkata, Yangon, Bangkok,
 Ho Chi Minh City — fall outside the Sudan type. Af is Köppen's strict
 rainforest class, so it is narrower than a textbook's "equatorial rainforest"
@@ -510,18 +510,21 @@ and a `credit` line at the foot), over the land and under the coast; with
 Borders on, the borders are drawn again over the patches.
 
 A climate asked for from a reference map is drawn as that map draws it, not as
-Köppen does, and **it overwrites the Mediterranean, desert and Sudan-type
-patches wherever they meet** — those three are Köppen's only until a reference
-replaces them too. The tropical monsoon (Am) is the first: traced from the
+Köppen does, and **it overwrites the Mediterranean and Sudan-type patches
+wherever they meet** — those two are Köppen's only until a reference replaces
+them too. **The hot and cold deserts are Köppen's BWh and BWk exactly**, as
+asked: a reference gives way to them, as it does to the equatorial patch
+(`KEEP` in `scripts/climate.mjs`). The tropical monsoon (Am) is the first: traced from the
 reference "Distribution of monsoon climate area" by `scripts/trace-climate.mjs`
 into `scripts/climate-reference/monsoon.geojson`, which `scripts/climate.mjs`
 (`REFERENCE`, `OVERWRITTEN`) fills onto the Köppen grid and cuts out of the
-three before they are contoured. So it reaches the US Gulf coast and north-east
-Mexico, which Köppen calls humid subtropical; it takes the eastern Thar and the
-Llanos, so those are no longer the hot desert's and Sudan type's checks; and
-Darwin is monsoon, no longer Sudan type. The equatorial patch is not overwritten: it keeps its ground and the
-monsoon is cut out of it, Af specks too small to draw excepted, or they would
-leave holes. The tracer fits the picture's projection against the Köppen
+two before they are contoured. So it reaches the US Gulf coast and north-east
+Mexico, which Köppen calls humid subtropical; it takes the Llanos, so they are
+no longer the Sudan type's check; and Darwin is monsoon, no longer Sudan type.
+The reference paints the eastern Thar and Karachi yellow too, but they are BWh,
+so they stay desert, and the build checks they do. The equatorial patch and the
+deserts are not overwritten: they keep their ground and the monsoon is cut out
+of them, specks too small to draw excepted, or they would leave holes. The tracer fits the picture's projection against the Köppen
 raster's land (a Miller map stretched north–south, 96% of pixels agreeing),
 grows the colour across the grey fringe the reference leaves at each coast and
 a few pixels out to sea — never across land it left grey, so its inland edges

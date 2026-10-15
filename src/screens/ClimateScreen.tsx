@@ -13,7 +13,8 @@ import { useBare } from '../app/useBare'
  * physical world map. The regions are the Köppen-Geiger classes of Beck et al.
  * (2023) for 1991–2020, made into polygons at build time (scripts/climate.mjs),
  * except the monsoon's, which is traced from the reference map it was asked
- * for and overwrites the Köppen-drawn patches where they meet; what each card
+ * for and overwrites the Mediterranean and Sudan-type patches where they meet
+ * (the deserts are BWh and BWk exactly, and it gives way to them); what each card
  * says is the textbook's account of the climate.
  */
 type ClimateId = 'equatorial' | 'monsoon' | 'mediterranean' | 'desert-hot' | 'desert-cold' | 'sudan'
@@ -58,7 +59,7 @@ const CLIMATES: Climate[] = [
       "Three seasons: cool and dry (October to February), hot and dry (March to mid-June), and the rains (mid-June to September), when the monsoon 'bursts'",
       'Rain depends on relief: windward slopes such as the Western Ghats and the Khasi Hills (Cherrapunji, Mawsynram) are drenched, while the rain-shadow interiors get little',
       'Monsoon (tropical deciduous) forest that sheds its leaves in the dry season — teak, sal and bamboo — thinning to thorn scrub where it is drier',
-      'Drawn as the reference map draws it: where Köppen would say otherwise, the monsoon patch wins',
+      "Drawn as the reference map draws it: where Köppen would say Mediterranean or Sudan type, the monsoon patch wins; the deserts stay Köppen's BWh and BWk",
     ],
   },
   {
