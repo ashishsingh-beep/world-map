@@ -417,9 +417,18 @@ the range's own `spanKm`). The band carries its own name along its path, so a
 range emits no marker and no second label. A peak is a little snow-capped mountain (`PeakGlyph` in `MapCanvas`, `PeakSwatch` in `src/ui/bits.tsx` for the legend: slate-blue faces, white snow, green foothills and pines), and so is a river's origin; in a round its faces take the quiz colour and the snow stays.
 Nothing on the map pins a summit down, so a peak or an origin is answered by a
 tap anywhere within 150km of it or 48px on screen (`PEAK_REACH_KM`,
-`PEAK_TOLERANCE_PX` in `useQuiz`), against a city's 28px — so long as it is
-still the nearest point the round could ask, every one in the pool and not only
-this draw's, or one tap in Garhwal would answer three peaks.
+`PEAK_TOLERANCE_PX` in `useQuiz`).
+
+**A point is answered roughly, not exactly.** Every point place in Pin — a
+capital, a city, a port, a pass, a lake, a confluence, a strait's or canal's
+marker — counts within 100km of the tap (`POINT_REACH_KM`, or its own `spanKm`
+if larger), or within 28px on screen where 100km is a speck on a zoomed-out
+map (`PIN_TOLERANCE_PX`). There is no rival check, on request: where points
+overlap, one tap among them answers whichever is being asked, so a cluster —
+three Garhwal peaks, Santos and São Paulo — is a matter of answering in the
+right order, not of hitting each pin. It used to demand the tap be nearer this
+point than any other the round could ask; that is gone. Areas (countries, seas,
+patches), ranges and line choices (currents, rivers) are judged as before.
 
 **An ocean current is an arrow.** The third World Map category, Phenomena,
 starts with the currents (`src/data/syllabus/currents.json`, section

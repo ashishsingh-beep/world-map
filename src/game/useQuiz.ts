@@ -36,15 +36,22 @@ export type Verdict = 'correct' | 'incorrect'
 
 export const QUESTION_SECONDS = 15
 const REVEAL_MS = 1400
-/** How close a tap must land to a point place to count, in screen pixels. */
+/** How close on screen a tap may land to a point place, however far that is on the ground. */
 export const PIN_TOLERANCE_PX = 28
 /** How close a tap must land to a current's arrow or a river, in screen pixels — and nearer it than any other. */
 const CURRENT_TOLERANCE_PX = 24
 /**
+ * A point place — a capital, a port, a pass, a lake, a confluence — is a
+ * matter of knowing roughly where, not to the kilometre: a tap within 100km
+ * of it counts, or within 28px on screen when the map is zoomed out so far
+ * that 100km is a speck. Overlap is fine: where several points lie within
+ * reach of one tap, it answers whichever is being asked, so a cluster is a
+ * matter of answering in the right order, not of hitting each pin exactly.
+ */
+const POINT_REACH_KM = 100
+/**
  * A peak, or a river's origin, is a point in country where nothing on the map
- * says exactly where it is, so it is given far more room than a city: anywhere
- * within 150km of it, or 48px on screen, so long as it is still the nearest
- * peak to the tap.
+ * says exactly where it is, so it is given more room still: 150km, or 48px.
  */
 const PEAK_REACH_KM = 150
 const PEAK_TOLERANCE_PX = 48
@@ -358,8 +365,8 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
 
   /**
    * A tap anywhere on the map, used by place rounds. A country answer is judged
-   * by containment; a point answer by how close the tap landed on screen, so
-   * the difficulty stays the same whatever the zoom.
+   * by containment; a point answer by how close the tap landed — within
+   * POINT_REACH_KM, or PIN_TOLERANCE_PX on screen — whatever else is near it.
    */
   const pickPoint = useCallback(
     (lonLat: [number, number], toScreen: ToScreen) => {
@@ -414,41 +421,13 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
         return
       }
       const at = toScreen(lonLat)
-      const screenDistance = (q: Question) => {
-        const b = at && toScreen(q.point)
-        return at && b ? Math.hypot(at[0] - b[0], at[1] - b[1]) : Infinity
-      }
-      // Being within tolerance is not enough: the tap must also be closer to
-      // this place than to any other in the round — every one it could ask,
-      // not only this draw's — or one tap between Santos and São Paulo would
-      // answer both.
-      const px = screenDistance(current)
-      // Points only: a range's or a river's own point is just where its label
-      // sits, and a tap near the label is no answer to anything.
-      const nearestOnScreen = pool.reduce((best, q) =>
-        !q.iso && !q.place?.line && screenDistance(q) < screenDistance(best) ? q : best
-      , current)
-      const tolerancePx = isPeakLike(current) ? PEAK_TOLERANCE_PX : PIN_TOLERANCE_PX
-      const byScreen = px <= tolerancePx && nearestOnScreen.id === current.id
-
-      /**
-       * A sea is an area, not a point, so pointing anywhere inside it counts.
-       * Scoring by distance ÷ its own span also settles nesting for free: a tap
-       * in the middle of the Mediterranean scores better against the
-       * Mediterranean than against the Tyrrhenian inside it, and vice versa.
-       */
-      const reachKm = (q: Question) =>
-        isPeakLike(q) ? Math.max(q.place?.spanKm ?? 0, PEAK_REACH_KM) : q.place?.spanKm
-      const spanScore = (q: Question) => {
-        const reach = q.place?.line ? undefined : reachKm(q)
-        return reach ? (geoDistance(lonLat, q.point) * EARTH_RADIUS_KM) / reach : Infinity
-      }
-      const nearestBySpan = pool.reduce((best, q) => (spanScore(q) < spanScore(best) ? q : best), current)
-      const bySpan = spanScore(current) <= 1 && nearestBySpan.id === current.id
-
-      settle(byScreen || bySpan, undefined, km)
+      const there = at && toScreen(current.point)
+      const px = at && there ? Math.hypot(at[0] - there[0], at[1] - there[1]) : Infinity
+      const peak = isPeakLike(current)
+      const reachKm = Math.max(current.place?.spanKm ?? 0, peak ? PEAK_REACH_KM : POINT_REACH_KM)
+      settle(km <= reachKm || px <= (peak ? PEAK_TOLERANCE_PX : PIN_TOLERANCE_PX), undefined, km)
     },
-    [phase, current, settle, pool, choices]
+    [phase, current, settle, choices]
   )
 
   /**
