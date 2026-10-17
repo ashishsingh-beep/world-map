@@ -589,7 +589,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                   <span className="block font-extrabold text-slate-900">Show suggestions</span>
                   <span className="block text-xs font-semibold text-slate-500">
                     {suggestions
-                      ? 'Names appear after 3 letters; press Enter to answer.'
+                      ? 'Names appear after 3 letters; Enter takes the highlighted one.'
                       : 'No list. The answer is taken once it is spelt right; skip if you are stuck.'}
                   </span>
                 </span>

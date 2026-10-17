@@ -283,9 +283,11 @@ round's own answers, never all 196 names — the whole round's, though, not just
 the ten a short round drew, or a ten-question round's list would be multiple
 choice — and it is there to fix spelling — not
 to turn recall into multiple choice, which is what it becomes if it opens on one
-or two letters. Enter submits what was *typed*; picking a suggestion is Enter
-while one is highlighted, or a click, so a fully typed answer is never silently
-swapped for a suggestion. An exact match closes the list, having nothing to add.
+or two letters. The first suggestion is highlighted as soon as the list opens,
+so Enter takes it without a click — asked for, to save reaching for the mouse;
+the arrows move the highlight, a click picks any. An exact match closes the
+list, having nothing to add, so a fully spelt answer is still submitted as
+typed; so is anything while the list is closed, or after Escape puts it away.
 
 Suggestions do not replace the judge below. Someone who types the whole name and
 fat-fingers it never opened the list, and that answer still has to be marked
@@ -998,7 +1000,7 @@ fails.
 | | |
 |---|---|
 | Modes | Pin (name → tap map), Type (map highlights → type name) |
-| Type input | Suggestions off (default): taken once spelt exactly, case- and accent-insensitive, ⏭ to skip. Suggestions on: list after 3 characters, Enter submits, misspellings accepted with a correction (see below) |
+| Type input | Suggestions off (default): taken once spelt exactly, case- and accent-insensitive, ⏭ to skip. Suggestions on: list after 3 characters with the first highlighted, Enter takes it (or what was typed when the list is closed), misspellings accepted with a correction (see below) |
 | Timer | 15s per question, or off |
 | Wrong/timeout | Reveal correct country, drop pin, move on |
 | Colours | correct green, wrong pick red, missed grey — all persist for the round |

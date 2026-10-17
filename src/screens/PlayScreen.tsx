@@ -58,7 +58,11 @@ export function PlayScreen({
 }: Props) {
   const quiz = useQuiz({ round, mode, timed, size, initial })
   const [draft, setDraft] = useState('')
-  /** Which suggestion the arrow keys are on; -1 means Enter submits what was typed. */
+  /**
+   * Which suggestion Enter takes. Typing puts it on the first, so Enter picks
+   * that without reaching for the mouse; the arrows move it; -1 (after
+   * Escape) means Enter submits what was typed.
+   */
   const [active, setActive] = useState(-1)
   /** Escape hides the list without clearing the field, until the next keystroke. */
   const [dismissed, setDismissed] = useState(false)
@@ -274,8 +278,9 @@ export function PlayScreen({
               // Without suggestions Enter does nothing: the answer is taken
               // as it is typed, and a wrong one just waits to be corrected.
               if (!suggest) return
-              // Only what was typed. Picking a suggestion is Enter *on* it,
-              // handled below, so a fully typed answer is never swapped out.
+              // What was typed, when no suggestion is highlighted: the list is
+              // closed (under three characters, or an exact match) or put
+              // away with Escape. Enter on a suggestion is handled below.
               submit(draft)
             }}
           >
@@ -325,7 +330,7 @@ export function PlayScreen({
                 value={draft}
                 onChange={(e) => {
                   setDraft(e.target.value)
-                  setActive(-1)
+                  setActive(0)
                   setDismissed(false)
                   if (!suggest) quiz.acceptIfExact(e.target.value, temp)
                 }}
@@ -341,7 +346,7 @@ export function PlayScreen({
                     e.preventDefault()
                     setDismissed(true)
                     setActive(-1)
-                  } else if (e.key === 'Enter' && active >= 0) {
+                  } else if (e.key === 'Enter' && active >= 0 && active < showing.length) {
                     e.preventDefault()
                     submit(showing[active])
                   }
