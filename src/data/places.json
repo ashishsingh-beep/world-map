@@ -1020,8 +1020,10 @@
         15.2663,
         -4.4419
       ],
-      "significance": "Capital of DR Congo on the Congo River, facing Brazzaville — Africa's largest French-speaking city",
-      "notes": [],
+      "significance": "Capital of DR Congo on the Congo River — Africa's largest French-speaking city",
+      "notes": [
+        "Faces Brazzaville across the Congo River — the closest pair of capitals bar Rome and the Vatican"
+      ],
       "tier": 1,
       "continent": "Africa",
       "section": "places",
@@ -1037,8 +1039,10 @@
         15.2429,
         -4.2634
       ],
-      "significance": "Capital of the Republic of the Congo, facing Kinshasa across the Congo River — the closest pair of capitals bar Rome and the Vatican",
-      "notes": [],
+      "significance": "Capital of the Republic of the Congo",
+      "notes": [
+        "Faces Kinshasa across the Congo River — the closest pair of capitals bar Rome and the Vatican"
+      ],
       "tier": 1,
       "continent": "Africa",
       "section": "places",
