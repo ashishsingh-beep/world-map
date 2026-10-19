@@ -8,6 +8,7 @@ import {
   distanceToLineKm,
   kindLabel,
   groupsFor,
+  isFlow,
   placeKindOf,
   placeOf,
   type Place,
@@ -65,6 +66,8 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
   const isWaterRound = roundPlaces[0]?.section === 'water'
   const isPlacesSection = roundPlaces[0]?.section === 'places'
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
+  /** What the warm and cold chips call the arrows: currents, or winds. */
+  const flowWord = roundPlaces.some((p) => p.type === 'wind') ? 'winds' : 'currents'
   const isRivers = roundPlaces[0]?.section === 'rivers'
   /** A place on a rivers map that is neither a river, an origin nor a confluence: Majuli, Namcha Barwa. */
   const isLandmark = (p: Place) =>
@@ -89,7 +92,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
       roundPlaces.filter((p) => {
         if (isWaterKind(p.type)) return shown[p.type]
         if (isPlacesSection) return placeKindsShown[placeKindOf(p.type)]
-        if (p.type === 'current') return p.temp ? tempsShown[p.temp] : true
+        if (isFlow(p)) return p.temp ? tempsShown[p.temp] : true
         if (p.type === 'river') return (!p.role || rolesShown[p.role]) && !basinsHidden.includes(p.basin ?? '')
         if (p.type === 'origin') return rolesShown.origin && !basinsHidden.includes(p.basin ?? '')
         if (p.type === 'confluence') return rolesShown.confluence && !basinsHidden.includes(p.basin ?? '')
@@ -166,12 +169,12 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
           state: selected === p.id ? 'target' : 'idle',
           label:
             showAll || selected === p.id
-              ? p.type === 'current' || p.type === 'river'
+              ? isFlow(p) || p.type === 'river'
                 ? displayName(p) + (p.role === 'distributary' ? ' (distributary)' : '')
                 : p.name.toUpperCase()
               : undefined,
           belt: p.belt,
-          current: p.type === 'current' ? p.temp : undefined,
+          current: isFlow(p) ? p.temp : undefined,
           river: p.type === 'river' ? p.role : undefined,
           thin: p.thin,
           // A delta branch that reaches the sea is named at its mouth.
@@ -226,7 +229,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 let best: { id: string; px: number } | null = null
                 for (const p of visible) {
                   // A current or a river is its whole line, not the label's anchor.
-                  if (areaOf(p.id) || p.type === 'current' || p.type === 'river') continue
+                  if (areaOf(p.id) || isFlow(p) || p.type === 'river') continue
                   const a = toScreen(lonLat)
                   const b = toScreen(p.point)
                   if (!a || !b) continue
@@ -243,7 +246,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 const at = toScreen(lonLat)
                 let arrow: { id: string; px: number } | null = null
                 for (const p of visible) {
-                  if ((p.type !== 'current' && p.type !== 'river') || !at) continue
+                  if ((!isFlow(p) && p.type !== 'river') || !at) continue
                   const px = screenDistanceToLine(p.line as [number, number][], toScreen, at)
                   if (px <= 24 && (!arrow || px < arrow.px)) arrow = { id: p.id, px }
                 }
@@ -254,7 +257,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                 // Then the nearest ridgeline within its own tolerance.
                 let ridge: { id: string; km: number } | null = null
                 for (const p of visible) {
-                  if (!p.line || p.type === 'current' || p.type === 'river') continue
+                  if (!p.line || isFlow(p) || p.type === 'river') continue
                   const km = distanceToLineKm(p.line as [number, number][], lonLat)
                   if (km <= (p.spanKm ?? 60) && (!ridge || km < ridge.km)) {
                     ridge = { id: p.id, km }
@@ -412,7 +415,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
                   <span className={tempsShown[t] ? '' : 'opacity-40'}>
                     <CurrentSwatch temp={t} />
                   </span>
-                  {t === 'warm' ? 'Warm currents' : 'Cold currents'}
+                  {t === 'warm' ? 'Warm' : 'Cold'} {flowWord}
                   <span className="font-semibold text-slate-400">
                     {roundPlaces.filter((p) => p.temp === t).length}
                   </span>

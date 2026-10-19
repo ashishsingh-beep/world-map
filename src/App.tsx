@@ -113,8 +113,10 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
 
   const roundPlaces = round.places?.map(placeOf) ?? []
   const isWaterRound = roundPlaces[0]?.section === 'water'
-  /** Phenomena — the ocean currents: Pin and Name only, no Why. */
+  /** Phenomena — the ocean currents and the local winds: Pin and Name, warm or cold. */
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
+  /** The winds also have Why: each has a clue worth naming it from ("the snow eater"). */
+  const isWinds = roundPlaces.some((p) => p.type === 'wind')
   /** The Political Map: countries and their places in one round. */
   const isPolitical = !!round.scope
   /** Which continents it covers — one, several, or `world`. */
@@ -222,7 +224,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
 
   /** A save is only offered when it is still this exact round's questions. */
   const resumable = fits(saved, roundId, askIds, size) ? saved : null
-  const playMode = (!round.places?.length || isPhenomena) && mode === 'significance' ? 'type' : mode
+  const playMode = (!round.places?.length || (isPhenomena && !isWinds)) && mode === 'significance' ? 'type' : mode
 
   const onProgress = useCallback(
     (snapshot: QuizSnapshot | null) => {
@@ -316,7 +318,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                 : round.places
                   ? isRivers
                     ? riverTally(asked)
-                    : `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? 'currents' : 'places'}`
+                    : `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? (isWinds ? 'winds' : 'currents') : 'places'}`
                   : `${round.askable.length} countries`}
             </p>
 
@@ -548,12 +550,13 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
             </div>
 
             <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Mode</h2>
-            <div className={`grid gap-3 ${round.places && !isPhenomena ? 'grid-cols-3' : 'grid-cols-2'}`}>
+            <div className={`grid gap-3 ${round.places && (!isPhenomena || isWinds) ? 'grid-cols-3' : 'grid-cols-2'}`}>
               {(
                 isPhenomena
                   ? ([
                       ['pin', 'Pin', 'Tap the right arrow'],
                       ['type', 'Name', 'Warm or cold, then its name'],
+                      ...(isWinds ? ([['significance', 'Why', 'Name it from its fact']] as const) : []),
                     ] as const)
                   : ([
                       ['pin', 'Pin', 'Tap the map'],
@@ -778,13 +781,18 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
           <MenuSection title="Phenomena" blurb="What moves across the map rather than sits on it.">
             {PHENOMENA_CONTINENTS.map((continent) => {
               const r = PLACE_ROUNDS[allPlacesRoundId(continent.name)]
+              const winds = r.places?.some((id) => placeOf(id).type === 'wind')
               return (
                 <MenuCard
                   key={r.id}
-                  icon="currents"
+                  icon={winds ? 'wind' : 'currents'}
                   title={r.title}
-                  blurb="Warm and cold currents of every ocean, drawn as red and blue arrows."
-                  meta={`${r.places?.length ?? 0} currents`}
+                  blurb={
+                    winds
+                      ? 'Hot and cold local winds — the Chinook, the Mistral, the Harmattan — drawn as red and blue arrows.'
+                      : 'Warm and cold currents of every ocean, drawn as red and blue arrows.'
+                  }
+                  meta={`${r.places?.length ?? 0} ${winds ? 'winds' : 'currents'}`}
                   onClick={() => navigate({ view: 'setup', roundId: r.id })}
                 />
               )
@@ -799,8 +807,8 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
             <MenuCard
               icon="climate"
               title="Climate"
-              blurb="Where the Mediterranean, desert and Sudan-type climates are, from the Köppen map."
-              meta="Learn · 3 climates"
+              blurb="Equatorial, monsoon, Mediterranean, desert and Sudan-type climates, with the pressure belts and winds."
+              meta="Learn · 6 climates"
               onClick={() => navigate({ view: 'learn', roundId: CLIMATE })}
             />
           </MenuSection>

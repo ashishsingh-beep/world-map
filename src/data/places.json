@@ -36,6 +36,13 @@
       "count": 34
     },
     {
+      "name": "Local Winds",
+      "title": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world",
+      "count": 17
+    },
+    {
       "name": "North America",
       "title": "North America",
       "section": "places",
@@ -18109,6 +18116,2046 @@
       "continent": "Himalaya",
       "section": "mountains",
       "atlas": "india"
+    },
+    {
+      "id": "wind-chinook",
+      "name": "Chinook",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -117,
+          51
+        ],
+        [
+          -116.938,
+          51.003
+        ],
+        [
+          -116.813,
+          51.009
+        ],
+        [
+          -116.625,
+          51.019
+        ],
+        [
+          -116.375,
+          51.031
+        ],
+        [
+          -116.063,
+          51.047
+        ],
+        [
+          -115.688,
+          51.066
+        ],
+        [
+          -115.25,
+          51.087
+        ],
+        [
+          -114.75,
+          51.112
+        ],
+        [
+          -114.242,
+          51.123
+        ],
+        [
+          -113.727,
+          51.12
+        ],
+        [
+          -113.203,
+          51.103
+        ],
+        [
+          -112.672,
+          51.072
+        ],
+        [
+          -112.133,
+          51.027
+        ],
+        [
+          -111.586,
+          50.967
+        ],
+        [
+          -111.031,
+          50.894
+        ],
+        [
+          -110.469,
+          50.806
+        ],
+        [
+          -109.977,
+          50.73
+        ],
+        [
+          -109.555,
+          50.664
+        ],
+        [
+          -109.203,
+          50.609
+        ],
+        [
+          -108.922,
+          50.566
+        ],
+        [
+          -108.711,
+          50.533
+        ],
+        [
+          -108.57,
+          50.511
+        ],
+        [
+          -108.5,
+          50.5
+        ]
+      ],
+      "significance": "Warm, dry wind down the eastern slopes of the Rockies — the 'snow eater', freeing the winter grazing grounds of the USA and Canada",
+      "notes": [
+        "Moist westerlies from the Pacific drop their rain and snow rising over the Rockies, then warm by compression as they descend the far side",
+        "Can lift the temperature by 20°C or more in a few hours and melt a foot of snow in a day — hence 'snow eater'",
+        "Keeps the prairie pastures open in winter: a relief to the cattle ranches of Alberta and Montana",
+        "The North American foehn: the same mechanism as the Alps' wind"
+      ],
+      "tier": 1,
+      "point": [
+        -112.672,
+        51.072
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-foehn",
+      "name": "Foehn",
+      "aliases": [
+        "Föhn"
+      ],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          9.3,
+          45.9
+        ],
+        [
+          9.295,
+          45.914
+        ],
+        [
+          9.286,
+          45.942
+        ],
+        [
+          9.272,
+          45.984
+        ],
+        [
+          9.253,
+          46.041
+        ],
+        [
+          9.23,
+          46.111
+        ],
+        [
+          9.202,
+          46.195
+        ],
+        [
+          9.169,
+          46.294
+        ],
+        [
+          9.131,
+          46.406
+        ],
+        [
+          9.092,
+          46.52
+        ],
+        [
+          9.052,
+          46.636
+        ],
+        [
+          9.009,
+          46.753
+        ],
+        [
+          8.966,
+          46.872
+        ],
+        [
+          8.92,
+          46.992
+        ],
+        [
+          8.873,
+          47.114
+        ],
+        [
+          8.825,
+          47.237
+        ],
+        [
+          8.775,
+          47.362
+        ],
+        [
+          8.731,
+          47.472
+        ],
+        [
+          8.694,
+          47.566
+        ],
+        [
+          8.662,
+          47.644
+        ],
+        [
+          8.637,
+          47.706
+        ],
+        [
+          8.619,
+          47.753
+        ],
+        [
+          8.606,
+          47.784
+        ],
+        [
+          8.6,
+          47.8
+        ]
+      ],
+      "significance": "Warm, dry wind down the northern slopes of the Alps into the valleys of Switzerland, its soothing warmth making them climatic oases",
+      "notes": [
+        "Air drawn over the Alps from the south loses its moisture on the Italian side and warms as it descends to the north",
+        "Melts the snow and opens the pastures early, and helps ripen the grapes",
+        "Also raises the risk of avalanches and forest fires",
+        "Gives its name to every such wind: any warm, dry wind down a mountain's lee slope is a foehn wind"
+      ],
+      "tier": 1,
+      "point": [
+        8.966,
+        46.872
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-zonda",
+      "name": "Zonda",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -70.6,
+          -32.4
+        ],
+        [
+          -70.569,
+          -32.403
+        ],
+        [
+          -70.506,
+          -32.409
+        ],
+        [
+          -70.412,
+          -32.419
+        ],
+        [
+          -70.287,
+          -32.431
+        ],
+        [
+          -70.131,
+          -32.447
+        ],
+        [
+          -69.944,
+          -32.466
+        ],
+        [
+          -69.725,
+          -32.488
+        ],
+        [
+          -69.475,
+          -32.512
+        ],
+        [
+          -69.225,
+          -32.541
+        ],
+        [
+          -68.975,
+          -32.572
+        ],
+        [
+          -68.725,
+          -32.606
+        ],
+        [
+          -68.475,
+          -32.644
+        ],
+        [
+          -68.225,
+          -32.684
+        ],
+        [
+          -67.975,
+          -32.728
+        ],
+        [
+          -67.725,
+          -32.775
+        ],
+        [
+          -67.475,
+          -32.825
+        ],
+        [
+          -67.256,
+          -32.869
+        ],
+        [
+          -67.069,
+          -32.906
+        ],
+        [
+          -66.912,
+          -32.938
+        ],
+        [
+          -66.787,
+          -32.963
+        ],
+        [
+          -66.694,
+          -32.981
+        ],
+        [
+          -66.631,
+          -32.994
+        ],
+        [
+          -66.6,
+          -33
+        ]
+      ],
+      "significance": "Warm, dry wind down the eastern slopes of the Andes in Argentina, through Mendoza and San Juan",
+      "notes": [
+        "A foehn wind of the Andes: Pacific air drops its moisture on the Chilean side, then descends warm and dry",
+        "Blows mostly from May to November, often dusty, sometimes for days on end"
+      ],
+      "tier": 1,
+      "point": [
+        -68.475,
+        -32.644
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-harmattan",
+      "name": "Harmattan",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          8,
+          20
+        ],
+        [
+          7.922,
+          19.906
+        ],
+        [
+          7.766,
+          19.719
+        ],
+        [
+          7.531,
+          19.438
+        ],
+        [
+          7.219,
+          19.063
+        ],
+        [
+          6.828,
+          18.594
+        ],
+        [
+          6.359,
+          18.031
+        ],
+        [
+          5.813,
+          17.375
+        ],
+        [
+          5.188,
+          16.625
+        ],
+        [
+          4.578,
+          15.883
+        ],
+        [
+          3.984,
+          15.148
+        ],
+        [
+          3.406,
+          14.422
+        ],
+        [
+          2.844,
+          13.703
+        ],
+        [
+          2.297,
+          12.992
+        ],
+        [
+          1.766,
+          12.289
+        ],
+        [
+          1.25,
+          11.594
+        ],
+        [
+          0.75,
+          10.906
+        ],
+        [
+          0.313,
+          10.305
+        ],
+        [
+          -0.063,
+          9.789
+        ],
+        [
+          -0.375,
+          9.359
+        ],
+        [
+          -0.625,
+          9.016
+        ],
+        [
+          -0.813,
+          8.758
+        ],
+        [
+          -0.938,
+          8.586
+        ],
+        [
+          -1,
+          8.5
+        ]
+      ],
+      "significance": "Dry, dusty north-easterly from the Sahara to the Guinea coast in winter — the 'doctor', relieving the hot, humid equatorial lands",
+      "notes": [
+        "Blows from late November to mid-March, when the ITCZ has moved south",
+        "Called the 'doctor' for the relief its dry air brings from the wet, humid conditions around the equatorial region",
+        "Its sandstorms uproot trees and its dust haze reduces visibility, carried far out over the Atlantic"
+      ],
+      "tier": 1,
+      "point": [
+        2.844,
+        13.703
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-brickfielder",
+      "name": "Brickfielder",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          138,
+          -27
+        ],
+        [
+          138.055,
+          -27.086
+        ],
+        [
+          138.164,
+          -27.258
+        ],
+        [
+          138.328,
+          -27.516
+        ],
+        [
+          138.547,
+          -27.859
+        ],
+        [
+          138.82,
+          -28.289
+        ],
+        [
+          139.148,
+          -28.805
+        ],
+        [
+          139.531,
+          -29.406
+        ],
+        [
+          139.969,
+          -30.094
+        ],
+        [
+          140.398,
+          -30.766
+        ],
+        [
+          140.82,
+          -31.422
+        ],
+        [
+          141.234,
+          -32.063
+        ],
+        [
+          141.641,
+          -32.688
+        ],
+        [
+          142.039,
+          -33.297
+        ],
+        [
+          142.43,
+          -33.891
+        ],
+        [
+          142.813,
+          -34.469
+        ],
+        [
+          143.188,
+          -35.031
+        ],
+        [
+          143.516,
+          -35.523
+        ],
+        [
+          143.797,
+          -35.945
+        ],
+        [
+          144.031,
+          -36.297
+        ],
+        [
+          144.219,
+          -36.578
+        ],
+        [
+          144.359,
+          -36.789
+        ],
+        [
+          144.453,
+          -36.93
+        ],
+        [
+          144.5,
+          -37
+        ]
+      ],
+      "significance": "Hot, dry, dusty wind from the deserts of the interior onto the south-east coast of Australia in summer",
+      "notes": [
+        "Named after the brickfields of early Sydney, where it raised clouds of red dust",
+        "Blows for a day or two ahead of a cold front; temperatures can pass 40°C",
+        "Raises the danger of bushfires"
+      ],
+      "tier": 1,
+      "point": [
+        141.641,
+        -32.688
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-shamal",
+      "name": "Shamal",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          44,
+          34
+        ],
+        [
+          44.055,
+          33.938
+        ],
+        [
+          44.164,
+          33.813
+        ],
+        [
+          44.328,
+          33.625
+        ],
+        [
+          44.547,
+          33.375
+        ],
+        [
+          44.82,
+          33.063
+        ],
+        [
+          45.148,
+          32.688
+        ],
+        [
+          45.531,
+          32.25
+        ],
+        [
+          45.969,
+          31.75
+        ],
+        [
+          46.406,
+          31.258
+        ],
+        [
+          46.844,
+          30.773
+        ],
+        [
+          47.281,
+          30.297
+        ],
+        [
+          47.719,
+          29.828
+        ],
+        [
+          48.156,
+          29.367
+        ],
+        [
+          48.594,
+          28.914
+        ],
+        [
+          49.031,
+          28.469
+        ],
+        [
+          49.469,
+          28.031
+        ],
+        [
+          49.852,
+          27.648
+        ],
+        [
+          50.18,
+          27.32
+        ],
+        [
+          50.453,
+          27.047
+        ],
+        [
+          50.672,
+          26.828
+        ],
+        [
+          50.836,
+          26.664
+        ],
+        [
+          50.945,
+          26.555
+        ],
+        [
+          51,
+          26.5
+        ]
+      ],
+      "significance": "Hot, dry north-westerly down the Tigris–Euphrates valley and over the Persian Gulf, raising great dust storms in summer",
+      "notes": [
+        "Strongest in June and July, when it can blow for weeks on end",
+        "Its dust storms close airports and shipping in Iraq, Kuwait and the Gulf"
+      ],
+      "tier": 1,
+      "point": [
+        47.719,
+        29.828
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-black-roller",
+      "name": "Black Roller",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -104,
+          40
+        ],
+        [
+          -103.938,
+          39.961
+        ],
+        [
+          -103.813,
+          39.883
+        ],
+        [
+          -103.625,
+          39.766
+        ],
+        [
+          -103.375,
+          39.609
+        ],
+        [
+          -103.063,
+          39.414
+        ],
+        [
+          -102.688,
+          39.18
+        ],
+        [
+          -102.25,
+          38.906
+        ],
+        [
+          -101.75,
+          38.594
+        ],
+        [
+          -101.266,
+          38.281
+        ],
+        [
+          -100.797,
+          37.969
+        ],
+        [
+          -100.344,
+          37.656
+        ],
+        [
+          -99.906,
+          37.344
+        ],
+        [
+          -99.484,
+          37.031
+        ],
+        [
+          -99.078,
+          36.719
+        ],
+        [
+          -98.688,
+          36.406
+        ],
+        [
+          -98.313,
+          36.094
+        ],
+        [
+          -97.984,
+          35.82
+        ],
+        [
+          -97.703,
+          35.586
+        ],
+        [
+          -97.469,
+          35.391
+        ],
+        [
+          -97.281,
+          35.234
+        ],
+        [
+          -97.141,
+          35.117
+        ],
+        [
+          -97.047,
+          35.039
+        ],
+        [
+          -97,
+          35
+        ]
+      ],
+      "significance": "Dust storm of the Great Plains of the USA, rolling in as a dark wall of soil lifted from dry, ploughed fields",
+      "notes": [
+        "Hot and dry, it strips the topsoil from drought-struck farmland",
+        "The dust storms of the 1930s Dust Bowl were black rollers — 'Black Sunday', 14 April 1935, the worst"
+      ],
+      "tier": 1,
+      "point": [
+        -99.906,
+        37.344
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-sirocco",
+      "name": "Sirocco",
+      "aliases": [
+        "Scirocco"
+      ],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          10,
+          30
+        ],
+        [
+          10.041,
+          30.072
+        ],
+        [
+          10.122,
+          30.216
+        ],
+        [
+          10.244,
+          30.431
+        ],
+        [
+          10.406,
+          30.719
+        ],
+        [
+          10.609,
+          31.078
+        ],
+        [
+          10.853,
+          31.509
+        ],
+        [
+          11.138,
+          32.013
+        ],
+        [
+          11.462,
+          32.587
+        ],
+        [
+          11.797,
+          33.173
+        ],
+        [
+          12.141,
+          33.77
+        ],
+        [
+          12.494,
+          34.378
+        ],
+        [
+          12.856,
+          34.997
+        ],
+        [
+          13.228,
+          35.627
+        ],
+        [
+          13.609,
+          36.267
+        ],
+        [
+          14,
+          36.919
+        ],
+        [
+          14.4,
+          37.581
+        ],
+        [
+          14.75,
+          38.161
+        ],
+        [
+          15.05,
+          38.658
+        ],
+        [
+          15.3,
+          39.072
+        ],
+        [
+          15.5,
+          39.403
+        ],
+        [
+          15.65,
+          39.652
+        ],
+        [
+          15.75,
+          39.817
+        ],
+        [
+          15.8,
+          39.9
+        ]
+      ],
+      "significance": "Hot, dry, dusty southerly from the Sahara across the Mediterranean to southern Italy, its red sand falling as 'blood rain'",
+      "notes": [
+        "Blows ahead of depressions moving east along the Mediterranean, mostly in spring",
+        "Dry and dusty over North Africa; it gathers moisture crossing the sea and arrives humid and oppressive",
+        "Its red Saharan dust, brought down in rain on the southern side of the Alps, is the 'blood rain'",
+        "Withers crops and hampers the growth of citrus fruit"
+      ],
+      "tier": 1,
+      "point": [
+        12.856,
+        34.997
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-khamsin",
+      "name": "Khamsin",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          29,
+          24
+        ],
+        [
+          29.023,
+          24.055
+        ],
+        [
+          29.07,
+          24.164
+        ],
+        [
+          29.141,
+          24.328
+        ],
+        [
+          29.234,
+          24.547
+        ],
+        [
+          29.352,
+          24.82
+        ],
+        [
+          29.492,
+          25.148
+        ],
+        [
+          29.656,
+          25.531
+        ],
+        [
+          29.844,
+          25.969
+        ],
+        [
+          30.023,
+          26.406
+        ],
+        [
+          30.195,
+          26.844
+        ],
+        [
+          30.359,
+          27.281
+        ],
+        [
+          30.516,
+          27.719
+        ],
+        [
+          30.664,
+          28.156
+        ],
+        [
+          30.805,
+          28.594
+        ],
+        [
+          30.938,
+          29.031
+        ],
+        [
+          31.063,
+          29.469
+        ],
+        [
+          31.172,
+          29.852
+        ],
+        [
+          31.266,
+          30.18
+        ],
+        [
+          31.344,
+          30.453
+        ],
+        [
+          31.406,
+          30.672
+        ],
+        [
+          31.453,
+          30.836
+        ],
+        [
+          31.484,
+          30.945
+        ],
+        [
+          31.5,
+          31
+        ]
+      ],
+      "significance": "Hot, dry, sand-laden southerly over Egypt in spring, blowing for days at a time",
+      "notes": [
+        "Its name is Arabic for 'fifty': it blows on and off over some fifty days, from March to May",
+        "Comes ahead of depressions moving east across North Africa — a cousin of the wind that carries Saharan dust to Italy"
+      ],
+      "tier": 1,
+      "point": [
+        30.516,
+        27.719
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-santa-ana",
+      "name": "Santa Ana",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -115.5,
+          35.6
+        ],
+        [
+          -115.523,
+          35.584
+        ],
+        [
+          -115.57,
+          35.553
+        ],
+        [
+          -115.641,
+          35.506
+        ],
+        [
+          -115.734,
+          35.444
+        ],
+        [
+          -115.852,
+          35.366
+        ],
+        [
+          -115.992,
+          35.272
+        ],
+        [
+          -116.156,
+          35.163
+        ],
+        [
+          -116.344,
+          35.038
+        ],
+        [
+          -116.533,
+          34.914
+        ],
+        [
+          -116.723,
+          34.792
+        ],
+        [
+          -116.916,
+          34.672
+        ],
+        [
+          -117.109,
+          34.553
+        ],
+        [
+          -117.305,
+          34.436
+        ],
+        [
+          -117.502,
+          34.32
+        ],
+        [
+          -117.7,
+          34.206
+        ],
+        [
+          -117.9,
+          34.094
+        ],
+        [
+          -118.075,
+          33.995
+        ],
+        [
+          -118.225,
+          33.911
+        ],
+        [
+          -118.35,
+          33.841
+        ],
+        [
+          -118.45,
+          33.784
+        ],
+        [
+          -118.525,
+          33.742
+        ],
+        [
+          -118.575,
+          33.714
+        ],
+        [
+          -118.6,
+          33.7
+        ]
+      ],
+      "significance": "Hot, dry north-easterly from the Mojave Desert down through the passes to the coast of southern California, fanning forest fires in the valleys",
+      "notes": [
+        "Blows out of high pressure over the Great Basin, warming further as it descends to the coast",
+        "Commonest from October to March; brings Los Angeles its hottest, driest days",
+        "Drives wildfires through the canyons and valleys"
+      ],
+      "tier": 1,
+      "point": [
+        -117.109,
+        34.553
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-mistral",
+      "name": "Mistral",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          4.9,
+          46.6
+        ],
+        [
+          4.898,
+          46.569
+        ],
+        [
+          4.895,
+          46.506
+        ],
+        [
+          4.891,
+          46.413
+        ],
+        [
+          4.884,
+          46.288
+        ],
+        [
+          4.877,
+          46.131
+        ],
+        [
+          4.867,
+          45.944
+        ],
+        [
+          4.856,
+          45.725
+        ],
+        [
+          4.844,
+          45.475
+        ],
+        [
+          4.83,
+          45.233
+        ],
+        [
+          4.814,
+          44.998
+        ],
+        [
+          4.797,
+          44.772
+        ],
+        [
+          4.778,
+          44.553
+        ],
+        [
+          4.758,
+          44.342
+        ],
+        [
+          4.736,
+          44.139
+        ],
+        [
+          4.712,
+          43.944
+        ],
+        [
+          4.688,
+          43.756
+        ],
+        [
+          4.666,
+          43.592
+        ],
+        [
+          4.647,
+          43.452
+        ],
+        [
+          4.631,
+          43.334
+        ],
+        [
+          4.619,
+          43.241
+        ],
+        [
+          4.609,
+          43.17
+        ],
+        [
+          4.603,
+          43.123
+        ],
+        [
+          4.6,
+          43.1
+        ]
+      ],
+      "significance": "Cold, dry northerly funnelled down the Rhône valley of France to the Gulf of Lion",
+      "notes": [
+        "Cold air from the Massif Central and the Alps drains towards low pressure over the Mediterranean",
+        "Can blow at over 90 km/h for days, chiefly in winter and spring",
+        "Farmers in the Rhône valley plant rows of cypress as windbreaks against it"
+      ],
+      "tier": 1,
+      "point": [
+        4.778,
+        44.553
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-bora",
+      "name": "Bora",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          15.6,
+          46.3
+        ],
+        [
+          15.581,
+          46.289
+        ],
+        [
+          15.544,
+          46.267
+        ],
+        [
+          15.487,
+          46.234
+        ],
+        [
+          15.412,
+          46.191
+        ],
+        [
+          15.319,
+          46.136
+        ],
+        [
+          15.206,
+          46.07
+        ],
+        [
+          15.075,
+          45.994
+        ],
+        [
+          14.925,
+          45.906
+        ],
+        [
+          14.777,
+          45.82
+        ],
+        [
+          14.63,
+          45.736
+        ],
+        [
+          14.484,
+          45.653
+        ],
+        [
+          14.341,
+          45.572
+        ],
+        [
+          14.198,
+          45.492
+        ],
+        [
+          14.058,
+          45.414
+        ],
+        [
+          13.919,
+          45.338
+        ],
+        [
+          13.781,
+          45.262
+        ],
+        [
+          13.661,
+          45.197
+        ],
+        [
+          13.558,
+          45.141
+        ],
+        [
+          13.472,
+          45.094
+        ],
+        [
+          13.403,
+          45.056
+        ],
+        [
+          13.352,
+          45.028
+        ],
+        [
+          13.317,
+          45.009
+        ],
+        [
+          13.3,
+          45
+        ]
+      ],
+      "significance": "Cold, gusty north-easterly falling from the mountains onto the Adriatic coast, fiercest at Trieste in Italy",
+      "notes": [
+        "Cold air pours down from the plateau behind the Dinaric Alps, gusting at over 150 km/h",
+        "Picks up moisture over the Adriatic Sea, so it arrives cold and wet, bringing rainfall"
+      ],
+      "tier": 1,
+      "point": [
+        14.341,
+        45.572
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-blizzard",
+      "name": "Blizzard",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -100,
+          57
+        ],
+        [
+          -99.984,
+          56.906
+        ],
+        [
+          -99.953,
+          56.719
+        ],
+        [
+          -99.906,
+          56.438
+        ],
+        [
+          -99.844,
+          56.063
+        ],
+        [
+          -99.766,
+          55.594
+        ],
+        [
+          -99.672,
+          55.031
+        ],
+        [
+          -99.563,
+          54.375
+        ],
+        [
+          -99.438,
+          53.625
+        ],
+        [
+          -99.313,
+          52.875
+        ],
+        [
+          -99.188,
+          52.125
+        ],
+        [
+          -99.063,
+          51.375
+        ],
+        [
+          -98.938,
+          50.625
+        ],
+        [
+          -98.813,
+          49.875
+        ],
+        [
+          -98.688,
+          49.125
+        ],
+        [
+          -98.563,
+          48.375
+        ],
+        [
+          -98.438,
+          47.625
+        ],
+        [
+          -98.328,
+          46.969
+        ],
+        [
+          -98.234,
+          46.406
+        ],
+        [
+          -98.156,
+          45.938
+        ],
+        [
+          -98.094,
+          45.563
+        ],
+        [
+          -98.047,
+          45.281
+        ],
+        [
+          -98.016,
+          45.094
+        ],
+        [
+          -98,
+          45
+        ]
+      ],
+      "significance": "Very cold, very dry, snow-laden gale sweeping south across the plains of Canada and the USA",
+      "notes": [
+        "Polar air pours south over the open plains, with no east–west mountains to stop it",
+        "Driven snow cuts visibility to almost nothing, at temperatures far below freezing",
+        "The same wind in Siberia is called the Purga"
+      ],
+      "tier": 1,
+      "point": [
+        -98.938,
+        50.625
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-levanter",
+      "name": "Levanter",
+      "aliases": [
+        "Levante"
+      ],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -1.5,
+          36.7
+        ],
+        [
+          -1.539,
+          36.692
+        ],
+        [
+          -1.617,
+          36.677
+        ],
+        [
+          -1.734,
+          36.653
+        ],
+        [
+          -1.891,
+          36.622
+        ],
+        [
+          -2.086,
+          36.583
+        ],
+        [
+          -2.32,
+          36.536
+        ],
+        [
+          -2.594,
+          36.481
+        ],
+        [
+          -2.906,
+          36.419
+        ],
+        [
+          -3.217,
+          36.36
+        ],
+        [
+          -3.527,
+          36.305
+        ],
+        [
+          -3.834,
+          36.255
+        ],
+        [
+          -4.141,
+          36.208
+        ],
+        [
+          -4.445,
+          36.165
+        ],
+        [
+          -4.748,
+          36.126
+        ],
+        [
+          -5.05,
+          36.091
+        ],
+        [
+          -5.35,
+          36.059
+        ],
+        [
+          -5.613,
+          36.032
+        ],
+        [
+          -5.838,
+          36.009
+        ],
+        [
+          -6.025,
+          35.989
+        ],
+        [
+          -6.175,
+          35.973
+        ],
+        [
+          -6.288,
+          35.962
+        ],
+        [
+          -6.363,
+          35.954
+        ],
+        [
+          -6.4,
+          35.95
+        ]
+      ],
+      "significance": "Easterly squeezed through the Strait of Gibraltar along the coast of Spain, bringing fog and rain",
+      "notes": [
+        "Warm in summer, cold in winter",
+        "Moist Mediterranean air funnelled through the strait often caps the Rock of Gibraltar with a banner of cloud"
+      ],
+      "tier": 1,
+      "point": [
+        -4.141,
+        36.208
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-pampero",
+      "name": "Pampero",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -66,
+          -40
+        ],
+        [
+          -65.922,
+          -39.945
+        ],
+        [
+          -65.766,
+          -39.836
+        ],
+        [
+          -65.531,
+          -39.672
+        ],
+        [
+          -65.219,
+          -39.453
+        ],
+        [
+          -64.828,
+          -39.18
+        ],
+        [
+          -64.359,
+          -38.852
+        ],
+        [
+          -63.813,
+          -38.469
+        ],
+        [
+          -63.188,
+          -38.031
+        ],
+        [
+          -62.57,
+          -37.609
+        ],
+        [
+          -61.961,
+          -37.203
+        ],
+        [
+          -61.359,
+          -36.813
+        ],
+        [
+          -60.766,
+          -36.438
+        ],
+        [
+          -60.18,
+          -36.078
+        ],
+        [
+          -59.602,
+          -35.734
+        ],
+        [
+          -59.031,
+          -35.406
+        ],
+        [
+          -58.469,
+          -35.094
+        ],
+        [
+          -57.977,
+          -34.82
+        ],
+        [
+          -57.555,
+          -34.586
+        ],
+        [
+          -57.203,
+          -34.391
+        ],
+        [
+          -56.922,
+          -34.234
+        ],
+        [
+          -56.711,
+          -34.117
+        ],
+        [
+          -56.57,
+          -34.039
+        ],
+        [
+          -56.5,
+          -34
+        ]
+      ],
+      "significance": "Cold, violent south-westerly bursting across the grasslands of Argentina and Uruguay",
+      "notes": [
+        "Named after the Pampas it sweeps",
+        "A cold front: polar air from Patagonia replaces the warm, humid air of the plains, with squalls and a sharp fall in temperature"
+      ],
+      "tier": 1,
+      "point": [
+        -60.766,
+        -36.438
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-buran",
+      "name": "Buran",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          80,
+          55
+        ],
+        [
+          79.875,
+          54.938
+        ],
+        [
+          79.625,
+          54.813
+        ],
+        [
+          79.25,
+          54.625
+        ],
+        [
+          78.75,
+          54.375
+        ],
+        [
+          78.125,
+          54.063
+        ],
+        [
+          77.375,
+          53.688
+        ],
+        [
+          76.5,
+          53.25
+        ],
+        [
+          75.5,
+          52.75
+        ],
+        [
+          74.5,
+          52.25
+        ],
+        [
+          73.5,
+          51.75
+        ],
+        [
+          72.5,
+          51.25
+        ],
+        [
+          71.5,
+          50.75
+        ],
+        [
+          70.5,
+          50.25
+        ],
+        [
+          69.5,
+          49.75
+        ],
+        [
+          68.5,
+          49.25
+        ],
+        [
+          67.5,
+          48.75
+        ],
+        [
+          66.625,
+          48.313
+        ],
+        [
+          65.875,
+          47.938
+        ],
+        [
+          65.25,
+          47.625
+        ],
+        [
+          64.75,
+          47.375
+        ],
+        [
+          64.375,
+          47.188
+        ],
+        [
+          64.125,
+          47.063
+        ],
+        [
+          64,
+          47
+        ]
+      ],
+      "significance": "Cold north-easterly sweeping the steppes of Russia and Central Asia, often with a blizzard in winter",
+      "notes": [
+        "In winter it carries driven snow at temperatures far below freezing",
+        "In summer the same wind is hot and dusty on the steppe"
+      ],
+      "tier": 1,
+      "point": [
+        71.5,
+        50.75
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
+    },
+    {
+      "id": "wind-norte",
+      "name": "Norte",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -95,
+          28
+        ],
+        [
+          -95.016,
+          27.922
+        ],
+        [
+          -95.047,
+          27.766
+        ],
+        [
+          -95.094,
+          27.531
+        ],
+        [
+          -95.156,
+          27.219
+        ],
+        [
+          -95.234,
+          26.828
+        ],
+        [
+          -95.328,
+          26.359
+        ],
+        [
+          -95.438,
+          25.813
+        ],
+        [
+          -95.563,
+          25.188
+        ],
+        [
+          -95.664,
+          24.57
+        ],
+        [
+          -95.742,
+          23.961
+        ],
+        [
+          -95.797,
+          23.359
+        ],
+        [
+          -95.828,
+          22.766
+        ],
+        [
+          -95.836,
+          22.18
+        ],
+        [
+          -95.82,
+          21.602
+        ],
+        [
+          -95.781,
+          21.031
+        ],
+        [
+          -95.719,
+          20.469
+        ],
+        [
+          -95.664,
+          19.977
+        ],
+        [
+          -95.617,
+          19.555
+        ],
+        [
+          -95.578,
+          19.203
+        ],
+        [
+          -95.547,
+          18.922
+        ],
+        [
+          -95.523,
+          18.711
+        ],
+        [
+          -95.508,
+          18.57
+        ],
+        [
+          -95.5,
+          18.5
+        ]
+      ],
+      "significance": "Cold, strong northerly bursting south over the Gulf of Mexico into Mexico and Central America in winter",
+      "notes": [
+        "Polar outbreaks from North America sweep south behind a cold front, from October to April",
+        "Brings gales to Veracruz and rain to the Caribbean side of Central America"
+      ],
+      "tier": 1,
+      "point": [
+        -95.828,
+        22.766
+      ],
+      "continent": "Local Winds",
+      "section": "phenomena",
+      "atlas": "world"
     },
     {
       "id": "can-ottawa",

@@ -39,6 +39,8 @@ export type PlaceType =
   | 'strait'
   /** An ocean current — Phenomena. An arrow along its course, red warm, blue cold. */
   | 'current'
+  /** A local wind — Phenomena. An arrow the way it blows, red warm, blue cold, as a current is. */
+  | 'wind'
   /** A river of the Indian map — a main river, a tributary or a distributary — from OSM. */
   | 'river'
   /** Where a main river rises — Trambakeshwar, Sihawa — made by the build from the river's `source`. */
@@ -286,6 +288,7 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   sea: 'sea',
   strait: 'strait',
   current: 'ocean current',
+  wind: 'local wind',
   river: 'river',
   origin: 'origin',
   confluence: 'confluence',
@@ -297,6 +300,13 @@ export const RIVER_ROLE_LABEL = {
   tributary: 'tributary',
   distributary: 'distributary',
 } as const
+
+/**
+ * A flow — an ocean current or a local wind: an arrow along its course, warm
+ * or cold, picked out of all the others on the map and named with its
+ * temperature. The two are drawn and judged alike everywhere.
+ */
+export const isFlow = (p: Pick<Place, 'type'> | null | undefined): boolean => p?.type === 'current' || p?.type === 'wind'
 
 /** The label for any place's kind, a river by its role. */
 export const kindLabel = (p: Place): string =>

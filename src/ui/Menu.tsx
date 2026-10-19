@@ -21,6 +21,7 @@ export type MenuIcon =
   | 'globe'
   | 'waves'
   | 'currents'
+  | 'wind'
   | 'thermometer'
   | 'mountain'
   | 'river'
@@ -34,6 +35,7 @@ const TINTS: Record<MenuIcon, string> = {
   globe: 'bg-amber-100 text-amber-700',
   waves: 'bg-sky-100 text-sky-700',
   currents: 'bg-rose-100 text-rose-700',
+  wind: 'bg-teal-100 text-teal-700',
   thermometer: 'bg-orange-100 text-orange-700',
   mountain: 'bg-emerald-100 text-emerald-700',
   river: 'bg-blue-100 text-blue-700',
@@ -112,6 +114,14 @@ function Icon({ name }: { name: MenuIcon }) {
           <path d="M4 15c3-6 9-8 15-5" />
           <path d="m16 7 3 3-3.6 1.4" />
           <path d="M20 9c-3 6-9 8-15 5" opacity="0.55" />
+        </svg>
+      )
+    case 'wind':
+      return (
+        <svg {...common}>
+          <path d="M3 8h10a3 3 0 1 0-3-3" />
+          <path d="M3 12h15a3 3 0 1 1-3 3" />
+          <path d="M3 16h7" />
         </svg>
       )
     case 'thermometer':

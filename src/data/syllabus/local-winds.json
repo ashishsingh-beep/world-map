@@ -1,0 +1,502 @@
+{
+  "continent": "Local Winds",
+  "title": "Local Winds",
+  "section": "phenomena",
+  "source": "After the notes' local winds, hot and cold, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "wind-chinook",
+      "name": "Chinook",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -117,
+          51
+        ],
+        [
+          -113,
+          51.2
+        ],
+        [
+          -108.5,
+          50.5
+        ]
+      ],
+      "significance": "Warm, dry wind down the eastern slopes of the Rockies — the 'snow eater', freeing the winter grazing grounds of the USA and Canada",
+      "notes": [
+        "Moist westerlies from the Pacific drop their rain and snow rising over the Rockies, then warm by compression as they descend the far side",
+        "Can lift the temperature by 20°C or more in a few hours and melt a foot of snow in a day — hence 'snow eater'",
+        "Keeps the prairie pastures open in winter: a relief to the cattle ranches of Alberta and Montana",
+        "The North American foehn: the same mechanism as the Alps' wind"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-foehn",
+      "name": "Foehn",
+      "aliases": [
+        "Föhn"
+      ],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          9.3,
+          45.9
+        ],
+        [
+          9.0,
+          46.8
+        ],
+        [
+          8.6,
+          47.8
+        ]
+      ],
+      "significance": "Warm, dry wind down the northern slopes of the Alps into the valleys of Switzerland, its soothing warmth making them climatic oases",
+      "notes": [
+        "Air drawn over the Alps from the south loses its moisture on the Italian side and warms as it descends to the north",
+        "Melts the snow and opens the pastures early, and helps ripen the grapes",
+        "Also raises the risk of avalanches and forest fires",
+        "Gives its name to every such wind: any warm, dry wind down a mountain's lee slope is a foehn wind"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-zonda",
+      "name": "Zonda",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -70.6,
+          -32.4
+        ],
+        [
+          -68.6,
+          -32.6
+        ],
+        [
+          -66.6,
+          -33.0
+        ]
+      ],
+      "significance": "Warm, dry wind down the eastern slopes of the Andes in Argentina, through Mendoza and San Juan",
+      "notes": [
+        "A foehn wind of the Andes: Pacific air drops its moisture on the Chilean side, then descends warm and dry",
+        "Blows mostly from May to November, often dusty, sometimes for days on end"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-harmattan",
+      "name": "Harmattan",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          8,
+          20
+        ],
+        [
+          3,
+          14
+        ],
+        [
+          -1,
+          8.5
+        ]
+      ],
+      "significance": "Dry, dusty north-easterly from the Sahara to the Guinea coast in winter — the 'doctor', relieving the hot, humid equatorial lands",
+      "notes": [
+        "Blows from late November to mid-March, when the ITCZ has moved south",
+        "Called the 'doctor' for the relief its dry air brings from the wet, humid conditions around the equatorial region",
+        "Its sandstorms uproot trees and its dust haze reduces visibility, carried far out over the Atlantic"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-brickfielder",
+      "name": "Brickfielder",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          138,
+          -27
+        ],
+        [
+          141.5,
+          -32.5
+        ],
+        [
+          144.5,
+          -37
+        ]
+      ],
+      "significance": "Hot, dry, dusty wind from the deserts of the interior onto the south-east coast of Australia in summer",
+      "notes": [
+        "Named after the brickfields of early Sydney, where it raised clouds of red dust",
+        "Blows for a day or two ahead of a cold front; temperatures can pass 40°C",
+        "Raises the danger of bushfires"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-shamal",
+      "name": "Shamal",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          44,
+          34
+        ],
+        [
+          47.5,
+          30
+        ],
+        [
+          51,
+          26.5
+        ]
+      ],
+      "significance": "Hot, dry north-westerly down the Tigris–Euphrates valley and over the Persian Gulf, raising great dust storms in summer",
+      "notes": [
+        "Strongest in June and July, when it can blow for weeks on end",
+        "Its dust storms close airports and shipping in Iraq, Kuwait and the Gulf"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-black-roller",
+      "name": "Black Roller",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -104,
+          40
+        ],
+        [
+          -100,
+          37.5
+        ],
+        [
+          -97,
+          35
+        ]
+      ],
+      "significance": "Dust storm of the Great Plains of the USA, rolling in as a dark wall of soil lifted from dry, ploughed fields",
+      "notes": [
+        "Hot and dry, it strips the topsoil from drought-struck farmland",
+        "The dust storms of the 1930s Dust Bowl were black rollers — 'Black Sunday', 14 April 1935, the worst"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-sirocco",
+      "name": "Sirocco",
+      "aliases": [
+        "Scirocco"
+      ],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          10,
+          30
+        ],
+        [
+          12.6,
+          34.6
+        ],
+        [
+          15.8,
+          39.9
+        ]
+      ],
+      "significance": "Hot, dry, dusty southerly from the Sahara across the Mediterranean to southern Italy, its red sand falling as 'blood rain'",
+      "notes": [
+        "Blows ahead of depressions moving east along the Mediterranean, mostly in spring",
+        "Dry and dusty over North Africa; it gathers moisture crossing the sea and arrives humid and oppressive",
+        "Its red Saharan dust, brought down in rain on the southern side of the Alps, is the 'blood rain'",
+        "Withers crops and hampers the growth of citrus fruit"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-khamsin",
+      "name": "Khamsin",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          29,
+          24
+        ],
+        [
+          30.5,
+          27.5
+        ],
+        [
+          31.5,
+          31
+        ]
+      ],
+      "significance": "Hot, dry, sand-laden southerly over Egypt in spring, blowing for days at a time",
+      "notes": [
+        "Its name is Arabic for 'fifty': it blows on and off over some fifty days, from March to May",
+        "Comes ahead of depressions moving east across North Africa — a cousin of the wind that carries Saharan dust to Italy"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-santa-ana",
+      "name": "Santa Ana",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "warm",
+      "line": [
+        [
+          -115.5,
+          35.6
+        ],
+        [
+          -117,
+          34.6
+        ],
+        [
+          -118.6,
+          33.7
+        ]
+      ],
+      "significance": "Hot, dry north-easterly from the Mojave Desert down through the passes to the coast of southern California, fanning forest fires in the valleys",
+      "notes": [
+        "Blows out of high pressure over the Great Basin, warming further as it descends to the coast",
+        "Commonest from October to March; brings Los Angeles its hottest, driest days",
+        "Drives wildfires through the canyons and valleys"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-mistral",
+      "name": "Mistral",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          4.9,
+          46.6
+        ],
+        [
+          4.8,
+          44.6
+        ],
+        [
+          4.6,
+          43.1
+        ]
+      ],
+      "significance": "Cold, dry northerly funnelled down the Rhône valley of France to the Gulf of Lion",
+      "notes": [
+        "Cold air from the Massif Central and the Alps drains towards low pressure over the Mediterranean",
+        "Can blow at over 90 km/h for days, chiefly in winter and spring",
+        "Farmers in the Rhône valley plant rows of cypress as windbreaks against it"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-bora",
+      "name": "Bora",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          15.6,
+          46.3
+        ],
+        [
+          14.4,
+          45.6
+        ],
+        [
+          13.3,
+          45.0
+        ]
+      ],
+      "significance": "Cold, gusty north-easterly falling from the mountains onto the Adriatic coast, fiercest at Trieste in Italy",
+      "notes": [
+        "Cold air pours down from the plateau behind the Dinaric Alps, gusting at over 150 km/h",
+        "Picks up moisture over the Adriatic Sea, so it arrives cold and wet, bringing rainfall"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-blizzard",
+      "name": "Blizzard",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -100,
+          57
+        ],
+        [
+          -99,
+          51
+        ],
+        [
+          -98,
+          45
+        ]
+      ],
+      "significance": "Very cold, very dry, snow-laden gale sweeping south across the plains of Canada and the USA",
+      "notes": [
+        "Polar air pours south over the open plains, with no east–west mountains to stop it",
+        "Driven snow cuts visibility to almost nothing, at temperatures far below freezing",
+        "The same wind in Siberia is called the Purga"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-levanter",
+      "name": "Levanter",
+      "aliases": [
+        "Levante"
+      ],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -1.5,
+          36.7
+        ],
+        [
+          -4,
+          36.2
+        ],
+        [
+          -6.4,
+          35.95
+        ]
+      ],
+      "significance": "Easterly squeezed through the Strait of Gibraltar along the coast of Spain, bringing fog and rain",
+      "notes": [
+        "Warm in summer, cold in winter",
+        "Moist Mediterranean air funnelled through the strait often caps the Rock of Gibraltar with a banner of cloud"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-pampero",
+      "name": "Pampero",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -66,
+          -40
+        ],
+        [
+          -61,
+          -36.5
+        ],
+        [
+          -56.5,
+          -34
+        ]
+      ],
+      "significance": "Cold, violent south-westerly bursting across the grasslands of Argentina and Uruguay",
+      "notes": [
+        "Named after the Pampas it sweeps",
+        "A cold front: polar air from Patagonia replaces the warm, humid air of the plains, with squalls and a sharp fall in temperature"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-buran",
+      "name": "Buran",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          80,
+          55
+        ],
+        [
+          72,
+          51
+        ],
+        [
+          64,
+          47
+        ]
+      ],
+      "significance": "Cold north-easterly sweeping the steppes of Russia and Central Asia, often with a blizzard in winter",
+      "notes": [
+        "In winter it carries driven snow at temperatures far below freezing",
+        "In summer the same wind is hot and dusty on the steppe"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wind-norte",
+      "name": "Norte",
+      "aliases": [],
+      "type": "wind",
+      "country": null,
+      "temp": "cold",
+      "line": [
+        [
+          -95,
+          28
+        ],
+        [
+          -96,
+          23
+        ],
+        [
+          -95.5,
+          18.5
+        ]
+      ],
+      "significance": "Cold, strong northerly bursting south over the Gulf of Mexico into Mexico and Central America in winter",
+      "notes": [
+        "Polar outbreaks from North America sweep south behind a cold front, from October to April",
+        "Brings gales to Veracruz and rain to the Caribbean side of Central America"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": []
+}

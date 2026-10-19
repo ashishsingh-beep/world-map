@@ -1024,6 +1024,8 @@ const PLACE_TYPES = new Set([
   'ocean', 'sea', 'strait',
   // Phenomena: an ocean current, drawn as an arrow along its course
   'current',
+  // …and a local wind, an arrow the way it blows: the Chinook, the Mistral
+  'wind',
   // Indian map: a river — main stem, tributary or distributary — from OSM
   'river',
   // …and where a main river rises, at the head of its course
@@ -1134,7 +1136,7 @@ const GENERIC_WORDS = new Set(
   plains plain national park republic united central upper lower little grand point head
   sound channel passage reef triangle zone depression highlands archipelago pass falls
   basin delta corridor line fort old gate canyon crossing peak mine iron ore bight
-  current drift`.split(/\s+/)
+  current drift wind`.split(/\s+/)
 )
 
 /**
@@ -1480,7 +1482,16 @@ for (const file of syllabusFiles) {
       }
       if (Array.isArray(p.line) && p.line.length >= 2) p.line = smoothCourse(p.line)
     }
-    if (p.type === 'range' || p.type === 'coast' || p.type === 'current' || p.type === 'river') {
+    /**
+     * A local wind is drawn as a current is — an arrow the way it blows, red
+     * if warm and blue if cold — but over land as often as sea, so it has no
+     * ocean and is never held to the water.
+     */
+    if (p.type === 'wind') {
+      if (!['warm', 'cold'].includes(p.temp)) errors.push(`${where(p.id)}: a wind is "warm" or "cold"`)
+      if (Array.isArray(p.line) && p.line.length >= 2) p.line = smoothCourse(p.line)
+    }
+    if (['range', 'coast', 'current', 'wind', 'river'].includes(p.type)) {
       if (!Array.isArray(p.line) || p.line.length < 2) {
         errors.push(`${where(p.id)}: a ${p.type} needs a line of at least two points`)
       } else {
@@ -1499,7 +1510,7 @@ for (const file of syllabusFiles) {
 
     // The check that catches transposed or mistyped coordinates.
     const feature = p.country ? picked.get(p.country) : null
-    if (feature && point && !p.offshore && !['country', 'range', 'coast', 'current', 'river'].includes(p.type)) {
+    if (feature && point && !p.offshore && !['country', 'range', 'coast', 'current', 'wind', 'river'].includes(p.type)) {
       const slack = geoContains(feature, point) ? 0 : distanceToFeatureKm(feature, point)
       if (slack > ONSHORE_SLACK_KM) {
         const km = geoDistance(point, meta[p.country].centroid) * 6371

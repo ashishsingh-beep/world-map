@@ -459,7 +459,26 @@ the name alone is the typed answer, but wherever one is shown — the Pin prompt
 a label, a miss — `displayName` adds its ocean. The Somali Current is warm
 because the notes' map draws it so; its note says the summer upwelling is cold.
 
-**Isotherms are computed, not traced.** Phenomena's second entry is a Learn-only
+**A local wind is an arrow too.** Phenomena's second round is the local
+winds (`src/data/syllabus/local-winds.json`, type `wind`), from the notes: the
+hot winds — Chinook, Foehn, Zonda, Harmattan, Brickfielder, Shamal, Black
+Roller, Sirocco, Khamsin, Santa Ana — and the cold — Mistral, Bora, Blizzard,
+Levanter, Pampero, Buran, Norte — 17 in all, each a hand-traced `line` the way
+it blows and a `temp`, with the notes' facts and the standard UPSC ones on its
+card. The warm/cold split is the notes', even where a wind is both: the
+Levanter, "warm during summers, cold during winters", is filed cold, as they
+file it. A wind is a current in all but name — `isFlow` in
+`src/data/places.ts` is the one test, and everything a current does a wind does
+(drawn red or blue by `CURRENT_INK`, picked as the nearest arrow on screen,
+named warm-or-cold-then-name in Name mode) — except three things: it blows over
+land, so it has no `ocean` and is never held to the sea; it has a Why mode,
+because its clue ("the snow eater") is worth naming it from, and the name alone
+answers there; and in Name mode its arrow is zoomed to when it is small (the
+Foehn, the Bora are a few pixels at world scale), as a sea is. The Purga is not
+a wind of its own: it is the Blizzard's Siberian name, in the Blizzard's notes,
+not an alias, since the arrow is in North America.
+
+ The isotherms are a Learn-only
 screen (`#/isotherms`, `src/screens/IsothermScreen.tsx`, no round behind it, so
 `App` answers it before anything that needs one) with three maps — January,
 July and the January–July range — at the textbook figures' own levels
@@ -485,7 +504,7 @@ as the 10°C loops. Lines are coloured on the currents' own blue-to-red
 (`CURRENT_INK`), lowest level to highest; the thermal equator is dashed navy.
 `MapCanvas` draws them through `isolines`, a plain line layer with labels.
 
-**Climates are Köppen's, unless a reference map is.** Phenomena's third entry is a
+**Climates are Köppen's, unless a reference map is.** Phenomena's climate entry is a
 Learn-only climate map (`#/climate`, `src/screens/ClimateScreen.tsx`, answered
 in `App` like the isotherms): the equatorial, tropical monsoon, Mediterranean,
 hot desert, cold desert and Sudan-type climates as patches over a physical world map, a legend chip each to

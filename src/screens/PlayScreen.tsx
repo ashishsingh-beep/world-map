@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { metaOf } from '../data/countries'
-import { TYPE_LABEL, WATER_GLYPH, countryClue, kindLabel, placeOf } from '../data/places'
+import { TYPE_LABEL, WATER_GLYPH, countryClue, isFlow, kindLabel, placeOf } from '../data/places'
 import { MapCanvas } from '../map/MapCanvas'
 import {
   QUESTION_SECONDS,
@@ -71,7 +71,7 @@ export function PlayScreen({
   const [temp, setTemp] = useState<'warm' | 'cold' | null>(null)
   /** Briefly set when a name is submitted with no temperature chosen: the buttons ask for it. */
   const [nudge, setNudge] = useState(false)
-  const asksTemp = mode === 'type' && quiz.current?.place?.type === 'current'
+  const asksTemp = mode === 'type' && isFlow(quiz.current?.place)
 
   useEffect(() => {
     setDraft('')
@@ -243,7 +243,7 @@ export function PlayScreen({
         {mode === 'significance' && (
           <div className="max-w-2xl rounded-2xl bg-white px-6 py-4 text-center shadow-xl">
             <div className="text-[10px] font-bold tracking-widest text-slate-400">
-              {asksCountry ? 'WHICH COUNTRY IS THIS?' : q?.place?.type === 'river' ? 'WHICH RIVER IS THIS?' : 'WHICH PLACE IS THIS?'}
+              {asksCountry ? 'WHICH COUNTRY IS THIS?' : q?.place?.type === 'river' ? 'WHICH RIVER IS THIS?' : q?.place?.type === 'wind' ? 'WHICH WIND IS THIS?' : 'WHICH PLACE IS THIS?'}
             </div>
             <div className="mt-1 text-lg leading-snug font-extrabold text-slate-900">
               {q?.place ? q.place.significance : q?.iso ? countryClue(q.iso) : null}
@@ -289,7 +289,7 @@ export function PlayScreen({
             {asksTemp && (
               <div
                 role="radiogroup"
-                aria-label="Warm or cold current"
+                aria-label="Warm or cold"
                 // A row of its own on a phone, so the name keeps the width it needs.
                 className={`flex basis-full gap-2 rounded-xl transition sm:basis-auto sm:shrink-0 ${
                   nudge ? 'ring-4 ring-amber-300' : ''
@@ -353,8 +353,10 @@ export function PlayScreen({
                 }}
                 placeholder={
                   asksTemp
-                    ? 'Type the current'
-                    : q?.place?.type === 'river'
+                    ? `Type the ${q?.place?.type === 'wind' ? 'wind' : 'current'}`
+                    : q?.place?.type === 'wind'
+                      ? 'Type the wind'
+                      : q?.place?.type === 'river'
                       ? 'Type the river'
                       : q?.place?.type === 'origin'
                         ? 'Type the origin'
@@ -430,8 +432,8 @@ export function PlayScreen({
             }`}
           >
             {quiz.verdict !== 'correct' ? (
-              q?.place?.type === 'current' && mode === 'type' ? (
-                `✕ ${q.label} — a ${q.place.temp} current`
+              isFlow(q?.place) && mode === 'type' ? (
+                `✕ ${q?.label} — a ${q?.place?.temp} ${q?.place?.type === 'wind' ? 'wind' : 'current'}`
               ) : (
                 `✕ ${q?.name}${quiz.missKm != null ? ` — ${formatMiss(quiz.missKm)} off` : ''}`
               )

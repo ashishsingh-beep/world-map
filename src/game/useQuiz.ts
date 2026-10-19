@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geoBounds, geoContains, geoDistance } from 'd3-geo'
 import { allIsos, featureByIso, metaOf } from '../data/countries'
 import { areaOf } from '../data/areas'
-import { displayName, distanceToLineKm, placeOf, type Place } from '../data/places'
+import { displayName, distanceToLineKm, isFlow, placeOf, type Place } from '../data/places'
 import { judgeName, normaliseName, type Candidate } from './matchName'
 import type {
   CountryState,
@@ -62,7 +62,7 @@ const isPeakLike = (q: Question) => q.place?.type === 'peak' || q.place?.type ==
  * out of the rest: the ocean currents, and the rivers. A range is a line too,
  * but its band appears only once it has been answered.
  */
-const isLineChoice = (p: Place | null | undefined) => p?.type === 'current' || p?.type === 'river'
+const isLineChoice = (p: Place | null | undefined) => isFlow(p) || p?.type === 'river'
 const EARTH_RADIUS_KM = 6371
 
 export interface QuizOptions {
@@ -431,12 +431,13 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
   )
 
   /**
-   * A current is named twice over: warm or cold, then its name. Both must be
-   * right, and neither is taken until the temperature has been chosen — the
-   * field cannot accept a name for a question half answered.
+   * A current or a wind is named twice over in Name mode: warm or cold, then
+   * its name. Both must be right, and neither is taken until the temperature
+   * has been chosen — the field cannot accept a name for a question half
+   * answered. Why mode (a wind's clue) asks the name alone.
    */
   const tempOk = (temp?: 'warm' | 'cold' | null) =>
-    current?.place?.type !== 'current' ? true : temp ? temp === current.place.temp : null
+    !isFlow(current?.place) || mode !== 'type' ? true : temp ? temp === current?.place?.temp : null
 
   const submitName = useCallback(
     (text: string, temp?: 'warm' | 'cold' | null) => {
@@ -530,7 +531,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
           belt: q.place?.belt,
           // In Name mode the temperature is half the question, so no arrow
           // shows it until it has been answered.
-          current: q.place?.type === 'current' ? (mode === 'type' ? 'unknown' : q.place.temp) : undefined,
+          current: isFlow(q.place) ? (mode === 'type' ? 'unknown' : q.place?.temp) : undefined,
           river: q.place?.type === 'river' ? q.place.role : undefined,
           thin: q.place?.thin,
           rank: q.place?.rank,
@@ -669,7 +670,11 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
               // or landmark's point — every one, however large (`focusAlways`).
               current.place.section === 'rivers'
               ? ((current.place.line as [number, number][] | undefined) ?? [current.point])
-              : null,
+              : // A local wind: its arrow, which is often a few pixels at
+                // world scale (the Foehn, the Bora), zoomed to when it is.
+                current.place.type === 'wind'
+                ? ((current.place.line as [number, number][] | undefined) ?? [current.point])
+                : null,
     /**
      * On the Rivers map the camera goes to every Type-mode question, not only
      * a small one: a tributary is a thin line among twenty, and finding which
