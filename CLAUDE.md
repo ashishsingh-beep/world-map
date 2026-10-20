@@ -268,8 +268,17 @@ alone — the Bosporus, which is the line between the continents, included. The 
 Europe, being genuinely European Arctic, as do the Baltic and the Danish Straits,
 which are Denmark proper. The Antarctic seas — Ross, Weddell, Amundsen, Scotia —
 are not in the set at all; the Southern Ocean and the Drake Passage are what is
-left of the far south. Region and notations narrow *practice*
-only: Learn always draws the whole set, with its own legend chips.
+left of the far south.
+
+**Learn opens on what the setup has chosen.** The setup's choices are not
+practice-only: Learn starts from them too — the Political Map's sections, the
+Seas & Straits region (only that region's features) and notations, the rivers'
+systems (their context rivers with them) — so a learner who ticked Capitals and
+Other places sees just those. `App` hands them to `LearnScreen` as `initial`
+and narrows its round; Learn's own legend chips then turn things on and off from
+there, for that visit only, never writing back to the setup. With Countries off,
+the micro-state rings go too. Only the question count, mode and timer are
+practice's alone.
 
 **The typed input has two behaviours, chosen by "Show suggestions" on setup.**
 Off — the default, and the reference's way — there is no list and no Enter: the

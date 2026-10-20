@@ -12,12 +12,13 @@ import {
   placeKindOf,
   placeOf,
   type Place,
+  type PlaceKind,
 } from '../data/places'
 import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/areas'
 import { screenDistanceToLine, shapeOf } from '../game/useQuiz'
 import type { Round } from '../game/rounds'
-import { BELTS, BeltSwatch, ConfluenceSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS } from '../ui/bits'
+import { BELTS, BeltSwatch, ConfluenceSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS, type WaterKind } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
 import { useBare } from '../app/useBare'
@@ -28,18 +29,24 @@ import { useBare } from '../app/useBare'
  * practise screen. Everything is labelled, and each water
  * notation can be filtered so a world of them stays readable.
  */
-export function LearnScreen({ round, onExit }: { round: Round; onExit: () => void }) {
+export function LearnScreen({
+  round,
+  initial,
+  onExit,
+}: {
+  round: Round
+  /** What the setup screen has chosen, which Learn opens on. */
+  initial?: { placeKinds?: Record<PlaceKind, boolean>; kinds?: Record<WaterKind, boolean> }
+  onExit: () => void
+}) {
   const [showAll, setShowAll] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
   /** Which notations are drawn. All of them at once is unreadable worldwide. */
-  const [shown, setShown] = useState({ ocean: true, sea: true, strait: true, canal: true })
+  const [shown, setShown] = useState(() => initial?.kinds ?? { ocean: true, sea: true, strait: true, canal: true })
   /** Which of a round's sections are drawn: countries, capitals, regions, other places. */
-  const [placeKindsShown, setPlaceKindsShown] = useState({
-    country: true,
-    capital: true,
-    other: true,
-    region: true,
-  })
+  const [placeKindsShown, setPlaceKindsShown] = useState(
+    () => initial?.placeKinds ?? { country: true, capital: true, other: true, region: true }
+  )
   /** Which rivers are drawn, by role and by system. */
   const [rolesShown, setRolesShown] = useState({
     main: true,
@@ -286,7 +293,7 @@ export function LearnScreen({ round, onExit }: { round: Round; onExit: () => voi
               }
             : undefined
         }
-        countryMarkers={!isWaterRound && !isPhenomena}
+        countryMarkers={!isWaterRound && !isPhenomena && (!isMixed || countriesShown)}
         labels={isPlaceRound && !countriesShown ? 'none' : showAll ? 'all' : 'selected'}
         selectedIso={selectedCountry}
         // Constant, not conditional on `place`: refitting when a card opens

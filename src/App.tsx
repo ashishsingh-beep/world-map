@@ -290,7 +290,32 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
   }
 
   if (route.view === 'learn') {
-    return <LearnScreen round={round} onExit={() => navigate({ view: 'setup', roundId })} />
+    /**
+     * Learn opens on what the setup has chosen, as Practice does: the
+     * Political Map's sections, the water round's region and notations, the
+     * rivers' systems. Its own legend chips then turn things on and off from
+     * there, for this visit only.
+     */
+    const learnRound =
+      isWaterRound || isRivers
+        ? {
+            ...round,
+            places: inRegion.map((p) => p.id),
+            context: round.context?.filter((id) => !isRivers || inBasins(placeOf(id).basin)),
+          }
+        : round
+    return (
+      <LearnScreen
+        round={learnRound}
+        initial={{
+          placeKinds: isPlacesRound
+            ? (Object.fromEntries(PLACE_KINDS.map(({ kind }) => [kind, kindOn(kind)])) as Record<PlaceKind, boolean>)
+            : undefined,
+          kinds: isWaterRound ? kinds : undefined,
+        }}
+        onExit={() => navigate({ view: 'setup', roundId })}
+      />
+    )
   }
 
   if (route.view === 'setup') {
