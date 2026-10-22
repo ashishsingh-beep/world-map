@@ -658,7 +658,7 @@ they would touch one already placed.
 **A river is its real course, from OpenStreetMap.** The India map's Rivers
 round (`src/data/syllabus/rivers.json`, section `rivers`, type `river`) has the
 Godavari, Mahanadi, Krishna, Kaveri, Brahmaputra, Ganga, Indus, Narmada, Tapi,
-Mahi and Luni systems from the notes — each with exactly the
+Mahi, Sabarmati and Luni systems from the notes — each with exactly the
 tributaries its map names, no more: each river a `role` — `main`,
 `tributary` or `distributary` — a `basin`, the river it `joins` (a tributary
 flows into it, a distributary leaves it), and an `osm` id. Natural Earth has

@@ -3778,6 +3778,38 @@
       }
     },
     {
+      "id": "riv-sabarmati",
+      "name": "Sabarmati",
+      "aliases": [],
+      "type": "river",
+      "country": "IND",
+      "role": "main",
+      "basin": "Sabarmati",
+      "osm": "R7717294",
+      "significance": "West-flowing river of Gujarat with Ahmedabad and Gandhinagar on its banks — and Gandhi's ashram, where the Dandi March set out in 1930",
+      "notes": [
+        "Rises in the Aravalli hills of Udaipur district in Rajasthan",
+        "Flows south-west across Gujarat, past Gandhinagar and Ahmedabad, to the Gulf of Khambhat",
+        "About 370 km long; its main tributaries are the Hathmati and the Watrak",
+        "Dharoi dam holds it in north Gujarat",
+        "Gandhi's ashram on its bank at Ahmedabad was the starting point of the Dandi March, 12 March 1930"
+      ],
+      "tier": 1,
+      "source": {
+        "name": "Aravalli Hills",
+        "aliases": [
+          "Aravalli Range",
+          "Aravallis"
+        ],
+        "near": "Udaipur",
+        "point": [
+          73.3,
+          24.58
+        ],
+        "significance": "Where the river of Ahmedabad rises, in the uplands of Udaipur district in southern Rajasthan, before it crosses into Gujarat"
+      }
+    },
+    {
       "id": "riv-luni",
       "name": "Luni",
       "aliases": [
