@@ -1,0 +1,164 @@
+{
+  "continent": "World Mountains",
+  "title": "Mountains",
+  "section": "physical",
+  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "mtn-andes",
+      "name": "Andes",
+      "aliases": [
+        "Andes Mountains",
+        "Andes Range"
+      ],
+      "type": "mountains",
+      "country": "PER",
+      "point": [
+        -72,
+        -17
+      ],
+      "land": [
+        "ANDES"
+      ],
+      "significance": "The longest mountain range on Earth: young fold mountains running the whole Pacific edge of South America through seven countries",
+      "notes": [
+        "Fold mountains",
+        "The longest mountain range in the world, about 7,000 km",
+        "Runs through Venezuela, Colombia, Ecuador, Peru, Bolivia, Chile and Argentina — 7 countries",
+        "Highest peak: **Aconcagua**"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-cordillera-oriental",
+      "name": "Cordillera Oriental",
+      "aliases": [
+        "Cordillera",
+        "Eastern Cordillera"
+      ],
+      "type": "mountains",
+      "country": "COL",
+      "point": [
+        -73.5,
+        6.0
+      ],
+      "land": [
+        "CORDILLERA ORIENTAL"
+      ],
+      "significance": "The Andes' eastern range in the north, carrying Bogotá's plateau up through Colombia into Venezuela",
+      "notes": [
+        "Mainly in Colombia, a small part in Venezuela"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-cotopaxi",
+      "name": "Cotopaxi",
+      "aliases": [],
+      "type": "peak",
+      "country": "ECU",
+      "point": [
+        -78.437,
+        -0.684
+      ],
+      "significance": "One of the highest active volcanoes on Earth, a perfect snow cone on the avenue of volcanoes south of Quito",
+      "notes": [
+        "In Ecuador",
+        "5,897 m"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-chimborazo",
+      "name": "Chimborazo",
+      "aliases": [],
+      "type": "peak",
+      "country": "ECU",
+      "point": [
+        -78.817,
+        -1.469
+      ],
+      "significance": "Ecuador's highest peak, whose summit — on the Equator's bulge — is the farthest point on Earth from its centre",
+      "notes": [
+        "In Ecuador",
+        "6,263 m"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-huascaran",
+      "name": "Huascarán",
+      "aliases": [
+        "Huascaran",
+        "Nevado Huascarán"
+      ],
+      "type": "peak",
+      "country": "PER",
+      "point": [
+        -77.604,
+        -9.122
+      ],
+      "significance": "Peru's highest peak and the highest in the tropics, crowning the Cordillera Blanca",
+      "notes": [
+        "In Peru",
+        "6,768 m"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-misti",
+      "name": "Misti",
+      "aliases": [
+        "El Misti"
+      ],
+      "type": "peak",
+      "country": "PER",
+      "point": [
+        -71.409,
+        -16.294
+      ],
+      "significance": "The snow-capped cone that looms over Arequipa",
+      "notes": [
+        "In Peru",
+        "A dormant volcano, 5,822 m"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-ojos-del-salado",
+      "name": "Ojos del Salado",
+      "aliases": [],
+      "type": "peak",
+      "country": "CHL",
+      "point": [
+        -68.541,
+        -27.109
+      ],
+      "significance": "The highest active volcano on Earth, on the Argentina–Chile border above the Atacama",
+      "notes": [
+        "The highest active volcano",
+        "On the Argentina–Chile border",
+        "6,893 m"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-aconcagua",
+      "name": "Aconcagua",
+      "aliases": [],
+      "type": "peak",
+      "country": "ARG",
+      "point": [
+        -70.011,
+        -32.653
+      ],
+      "significance": "The highest peak of South America — and of the world outside Asia — near the Argentina–Chile border",
+      "notes": [
+        "The highest peak of South America, 6,961 m",
+        "In Argentina's Mendoza province, close to the border with Chile"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": []
+}

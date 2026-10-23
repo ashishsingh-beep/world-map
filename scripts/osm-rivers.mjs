@@ -1,5 +1,6 @@
 /**
- * River courses from OpenStreetMap, for the Indian map's rivers.
+ * River courses from OpenStreetMap, for the Indian map's rivers and the
+ * world's.
  *
  * Natural Earth carries the Godavari and the Mahanadi and almost none of their
  * tributaries; OpenStreetMap carries all of them, traced from imagery. A river
@@ -230,24 +231,48 @@ export function joinCourse(ways, { source = null, parent = null, leaves = false,
     group[root(best.j)] = root(best.i)
   }
 
+  // A binary heap: the Amazon's chain of relations is tens of thousands of
+  // nodes, where a linear scan for the nearest open node took minutes.
   const dijkstra = (from) => {
     const dist = new Map([[from, 0]])
     const prev = new Map()
-    const done = new Set()
-    // Small graphs (a few thousand nodes): a linear scan is plenty.
-    const open = new Set([from])
-    while (open.size) {
-      let x = null
-      for (const n of open) if (x === null || dist.get(n) < dist.get(x)) x = n
-      open.delete(x)
-      done.add(x)
+    const heap = [[0, from]]
+    const push = (item) => {
+      heap.push(item)
+      for (let i = heap.length - 1; i > 0; ) {
+        const up = (i - 1) >> 1
+        if (heap[up][0] <= heap[i][0]) break
+        ;[heap[up], heap[i]] = [heap[i], heap[up]]
+        i = up
+      }
+    }
+    const pop = () => {
+      const top = heap[0]
+      const last = heap.pop()
+      if (heap.length) {
+        heap[0] = last
+        for (let i = 0; ; ) {
+          const l = 2 * i + 1
+          const r = l + 1
+          let m = i
+          if (l < heap.length && heap[l][0] < heap[m][0]) m = l
+          if (r < heap.length && heap[r][0] < heap[m][0]) m = r
+          if (m === i) break
+          ;[heap[m], heap[i]] = [heap[i], heap[m]]
+          i = m
+        }
+      }
+      return top
+    }
+    while (heap.length) {
+      const [d, x] = pop()
+      if (d > dist.get(x)) continue
       for (const [y, km] of adj.get(x)) {
-        if (done.has(y)) continue
-        const d = dist.get(x) + km
-        if (d < (dist.get(y) ?? Infinity)) {
-          dist.set(y, d)
+        const nd = d + km
+        if (nd < (dist.get(y) ?? Infinity)) {
+          dist.set(y, nd)
           prev.set(y, x)
-          open.add(y)
+          push([nd, y])
         }
       }
     }

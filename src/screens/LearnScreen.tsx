@@ -29,6 +29,16 @@ import { useBare } from '../app/useBare'
  * practise screen. Everything is labelled, and each water
  * notation can be filtered so a world of them stays readable.
  */
+/** A physical section's chips. */
+const TYPE_PLURAL: Partial<Record<string, string>> = {
+  mountains: 'Ranges',
+  peak: 'Peaks',
+  plateau: 'Plateaus',
+  grassland: 'Grasslands',
+  desert: 'Deserts',
+  lake: 'Lakes',
+}
+
 export function LearnScreen({
   round,
   initial,
@@ -57,6 +67,8 @@ export function LearnScreen({
     landmark: true,
   })
   const [basinsHidden, setBasinsHidden] = useState<string[]>([])
+  /** A physical section's kinds put away in the legend: the Andes' range, its peaks. */
+  const [kindsHidden, setKindsHidden] = useState<string[]>([])
   /** Which currents are drawn: the warm ones, the cold ones, or both. */
   const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
   /** The country under the last tap, which a place on top of it may outrank. */
@@ -73,6 +85,8 @@ export function LearnScreen({
   const isWaterRound = roundPlaces[0]?.section === 'water'
   const isPlacesSection = roundPlaces[0]?.section === 'places'
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
+  /** A physical section's kinds, in the order they come: the Andes before its peaks. */
+  const physicalKinds = [...new Set(roundPlaces.map((p) => p.type))]
   /** What the warm and cold chips call the arrows: currents, or winds. */
   const flowWord = roundPlaces.some((p) => p.type === 'wind') ? 'winds' : 'currents'
   const isRivers = roundPlaces[0]?.section === 'rivers'
@@ -106,9 +120,10 @@ export function LearnScreen({
         // Anything else on a rivers map is a landmark on a river's course:
         // Majuli, Namcha Barwa.
         if (isRivers) return rolesShown.landmark && !basinsHidden.includes(p.basin ?? '')
+        if (round.physical) return !kindsHidden.includes(p.type)
         return true
       }),
-    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden, isRivers]
+    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden, isRivers, round.physical, kindsHidden]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
@@ -206,6 +221,7 @@ export function LearnScreen({
       <MapCanvas
         className="absolute inset-0"
         render={round.render}
+        physical={round.physical}
         // `askable`, not `render`: the latter now carries context geography
         // like Greenland, which has no name to reveal.
         askable={isPlaceRound && !countriesShown ? [] : round.askable}
@@ -293,7 +309,7 @@ export function LearnScreen({
               }
             : undefined
         }
-        countryMarkers={!isWaterRound && !isPhenomena && (!isMixed || countriesShown)}
+        countryMarkers={!isWaterRound && !isPhenomena && !round.physical && (!isMixed || countriesShown)}
         labels={isPlaceRound && !countriesShown ? 'none' : showAll ? 'all' : 'selected'}
         selectedIso={selectedCountry}
         // Constant, not conditional on `place`: refitting when a card opens
@@ -397,6 +413,35 @@ export function LearnScreen({
                     {b} system
                     <span className="font-semibold text-slate-400">
                       {roundPlaces.filter((p) => p.basin === b).length}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+          )}
+
+          {round.physical && !isRivers && physicalKinds.length > 1 && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {physicalKinds.map((t) => {
+                const on = !kindsHidden.includes(t)
+                return (
+                  <label
+                    key={t}
+                    className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                      on ? 'text-slate-700' : 'text-slate-400'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={(e) =>
+                        setKindsHidden((h) => (e.target.checked ? h.filter((x) => x !== t) : [...h, t]))
+                      }
+                      className="h-3.5 w-3.5 accent-blue-600"
+                    />
+                    {TYPE_PLURAL[t] ?? t}
+                    <span className="font-semibold text-slate-400">
+                      {roundPlaces.filter((p) => p.type === t).length}
                     </span>
                   </label>
                 )

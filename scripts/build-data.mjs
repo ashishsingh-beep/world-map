@@ -75,6 +75,13 @@ const LADAKH_RAW = resolve(CACHE, 'india-states-2019.geojson')
 const LAND_URL =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_regions_polys.geojson'
 const LAND_RAW = resolve(CACHE, 'ne_10m_geography_regions_polys.geojson')
+/**
+ * Natural Earth's lakes, for the physical map's lake patches: Titicaca, Poopó.
+ * A lake open to the sea — Lake Maracaibo, the Lagoa dos Patos — is in the
+ * marine layer instead, and looked up there when this has no such name.
+ */
+const LAKES_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_lakes.geojson'
+const LAKES_RAW = resolve(CACHE, 'ne_10m_lakes.geojson')
 
 /**
  * Fifth: Natural Earth's map units, which split the UK into England, Scotland,
@@ -125,7 +132,19 @@ const ADMIN1_RAW = resolve(CACHE, 'ne_10m_admin_1_states_provinces.geojson')
 /** The types that are areas. Everything else in the section is a marker. */
 const AREA_TYPES = new Set(['ocean', 'sea', 'reef'])
 /** Land-region types that are areas rather than a point-and-radius marker. */
-const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
+const LAND_AREA_TYPES = new Set(['peninsula', 'constituent', 'plateau', 'grassland', 'desert', 'mountains'])
+/**
+ * The physical map's patches, each kind in its own colour, drawn over the land
+ * (`onLand`) as a peninsula is. A lake is one too when it names its polygon
+ * with `land`; without, it stays a marker, as the Indus map's do.
+ */
+const PHYSICAL_TINT = {
+  plateau: '#7c3aed',
+  grassland: '#16a34a',
+  desert: '#d97706',
+  mountains: '#92400e',
+  lake: '#1d4ed8',
+}
 /**
  * A region that is not a peninsula — the Afar Region, say — is a zone, and a
  * zone is a marker unless it names a polygon of its own with `land` or
@@ -133,7 +152,7 @@ const LAND_AREA_TYPES = new Set(['peninsula', 'constituent'])
  */
 const isLandArea = (p) =>
   LAND_AREA_TYPES.has(p.type) ||
-  (['zone', 'state', 'island', 'territory'].includes(p.type) &&
+  (['zone', 'state', 'island', 'territory', 'lake'].includes(p.type) &&
     Boolean(p.land?.length || p.admin1?.length || p.countries?.length || p.south != null))
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
@@ -252,6 +271,10 @@ function download() {
   if (!existsSync(LAND_RAW)) {
     console.log('Downloading Natural Earth physical regions…')
     execFileSync('curl', ['-sSL', '-o', LAND_RAW, LAND_URL], { stdio: 'inherit' })
+  }
+  if (!existsSync(LAKES_RAW)) {
+    console.log('Downloading Natural Earth lakes…')
+    execFileSync('curl', ['-sSL', '-o', LAKES_RAW, LAKES_URL], { stdio: 'inherit' })
   }
   if (!existsSync(MAP_UNITS_RAW)) {
     console.log('Downloading Natural Earth map units…')
@@ -1032,6 +1055,11 @@ const PLACE_TYPES = new Set([
   'origin',
   // …and where two rivers meet: Devprayag, Prayagraj's Sangam
   'confluence',
+  // The world's physical map: areas from Natural Earth's physical regions —
+  // the Altiplano, the Llanos, the Atacama, the Andes — and points on a world
+  // river's course: Angel Falls, the Itaipu dam, the Río de la Plata.
+  'plateau', 'grassland', 'desert', 'mountains',
+  'waterfall', 'dam', 'estuary',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
 const WATER_TYPES = new Set(['ocean', 'sea', 'strait', 'canal', 'reef'])
@@ -1136,7 +1164,7 @@ const GENERIC_WORDS = new Set(
   plains plain national park republic united central upper lower little grand point head
   sound channel passage reef triangle zone depression highlands archipelago pass falls
   basin delta corridor line fort old gate canyon crossing peak mine iron ore bight
-  current drift wind`.split(/\s+/)
+  current drift wind lago lagoa laguna rio salto highland cordillera grasslands lagoon`.split(/\s+/)
 )
 
 /**
@@ -1188,12 +1216,6 @@ const syllabusFiles = existsSync(SYLLABUS)
  * river can be ended early (`endsAt`): the Godavari stops at the Dowleswaram
  * barrage, where it divides into the Gautami and the Vasishta.
  */
-const INDIA_FEATURE = picked.get('IND')
-const indiaRing = []
-{
-  const walk = (c) => (typeof c[0] === 'number' ? indiaRing.push(c) : c.forEach(walk))
-  walk(INDIA_FEATURE.geometry.coordinates)
-}
 const ringCache = new Map()
 function ringOf(feature) {
   if (!ringCache.has(feature)) {
@@ -1204,7 +1226,18 @@ function ringOf(feature) {
   }
   return ringCache.get(feature)
 }
-function courseRivers(rivers, where) {
+/** The outlines a river may run along: its own country's and every one it runs `through`. */
+/**
+ * The countries a river may run in: its own, every one it runs `through`, and
+ * — on the Indian map, where a river filed under Nepal or Bangladesh still
+ * crosses India — India.
+ */
+const homesOf = (p, atlas) =>
+  [...new Set([p.country, ...(p.through ?? []), ...(atlas === 'india' ? ['IND'] : [])])]
+    .map((iso) => picked.get(iso))
+    .filter(Boolean)
+function courseRivers(rivers, where, simplifyKm = 0.15, atlas = 'world') {
+  const homeRings = (p) => homesOf(p, atlas).map(ringOf)
   const byId = new Map(rivers.map((p) => [p.id, p]))
   const done = new Map()
   const run = (p) => {
@@ -1226,6 +1259,12 @@ function courseRivers(rivers, where) {
       allRoles: p.osmAllRoles ?? false,
       canal: p.osmCanal ?? false,
     })
+    // `osmWalks`: a stretch with no relation of its own, gathered by name from
+    // a seed way inside a box — the Paraná's Rio Grande, from the Brazilian
+    // Highlands to where it meets the Paranaíba.
+    for (const walk of p.osmWalks ?? []) {
+      ways = [...ways, ...fetchRiverWays(walk.seed, walk.names, CACHE, walk.box ?? null)]
+    }
     // `osmSkip`: ways a relation runs above where the notes say the river
     // rises — the Jhelum's relation climbs the Sandran past Verinag's spring.
     if (p.osmSkip) {
@@ -1297,7 +1336,7 @@ function courseRivers(rivers, where) {
       // Kathajodi does into the Devi.
       const fed = rivers.some((q) => q.joins === p.id && q.role === 'distributary')
       const end = line[line.length - 1]
-      const sea = Math.min(...indiaRing.map((c) => geoDistance(c, end) * 6371))
+      const sea = Math.min(...homeRings(p).flat().map((c) => geoDistance(c, end) * 6371))
       if (!fed && sea > 15) errors.push(`${where(p.id)}: ends ${sea.toFixed(0)}km from the coast, not at the sea`)
     }
     if (lengthKm(line) < 20) errors.push(`${where(p.id)}: only ${lengthKm(line).toFixed(0)}km of course`)
@@ -1309,19 +1348,25 @@ function courseRivers(rivers, where) {
       if (!picked.has(iso)) errors.push(`${where(p.id)}: "through" names ${iso}, which is not a drawn country`)
       return picked.get(iso)
     }).filter(Boolean)
-    // Off the drawn land only by the coast's own generalisation is still India
+    // Off the drawn land only by the coast's own generalisation is still home
     // — or still Bangladesh, where the Meghna's estuary is wider than its coast.
-    const rings = [indiaRing, ...through.map(ringOf)]
+    // Home is the river's own country: India for the Indian map, Brazil for
+    // the Amazon.
+    if (!picked.get(p.country)) errors.push(`${where(p.id)}: a river needs its country, one the map draws`)
+    const homes = homesOf(p, atlas)
+    const rings = homeRings(p)
     const abroad = sample.filter(
       (c) =>
-        !geoContains(INDIA_FEATURE, c) &&
+        !homes.some((f) => geoContains(f, c)) &&
         !through.some((f) => geoContains(f, c)) &&
         !rings.some((ring) => ring.some((v) => geoDistance(v, c) * 6371 <= 5))
     ).length
     if (abroad > sample.length * 0.05) {
-      errors.push(`${where(p.id)}: ${abroad} of ${sample.length} sampled points outside India${through.length ? ` and ${p.through.join(', ')}` : ''}`)
+      errors.push(`${where(p.id)}: ${abroad} of ${sample.length} sampled points outside ${p.country}${through.length ? ` and ${p.through.join(', ')}` : ''}`)
     }
-    const course = simplifyLine(line, 0.15)
+    // A world river is drawn at the world's scale: its courses are thinned to
+    // the file's own `simplifyKm` (the Amazon at 150m would be 40,000 points).
+    const course = simplifyLine(line, simplifyKm)
     done.set(p.id, course)
     p.line = course
     p.lengthKm = Math.round(lengthKm(line))
@@ -1350,7 +1395,7 @@ for (const file of syllabusFiles) {
   const doc = JSON.parse(readFileSync(resolve(SYLLABUS, file), 'utf8'))
   const where = (id) => `${file}:${id}`
   const rivers = doc.places.filter((p) => p.type === 'river')
-  if (rivers.length) courseRivers(rivers, where)
+  if (rivers.length) courseRivers(rivers, where, doc.simplifyKm, doc.atlas ?? 'world')
   /**
    * A river's origin is a question of its own — "Find the origin:
    * Trambakeshwar" — so it is a place, made here from the river's `source`
@@ -1772,10 +1817,24 @@ if (strayLabels.length) {
  * countries (the Horn of Africa, as the notes define it).
  */
 const landRaw = JSON.parse(readFileSync(LAND_RAW, 'utf8'))
+/**
+ * Natural Earth repeats a few names — two "Cordillera Oriental"s, Colombia's
+ * and Peru's — so every polygon of a name is kept, and a place takes the one
+ * its own point is in (`pickFor`).
+ */
 const landByName = new Map()
 for (const f of landRaw.features) {
   const name = f.properties.name ?? f.properties.NAME
-  if (name) landByName.set(loose(name), f)
+  if (name) landByName.set(loose(name), [...(landByName.get(loose(name)) ?? []), f])
+}
+const pickFor = (p, fs) => fs && (fs.find((f) => geoContains(f, p.point)) ?? fs[0])
+/** A lake's patch: Natural Earth's lakes first, then the marine layer for one open to the sea. */
+const lakeByName = new Map()
+for (const file of [MARINE_RAW, LAKES_RAW]) {
+  for (const f of JSON.parse(readFileSync(file, 'utf8')).features) {
+    const name = f.properties.name ?? f.properties.NAME
+    if (name && f.geometry) lakeByName.set(loose(name), [f])
+  }
 }
 /** A constituent country's patch is its map unit, looked up by the same key. */
 const unitByName = new Map()
@@ -1850,6 +1909,10 @@ const landFeatures = []
 const noLandPolygon = []
 for (const p of places) {
   if (!isLandArea(p)) continue
+  if (PHYSICAL_TINT[p.type]) {
+    p.tint ??= PHYSICAL_TINT[p.type]
+    p.onLand = true
+  }
   let parts = []
   // A region the notes define as a set of countries — the Horn of Africa is
   // Somalia, Ethiopia, Eritrea and Djibouti — is those countries' own land,
@@ -1876,9 +1939,10 @@ for (const p of places) {
     }
   }
   for (const name of p.admin1 || p.countries || p.south != null ? (p.land ?? []) : (p.land ?? [p.name])) {
-    const f = (p.type === 'constituent' ? unitByName : landByName).get(loose(name))
+    const found = (p.type === 'constituent' ? unitByName : p.type === 'lake' ? lakeByName : landByName).get(loose(name))
+    const f = Array.isArray(found) ? pickFor(p, found) : found
     if (!f) {
-      errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : 'land polygon'} named "${name}"`)
+      errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : p.type === 'lake' ? 'lake' : 'land polygon'} named "${name}"`)
       continue
     }
     const g = f.geometry

@@ -664,7 +664,7 @@ export function useQuiz({ round, mode, timed, size, initial = null }: QuizOption
             ? areaFrame()
             : null
           : // The Political Map: a country, or a place in the places section.
-            !current.place || current.place.section === 'places'
+            !current.place || current.place.section === 'places' || current.place.section === 'physical'
             ? focusOf(current)
             : // The Rivers map: the river's whole course, or the peak, origin
               // or landmark's point — every one, however large (`focusAlways`).

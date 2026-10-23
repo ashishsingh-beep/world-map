@@ -47,6 +47,19 @@ export type PlaceType =
   | 'origin'
   /** Where two rivers meet — Vishnuprayag, Prayagraj — put by the build exactly where its first river ends. */
   | 'confluence'
+  /**
+   * The world's physical map: areas from Natural Earth's physical regions,
+   * each drawn in its own tint — the Altiplano, the Llanos, the Atacama, the
+   * Andes as a whole range.
+   */
+  | 'plateau'
+  | 'grassland'
+  | 'desert'
+  | 'mountains'
+  /** Points on a world river's course: Angel Falls, the Itaipu dam, the Río de la Plata. */
+  | 'waterfall'
+  | 'dam'
+  | 'estuary'
 
 export interface Place {
   id: string
@@ -54,7 +67,7 @@ export interface Place {
   aliases: string[]
   type: PlaceType
   /** Which menu section this belongs to. */
-  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers'
+  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers' | 'physical'
   /** ISO3 of the country it belongs to, or null for territories and shared features. */
   country: string | null
   /** ISO3 of the governing state, when that differs from `country`. */
@@ -184,7 +197,7 @@ export interface PlaceGroup {
   mnemonic: string | null
   /** The syllabus the trick was authored in. */
   continent: string
-  section: 'places' | 'water' | 'mountains' | 'phenomena'
+  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'physical'
   /**
    * Key into `TRICK_DIAGRAMS` in `src/ui/TrickDiagram.tsx`. Set when the trick
    * is spatial and a drawing says it better than a sentence; the mnemonic then
@@ -197,7 +210,7 @@ export interface PlaceGroup {
 export interface SyllabusContinent {
   name: string
   title: string
-  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers'
+  section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers' | 'physical'
   atlas: 'world' | 'india'
   count: number
 }
@@ -292,6 +305,13 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   river: 'river',
   origin: 'origin',
   confluence: 'confluence',
+  plateau: 'plateau',
+  grassland: 'grassland',
+  desert: 'desert',
+  mountains: 'mountain range',
+  waterfall: 'waterfall',
+  dam: 'dam',
+  estuary: 'estuary',
 }
 
 /** What a river is called on a prompt or a card: its role, which is the point. */

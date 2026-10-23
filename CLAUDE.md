@@ -136,9 +136,11 @@ section a place is in; nothing else may re-derive it.
 **The Political Map is one round per scope, not a country round and a places
 round.** The World Map menu is the Political Map, the Physical Map and
 Phenomena, nothing else. The Physical Map holds Seas & Straits, with Rivers,
-Mountains, Deserts, Grasslands and Lakes beside it (`PHYSICAL_SECTIONS` in
-`src/app/physical.ts`), each already a map at a route of its own
-(`#/physical-rivers/learn`, `PhysicalScreen`) waiting for its notes. A physical
+Mountains, Plateaus, Deserts, Grasslands and Lakes beside it (`PHYSICAL_SECTIONS`
+in `src/app/physical.ts`). A section without notes is a map at a route of its
+own (`#/physical-rivers/learn`, `PhysicalScreen`); once its syllabus has places
+— `syllabus` names the file's `continent`, `World Rivers` and so on — its card
+and that route open the round instead (`physicalRound` in `App`). A physical
 map (`physical` on `MapCanvas`) draws the land as one mass — no borders, only
 the coast (`coastline()` in `src/data/countries.ts`: the topology's arcs that
 belong to one country alone, less Natural Earth's cut along the 180th) — and a
@@ -386,6 +388,42 @@ its own significance describes. Clipping done through raw GeoJSON output
 found a live instance of the winding trap below — mapshaper's `-clip` handed
 back a ring wound the opposite way from its input, and only going through
 TopoJSON (as the rest of this build already does) reads it correctly.
+
+**The physical sections are filled continent by continent.** Each is one
+syllabus file, `src/data/syllabus/physical-*.json` — rivers, mountains,
+plateaus, deserts, grasslands, lakes — holding every continent's features as
+they arrive, South America first, so the notes for a continent are cherry-picked
+into the section each feature belongs to. Its round draws the world and is
+framed on what it holds (`framing` in `rounds.ts`, from each patch's extent and
+each river's course), and it is a physical map (`Round.physical`): land as one
+mass, borders on the switch, no micro-state rings. The areas are Natural
+Earth's own physical regions (`land`): the Altiplano is the Bolivian Plateau,
+Planalto do Mato Grosso, Planalto da Borborema, Patagonia (both the plateau and
+the desert), the Atacama, the Llanos, Caatingas, the Gran Chaco, the Pampas,
+the Andes and Colombia's Cordillera Oriental. The notes' three Cs have no
+polygon of their own, so the Cerrados are Natural Earth's Planalto Central and
+the Campos its Campos Sertão, which lie where the notes mark them. A repeated
+name (two Cordilleras Oriental) takes the polygon its point is in (`pickFor`).
+A lake is a patch too when it names one: Natural Earth's lakes layer
+(`LAKES_URL`) for Titicaca and Poopó, the marine layer for Maracaibo and the
+Lagoa dos Patos. Each kind is drawn over the land in its own tint
+(`PHYSICAL_TINT` in the build): plateau violet, grassland green, desert amber,
+range brown, lake blue; peaks are the peak glyph. Learn has a chip per kind when
+a section has more than one (Ranges, Peaks).
+
+The world's rivers are the Indian ones' machinery at another scale
+(`physical-rivers.json`, section `rivers`, atlas `world`): systems as `basin`,
+origins, tributaries, landmarks (Macapá at the Amazon's mouth, Angel Falls, the
+Itaipu dam, the Río de la Plata). A river is held to its own `country` and its
+`through` list, not to India — the India map alone adds India to every river's
+— and a file may set `simplifyKm` (the world's is 1km; the Amazon at 150m would
+be tens of thousands of points). The Amazon is drawn from the Mantaro's source,
+as the notes have it, through five OSM relations (Mantaro, Ene, Tambo,
+Ucayali, Amazonas); the Paraná from the Rio Grande's in the Brazilian
+Highlands. The Rio Grande has no relation, and its reservoirs break any walk by
+name, so it is `osmWalks`: several seed ways walked by name inside a box, the
+gaps under 40km bridged. The course search is a heap Dijkstra: the Amazon's
+graph is too big for the linear scan India's rivers got by with.
 
 **Oceania's regions are drawn, and held to their members.** Melanesia,
 Micronesia and Polynesia are a convention, not a coastline: no dataset

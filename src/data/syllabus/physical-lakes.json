@@ -1,0 +1,105 @@
+{
+  "continent": "World Lakes",
+  "title": "Lakes",
+  "section": "physical",
+  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "lak-maracaibo",
+      "name": "Lake Maracaibo",
+      "aliases": [
+        "Maracaibo",
+        "Lago de Maracaibo"
+      ],
+      "type": "lake",
+      "country": "VEN",
+      "point": [
+        -71.6,
+        9.8
+      ],
+      "land": [
+        "Lago de Maracaibo"
+      ],
+      "significance": "South America's largest lake, a tidal bay of the Caribbean over rich oil fields — and Earth's lightning capital, lit by the Catatumbo storms",
+      "notes": [
+        "In Venezuela",
+        "The largest lake of South America",
+        "Earth's lightning capital: the Catatumbo lightning flashes on most nights of the year"
+      ],
+      "tier": 1,
+      "offshore": true
+    },
+    {
+      "id": "lak-titicaca",
+      "name": "Lake Titicaca",
+      "aliases": [
+        "Titicaca",
+        "Lago Titicaca"
+      ],
+      "type": "lake",
+      "country": "PER",
+      "point": [
+        -69.6,
+        -15.6
+      ],
+      "land": [
+        "Lago Titicaca"
+      ],
+      "significance": "The highest navigable lake in the world, 3,812 m up on the Altiplano, shared by Peru and Bolivia — and drying",
+      "notes": [
+        "Between Peru and Bolivia",
+        "The highest navigable lake",
+        "Drying"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-poopo",
+      "name": "Lake Poopó",
+      "aliases": [
+        "Poopó",
+        "Poopo",
+        "Lake Poopo",
+        "Lago Poopó"
+      ],
+      "type": "lake",
+      "country": "BOL",
+      "point": [
+        -67.1,
+        -18.75
+      ],
+      "land": [
+        "Lago Poopó"
+      ],
+      "significance": "A shallow salt lake on the Altiplano, once Bolivia's second largest, that dried up almost completely in 2015",
+      "notes": [
+        "In Bolivia",
+        "A dried lake"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-patos",
+      "name": "Lagoa dos Patos",
+      "aliases": [
+        "Lake Patos",
+        "Patos Lagoon"
+      ],
+      "type": "lake",
+      "country": "BRA",
+      "point": [
+        -51.3,
+        -31.1
+      ],
+      "land": [
+        "Lagoa dos Patos"
+      ],
+      "significance": "Brazil's largest lagoon, behind a sand bar on the coast of Rio Grande do Sul, with Porto Alegre at its head",
+      "notes": [
+        "The largest lagoon lake of Brazil"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": []
+}

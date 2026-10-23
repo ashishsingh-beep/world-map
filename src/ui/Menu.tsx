@@ -29,6 +29,7 @@ export type MenuIcon =
   | 'desert'
   | 'grass'
   | 'lake'
+  | 'plateau'
   | 'climate'
 
 const TINTS: Record<MenuIcon, string> = {
@@ -43,6 +44,7 @@ const TINTS: Record<MenuIcon, string> = {
   desert: 'bg-yellow-100 text-yellow-700',
   grass: 'bg-lime-100 text-lime-700',
   lake: 'bg-cyan-100 text-cyan-700',
+  plateau: 'bg-fuchsia-100 text-fuchsia-700',
   climate: 'bg-violet-100 text-violet-700',
 }
 
@@ -162,6 +164,14 @@ function Icon({ name }: { name: MenuIcon }) {
         <svg {...common}>
           <path d="M4 12c0-3.5 3.6-6 8-6s8 2.5 8 6-3.6 6-8 6-8-2.5-8-6z" />
           <path d="M8 12c1-.8 2-.8 3 0s2 .8 3 0" />
+        </svg>
+      )
+    case 'plateau':
+      return (
+        <svg {...common}>
+          <path d="M3 18h18" />
+          <path d="M4 18l3-8h10l3 8" />
+          <path d="M7 10h10" />
         </svg>
       )
     case 'climate':

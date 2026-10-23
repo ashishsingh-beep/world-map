@@ -1,5 +1,7 @@
 import { allIsos, meta, metaOf, renderOnlyIsos, type Continent } from '../data/countries'
-import { places as allPlaces, syllabusContinents } from '../data/places'
+import { places as allPlaces, syllabusContinents, type Place } from '../data/places'
+import { areaOf } from '../data/areas'
+import { geoBounds } from 'd3-geo'
 
 export type BBox = [[number, number], [number, number]]
 
@@ -34,6 +36,12 @@ export interface Round {
   backdrop?: string[]
   /** Places drawn and never asked — a connecting river, the Kanhan. */
   context?: string[]
+  /**
+   * A section of the world's physical map — rivers, mountains, plateaus,
+   * deserts, grasslands, lakes: drawn as land and water, with the borders on
+   * a switch, rather than as the political map.
+   */
+  physical?: boolean
 }
 
 const isosIn = (continent: Continent) =>
@@ -302,7 +310,11 @@ function continentPlaceRound({
   // Seas and straits span the globe, so their round draws every country, and
   // so do the phenomena — the ocean currents run round all of it.
   const phenomena = ps.length > 0 && ps.every((p) => p.section === 'phenomena')
-  const worldwide = name === 'World' || phenomena
+  // The physical map's sections hold features from every continent, so they
+  // draw the world, and are framed on what they hold.
+  const physical =
+    ps.length > 0 && atlas !== 'india' && ps.every((p) => p.section === 'physical' || p.section === 'rivers')
+  const worldwide = name === 'World' || phenomena || physical
   // The Himalaya runs through five countries, so its round draws the whole
   // neighbourhood and lets the state outlines do the locating.
   // The Indian map is India plus only the neighbours that frame it — enough
@@ -321,7 +333,9 @@ function continentPlaceRound({
     id: allPlacesRoundId(name),
     title,
     atlas,
-    blurb: phenomena
+    blurb: physical && !ps.some((p) => p.section === 'rivers')
+      ? `${ps.length} ${title.toLowerCase()} so far, from ${listed(continentsOf(ps))}.`
+      : phenomena
       ? ps.some((p) => p.type === 'wind')
         ? `All ${ps.length} local winds, hot and cold, each an arrow the way it blows.`
         : `All ${ps.length} currents, warm and cold, in every ocean.`
@@ -343,16 +357,47 @@ function continentPlaceRound({
      * to the round's own features instead would give the mountains a
      * Himalaya-shaped letterbox and leave nowhere for the rivers to go.
      */
+    ...(physical ? { physical: true } : {}),
     view:
       atlas === 'india'
         ? INDIA_VIEW
-        : phenomena
+        : physical
+          ? framing(ps)
+          : phenomena
           ? worldReaching(ps.flatMap((p) => p.line ?? [p.point]))
           : fitAround(
             worldwide ? (VIEW_OVERRIDES.world as BBox) : (PLACE_BASE_VIEW[name] ?? fit(isos)),
             ps.map((p) => p.point)
           ),
   }
+}
+
+/** The continents a physical section's features are in, by their countries. */
+function continentsOf(ps: Place[]): string[] {
+  return [...new Set(ps.map((p) => (p.country && meta[p.country] ? meta[p.country].continent : null)).filter(Boolean))] as string[]
+}
+
+/**
+ * A physical section's frame: everything it holds — a patch's whole extent, a
+ * river's whole course — with a margin, so South America alone is framed as
+ * South America, and the frame widens as the other continents arrive.
+ */
+function framing(ps: Place[], pad = 4): BBox {
+  const pts: [number, number][] = []
+  for (const p of ps) {
+    pts.push(p.point, ...((p.line as [number, number][] | undefined) ?? []))
+    const area = areaOf(p.id)
+    if (area) {
+      const [[w, s], [e, n]] = geoBounds(area as never)
+      pts.push([w, s], [e, n])
+    }
+  }
+  const lons = pts.map(([x]) => x)
+  const lats = pts.map(([, y]) => y)
+  return [
+    [Math.max(-180, Math.min(...lons) - pad), Math.max(-85, Math.min(...lats) - pad)],
+    [Math.min(180, Math.max(...lons) + pad), Math.min(85, Math.max(...lats) + pad)],
+  ]
 }
 
 /**

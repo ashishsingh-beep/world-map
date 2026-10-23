@@ -32,7 +32,7 @@ import { MenuCard, MenuSection } from './ui/Menu'
 import { IsothermScreen } from './screens/IsothermScreen'
 import { ClimateScreen } from './screens/ClimateScreen'
 import { PhysicalScreen } from './screens/PhysicalScreen'
-import { PHYSICAL_SECTIONS, physicalSection } from './app/physical'
+import { PHYSICAL_SECTIONS, physicalSection, type PhysicalSection } from './app/physical'
 import {
   clearRound,
   fits,
@@ -64,6 +64,12 @@ const riverTally = (asked: Place[]) => {
     .join(' · ')
 }
 
+/** A physical section's round, once its syllabus has something in it. */
+const physicalRound = (s: PhysicalSection) => {
+  const r = PLACE_ROUNDS[allPlacesRoundId(s.syllabus)]
+  return r?.places?.length ? r : null
+}
+
 /**
  * The isotherm maps have no round behind them, so they are answered before
  * anything that needs one.
@@ -73,8 +79,10 @@ export default function App() {
   const toWorld = () => navigate({ view: 'atlas', roundId: HOME.roundId, atlas: 'world' })
   if (route.roundId === ISOTHERMS) return <IsothermScreen onExit={toWorld} />
   if (route.roundId === CLIMATE) return <ClimateScreen onExit={toWorld} />
+  // A physical section with its notes in is a round; until then, its map.
   const physical = physicalSection(route.roundId)
-  if (physical) return <PhysicalScreen section={physical} onExit={toWorld} />
+  if (physical && !physicalRound(physical)) return <PhysicalScreen section={physical} onExit={toWorld} />
+  if (physical) return <Rounds route={{ ...route, roundId: physicalRound(physical)!.id }} navigate={navigate} />
   return <Rounds route={route} navigate={navigate} />
 }
 
@@ -790,16 +798,28 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
               />
             )
           })}
-          {PHYSICAL_SECTIONS.map((section) => (
-            <MenuCard
-              key={section.id}
-              icon={section.icon}
-              title={section.title}
-              blurb="Notes to come — the world map is ready, borders and names on a switch."
-              meta="Map ready"
-              onClick={() => navigate({ view: 'learn', roundId: section.id })}
-            />
-          ))}
+          {PHYSICAL_SECTIONS.map((section) => {
+            const r = physicalRound(section)
+            return r ? (
+              <MenuCard
+                key={section.id}
+                icon={section.icon}
+                title={section.title}
+                blurb={r.blurb}
+                meta={`${r.places?.length ?? 0} ${r.places?.some((id) => placeOf(id).type === 'river') ? 'features' : section.title.toLowerCase()}`}
+                onClick={() => navigate({ view: 'setup', roundId: r.id })}
+              />
+            ) : (
+              <MenuCard
+                key={section.id}
+                icon={section.icon}
+                title={section.title}
+                blurb="Notes to come — the world map is ready, borders and names on a switch."
+                meta="Map ready"
+                onClick={() => navigate({ view: 'learn', roundId: section.id })}
+              />
+            )
+          })}
         </MenuSection>
 
         {PHENOMENA_CONTINENTS.length > 0 && (

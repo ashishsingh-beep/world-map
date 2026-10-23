@@ -116,6 +116,7 @@ export function ResultsScreen({
       <MapCanvas
         className="absolute inset-0"
         render={round.render}
+        physical={round.physical}
         askable={[]}
         view={round.view}
         atlas={round.atlas}

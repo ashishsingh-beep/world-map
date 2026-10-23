@@ -1,0 +1,101 @@
+{
+  "continent": "World Plateaus",
+  "title": "Plateaus",
+  "section": "physical",
+  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "plt-bolivian",
+      "name": "Bolivian Plateau",
+      "aliases": [
+        "Altiplano",
+        "Altiplano Plateau"
+      ],
+      "type": "plateau",
+      "country": "BOL",
+      "point": [
+        -68,
+        -19.5
+      ],
+      "land": [
+        "ALTIPLANO"
+      ],
+      "significance": "The high tableland of Lake Titicaca and La Paz, lying between the ranges of the Andes — the highest plateau outside Tibet",
+      "notes": [
+        "Shared by Peru and Bolivia",
+        "Also known as the **Altiplano**",
+        "Nearest mountains: the Andes",
+        "An intermontane plateau — one enclosed by mountains"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "plt-mato-grosso",
+      "name": "Mato Grosso Plateau",
+      "aliases": [
+        "Plateau of Mato Grosso",
+        "Planalto do Mato Grosso",
+        "Mato Grosso"
+      ],
+      "type": "plateau",
+      "country": "BRA",
+      "point": [
+        -56,
+        -11
+      ],
+      "land": [
+        "PLANALTO DO MATO GROSSO"
+      ],
+      "significance": "Brazil's great central tableland, the divide between the rivers flowing north to the Amazon and south to the Paraná",
+      "notes": [
+        "In Brazil"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "plt-borborema",
+      "name": "Borborema Plateau",
+      "aliases": [
+        "Planalto da Borborema"
+      ],
+      "type": "plateau",
+      "country": "BRA",
+      "point": [
+        -37,
+        -7.5
+      ],
+      "land": [
+        "Planalto da Borborema"
+      ],
+      "significance": "The upland of Brazil's north-eastern bulge, whose seaward slope catches the rain the dry interior behind it lacks",
+      "notes": [
+        "In north-east Brazil"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "plt-patagonian",
+      "name": "Patagonian Plateau",
+      "aliases": [
+        "Patagonia Plateau",
+        "Patagonia"
+      ],
+      "type": "plateau",
+      "country": "ARG",
+      "point": [
+        -69,
+        -44
+      ],
+      "land": [
+        "PATAGONIA"
+      ],
+      "significance": "Stepped tableland east of the southern Andes in Argentina — a piedmont plateau, built up at the mountains' foot",
+      "notes": [
+        "In Argentina",
+        "A piedmont plateau — one at the foot of mountains, as against an intermontane one enclosed by them"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": []
+}

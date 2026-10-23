@@ -140,9 +140,9 @@ export function PlayScreen({
           areas: quiz.areas,
           bands: quiz.bands,
           // The water and currents rounds keep their country rings off, as in play.
-          countryMarkers: !(
-            round.places?.length && ['water', 'phenomena'].includes(placeOf(round.places[0])?.section)
-          ),
+          countryMarkers:
+            !round.physical &&
+            !(round.places?.length && ['water', 'phenomena'].includes(placeOf(round.places[0])?.section)),
         }}
         missed={quiz.missed}
         onPractiseMissed={
@@ -176,6 +176,7 @@ export function PlayScreen({
       <MapCanvas
         className="absolute inset-0"
         render={round.render}
+        physical={round.physical}
         askable={mode === 'pin' && asksCountry ? round.askable : []}
         view={round.view}
         states={quiz.states}
@@ -191,7 +192,7 @@ export function PlayScreen({
         focusAlways={quiz.focusAlways}
         pinPoint={quiz.pinPoint}
         markPoint={quiz.markPoint}
-        countryMarkers={!isWaterRound && q?.place?.section !== 'phenomena' && q?.place?.section !== 'rivers'}
+        countryMarkers={!isWaterRound && !round.physical && q?.place?.section !== 'phenomena' && q?.place?.section !== 'rivers'}
         onPickPoint={isPlaceRound && mode === 'pin' && !asksCountry ? quiz.pickPoint : undefined}
         padding={{ top: 180, right: 32, bottom: 32, left: 32 }}
       />

@@ -1,0 +1,150 @@
+{
+  "continent": "World Grasslands",
+  "title": "Grasslands",
+  "section": "physical",
+  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "grs-llanos",
+      "name": "Llanos",
+      "aliases": [],
+      "type": "grassland",
+      "country": "VEN",
+      "point": [
+        -68,
+        7.2
+      ],
+      "land": [
+        "LLANOS"
+      ],
+      "significance": "The tropical grassland of the Orinoco basin, flooded in the wet season and parched in the dry",
+      "notes": [
+        "Tropical grassland — between the Tropics of Cancer and Capricorn",
+        "In Venezuela (and Colombia), along the **Orinoco** river"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-catingas",
+      "name": "Catingas",
+      "aliases": [
+        "Caatinga",
+        "Caatingas"
+      ],
+      "type": "grassland",
+      "country": "BRA",
+      "point": [
+        -40,
+        -7
+      ],
+      "land": [
+        "CAATINGAS"
+      ],
+      "significance": "The thorny scrub of Brazil's drought-prone north-east, the land of the sertão",
+      "notes": [
+        "Tropical grassland — between the Tropics of Cancer and Capricorn",
+        "In north-east Brazil — the northernmost of Brazil's three Cs"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-cerrados",
+      "name": "Cerrados",
+      "aliases": [
+        "Cerrado"
+      ],
+      "type": "grassland",
+      "country": "BRA",
+      "point": [
+        -50,
+        -14
+      ],
+      "land": [
+        "PLANALTO CENTRAL"
+      ],
+      "significance": "Brazil's vast savanna of the central plateau around Brasília, now its soybean frontier",
+      "notes": [
+        "Tropical grassland — between the Tropics of Cancer and Capricorn",
+        "In central Brazil — the middle of Brazil's three Cs"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-campos",
+      "name": "Campos",
+      "aliases": [],
+      "type": "grassland",
+      "country": "BRA",
+      "point": [
+        -45.5,
+        -15
+      ],
+      "land": [
+        "Campos Sertão"
+      ],
+      "significance": "Brazil's open highland grassland of the sertão, south of the north-east's thorn scrub",
+      "notes": [
+        "Tropical grassland — between the Tropics of Cancer and Capricorn",
+        "In Brazil — the third of Brazil's three Cs"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-gran-chaco",
+      "name": "Gran Chaco",
+      "aliases": [
+        "Chaco"
+      ],
+      "type": "grassland",
+      "country": "PRY",
+      "point": [
+        -61,
+        -23
+      ],
+      "land": [
+        "GRAN CHACO"
+      ],
+      "significance": "The hot lowland plain of thorn forest and grass where Bolivia, Paraguay and Argentina meet, on the Tropic of Capricorn",
+      "notes": [
+        "Spread over Brazil, Bolivia, Paraguay and Argentina",
+        "On the Tropic of Capricorn"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-pampas",
+      "name": "Pampas",
+      "aliases": [
+        "Pampa"
+      ],
+      "type": "grassland",
+      "country": "ARG",
+      "point": [
+        -63,
+        -34
+      ],
+      "land": [
+        "PAMPAS"
+      ],
+      "significance": "Argentina's flat, fertile temperate grassland round Buenos Aires, its cattle fed on alfalfa",
+      "notes": [
+        "Temperate grassland — outside the Tropics",
+        "In Argentina",
+        "Alfalfa (lucerne) grass, grown to feed cattle"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": [
+    {
+      "id": "grs-brazil-three-cs",
+      "name": "Brazil's three Cs",
+      "members": [
+        "grs-catingas",
+        "grs-cerrados",
+        "grs-campos"
+      ],
+      "mnemonic": "C1, C2, C3 — Catingas, Cerrados, Campos, north to south"
+    }
+  ]
+}

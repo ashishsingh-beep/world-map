@@ -1,0 +1,358 @@
+{
+  "continent": "World Rivers",
+  "title": "Rivers",
+  "section": "rivers",
+  "atlas": "world",
+  "simplifyKm": 1,
+  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "wriv-amazon",
+      "name": "Amazon",
+      "aliases": [
+        "Amazonas"
+      ],
+      "type": "river",
+      "country": "BRA",
+      "role": "main",
+      "basin": "Amazon",
+      "through": [
+        "PER",
+        "COL"
+      ],
+      "osm": "R2295651",
+      "osmExtra": [
+        "R1425071",
+        "R1246350",
+        "R1246349",
+        "R1246351"
+      ],
+      "labelAt": 0.62,
+      "source": {
+        "name": "Mantaro",
+        "aliases": [
+          "Mantaro River",
+          "Río Mantaro"
+        ],
+        "near": "Andes, Peru",
+        "point": [
+          -76.28,
+          -10.92
+        ],
+        "country": "PER",
+        "significance": "Where the river of the selvas rises: a river of the Andes of central Peru, flowing out of Lake Junín"
+      },
+      "significance": "The river of the selvas, the world's largest rainforest — second longest on Earth, and the greatest of all by the water it carries",
+      "notes": [
+        "Flows through Peru, Colombia and Brazil",
+        "Rises in the Andes of Peru as the **Mantaro**",
+        "The second longest river in the world, after the Nile — and the largest by width and volume",
+        "Its largest tributary is the **Madeira**",
+        "Reaches the Atlantic at **Macapá**, on the Equator",
+        "Drains the Amazon forest — the selvas, the world's largest evergreen rainforest"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-madeira",
+      "name": "Madeira",
+      "aliases": [],
+      "type": "river",
+      "country": "BRA",
+      "role": "tributary",
+      "basin": "Amazon",
+      "joins": "wriv-amazon",
+      "through": [
+        "BOL"
+      ],
+      "osm": "R241330",
+      "bank": "right",
+      "significance": "The largest tributary of the river of the selvas, formed on the Bolivian border and running north-east past Porto Velho",
+      "notes": [
+        "The Amazon's largest tributary",
+        "Formed where the Mamoré and the Beni meet, on the Brazil–Bolivia border"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-macapa",
+      "name": "Macapá",
+      "aliases": [
+        "Macapa"
+      ],
+      "type": "city",
+      "country": "BRA",
+      "point": [
+        -51.07,
+        0.03
+      ],
+      "basin": "Amazon",
+      "significance": "The city at the mouth of the world's greatest river, standing on the Equator",
+      "notes": [
+        "Marks the Amazon's mouth on the Atlantic",
+        "Capital of Brazil's Amapá state"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-magdalena",
+      "name": "Magdalena",
+      "aliases": [
+        "Río Magdalena"
+      ],
+      "type": "river",
+      "country": "COL",
+      "role": "main",
+      "basin": "Magdalena",
+      "osm": "R2140749",
+      "source": {
+        "name": "Laguna de la Magdalena",
+        "aliases": [
+          "Magdalena Lake"
+        ],
+        "point": [
+          -76.61,
+          1.94
+        ],
+        "significance": "Where Colombia's great river rises, a small lake high in the Colombian Massif, where the Andes part into three ranges"
+      },
+      "significance": "Colombia's chief river, running north between the Andes' cordilleras to the Caribbean at Barranquilla",
+      "notes": [
+        "Flows through Colombia",
+        "Mouth: the **Caribbean Sea**, at Bocas de Ceniza by Barranquilla"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-orinoco",
+      "name": "Orinoco",
+      "aliases": [
+        "Río Orinoco"
+      ],
+      "type": "river",
+      "country": "VEN",
+      "role": "main",
+      "basin": "Orinoco",
+      "through": [
+        "COL"
+      ],
+      "osm": "R1083284",
+      "source": {
+        "name": "Cerro Delgado Chalbaud",
+        "aliases": [
+          "Delgado Chalbaud"
+        ],
+        "point": [
+          -63.41,
+          2.39
+        ],
+        "significance": "Where Venezuela's great river rises, on a peak of the highlands along the Brazilian border"
+      },
+      "significance": "Venezuela's great river, arcing round the Guiana Highlands and across the grasslands of the Llanos to a delta on the Atlantic",
+      "notes": [
+        "Flows through Venezuela, and along its border with Colombia",
+        "Drains the **Llanos** grasslands",
+        "Its basin holds **Angel Falls**, the highest waterfall in the world"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-angel-falls",
+      "name": "Angel Falls",
+      "aliases": [
+        "Salto Ángel",
+        "Salto Angel",
+        "Kerepakupai Merú"
+      ],
+      "type": "waterfall",
+      "country": "VEN",
+      "point": [
+        -62.535,
+        5.967
+      ],
+      "basin": "Orinoco",
+      "significance": "The highest waterfall in the world, plunging 979 m off a tabletop mountain in Canaima National Park",
+      "notes": [
+        "The world's highest uninterrupted waterfall: 979 m (3,212 ft)",
+        "Falls from Auyán-tepui, on a stream that drains through the Caroní to the Orinoco"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-parana",
+      "name": "Paraná",
+      "aliases": [
+        "Parana",
+        "Río Paraná"
+      ],
+      "type": "river",
+      "country": "ARG",
+      "role": "main",
+      "basin": "Paraná",
+      "through": [
+        "BRA",
+        "PRY",
+        "URY"
+      ],
+      "osm": "R421678",
+      "osmWalks": [
+        {
+          "seed": "W358275779",
+          "names": [
+            "Rio Grande"
+          ],
+          "box": [
+            [
+              -51.3,
+              -22.7
+            ],
+            [
+              -43.7,
+              -19.4
+            ]
+          ]
+        },
+        {
+          "seed": "W214127902",
+          "names": [
+            "Rio Grande"
+          ],
+          "box": [
+            [
+              -51.3,
+              -22.7
+            ],
+            [
+              -43.7,
+              -19.4
+            ]
+          ]
+        },
+        {
+          "seed": "W1493628931",
+          "names": [
+            "Rio Grande"
+          ],
+          "box": [
+            [
+              -51.3,
+              -22.7
+            ],
+            [
+              -43.7,
+              -19.4
+            ]
+          ]
+        },
+        {
+          "seed": "W42845535",
+          "names": [
+            "Rio Grande"
+          ],
+          "box": [
+            [
+              -51.3,
+              -22.7
+            ],
+            [
+              -43.7,
+              -19.4
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "name": "Brazilian Highlands",
+        "aliases": [
+          "Brazil Highlands",
+          "Brazilian Plateau"
+        ],
+        "near": "Serra da Mantiqueira",
+        "point": [
+          -44.61,
+          -22.27
+        ],
+        "country": "BRA",
+        "significance": "Where South America's second river rises, as the Rio Grande in the Serra da Mantiqueira of Minas Gerais"
+      },
+      "significance": "South America's second river, from the Brazilian Highlands past Paraguay into Argentina — dammed at Itaipu, it ends in the Río de la Plata",
+      "notes": [
+        "Flows through Brazil, Paraguay and Argentina",
+        "Rises in the **Brazilian Highlands**",
+        "Mouth: the **Río de la Plata**",
+        "**Itaipu**, on the Brazil–Paraguay border, is the largest dam of South America"
+      ],
+      "tier": 1,
+      "labelAt": 0.62
+    },
+    {
+      "id": "wriv-itaipu",
+      "name": "Itaipu Dam",
+      "aliases": [
+        "Itaipu",
+        "Itaipú"
+      ],
+      "type": "dam",
+      "country": "BRA",
+      "point": [
+        -54.589,
+        -25.408
+      ],
+      "basin": "Paraná",
+      "significance": "The largest dam of South America, on the Brazil–Paraguay border just above the meeting point with Argentina",
+      "notes": [
+        "Shared by Brazil and Paraguay",
+        "One of the world's largest hydroelectric plants"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-la-plata",
+      "name": "Río de la Plata",
+      "aliases": [
+        "La Plata",
+        "River Plate",
+        "Rio de la Plata"
+      ],
+      "type": "estuary",
+      "country": "ARG",
+      "point": [
+        -57.6,
+        -34.9
+      ],
+      "basin": "Paraná",
+      "offshore": true,
+      "significance": "The broad estuary between Buenos Aires and Montevideo into which South America's second river empties",
+      "notes": [
+        "Mouth of the Paraná (and the Uruguay)"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": [
+    {
+      "id": "wriv-amazon-trick",
+      "name": "Amazon — its countries",
+      "members": [
+        "wriv-amazon"
+      ],
+      "mnemonic": "PCB — Peru, Colombia, Brazil"
+    },
+    {
+      "id": "wriv-parana-trick",
+      "name": "Paraná — its countries",
+      "members": [
+        "wriv-parana"
+      ],
+      "mnemonic": "Pa·ra·na — Para for Paraguay, ra for Brazil, na for Argentina"
+    },
+    {
+      "id": "wriv-magdalena-trick",
+      "name": "Magdalena",
+      "members": [
+        "wriv-magdalena"
+      ],
+      "mnemonic": "Nadi — Mug Daal lena: the Magdalena"
+    }
+  ]
+}

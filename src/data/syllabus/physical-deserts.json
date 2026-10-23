@@ -1,0 +1,59 @@
+{
+  "continent": "World Deserts",
+  "title": "Deserts",
+  "section": "physical",
+  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "places": [
+    {
+      "id": "dst-atacama",
+      "name": "Atacama",
+      "aliases": [
+        "Atacama Desert",
+        "Desierto de Atacama"
+      ],
+      "type": "desert",
+      "country": "CHL",
+      "point": [
+        -70,
+        -23
+      ],
+      "land": [
+        "DESIERTO DE ATACAMA"
+      ],
+      "significance": "The driest desert on Earth, on Chile's Pacific coast, kept dry by the cold Peru current offshore",
+      "notes": [
+        "In Chile",
+        "The driest desert in the world",
+        "Cold **Peruvian (Humboldt) current** offshore",
+        "Due to the easterly winds: they drop their rain east of the Andes and arrive dry"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-patagonian",
+      "name": "Patagonian Desert",
+      "aliases": [
+        "Patagonia",
+        "Patagonian Steppe"
+      ],
+      "type": "desert",
+      "country": "ARG",
+      "point": [
+        -69,
+        -44
+      ],
+      "land": [
+        "PATAGONIA"
+      ],
+      "significance": "The rain-shadow desert of southern Argentina, in the lee of the Andes from the westerlies",
+      "notes": [
+        "In Argentina",
+        "A rain shadow desert of the Andes",
+        "The **westerlies** drop their rain on the Chilean side",
+        "On the leeward side of the Andes"
+      ],
+      "tier": 1
+    }
+  ],
+  "groups": []
+}

@@ -1,14 +1,16 @@
 /**
- * The physical map's sections still waiting for their notes. Each already has
- * its map — the world as land and water, borders on a switch — at a route of
- * its own, so filling one in is adding to that screen, not making it.
+ * The physical map's sections. Each is a map at a route of its own — the
+ * world as land and water, borders on a switch — until its notes arrive; then
+ * its syllabus (`syllabus`, a syllabus file's `continent`) makes it a round,
+ * and the section's card opens that round's setup instead.
  */
 export const PHYSICAL_SECTIONS = [
-  { id: 'physical-rivers', title: 'Rivers', icon: 'river' },
-  { id: 'physical-mountains', title: 'Mountains', icon: 'mountain' },
-  { id: 'physical-deserts', title: 'Deserts', icon: 'desert' },
-  { id: 'physical-grasslands', title: 'Grasslands', icon: 'grass' },
-  { id: 'physical-lakes', title: 'Lakes', icon: 'lake' },
+  { id: 'physical-rivers', title: 'Rivers', icon: 'river', syllabus: 'World Rivers' },
+  { id: 'physical-mountains', title: 'Mountains', icon: 'mountain', syllabus: 'World Mountains' },
+  { id: 'physical-plateaus', title: 'Plateaus', icon: 'plateau', syllabus: 'World Plateaus' },
+  { id: 'physical-deserts', title: 'Deserts', icon: 'desert', syllabus: 'World Deserts' },
+  { id: 'physical-grasslands', title: 'Grasslands', icon: 'grass', syllabus: 'World Grasslands' },
+  { id: 'physical-lakes', title: 'Lakes', icon: 'lake', syllabus: 'World Lakes' },
 ] as const
 
 export type PhysicalSection = (typeof PHYSICAL_SECTIONS)[number]
