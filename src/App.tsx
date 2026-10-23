@@ -4,6 +4,8 @@ import {
   POLITICAL_ROUNDS,
   POLITICAL_SCOPES,
   PLACE_ROUNDS,
+  PHYSICAL_ALL_ROUND,
+  physicalSectionOf,
   politicalIdFor,
   politicalRoundId,
   scopesOf,
@@ -88,7 +90,7 @@ export default function App() {
 
 function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, replace?: boolean) => void }) {
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref } = prefs
+  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref, physicalSections: sectionPref } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
@@ -97,6 +99,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     setPrefs((p) => ({ ...p, kinds: next(p.kinds) }))
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
   const setBasins = (basins: string[]) => setPrefs((p) => ({ ...p, basins }))
+  const setSections = (physicalSections: string[]) => setPrefs((p) => ({ ...p, physicalSections }))
   const setPlaceKinds = (next: (k: Record<PlaceKind, boolean>) => Record<PlaceKind, boolean>) =>
     setPrefs((p) => ({ ...p, placeKinds: next(p.placeKinds) }))
   useEffect(() => savePrefs(prefs), [prefs])
@@ -142,7 +145,26 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
    * from. None chosen is all of them, as is every one; a stored system this
    * round does not have is dropped.
    */
-  const isRivers = roundPlaces[0]?.section === 'rivers'
+  /**
+   * The unified Physical Map narrows by section — rivers, mountains, any
+   * several — exactly as a rivers round narrows by system.
+   */
+  const isPhysicalAll = !!round.physicalAll
+  const sectionsHere = PHYSICAL_SECTIONS.filter((s) => roundPlaces.some((p) => physicalSectionOf(p)?.id === s.id))
+  const sectionsChosen = sectionPref.filter((id) => sectionsHere.some((s) => s.id === id))
+  const allSections = sectionsChosen.length === 0 || sectionsChosen.length === sectionsHere.length
+  const inSections = (p: Place) => allSections || sectionsChosen.includes(physicalSectionOf(p)?.id ?? '')
+  const tapSection = (id: string) => {
+    if (id === 'all') return setSections([])
+    const next = allSections
+      ? [id]
+      : sectionsChosen.includes(id)
+        ? sectionsChosen.filter((s) => s !== id)
+        : [...sectionsChosen, id]
+    if (!next.length) return
+    setSections(next.length === sectionsHere.length ? [] : next)
+  }
+  const isRivers = !isPhysicalAll && roundPlaces[0]?.section === 'rivers'
   const basins = isRivers ? [...new Set(roundPlaces.map((p) => p.basin ?? ''))].filter(Boolean) : []
   const basinsHere = basinPref.filter((b) => basins.includes(b))
   const allBasins = basinsHere.length === 0 || basinsHere.length === basins.length
@@ -158,7 +180,9 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : isRivers
       ? roundPlaces.filter((p) => inBasins(p.basin))
-      : roundPlaces
+      : isPhysicalAll
+        ? roundPlaces.filter(inSections)
+        : roundPlaces
   /**
    * Why mode's clue for a country is its capital, so a country no syllabus
    * names a capital for yet has no clue to ask from, and sits out.
@@ -205,7 +229,9 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
             // Context rivers ride along with their own system only.
             backdrop: [
               ...inRegion.map((p) => p.id),
-              ...(round.context ?? []).filter((id) => !isRivers || inBasins(placeOf(id).basin)),
+              ...(round.context ?? []).filter((id) =>
+                isRivers ? inBasins(placeOf(id).basin) : !isPhysicalAll || inSections(placeOf(id))
+              ),
             ],
           }
         : { ...round, askable: countries }
@@ -218,7 +244,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
         drillIds.filter((id) => !meta[id]),
         drillIds.filter((id) => meta[id])
       )
-    : isWaterRound || isPlacesRound || isRivers
+    : isWaterRound || isPlacesRound || isRivers || isPhysicalAll
       ? withQuestions(
           asked.map((p) => p.id),
           askedCountries
@@ -320,6 +346,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
             ? (Object.fromEntries(PLACE_KINDS.map(({ kind }) => [kind, kindOn(kind)])) as Record<PlaceKind, boolean>)
             : undefined,
           kinds: isWaterRound ? kinds : undefined,
+          sections: isPhysicalAll && !allSections ? sectionsChosen : undefined,
         }}
         onExit={() => navigate({ view: 'setup', roundId })}
       />
@@ -351,7 +378,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                 : round.places
                   ? isRivers
                     ? riverTally(asked)
-                    : `${asked.length} ${isWaterRound ? 'features' : isPhenomena ? (isWinds ? 'winds' : 'currents') : 'places'}`
+                    : `${asked.length} ${isWaterRound || isPhysicalAll ? 'features' : isPhenomena ? (isWinds ? 'winds' : 'currents') : 'places'}`
                   : `${round.askable.length} countries`}
             </p>
 
@@ -399,6 +426,38 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                 </div>
                 <p className="mt-2 text-xs font-semibold text-slate-500">
                   Tap continents to practise several together, or World for all of them.
+                </p>
+              </>
+            )}
+
+            {isPhysicalAll && sectionsHere.length > 1 && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Features</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {[{ id: 'all', title: 'All' }, ...sectionsHere].map(({ id, title }) => {
+                    const on = id === 'all' ? allSections : !allSections && sectionsChosen.includes(id)
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => tapSection(id)}
+                        aria-pressed={on}
+                        className={`cursor-pointer rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                          on ? 'border-blue-600' : 'border-transparent'
+                        }`}
+                      >
+                        <div className="font-extrabold text-slate-900">{title}</div>
+                        <div className="text-xs font-semibold text-slate-500">
+                          {id === 'all'
+                            ? roundPlaces.length
+                            : roundPlaces.filter((p) => physicalSectionOf(p)?.id === id).length}
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+                <p className="mt-2 text-xs font-semibold text-slate-500">
+                  Tap sections to practise several together, or All for every feature on the map.
                 </p>
               </>
             )}
@@ -798,6 +857,15 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
               />
             )
           })}
+          {PHYSICAL_ALL_ROUND && (
+            <MenuCard
+              icon="terrain"
+              title="Physical Map"
+              blurb="Rivers, mountains, plateaus, deserts, grasslands and lakes — every physical feature on one map."
+              meta={`${PHYSICAL_ALL_ROUND.places?.length ?? 0} features`}
+              onClick={() => navigate({ view: 'setup', roundId: PHYSICAL_ALL_ROUND!.id })}
+            />
+          )}
           {PHYSICAL_SECTIONS.map((section) => {
             const r = physicalRound(section)
             return r ? (

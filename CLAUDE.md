@@ -411,6 +411,18 @@ Lagoa dos Patos. Each kind is drawn over the land in its own tint
 range brown, lake blue; peaks are the peak glyph. Learn has a chip per kind when
 a section has more than one (Ranges, Peaks).
 
+**The Physical Map is every section on one map.** Its card heads the Physical
+Map menu, before the sections, and opens `physical-all` (`PHYSICAL_ALL_ROUND`
+in `rounds.ts`): every place of every section's round, their context rivers
+with them, framed on the lot. Seas & Straits is not in it — water has its own
+round. Setup narrows it by section with Features chips that toggle like the
+river systems (`physicalSections` pref, none meaning all; All stands alone,
+ticking every section is All, the last one cannot be tapped away), and Learn
+opens on that choice with a chip per section of its own. `physicalSectionOf`
+in `rounds.ts` is the one function that says which section a place is in, by
+its syllabus `continent`. The per-kind and per-system chips stay on the
+section rounds; the unified map narrows by section only.
+
 The world's rivers are the Indian ones' machinery at another scale
 (`physical-rivers.json`, section `rivers`, atlas `world`): systems as `basin`,
 origins, tributaries, landmarks (Macapá at the Amazon's mouth, Angel Falls, the

@@ -40,6 +40,8 @@ export interface Prefs {
   placeKinds: Record<PlaceKind, boolean>
   /** Which river systems a rivers round asks, by basin name; none means all of them. */
   basins: string[]
+  /** Which sections the unified Physical Map asks (`physical-rivers`…); none means all of them. */
+  physicalSections: string[]
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -53,6 +55,7 @@ export const DEFAULT_PREFS: Prefs = {
   // questions, and these two are where a political map starts.
   placeKinds: { country: true, capital: true, other: false, region: false },
   basins: [],
+  physicalSections: [],
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -131,6 +134,10 @@ export function loadPrefs(): Prefs {
       : typeof raw.basin === 'string' && raw.basin !== 'all'
         ? [raw.basin]
         : DEFAULT_PREFS.basins,
+    // Checked against the sections the map has where it is used, as basins are.
+    physicalSections: Array.isArray(raw.physicalSections)
+      ? raw.physicalSections.filter((s): s is string => typeof s === 'string')
+      : DEFAULT_PREFS.physicalSections,
   }
 }
 

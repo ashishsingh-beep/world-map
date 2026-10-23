@@ -17,7 +17,8 @@ import {
 import { MapCanvas, type MapArea, type MapBand, type MapPoint } from '../map/MapCanvas'
 import { areaOf } from '../data/areas'
 import { screenDistanceToLine, shapeOf } from '../game/useQuiz'
-import type { Round } from '../game/rounds'
+import { physicalSectionOf, type Round } from '../game/rounds'
+import { PHYSICAL_SECTIONS } from '../app/physical'
 import { BELTS, BeltSwatch, ConfluenceSwatch, CurrentSwatch, KindSwatch, PeakSwatch, RiverSwatch, PlaceKindSwatch, PLACE_KINDS, WATER_KINDS, type WaterKind } from '../ui/bits'
 import { TrickDiagram } from '../ui/TrickDiagram'
 import { TricksSheet } from '../ui/TricksSheet'
@@ -46,7 +47,7 @@ export function LearnScreen({
 }: {
   round: Round
   /** What the setup screen has chosen, which Learn opens on. */
-  initial?: { placeKinds?: Record<PlaceKind, boolean>; kinds?: Record<WaterKind, boolean> }
+  initial?: { placeKinds?: Record<PlaceKind, boolean>; kinds?: Record<WaterKind, boolean>; sections?: string[] }
   onExit: () => void
 }) {
   const [showAll, setShowAll] = useState(false)
@@ -69,6 +70,10 @@ export function LearnScreen({
   const [basinsHidden, setBasinsHidden] = useState<string[]>([])
   /** A physical section's kinds put away in the legend: the Andes' range, its peaks. */
   const [kindsHidden, setKindsHidden] = useState<string[]>([])
+  /** The unified Physical Map's sections put away: rivers, mountains… Opens on the setup's choice. */
+  const [sectionsHidden, setSectionsHidden] = useState<string[]>(() =>
+    initial?.sections ? PHYSICAL_SECTIONS.map((s) => s.id).filter((id) => !initial.sections!.includes(id)) : []
+  )
   /** Which currents are drawn: the warm ones, the cold ones, or both. */
   const [tempsShown, setTempsShown] = useState({ warm: true, cold: true })
   /** The country under the last tap, which a place on top of it may outrank. */
@@ -87,9 +92,11 @@ export function LearnScreen({
   const isPhenomena = roundPlaces[0]?.section === 'phenomena'
   /** A physical section's kinds, in the order they come: the Andes before its peaks. */
   const physicalKinds = [...new Set(roundPlaces.map((p) => p.type))]
+  /** The unified Physical Map's sections, in menu order. */
+  const physicalSectionsHere = PHYSICAL_SECTIONS.filter((s) => roundPlaces.some((p) => physicalSectionOf(p)?.id === s.id))
   /** What the warm and cold chips call the arrows: currents, or winds. */
   const flowWord = roundPlaces.some((p) => p.type === 'wind') ? 'winds' : 'currents'
-  const isRivers = roundPlaces[0]?.section === 'rivers'
+  const isRivers = !round.physicalAll && roundPlaces[0]?.section === 'rivers'
   /** A place on a rivers map that is neither a river, an origin nor a confluence: Majuli, Namcha Barwa. */
   const isLandmark = (p: Place) =>
     p.section === 'rivers' && p.type !== 'river' && p.type !== 'origin' && p.type !== 'confluence'
@@ -111,6 +118,7 @@ export function LearnScreen({
   const visible = useMemo(
     () =>
       roundPlaces.filter((p) => {
+        if (round.physicalAll && sectionsHidden.includes(physicalSectionOf(p)?.id ?? '')) return false
         if (isWaterKind(p.type)) return shown[p.type]
         if (isPlacesSection) return placeKindsShown[placeKindOf(p.type)]
         if (isFlow(p)) return p.temp ? tempsShown[p.temp] : true
@@ -120,10 +128,10 @@ export function LearnScreen({
         // Anything else on a rivers map is a landmark on a river's course:
         // Majuli, Namcha Barwa.
         if (isRivers) return rolesShown.landmark && !basinsHidden.includes(p.basin ?? '')
-        if (round.physical) return !kindsHidden.includes(p.type)
+        if (round.physical && !round.physicalAll) return !kindsHidden.includes(p.type)
         return true
       }),
-    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden, isRivers, round.physical, kindsHidden]
+    [roundPlaces, shown, isPlacesSection, placeKindsShown, tempsShown, rolesShown, basinsHidden, isRivers, round.physical, round.physicalAll, kindsHidden, sectionsHidden]
   )
   // A card for something no longer on the map would be stranded.
   const place = selected ? (visible.find((p) => p.id === selected) ?? null) : null
@@ -420,7 +428,36 @@ export function LearnScreen({
             </div>
           )}
 
-          {round.physical && !isRivers && physicalKinds.length > 1 && (
+          {round.physicalAll && physicalSectionsHere.length > 1 && (
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
+              {physicalSectionsHere.map((s) => {
+                const on = !sectionsHidden.includes(s.id)
+                return (
+                  <label
+                    key={s.id}
+                    className={`flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold transition hover:bg-slate-100 ${
+                      on ? 'text-slate-700' : 'text-slate-400'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={(e) =>
+                        setSectionsHidden((h) => (e.target.checked ? h.filter((x) => x !== s.id) : [...h, s.id]))
+                      }
+                      className="h-3.5 w-3.5 accent-blue-600"
+                    />
+                    {s.title}
+                    <span className="font-semibold text-slate-400">
+                      {roundPlaces.filter((p) => physicalSectionOf(p)?.id === s.id).length}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+          )}
+
+          {round.physical && !round.physicalAll && !isRivers && physicalKinds.length > 1 && (
             <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-1 rounded-full bg-white/95 px-2 py-1.5 shadow-lg">
               {physicalKinds.map((t) => {
                 const on = !kindsHidden.includes(t)

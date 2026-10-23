@@ -2,6 +2,7 @@ import { allIsos, meta, metaOf, renderOnlyIsos, type Continent } from '../data/c
 import { places as allPlaces, syllabusContinents, type Place } from '../data/places'
 import { areaOf } from '../data/areas'
 import { geoBounds } from 'd3-geo'
+import { PHYSICAL_SECTIONS } from '../app/physical'
 
 export type BBox = [[number, number], [number, number]]
 
@@ -42,6 +43,11 @@ export interface Round {
    * a switch, rather than as the political map.
    */
   physical?: boolean
+  /**
+   * The unified Physical Map: every physical section's features on one map,
+   * Seas & Straits apart. Its setup and Learn narrow by section.
+   */
+  physicalAll?: boolean
 }
 
 const isosIn = (continent: Continent) =>
@@ -560,5 +566,42 @@ export function canonicalRoundId(id: string): string {
  * the URL, where anyone can type one that does not exist.
  */
 export function roundById(id: string): Round | null {
-  return POLITICAL_ROUNDS[id] ?? combinedRound(id) ?? ROUNDS[id] ?? PLACE_ROUNDS[id] ?? null
+  return (
+    POLITICAL_ROUNDS[id] ??
+    combinedRound(id) ??
+    ROUNDS[id] ??
+    PLACE_ROUNDS[id] ??
+    (id === PHYSICAL_ALL ? PHYSICAL_ALL_ROUND : null)
+  )
 }
+
+/** The physical section a feature belongs to, by the syllabus it came from. */
+export const physicalSectionOf = (p: Place) => PHYSICAL_SECTIONS.find((s) => s.syllabus === p.continent) ?? null
+
+/**
+ * The unified Physical Map: every feature of every physical section — rivers,
+ * mountains, plateaus, deserts, grasslands, lakes — on one map. Seas & Straits
+ * keep their own round, with their own notation. Null until a section has notes.
+ */
+export const PHYSICAL_ALL = 'physical-all'
+export const PHYSICAL_ALL_ROUND: Round | null = (() => {
+  const sections = PHYSICAL_SECTIONS.map((s) => PLACE_ROUNDS[allPlacesRoundId(s.syllabus)]).filter(
+    (r): r is Round => !!r?.places?.length
+  )
+  if (!sections.length) return null
+  const places = sections.flatMap((r) => r.places ?? [])
+  const byId = new Map(allPlaces.map((p) => [p.id, p]))
+  return {
+    id: PHYSICAL_ALL,
+    title: 'Physical Map',
+    blurb: `Every physical feature on one map — ${listed(sections.map((r) => r.title.toLowerCase()))} — ${places.length} in all, seas and straits apart.`,
+    render: [...allIsos, ...renderOnlyIsos],
+    askable: [],
+    places,
+    context: sections.flatMap((r) => r.context ?? []),
+    atlas: 'world',
+    physical: true,
+    physicalAll: true,
+    view: framing(places.map((id) => byId.get(id)!).filter(Boolean)),
+  }
+})()
