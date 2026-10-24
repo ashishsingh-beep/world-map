@@ -21669,8 +21669,15 @@
         -69,
         -44
       ],
-      "land": [
-        "PATAGONIA"
+      "admin1": [
+        "Neuquén",
+        "Río Negro",
+        "Chubut",
+        "Santa Cruz"
+      ],
+      "koppen": [
+        "BWk",
+        "BSk"
       ],
       "significance": "The rain-shadow desert of southern Argentina, in the lee of the Andes from the westerlies",
       "notes": [
@@ -21684,7 +21691,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "clip": true
     },
     {
       "id": "grs-llanos",
@@ -28428,6 +28436,7 @@
         "**Itaipu**, on the Brazil–Paraguay border, is the largest dam of South America"
       ],
       "tier": 1,
+      "labelAt": 0.62,
       "line": [
         [
           -44.6143,
@@ -30546,8 +30555,7 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world",
-      "labelAt": 0.62
+      "atlas": "world"
     },
     {
       "id": "wriv-itaipu",

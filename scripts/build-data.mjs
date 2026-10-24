@@ -19,7 +19,7 @@ import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-ge
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
 import { annualRange, contour, readReanalysis, readStations, sample, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
 import { POLAR, TRADES, WESTERLIES, againstShips, windsAndBelts } from './winds.mjs'
-import { climateRegions } from './climate.mjs'
+import { climateRegions, koppenWithin } from './climate.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -1904,6 +1904,20 @@ function clipToCountry(parts, iso) {
   return g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]
 }
 
+/** Beck et al.'s Köppen-Geiger raster for 1991–2020 at 0.1°, downloaded once. */
+function koppenTif() {
+  const dir = resolve(CACHE, 'kg')
+  const tif = resolve(dir, '1991_2020/koppen_geiger_0p1.tif')
+  if (!existsSync(tif)) {
+    mkdirSync(dir, { recursive: true })
+    const zip = resolve(dir, 'koppen_geiger_tif.zip')
+    execFileSync('curl', ['-sSL', '-f', '-o', zip, 'https://ndownloader.figshare.com/files/61012822'], { stdio: 'inherit' })
+    execFileSync('unzip', ['-o', '-q', zip, '1991_2020/koppen_geiger_0p1.tif', '-d', dir], { stdio: 'inherit' })
+    execFileSync('rm', ['-f', zip])
+  }
+  return tif
+}
+
 const countriesTopo = JSON.parse(readFileSync(topoOut, 'utf8'))
 const landFeatures = []
 const noLandPolygon = []
@@ -1966,6 +1980,18 @@ for (const p of places) {
       parts.push([ringWinding(box) === ringWinding(first) ? box : box.reverse()])
       p.clip = true
     }
+  }
+  /**
+   * A place whose extent is a climate within its frame keeps only the cells
+   * Köppen puts in its `koppen` classes: the Patagonian Desert is the dry
+   * steppe (BWk, BSk) of Argentina's Patagonian provinces, from the Colorado
+   * River south — not Natural Earth's "Patagonia", which runs north to
+   * Mendoza and west over the Andes' forests and icefields to Chile's fjords.
+   * Clipped to the country after, since the 0.1° cells overrun the coast.
+   */
+  if (p.koppen && parts.length) {
+    parts = await koppenWithin(koppenTif(), p.koppen, { type: 'MultiPolygon', coordinates: parts })
+    p.clip = true
   }
   if (!parts.length) {
     noLandPolygon.push(p.name)
@@ -2499,15 +2525,7 @@ const dateLine = (() => {
  * not in doubt, so a misread raster or a wrong class code cannot pass.
  */
 {
-  const KG_DIR = resolve(CACHE, 'kg')
-  const KG_TIF = resolve(KG_DIR, '1991_2020/koppen_geiger_0p1.tif')
-  if (!existsSync(KG_TIF)) {
-    mkdirSync(KG_DIR, { recursive: true })
-    const zip = resolve(KG_DIR, 'koppen_geiger_tif.zip')
-    execFileSync('curl', ['-sSL', '-f', '-o', zip, 'https://ndownloader.figshare.com/files/61012822'], { stdio: 'inherit' })
-    execFileSync('unzip', ['-o', '-q', zip, '1991_2020/koppen_geiger_0p1.tif', '-d', KG_DIR], { stdio: 'inherit' })
-    execFileSync('rm', ['-f', zip])
-  }
+  const KG_TIF = koppenTif()
   const raw = resolve(CACHE, 'climate-raw.geojson')
   writeFileSync(raw, JSON.stringify(await climateRegions(KG_TIF)))
   const climateOut = resolve(OUT, 'climate.topo.json')

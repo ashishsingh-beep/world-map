@@ -398,12 +398,20 @@ framed on what it holds (`framing` in `rounds.ts`, from each patch's extent and
 each river's course), and it is a physical map (`Round.physical`): land as one
 mass, borders on the switch, no micro-state rings. The areas are Natural
 Earth's own physical regions (`land`): the Altiplano is the Bolivian Plateau,
-Planalto do Mato Grosso, Planalto da Borborema, Patagonia (both the plateau and
-the desert), the Atacama, the Llanos, Caatingas, the Gran Chaco, the Pampas,
+Planalto do Mato Grosso, Planalto da Borborema, Patagonia (the plateau), the
+Atacama, the Llanos, Caatingas, the Gran Chaco, the Pampas,
 the Andes and Colombia's Cordillera Oriental. The notes' three Cs have no
 polygon of their own, so the Cerrados are Natural Earth's Planalto Central and
 the Campos its Campos Sertão, which lie where the notes mark them. A repeated
 name (two Cordilleras Oriental) takes the polygon its point is in (`pickFor`).
+The Patagonian Desert is not Natural Earth's "Patagonia", which runs north to
+Mendoza and west over the Andes' forests and icefields to Chile's fjords: it is
+the dry steppe of Argentina's Patagonian provinces — Neuquén, Río Negro, Chubut
+and Santa Cruz, from the Colorado River south — where Köppen puts BWk or BSk
+(`koppen`, read by `koppenWithin` in `scripts/climate.mjs` from the climate
+map's raster), clipped to Argentina. Tierra del Fuego is tundra and subpolar
+oceanic there, so it is out. Any patch whose extent is a climate within a frame
+can take `koppen` the same way.
 A lake is a patch too when it names one: Natural Earth's lakes layer
 (`LAKES_URL`) for Titicaca and Poopó, the marine layer for Maracaibo and the
 Lagoa dos Patos. Each kind is drawn over the land in its own tint

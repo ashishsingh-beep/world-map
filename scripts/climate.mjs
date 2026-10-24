@@ -133,6 +133,54 @@ const signedArea = (ring) =>
     return s + (x1 * y2 - x2 * y1)
   }, 0) / 2
 
+/** A mask as MultiPolygon coordinates by marching squares, its specks under MIN_CELLS dropped. */
+function maskPolygons(mask, width, height, west, north, dx, dy) {
+  const [shape] = contours().size([width, height]).thresholds([0.5]).smooth(true)(mask)
+  const toLonLat = ([x, y]) => [+(west + x * dx).toFixed(4), +(north + y * dy).toFixed(4)]
+  const polygons = []
+  for (const rings of shape.coordinates) {
+    const [outer, ...holes] = rings
+    if (Math.abs(signedArea(outer)) < MIN_CELLS) continue
+    // Written the way a shapefile winds them — exterior clockwise, holes
+    // anticlockwise, in lon/lat — which mapshaper and d3-geo both read as
+    // the region and not the globe less the region.
+    const wind = (ring, clockwise) => {
+      const ll = ring.map(toLonLat)
+      return (signedArea(ll) < 0) === clockwise ? ll : ll.reverse()
+    }
+    polygons.push([
+      wind(outer, true),
+      ...holes.filter((h) => Math.abs(signedArea(h)) >= MIN_CELLS).map((h) => wind(h, false)),
+    ])
+  }
+  return polygons
+}
+
+/** Köppen's class codes in the raster, 1 to 30, by name. */
+const KOPPEN = ['Af', 'Am', 'Aw', 'BWh', 'BWk', 'BSh', 'BSk', 'Csa', 'Csb', 'Csc', 'Cwa', 'Cwb', 'Cwc', 'Cfa', 'Cfb', 'Cfc',
+  'Dsa', 'Dsb', 'Dsc', 'Dsd', 'Dwa', 'Dwb', 'Dwc', 'Dwd', 'Dfa', 'Dfb', 'Dfc', 'Dfd', 'ET', 'EF']
+
+/**
+ * The part of a lon/lat (Multi)Polygon that Köppen puts in the named classes,
+ * as MultiPolygon coordinates: a place whose extent is a climate within a
+ * frame — the Patagonian Desert is the dry steppe (BWk, BSk) of Argentina's
+ * Patagonian provinces, not the Andes' forests and ice beside it.
+ */
+export async function koppenWithin(tifPath, classes, geometry) {
+  const unknown = classes.filter((c) => !KOPPEN.includes(c))
+  if (unknown.length) throw new Error(`Köppen classes not known: ${unknown.join(', ')}`)
+  const image = await (await fromFile(tifPath)).getImage()
+  const width = image.getWidth()
+  const height = image.getHeight()
+  const [west, north] = image.getOrigin()
+  const [dx, dy] = image.getResolution()
+  const [raster] = await image.readRasters()
+  const codes = new Set(classes.map((c) => KOPPEN.indexOf(c) + 1))
+  const mask = rasterize(geometry, width, height, west, north, dx, dy)
+  for (let i = 0; i < mask.length; i++) if (mask[i] && !codes.has(raster[i])) mask[i] = 0
+  return maskPolygons(drawnCells(mask, width), width, height, west, north, dx, dy)
+}
+
 export async function climateRegions(tifPath) {
   const image = await (await fromFile(tifPath)).getImage()
   const width = image.getWidth()
@@ -182,26 +230,7 @@ export async function climateRegions(tifPath) {
   masks.push(...references)
 
   const features = []
-  for (const [id, mask] of masks) {
-    const [shape] = contours().size([width, height]).thresholds([0.5]).smooth(true)(mask)
-    const toLonLat = ([x, y]) => [+(west + x * dx).toFixed(4), +(north + y * dy).toFixed(4)]
-    const polygons = []
-    for (const rings of shape.coordinates) {
-      const [outer, ...holes] = rings
-      if (Math.abs(signedArea(outer)) < MIN_CELLS) continue
-      // Written the way a shapefile winds them — exterior clockwise, holes
-      // anticlockwise, in lon/lat — which mapshaper and d3-geo both read as
-      // the region and not the globe less the region.
-      const wind = (ring, clockwise) => {
-        const ll = ring.map(toLonLat)
-        return (signedArea(ll) < 0) === clockwise ? ll : ll.reverse()
-      }
-      polygons.push([
-        wind(outer, true),
-        ...holes.filter((h) => Math.abs(signedArea(h)) >= MIN_CELLS).map((h) => wind(h, false)),
-      ])
-    }
-    features.push({ type: 'Feature', properties: { id }, geometry: { type: 'MultiPolygon', coordinates: polygons } })
-  }
+  for (const [id, mask] of masks)
+    features.push({ type: 'Feature', properties: { id }, geometry: { type: 'MultiPolygon', coordinates: maskPolygons(mask, width, height, west, north, dx, dy) } })
   return { type: 'FeatureCollection', features }
 }

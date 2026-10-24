@@ -42,8 +42,15 @@
         -69,
         -44
       ],
-      "land": [
-        "PATAGONIA"
+      "admin1": [
+        "Neuquén",
+        "Río Negro",
+        "Chubut",
+        "Santa Cruz"
+      ],
+      "koppen": [
+        "BWk",
+        "BSk"
       ],
       "significance": "The rain-shadow desert of southern Argentina, in the lee of the Andes from the westerlies",
       "notes": [
