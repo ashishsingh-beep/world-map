@@ -1904,6 +1904,52 @@ function clipToCountry(parts, iso) {
   return g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]
 }
 
+/**
+ * Erases named land-layer polygons from one place's parts, via a throwaway
+ * job: the Patagonian Plateau is the Patagonian provinces less the Andes, the
+ * same polygon the Mountains section draws, so the two meet edge to edge.
+ */
+function eraseLand(p, parts, names) {
+  const cut = []
+  for (const name of names) {
+    const f = pickFor(p, landByName.get(loose(name)))
+    if (!f) {
+      errors.push(`${p.id}: no land polygon named "${name}" to erase`)
+      continue
+    }
+    cut.push({ type: 'Feature', properties: {}, geometry: f.geometry })
+  }
+  if (!cut.length) return parts
+  const penIn = resolve(CACHE, 'land-erase-pen.geojson')
+  const cutIn = resolve(CACHE, 'land-erase-cut.geojson')
+  const eraseOut = resolve(CACHE, 'land-erase-out.topo.json')
+  writeFileSync(
+    penIn,
+    JSON.stringify({
+      type: 'FeatureCollection',
+      features: [{ type: 'Feature', properties: {}, geometry: { type: 'MultiPolygon', coordinates: parts } }],
+    })
+  )
+  writeFileSync(cutIn, JSON.stringify({ type: 'FeatureCollection', features: cut }))
+  execFileSync(
+    resolve(ROOT, 'node_modules/.bin/mapshaper'),
+    [
+      penIn, cutIn, 'combine-files',
+      '-rename-layers', 'pen,cut',
+      '-erase', 'target=pen', 'source=cut',
+      // Through TopoJSON for the same winding reason as clipToCountry's.
+      '-o', 'format=topojson', 'quantization=1e5', 'target=pen', eraseOut,
+    ],
+    { stdio: 'inherit' }
+  )
+  const topo = JSON.parse(readFileSync(eraseOut, 'utf8'))
+  const erased = topojsonFeature(topo, topo.objects.pen)
+  const f = erased.type === 'FeatureCollection' ? erased.features[0] : erased
+  if (!f?.geometry) return []
+  const g = f.geometry
+  return g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]
+}
+
 /** Beck et al.'s Köppen-Geiger raster for 1991–2020 at 0.1°, downloaded once. */
 function koppenTif() {
   const dir = resolve(CACHE, 'kg')
@@ -1989,6 +2035,7 @@ for (const p of places) {
    * Mendoza and west over the Andes' forests and icefields to Chile's fjords.
    * Clipped to the country after, since the 0.1° cells overrun the coast.
    */
+  if (p.erase && parts.length) parts = eraseLand(p, parts, p.erase)
   if (p.koppen && parts.length) {
     parts = await koppenWithin(koppenTif(), p.koppen, { type: 'MultiPolygon', coordinates: parts })
     p.clip = true

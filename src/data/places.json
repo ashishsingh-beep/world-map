@@ -22247,12 +22247,19 @@
       "type": "plateau",
       "country": "ARG",
       "point": [
-        -69,
-        -44
+        -69.5,
+        -48.5
       ],
-      "land": [
-        "PATAGONIA"
+      "admin1": [
+        "Neuquén",
+        "Río Negro",
+        "Chubut",
+        "Santa Cruz"
       ],
+      "erase": [
+        "ANDES"
+      ],
+      "clip": true,
       "significance": "Stepped tableland east of the southern Andes in Argentina — a piedmont plateau, built up at the mountains' foot",
       "notes": [
         "In Argentina",
