@@ -881,6 +881,10 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
   }
 
   const world = POLITICAL_ROUNDS[politicalRoundId('world')]
+  /** The continents the Physical Map has features on, in the Political Map's order. */
+  const physicalContinents = POLITICAL_SCOPES.flatMap((s) =>
+    s.continent && PHYSICAL_ALL_ROUND?.places?.some((id) => placeOf(id).realm === s.continent) ? [s.continent as string] : []
+  )
   return (
     <div className="min-h-dvh bg-slate-50 px-5 py-10">
       <div className="mx-auto max-w-3xl">
@@ -931,9 +935,26 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
               icon="terrain"
               title="Physical Map"
               blurb="Rivers, mountains, plateaus, deserts, grasslands and lakes — every physical feature on one map."
-              meta={`${PHYSICAL_ALL_ROUND.places?.length ?? 0} features`}
+              meta={`${PHYSICAL_ALL_ROUND.places?.length ?? 0} features · ${physicalContinents.length} continents`}
               onClick={() => navigate({ view: 'setup', roundId: PHYSICAL_ALL_ROUND!.id })}
-            />
+            >
+              {/* As the Political Map's: a continent opens the map with just it ticked, World with every one. */}
+              <div className="flex flex-wrap gap-2">
+                {['World', ...physicalContinents].map((label) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => {
+                      setContinents(label === 'World' ? [] : [label])
+                      navigate({ view: 'setup', roundId: PHYSICAL_ALL_ROUND!.id })
+                    }}
+                    className="cursor-pointer rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </MenuCard>
           )}
           {PHYSICAL_SECTIONS.map((section) => {
             const r = physicalRound(section)

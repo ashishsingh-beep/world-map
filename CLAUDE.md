@@ -468,7 +468,10 @@ Physical Map is Africa on the Rivers map too. A place's continent is its
 filed under no country (the Savanna), from the country under its point; the
 build fails if any world physical place has none. Sections, river systems and
 counts are then what the chosen continents hold, and the map, in Learn and in
-Play, is framed on them (`framing`, exported from `rounds.ts`).
+Play, is framed on them (`framing`, exported from `rounds.ts`). The Physical
+Map's menu card carries continent chips as the Political Map's does — World
+and each continent it has features on — and a chip opens its setup with just
+that continent ticked, World with every one.
 
 The world's rivers are the Indian ones' machinery at another scale
 (`physical-rivers.json`, section `rivers`, atlas `world`): systems as `basin`,
