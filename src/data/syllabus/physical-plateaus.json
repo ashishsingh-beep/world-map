@@ -2,7 +2,7 @@
   "continent": "World Plateaus",
   "title": "Plateaus",
   "section": "physical",
-  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "source": "After the notes' South America and Africa physical maps, with standard UPSC facts added",
   "places": [
     {
       "id": "plt-bolivian",
@@ -100,6 +100,30 @@
       "notes": [
         "In Argentina",
         "A piedmont plateau — one at the foot of mountains, as against an intermontane one enclosed by them"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "plt-katanga",
+      "name": "Katanga Plateau",
+      "aliases": [
+        "Katanga",
+        "Shaba Plateau"
+      ],
+      "type": "plateau",
+      "country": "COD",
+      "point": [
+        26.5,
+        -11
+      ],
+      "land": [
+        "KATANGA PLATEAU"
+      ],
+      "significance": "The copper-rich upland of south-eastern DRC and northern Zambia, where the Congo's headwaters rise",
+      "notes": [
+        "In the DRC (and Zambia)",
+        "Rich in copper and cobalt — the Copperbelt",
+        "The Congo rises on it as the **Lualaba**"
       ],
       "tier": 1
     }

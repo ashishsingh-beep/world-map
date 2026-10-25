@@ -2,7 +2,7 @@
   "continent": "World Mountains",
   "title": "Mountains",
   "section": "physical",
-  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "source": "After the notes' South America and Africa physical maps, with standard UPSC facts added",
   "places": [
     {
       "id": "mtn-andes",
@@ -158,7 +158,200 @@
         "In Argentina's Mendoza province, close to the border with Chile"
       ],
       "tier": 1
+    },
+    {
+      "id": "mtn-atlas",
+      "name": "Atlas Mountains",
+      "aliases": [
+        "Atlas",
+        "Atlas Range"
+      ],
+      "type": "mountains",
+      "country": "MAR",
+      "point": [
+        -2,
+        33
+      ],
+      "land": [
+        "ATLAS MOUNTAINS"
+      ],
+      "significance": "Young fold mountains along Africa's north-west edge, from the Atlantic coast of Morocco to Tunisia",
+      "notes": [
+        "Fold mountains",
+        "Run through Morocco, Algeria and Tunisia",
+        "Highest peak: Toubkal (4,167 m), in Morocco",
+        "They keep the Mediterranean's rain from the desert to the south"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-hoggar",
+      "name": "Hoggar Mountains",
+      "aliases": [
+        "Hoggar",
+        "Ahaggar",
+        "Ahaggar Mountains"
+      ],
+      "type": "mountains",
+      "country": "DZA",
+      "point": [
+        5.5,
+        23.3
+      ],
+      "land": [
+        "AHAGGAR MTS."
+      ],
+      "significance": "A volcanic highland in the heart of the great desert, in southern Algeria around Tamanrasset",
+      "notes": [
+        "In Algeria",
+        "Highest point: Mount Tahat (2,908 m)",
+        "Home of the Tuareg"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-tibesti",
+      "name": "Tibesti Mountains",
+      "aliases": [
+        "Tibesti"
+      ],
+      "type": "mountains",
+      "country": "TCD",
+      "point": [
+        18.5,
+        21
+      ],
+      "land": [
+        "TIBESTI MTS."
+      ],
+      "significance": "The great desert's highest mountains, a volcanic massif in northern Chad on the Libyan border",
+      "notes": [
+        "In Chad (reaching into Libya)",
+        "Highest point: Emi Koussi (3,445 m), the highest of the Sahara"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-drakensberg",
+      "name": "Drakensberg",
+      "aliases": [
+        "Drakensberg Mountains",
+        "Dragon Mountains",
+        "uKhahlamba"
+      ],
+      "type": "mountains",
+      "country": "ZAF",
+      "point": [
+        29.3,
+        -29.3
+      ],
+      "land": [
+        "DRAKENSBERG"
+      ],
+      "significance": "The high eastern rim of southern Africa's plateau, rising over 3,000 m above the Indian Ocean coast",
+      "notes": [
+        "In South Africa (and Lesotho)",
+        "Face the **Indian Ocean**",
+        "Old, residual mountains — the eroded edge of the plateau, the Great Escarpment",
+        "Highest point: Thabana Ntlenyana (3,482 m), in Lesotho"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-kilimanjaro",
+      "name": "Kilimanjaro",
+      "aliases": [
+        "Mount Kilimanjaro",
+        "Kibo",
+        "Uhuru Peak"
+      ],
+      "type": "peak",
+      "country": "TZA",
+      "point": [
+        37.354,
+        -3.0764
+      ],
+      "significance": "Africa's highest peak, 5,895 m — a free-standing volcano on the plains of northern Tanzania",
+      "notes": [
+        "In Tanzania",
+        "The highest peak of Africa: 5,895 m (Uhuru Peak)",
+        "A volcano — the notes call it extinct; its outer cones are, while Kibo, the summit cone, is dormant"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-kenya",
+      "name": "Mount Kenya",
+      "aliases": [
+        "Kirinyaga",
+        "Batian"
+      ],
+      "type": "peak",
+      "country": "KEN",
+      "point": [
+        37.3092,
+        -0.1527
+      ],
+      "significance": "Africa's second-highest peak, 5,199 m — an old volcano standing just south of the Equator",
+      "notes": [
+        "In Kenya",
+        "The second highest peak of Africa: 5,199 m (Batian)",
+        "An extinct volcano, just south of the Equator"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-cameroon",
+      "name": "Mount Cameroon",
+      "aliases": [
+        "Cameroon Mountain",
+        "Fako",
+        "Mongo ma Ndemi"
+      ],
+      "type": "peak",
+      "country": "CMR",
+      "point": [
+        9.1734,
+        4.218
+      ],
+      "significance": "West Africa's highest peak, an active volcano rising straight from the shore of the Gulf of Guinea",
+      "notes": [
+        "In Cameroon",
+        "An active volcano — one of Africa's most active, it erupted in 1999 and 2000",
+        "About 4,040 m, the highest of West Africa"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "mtn-ras-dashen",
+      "name": "Ras Dashen",
+      "aliases": [
+        "Ras Dejen",
+        "Ras Dashan",
+        "Mount Ras Dashen"
+      ],
+      "type": "peak",
+      "country": "ETH",
+      "point": [
+        38.3685,
+        13.2364
+      ],
+      "significance": "Ethiopia's highest peak, about 4,550 m, in the Simien Mountains north-east of Lake Tana",
+      "notes": [
+        "In Ethiopia",
+        "The highest peak of Ethiopia, in the Simien Mountains"
+      ],
+      "tier": 1
     }
   ],
-  "groups": []
+  "groups": [
+    {
+      "id": "mtn-atlas-trick",
+      "name": "Atlas — its countries",
+      "members": [
+        "mtn-atlas"
+      ],
+      "mnemonic": "MAT — Morocco, Algeria, Tunisia"
+    }
+  ]
 }

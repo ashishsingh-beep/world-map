@@ -4,7 +4,7 @@
   "section": "rivers",
   "atlas": "world",
   "simplifyKm": 1,
-  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "source": "After the notes' South America and Africa physical maps, with standard UPSC facts added",
   "places": [
     {
       "id": "wriv-amazon",
@@ -325,6 +325,515 @@
       "significance": "The broad estuary between Buenos Aires and Montevideo into which South America's second river empties",
       "notes": [
         "Mouth of the Paraná (and the Uruguay)"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-nile",
+      "name": "Nile",
+      "aliases": [
+        "River Nile",
+        "Nile River"
+      ],
+      "type": "river",
+      "country": "EGY",
+      "role": "main",
+      "basin": "Nile",
+      "through": [
+        "SDN"
+      ],
+      "startsAt": [
+        32.5064,
+        15.6412
+      ],
+      "labelAt": 0.5,
+      "osm": "R50793",
+      "significance": "The longest river on Earth, flowing north through the desert from Khartoum to a delta on the Mediterranean — Egypt's lifeline",
+      "notes": [
+        "The longest river in the world, about 6,650 km",
+        "Formed at **Khartoum**, where the **White Nile** and the **Blue Nile** meet",
+        "Dammed at **Aswan**: the High Dam holds back **Lake Nasser**",
+        "Flows past **Cairo** into its delta, the Rosetta branch reaching the sea by **Alexandria** port",
+        "Flows through Sudan and Egypt to the Mediterranean"
+      ],
+      "tier": 1,
+      "osmExtra": [
+        "R9283265"
+      ]
+    },
+    {
+      "id": "wriv-white-nile",
+      "name": "White Nile",
+      "aliases": [
+        "Bahr al Abyad"
+      ],
+      "type": "river",
+      "country": "SSD",
+      "role": "tributary",
+      "basin": "Nile",
+      "through": [
+        "UGA",
+        "SDN"
+      ],
+      "joins": "wriv-nile",
+      "bank": "left",
+      "headstream": true,
+      "source": {
+        "name": "Jinja",
+        "aliases": [
+          "Ripon Falls",
+          "Source of the Nile"
+        ],
+        "near": "Lake Victoria",
+        "point": [
+          33.1963,
+          0.4154
+        ],
+        "country": "UGA",
+        "significance": "Where the longer headstream leaves Africa's largest lake, at the Ugandan town on its northern shore"
+      },
+      "osm": "R50790",
+      "significance": "The longer headstream, leaving Africa's largest lake at Jinja and winding through Uganda and the Sudd swamps to Khartoum",
+      "notes": [
+        "Rises at **Lake Victoria**, leaving it at Jinja, Uganda",
+        "Passes through Lake Kyoga and **Lake Albert**",
+        "Crosses the **Sudd**, the vast swamp of South Sudan",
+        "Meets the Blue Nile at **Khartoum**: from there the river is the Nile"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-blue-nile",
+      "name": "Blue Nile",
+      "aliases": [
+        "Abay",
+        "Abbay"
+      ],
+      "type": "river",
+      "country": "ETH",
+      "role": "tributary",
+      "basin": "Nile",
+      "through": [
+        "SDN"
+      ],
+      "joins": "wriv-nile",
+      "bank": "right",
+      "headstream": true,
+      "source": {
+        "name": "Bahir Dar",
+        "aliases": [
+          "Lake Tana outlet"
+        ],
+        "near": "Lake Tana",
+        "point": [
+          37.412,
+          11.6365
+        ],
+        "country": "ETH",
+        "significance": "Where the shorter headstream leaves Ethiopia's largest lake, by the city on its southern shore"
+      },
+      "osm": "R1657491",
+      "significance": "The shorter headstream that brings most of the water and silt, leaving Ethiopia's largest lake through a deep gorge to Khartoum",
+      "notes": [
+        "Rises at **Lake Tana**, Ethiopia — called the Abay there",
+        "Brings most of the Nile's water, and the silt of its floods",
+        "Dammed by the Grand Ethiopian Renaissance Dam (GERD)",
+        "Meets the White Nile at **Khartoum**: from there the river is the Nile"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-niger",
+      "name": "Niger",
+      "aliases": [
+        "Niger River",
+        "River Niger",
+        "Joliba"
+      ],
+      "type": "river",
+      "country": "MLI",
+      "role": "main",
+      "basin": "Niger",
+      "through": [
+        "GIN",
+        "NER",
+        "BEN",
+        "NGA"
+      ],
+      "source": {
+        "name": "Guinea Highlands",
+        "aliases": [
+          "Tembakounda"
+        ],
+        "point": [
+          -10.75,
+          9.08
+        ],
+        "country": "GIN",
+        "significance": "Where West Africa's great river rises, in the hills by the Sierra Leone border, some 240 km from the Atlantic"
+      },
+      "osm": "R9110137",
+      "significance": "West Africa's great river, rising only 240 km from the Atlantic yet flowing away from it in a boomerang arc through Mali to a vast delta on the Gulf of Guinea",
+      "notes": [
+        "Flows through Guinea, Mali, Niger and Nigeria",
+        "Rises in the **Guinea Highlands**, only about 240 km from the Atlantic, yet flows inland first",
+        "Its largest tributary is the **Benue**, joining at Lokoja",
+        "Ends in the oil-rich **Niger Delta**, by **Port Harcourt**",
+        "Floods an inland delta in Mali every year"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-benue",
+      "name": "Benue",
+      "aliases": [
+        "Benue River",
+        "Bénoué"
+      ],
+      "type": "river",
+      "country": "NGA",
+      "role": "tributary",
+      "basin": "Niger",
+      "through": [
+        "CMR"
+      ],
+      "joins": "wriv-niger",
+      "bank": "left",
+      "osm": "R1191132",
+      "significance": "The largest tributary of West Africa's great river, rising in northern Cameroon and joining it at Lokoja",
+      "notes": [
+        "Rises in northern Cameroon, on the Adamawa Plateau",
+        "Joins the Niger at **Lokoja**, Nigeria — its largest tributary"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-congo",
+      "name": "Congo",
+      "aliases": [
+        "Congo River",
+        "Zaire",
+        "Zaire River"
+      ],
+      "type": "river",
+      "country": "COD",
+      "role": "main",
+      "basin": "Congo",
+      "through": [
+        "COG",
+        "AGO"
+      ],
+      "osmExtra": [
+        "R2237396"
+      ],
+      "labelAt": 0.55,
+      "source": {
+        "name": "Musofi",
+        "aliases": [],
+        "near": "Katanga Plateau",
+        "point": [
+          26.4534,
+          -11.8738
+        ],
+        "country": "COD",
+        "significance": "Where the river of the central rainforest rises as the Lualaba, on the copper plateau of the DRC's far south-east"
+      },
+      "osm": "R2132913",
+      "significance": "The deepest river on Earth, crossing the Equator twice in a great arc through the rainforest of central Africa",
+      "notes": [
+        "The deepest river in the world — over 220 m",
+        "Flows through the DRC and along the border of the Republic of the Congo — also known as the **Zaire**",
+        "Cuts the **Equator twice**",
+        "Rises as the **Lualaba**; below the **Stanley (Boyoma) Falls** it is the Congo",
+        "Home of the **Pygmy** tribe, in its forests",
+        "Second only to the Amazon in the water it carries"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-zambezi",
+      "name": "Zambezi",
+      "aliases": [
+        "Zambesi",
+        "Zambeze"
+      ],
+      "type": "river",
+      "country": "ZMB",
+      "role": "main",
+      "basin": "Zambezi",
+      "through": [
+        "AGO",
+        "NAM",
+        "BWA",
+        "ZWE",
+        "MOZ"
+      ],
+      "source": {
+        "name": "Kalene Hill",
+        "aliases": [
+          "Mwinilunga"
+        ],
+        "point": [
+          24.3089,
+          -11.3697
+        ],
+        "country": "ZMB",
+        "significance": "Where southern Africa's great eastward river rises, in north-west Zambia near the Angola and DRC borders",
+        "labelBelow": true
+      },
+      "osm": "R318455",
+      "significance": "Africa's fourth-longest river, flowing east from north-west Zambia over Mosi-oa-Tunya and through two great reservoirs to the Indian Ocean",
+      "notes": [
+        "Zambia — Zambezi: it rises in north-west Zambia",
+        "Rises near the **Katanga Plateau**, by the borders of Angola and the DRC",
+        "Plunges over **Victoria Falls**",
+        "Dammed at **Kariba**, holding back Lake Kariba",
+        "Flows through Zambia and Angola, along the Namibia, Botswana and Zimbabwe borders, and through Mozambique to the Indian Ocean"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-orange",
+      "name": "Orange",
+      "aliases": [
+        "Orange River",
+        "Gariep",
+        "Senqu"
+      ],
+      "type": "river",
+      "country": "ZAF",
+      "role": "main",
+      "basin": "Orange",
+      "through": [
+        "LSO",
+        "NAM"
+      ],
+      "source": {
+        "name": "Mont-aux-Sources",
+        "aliases": [
+          "Maloti"
+        ],
+        "near": "Drakensberg",
+        "point": [
+          28.8731,
+          -28.7722
+        ],
+        "country": "LSO",
+        "significance": "Where South Africa's longest river rises, high on Lesotho's border with KwaZulu-Natal"
+      },
+      "osm": "R2248461",
+      "significance": "South Africa's longest river, rising in the mountains of Lesotho and flowing west across the plateau to the Atlantic",
+      "notes": [
+        "Forms a natural border between **South Africa** and **Namibia**",
+        "Rises in Lesotho, where it is called the Senqu",
+        "Flows west to the Atlantic"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-limpopo",
+      "name": "Limpopo",
+      "aliases": [
+        "Limpopo River"
+      ],
+      "type": "river",
+      "country": "ZAF",
+      "role": "main",
+      "basin": "Limpopo",
+      "through": [
+        "BWA",
+        "ZWE",
+        "MOZ"
+      ],
+      "osmExtra": [
+        "R1185307"
+      ],
+      "source": {
+        "name": "Witwatersrand",
+        "aliases": [
+          "Rand"
+        ],
+        "near": "Johannesburg",
+        "point": [
+          27.85,
+          -26.1
+        ],
+        "country": "ZAF",
+        "significance": "Where the river rises as the Crocodile, on the gold-bearing ridge of Johannesburg"
+      },
+      "osm": "R960818",
+      "significance": "The river that bounds South Africa against Botswana and Zimbabwe, crossing the Tropic of Capricorn on its way to the Indian Ocean",
+      "notes": [
+        "Forms South Africa's border with **Botswana** and **Zimbabwe**",
+        "Cuts the **Tropic of Capricorn** — twice",
+        "Drains into the **Indian Ocean**, in Mozambique",
+        "Rises as the Crocodile River on the Witwatersrand"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-khartoum",
+      "name": "Khartoum",
+      "aliases": [
+        "Al-Mogran",
+        "Mogran"
+      ],
+      "type": "confluence",
+      "country": "SDN",
+      "point": [
+        32.5064,
+        15.6412
+      ],
+      "basin": "Nile",
+      "meets": [
+        "wriv-blue-nile",
+        "wriv-white-nile"
+      ],
+      "significance": "Where the two headstreams meet and the great river begins, at Sudan's capital",
+      "notes": [
+        "Meeting point of the **White Nile** and the **Blue Nile** — the Mogran"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-aswan",
+      "name": "Aswan High Dam",
+      "aliases": [
+        "Aswan Dam",
+        "High Dam",
+        "Sadd al-Aali"
+      ],
+      "type": "dam",
+      "country": "EGY",
+      "point": [
+        32.8749,
+        23.9704
+      ],
+      "basin": "Nile",
+      "significance": "The great dam that ended the river's floods in Egypt in 1970, holding back a reservoir across the Sudan border",
+      "notes": [
+        "On the Nile, in Egypt",
+        "Holds back **Lake Nasser** (man-made)"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-cairo",
+      "name": "Cairo",
+      "aliases": [
+        "Al-Qahira"
+      ],
+      "type": "city",
+      "country": "EGY",
+      "point": [
+        31.2357,
+        30.0444
+      ],
+      "basin": "Nile",
+      "significance": "Egypt's capital, at the head of the delta, where the great river begins to divide",
+      "notes": [
+        "Capital of Egypt",
+        "Where the Nile divides into its delta"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-alexandria",
+      "name": "Alexandria",
+      "aliases": [
+        "Alexandria Port",
+        "Al-Iskandariya"
+      ],
+      "type": "city",
+      "country": "EGY",
+      "point": [
+        29.8952,
+        31.1992
+      ],
+      "basin": "Nile",
+      "significance": "Egypt's great Mediterranean port, at the delta's western edge",
+      "notes": [
+        "Egypt's chief port, on the Mediterranean"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-port-harcourt",
+      "name": "Port Harcourt",
+      "aliases": [
+        "PH"
+      ],
+      "type": "city",
+      "country": "NGA",
+      "point": [
+        7.03,
+        4.8
+      ],
+      "basin": "Niger",
+      "significance": "The oil port of the delta's eastern side, on the Bonny river",
+      "notes": [
+        "Nigeria's chief oil port, in the Niger Delta"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-boyoma",
+      "name": "Boyoma Falls",
+      "aliases": [
+        "Stanley Falls",
+        "Wagenia Falls"
+      ],
+      "type": "waterfall",
+      "country": "COD",
+      "point": [
+        25.2072,
+        0.4927
+      ],
+      "basin": "Congo",
+      "significance": "Seven cataracts over 100 km of the river above Kisangani — by the volume of water the largest falls on Earth",
+      "notes": [
+        "On the Congo (Lualaba), above Kisangani",
+        "Once called the Stanley Falls"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-victoria-falls",
+      "name": "Victoria Falls",
+      "aliases": [
+        "Mosi-oa-Tunya"
+      ],
+      "type": "waterfall",
+      "country": "ZMB",
+      "point": [
+        25.8572,
+        -17.9244
+      ],
+      "basin": "Zambezi",
+      "significance": "The 'smoke that thunders': the largest sheet of falling water on Earth, 1.7 km wide, on the Zambia–Zimbabwe border",
+      "notes": [
+        "On the Zambezi, between Zambia and Zimbabwe",
+        "Called Mosi-oa-Tunya, 'the smoke that thunders'"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "wriv-kariba-dam",
+      "name": "Kariba Dam",
+      "aliases": [
+        "Kariba"
+      ],
+      "type": "dam",
+      "country": "ZMB",
+      "point": [
+        28.7615,
+        -16.5214
+      ],
+      "basin": "Zambezi",
+      "significance": "The dam on the Zambia–Zimbabwe border that holds back the world's largest reservoir by volume",
+      "notes": [
+        "On the Zambezi, completed in 1959",
+        "Holds back Lake Kariba"
       ],
       "tier": 1
     }

@@ -56,6 +56,10 @@ export type PlaceType =
   | 'grassland'
   | 'desert'
   | 'mountains'
+  /** A rift valley — the Great Rift Valley — drawn as its floor, like a plateau. */
+  | 'valley'
+  /** A semi-arid belt between desert and savanna — the Sahel. Not a desert, so not called one. */
+  | 'semiarid'
   /** Points on a world river's course: Angel Falls, the Itaipu dam, the Río de la Plata. */
   | 'waterfall'
   | 'dam'
@@ -309,6 +313,8 @@ export const TYPE_LABEL: Record<PlaceType, string> = {
   grassland: 'grassland',
   desert: 'desert',
   mountains: 'mountain range',
+  valley: 'rift valley',
+  semiarid: 'semi-arid region',
   waterfall: 'waterfall',
   dam: 'dam',
   estuary: 'estuary',
@@ -357,12 +363,16 @@ export const WATER_GLYPH: Partial<Record<PlaceType, string>> = {
 /**
  * The tricks that apply to a set of places — a group counts if it names one of
  * them, or the country one of them sits in (the mnemonic for Canada's big three
- * belongs on Montreal's card as much as on Canada's).
+ * belongs on Montreal's card as much as on Canada's). Only a Political Map
+ * place takes its country's: those tricks are about where countries sit, which
+ * put "Nigeria and Niger" on the Sahel's card and "ABC" on the Patagonian
+ * Desert's.
  */
 export function groupsFor(subject: Place[], isos: string[] = []): PlaceGroup[] {
   const ids = new Set<string>(isos)
   for (const p of subject) {
     ids.add(p.id)
+    if (p.section !== 'places') continue
     if (p.country) ids.add(p.country)
     if (p.sovereign) ids.add(p.sovereign)
   }

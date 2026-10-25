@@ -2,7 +2,7 @@
   "continent": "World Grasslands",
   "title": "Grasslands",
   "section": "physical",
-  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "source": "After the notes' South America and Africa physical maps, with standard UPSC facts added",
   "places": [
     {
       "id": "grs-llanos",
@@ -131,6 +131,68 @@
         "Temperate grassland — outside the Tropics",
         "In Argentina",
         "Alfalfa (lucerne) grass, grown to feed cattle"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-savanna",
+      "name": "Savanna",
+      "aliases": [
+        "Savannah",
+        "African Savanna",
+        "Savanna grasslands"
+      ],
+      "type": "grassland",
+      "country": null,
+      "point": [
+        30,
+        10
+      ],
+      "land": [
+        "AFRICA"
+      ],
+      "koppen": [
+        "Aw"
+      ],
+      "clip": "land",
+      "significance": "Africa's tropical grassland of tall grass and scattered trees, between the rainforest and the deserts, wet in summer and dry in winter",
+      "notes": [
+        "Tropical grassland",
+        "**Elephant grass**: tall, coarse grass up to 3–4 m",
+        "The Sudan type climate — hot all year, rain in summer",
+        "Drawn where Köppen classes the climate tropical savanna (Aw)"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "grs-velds",
+      "name": "Velds",
+      "aliases": [
+        "Veld",
+        "Veldt",
+        "Highveld"
+      ],
+      "type": "grassland",
+      "country": "ZAF",
+      "point": [
+        28.6,
+        -27.3
+      ],
+      "admin1": [
+        "Gauteng",
+        "Free State",
+        "Mpumalanga",
+        "North West"
+      ],
+      "elevation": [
+        1500,
+        2100
+      ],
+      "significance": "South Africa's temperate grassland on the high interior plateau, some 1,500–2,100 m up",
+      "notes": [
+        "Temperate grasslands",
+        "In South Africa",
+        "The Highveld: the interior plateau between about 1,500 and 2,100 m"
       ],
       "tier": 1
     }

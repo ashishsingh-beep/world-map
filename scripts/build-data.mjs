@@ -19,7 +19,7 @@ import { geoArea, geoCentroid, geoBounds, geoContains, geoDistance } from 'd3-ge
 import { feature as topojsonFeature, merge as topojsonMerge, mesh as topojsonMesh, neighbors as topojsonNeighbors } from 'topojson-client'
 import { annualRange, contour, readReanalysis, readStations, sample, seaLevel, simplify, smooth, thermalEquator } from './isotherms.mjs'
 import { POLAR, TRADES, WESTERLIES, againstShips, windsAndBelts } from './winds.mjs'
-import { climateRegions, koppenWithin } from './climate.mjs'
+import { climateRegions, gridWithin, koppenWithin } from './climate.mjs'
 import { endAt, fetchRiverWays, joinCourse, kmToLine, leaveFrom, lengthKm, nearestOnLine, simplifyLine } from './osm-rivers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -132,7 +132,7 @@ const ADMIN1_RAW = resolve(CACHE, 'ne_10m_admin_1_states_provinces.geojson')
 /** The types that are areas. Everything else in the section is a marker. */
 const AREA_TYPES = new Set(['ocean', 'sea', 'reef'])
 /** Land-region types that are areas rather than a point-and-radius marker. */
-const LAND_AREA_TYPES = new Set(['peninsula', 'constituent', 'plateau', 'grassland', 'desert', 'mountains'])
+const LAND_AREA_TYPES = new Set(['peninsula', 'constituent', 'plateau', 'grassland', 'desert', 'mountains', 'valley', 'semiarid'])
 /**
  * The physical map's patches, each kind in its own colour, drawn over the land
  * (`onLand`) as a peninsula is. A lake is one too when it names its polygon
@@ -144,6 +144,8 @@ const PHYSICAL_TINT = {
   desert: '#d97706',
   mountains: '#92400e',
   lake: '#1d4ed8',
+  valley: '#be123c',
+  semiarid: '#a3a335',
 }
 /**
  * A region that is not a peninsula — the Afar Region, say — is a zone, and a
@@ -1058,7 +1060,7 @@ const PLACE_TYPES = new Set([
   // The world's physical map: areas from Natural Earth's physical regions —
   // the Altiplano, the Llanos, the Atacama, the Andes — and points on a world
   // river's course: Angel Falls, the Itaipu dam, the Río de la Plata.
-  'plateau', 'grassland', 'desert', 'mountains',
+  'plateau', 'grassland', 'desert', 'mountains', 'valley', 'semiarid',
   'waterfall', 'dam', 'estuary',
 ])
 /** Water features sit offshore by definition, so containment never applies. */
@@ -1859,12 +1861,19 @@ function admin1ByName() {
 }
 
 /** Clips one place's gathered parts to its own country, via a throwaway job. */
-function clipToCountry(parts, iso) {
-  const country = picked.get(iso)
-  if (!country) {
-    errors.push(`land clip: "${iso}" is not a country this build knows`)
+function clipToCountry(parts, isos) {
+  const missing = isos.filter((iso) => !picked.get(iso))
+  if (missing.length) {
+    errors.push(`land clip: ${missing.join(', ')} not a country this build knows`)
     return parts
   }
+  // One country is its own outline; several are merged from the drawn
+  // topology, so a patch over Botswana, Namibia and South Africa is cut at
+  // the coast and nowhere else.
+  const country =
+    isos.length === 1
+      ? picked.get(isos[0])
+      : { geometry: topojsonMerge(countriesTopo, countriesTopo.objects.countries.geometries.filter((g) => isos.includes(g.id))) }
   const penIn = resolve(CACHE, 'land-clip-pen.geojson')
   const countryIn = resolve(CACHE, 'land-clip-country.geojson')
   const clipOut = resolve(CACHE, 'land-clip-out.topo.json')
@@ -1950,6 +1959,36 @@ function eraseLand(p, parts, names) {
   return g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]
 }
 
+/**
+ * The cells of NOAA's ETOPO1 relief (1 arc-minute, read at a tenth of a
+ * degree) inside a place's frame whose height lies in `[min, max]` metres:
+ * the Velds are the Highveld, South Africa's plateau between about 1,500 and
+ * 2,100 m. Fetched for the frame's box only, from NOAA's ERDDAP, and cached.
+ */
+function elevationWithin(parts, [min, max]) {
+  const geometry = { type: 'MultiPolygon', coordinates: parts }
+  // Planar bounds, not geoBounds: a ring wound the other way would read as
+  // the whole globe.
+  let [w, s, e, n] = [Infinity, Infinity, -Infinity, -Infinity]
+  for (const [x, y] of parts.flat(2)) [w, s, e, n] = [Math.min(w, x), Math.min(s, y), Math.max(e, x), Math.max(n, y)]
+  const box = [Math.floor(w * 10) / 10, Math.floor(s * 10) / 10, Math.ceil(e * 10) / 10, Math.ceil(n * 10) / 10]
+  const cache = resolve(CACHE, `etopo1-${box.join(',')}.csv`)
+  if (!existsSync(cache)) {
+    const q = `altitude[(${box[1]}):6:(${box[3]})][(${box[0]}):6:(${box[2]})]`
+    execFileSync('curl', ['-sS', '-f', '-m', '300', '-o', cache, `https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.csv?${encodeURIComponent(q)}`], { stdio: 'inherit' })
+  }
+  const rows = readFileSync(cache, 'utf8').trim().split('\n').slice(2).map((l) => l.split(',').map(Number))
+  const lats = [...new Set(rows.map((r) => r[0]))].sort((a, b) => b - a)
+  const lons = [...new Set(rows.map((r) => r[1]))].sort((a, b) => a - b)
+  const width = lons.length, height = lats.length
+  const values = new Float64Array(width * height).fill(NaN)
+  const li = new Map(lats.map((v, i) => [v, i])), oi = new Map(lons.map((v, i) => [v, i]))
+  for (const [lat, lon, alt] of rows) values[li.get(lat) * width + oi.get(lon)] = alt
+  // Cell centres sit on the samples, so the grid's corner is half a step out.
+  const step = lons[1] - lons[0]
+  return gridWithin(values, width, height, lons[0] - step / 2, lats[0] + step / 2, step, -step, (v) => v >= min && v <= max, geometry)
+}
+
 /** Beck et al.'s Köppen-Geiger raster for 1991–2020 at 0.1°, downloaded once. */
 function koppenTif() {
   const dir = resolve(CACHE, 'kg')
@@ -2000,13 +2039,14 @@ for (const p of places) {
   }
   for (const name of p.admin1 || p.countries || p.south != null ? (p.land ?? []) : (p.land ?? [p.name])) {
     const found = (p.type === 'constituent' ? unitByName : p.type === 'lake' ? lakeByName : landByName).get(loose(name))
-    const f = Array.isArray(found) ? pickFor(p, found) : found
-    if (!f) {
+    // `landAll` takes every polygon of a repeated name: Natural Earth draws
+    // the Great Rift Valley as two, its Ethiopian–Eastern arm and its Western.
+    const fs = Array.isArray(found) ? (p.landAll ? found : [pickFor(p, found)]) : [found]
+    if (!fs[0]) {
       errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : p.type === 'lake' ? 'lake' : 'land polygon'} named "${name}"`)
       continue
     }
-    const g = f.geometry
-    parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
+    for (const { geometry: g } of fs) parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
   }
   /**
    * A territory whose border with the rest of its country is a parallel:
@@ -2035,18 +2075,31 @@ for (const p of places) {
    * Mendoza and west over the Andes' forests and icefields to Chile's fjords.
    * Clipped to the country after, since the 0.1° cells overrun the coast.
    */
-  if (p.erase && parts.length) parts = eraseLand(p, parts, p.erase)
+  // An erase leaves slivers where the two outlines nearly meet; anything
+  // under 2,000 km² of what is left is one, not a part of the place.
+  if (p.erase && parts.length) {
+    parts = eraseLand(p, parts, p.erase).filter((poly) => geoArea({ type: 'Polygon', coordinates: poly }) * 6371 ** 2 >= 2000)
+  }
   if (p.koppen && parts.length) {
     parts = await koppenWithin(koppenTif(), p.koppen, { type: 'MultiPolygon', coordinates: parts })
-    p.clip = true
+    p.clip ??= true
+  }
+  if (p.elevation && parts.length) {
+    parts = elevationWithin(parts, p.elevation)
+    p.clip ??= true
   }
   if (!parts.length) {
     noLandPolygon.push(p.name)
     continue
   }
+  // `clip: true` cuts to the place's own country; a list cuts to those
+  // countries together — the Sahara's grid cells to North Africa's coasts.
   if (p.clip) {
-    if (!p.country) errors.push(`${p.id}: "clip" needs a country`)
-    else parts = clipToCountry(parts, p.country)
+    const isos =
+      p.clip === 'land' ? countriesTopo.objects.countries.geometries.map((g) => g.id).filter((id) => picked.get(id))
+      : Array.isArray(p.clip) ? p.clip : p.country ? [p.country] : null
+    if (!isos) errors.push(`${p.id}: "clip" needs a country`)
+    else parts = clipToCountry(parts, isos)
   }
   landFeatures.push({
     type: 'Feature',

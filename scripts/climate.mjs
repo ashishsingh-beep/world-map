@@ -73,28 +73,36 @@ const OVERWRITTEN = new Set(['mediterranean', 'sudan'])
 const KEEP = ['equatorial', 'desert-hot', 'desert-cold']
 
 /**
- * Fills a lon/lat (Multi)Polygon onto the raster's grid, even-odd by scanline:
- * a cell is in when its centre is.
+ * Fills a lon/lat (Multi)Polygon onto the raster's grid, each polygon even-odd
+ * by scanline — a cell is in when its centre is — and the polygons joined, so
+ * two frames that overlap (the Sahara and the Libyan Desert) do not cancel.
  */
 function rasterize(geometry, width, height, west, north, dx, dy) {
   const mask = new Uint8Array(width * height)
   const polys = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates
-  const edges = []
-  for (const rings of polys) for (const ring of rings)
-    for (let i = 0; i < ring.length; i++) {
-      const a = ring[i], b = ring[(i + 1) % ring.length]
-      if (a[1] !== b[1]) edges.push([a, b])
-    }
-  for (let r = 0; r < height; r++) {
-    const lat = north + (r + 0.5) * dy
-    const xs = []
-    for (const [[x1, y1], [x2, y2]] of edges)
-      if ((y1 <= lat) !== (y2 <= lat)) xs.push(x1 + ((lat - y1) / (y2 - y1)) * (x2 - x1))
-    xs.sort((p, q) => p - q)
-    for (let k = 0; k + 1 < xs.length; k += 2) {
-      const c0 = Math.max(0, Math.ceil((xs[k] - west) / dx - 0.5))
-      const c1 = Math.min(width - 1, Math.floor((xs[k + 1] - west) / dx - 0.5))
-      for (let c = c0; c <= c1; c++) mask[r * width + c] = 1
+  for (const rings of polys) {
+    const edges = []
+    let top = -Infinity, bottom = Infinity
+    for (const ring of rings)
+      for (let i = 0; i < ring.length; i++) {
+        const a = ring[i], b = ring[(i + 1) % ring.length]
+        top = Math.max(top, a[1])
+        bottom = Math.min(bottom, a[1])
+        if (a[1] !== b[1]) edges.push([a, b])
+      }
+    const r0 = Math.max(0, Math.floor((top - north) / dy) - 1)
+    const r1 = Math.min(height - 1, Math.ceil((bottom - north) / dy) + 1)
+    for (let r = r0; r <= r1; r++) {
+      const lat = north + (r + 0.5) * dy
+      const xs = []
+      for (const [[x1, y1], [x2, y2]] of edges)
+        if ((y1 <= lat) !== (y2 <= lat)) xs.push(x1 + ((lat - y1) / (y2 - y1)) * (x2 - x1))
+      xs.sort((p, q) => p - q)
+      for (let k = 0; k + 1 < xs.length; k += 2) {
+        const c0 = Math.max(0, Math.ceil((xs[k] - west) / dx - 0.5))
+        const c1 = Math.min(width - 1, Math.floor((xs[k + 1] - west) / dx - 0.5))
+        for (let c = c0; c <= c1; c++) mask[r * width + c] = 1
+      }
     }
   }
   return mask
@@ -170,14 +178,21 @@ export async function koppenWithin(tifPath, classes, geometry) {
   const unknown = classes.filter((c) => !KOPPEN.includes(c))
   if (unknown.length) throw new Error(`Köppen classes not known: ${unknown.join(', ')}`)
   const image = await (await fromFile(tifPath)).getImage()
-  const width = image.getWidth()
-  const height = image.getHeight()
   const [west, north] = image.getOrigin()
   const [dx, dy] = image.getResolution()
   const [raster] = await image.readRasters()
   const codes = new Set(classes.map((c) => KOPPEN.indexOf(c) + 1))
+  return gridWithin(raster, image.getWidth(), image.getHeight(), west, north, dx, dy, (v) => codes.has(v), geometry)
+}
+
+/**
+ * The cells of a regular grid — rows from the north, `dy` negative — inside a
+ * lon/lat (Multi)Polygon whose value passes `keep`, as MultiPolygon
+ * coordinates, specks under MIN_CELLS dropped.
+ */
+export function gridWithin(values, width, height, west, north, dx, dy, keep, geometry) {
   const mask = rasterize(geometry, width, height, west, north, dx, dy)
-  for (let i = 0; i < mask.length; i++) if (mask[i] && !codes.has(raster[i])) mask[i] = 0
+  for (let i = 0; i < mask.length; i++) if (mask[i] && !keep(values[i])) mask[i] = 0
   return maskPolygons(drawnCells(mask, width), width, height, west, north, dx, dy)
 }
 

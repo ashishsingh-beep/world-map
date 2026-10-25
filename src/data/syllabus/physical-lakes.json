@@ -2,7 +2,7 @@
   "continent": "World Lakes",
   "title": "Lakes",
   "section": "physical",
-  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "source": "After the notes' South America and Africa physical maps, with standard UPSC facts added",
   "places": [
     {
       "id": "lak-maracaibo",
@@ -99,7 +99,430 @@
         "The largest lagoon lake of Brazil"
       ],
       "tier": 1
+    },
+    {
+      "id": "lak-victoria",
+      "name": "Lake Victoria",
+      "aliases": [
+        "Victoria",
+        "Victoria Nyanza",
+        "Nalubaale"
+      ],
+      "type": "lake",
+      "country": "TZA",
+      "point": [
+        32.91,
+        -1.1
+      ],
+      "land": [
+        "Lake Victoria"
+      ],
+      "significance": "Africa's largest lake, shared by three countries, which the Equator crosses and the White Nile leaves at Jinja",
+      "notes": [
+        "Shared by Uganda, Kenya and Tanzania",
+        "Not a rift valley lake: it fills a shallow basin between the rift's two arms",
+        "The largest lake of Africa, and the second largest freshwater lake in the world",
+        "Source of the **White Nile**, which leaves it at Jinja, Uganda",
+        "The Equator passes through it"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-tanganyika",
+      "name": "Lake Tanganyika",
+      "aliases": [
+        "Tanganyika"
+      ],
+      "type": "lake",
+      "country": "TZA",
+      "point": [
+        29.6,
+        -6
+      ],
+      "land": [
+        "Lake Tanganyika"
+      ],
+      "significance": "The longest freshwater lake on Earth and the second deepest, filling the western arm of the rift for some 670 km",
+      "notes": [
+        "A rift valley lake",
+        "The longest freshwater lake in the world, about 670 km",
+        "Shared by the DRC, Burundi, Zambia and Tanzania",
+        "The second deepest lake in the world (about 1,470 m), after Baikal"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-malawi",
+      "name": "Lake Malawi",
+      "aliases": [
+        "Lake Nyasa",
+        "Nyasa",
+        "Malawi",
+        "Lago Niassa"
+      ],
+      "type": "lake",
+      "country": "MWI",
+      "point": [
+        34.51,
+        -11.96
+      ],
+      "land": [
+        "Lake Malawi"
+      ],
+      "significance": "The great rift lake at the southern end of East Africa's lakes, shared by three countries",
+      "notes": [
+        "Shared by Malawi, Mozambique and Tanzania",
+        "Called Lake Nyasa in Tanzania and Lago Niassa in Mozambique",
+        "A rift valley lake, at the rift's southern end",
+        "Holds more species of fish than any other lake"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-turkana",
+      "name": "Lake Turkana",
+      "aliases": [
+        "Turkana",
+        "Lake Rudolf"
+      ],
+      "type": "lake",
+      "country": "KEN",
+      "point": [
+        36.18,
+        3.58
+      ],
+      "land": [
+        "Lake Turkana"
+      ],
+      "significance": "The world's largest permanent desert lake, an alkaline lake in the rift of northern Kenya",
+      "notes": [
+        "In Kenya — its northern tip in Ethiopia",
+        "An example of a rift valley lake",
+        "The world's largest permanent desert lake and its largest alkaline lake",
+        "The Omo, from Ethiopia, is its main inflow"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-albert",
+      "name": "Lake Albert",
+      "aliases": [
+        "Albert",
+        "Mwitanzige"
+      ],
+      "type": "lake",
+      "country": "UGA",
+      "point": [
+        30.92,
+        1.64
+      ],
+      "land": [
+        "Lake Albert"
+      ],
+      "significance": "A lake of the western rift on the Uganda–Congo border, through which the White Nile flows north",
+      "notes": [
+        "Between Uganda and the DRC",
+        "An example of a rift valley lake — the Western (Albertine) Rift",
+        "The White Nile passes through it, in from Lake Kyoga and out as the Albert Nile"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-edward",
+      "name": "Lake Edward",
+      "aliases": [
+        "Edward",
+        "Rweru"
+      ],
+      "type": "lake",
+      "country": "COD",
+      "point": [
+        29.6,
+        -0.35
+      ],
+      "land": [
+        "Lake Edward"
+      ],
+      "significance": "A lake of the western rift under the Rwenzori, on the Uganda–Congo border, draining north to its larger neighbour",
+      "notes": [
+        "Between Uganda and the DRC",
+        "An example of a rift valley lake — the Western (Albertine) Rift",
+        "Drains north, by the Semliki, into Lake Albert"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-chad",
+      "name": "Lake Chad",
+      "aliases": [
+        "Chad",
+        "Lac Tchad"
+      ],
+      "type": "lake",
+      "country": "TCD",
+      "point": [
+        14.49,
+        13.07
+      ],
+      "land": [
+        "Lake Chad"
+      ],
+      "significance": "A shallow lake of the Sahel, shared by four countries, that has lost nine-tenths of its water since the 1960s",
+      "notes": [
+        "Shared by Chad, Cameroon, Niger and Nigeria",
+        "Very shallow — a few metres deep",
+        "Has shrunk by about 90% since the 1960s, through drought and irrigation"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-volta",
+      "name": "Lake Volta",
+      "aliases": [
+        "Volta"
+      ],
+      "type": "lake",
+      "country": "GHA",
+      "point": [
+        -0.15,
+        7.54
+      ],
+      "land": [
+        "Lake Volta"
+      ],
+      "significance": "The world's largest reservoir by area, held back in Ghana by the Akosombo Dam",
+      "notes": [
+        "In Ghana",
+        "A man-made lake: the **Akosombo Dam** (1965)",
+        "The largest reservoir in the world by surface area"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-kariba",
+      "name": "Lake Kariba",
+      "aliases": [
+        "Kariba"
+      ],
+      "type": "lake",
+      "country": "ZWE",
+      "point": [
+        28.04,
+        -16.98
+      ],
+      "land": [
+        "Lake Kariba"
+      ],
+      "significance": "The world's largest reservoir by volume, held back on the Zambezi between Zambia and Zimbabwe",
+      "notes": [
+        "Between Zambia and Zimbabwe",
+        "A man-made lake: the Kariba Dam on the **Zambezi** (1959)",
+        "The largest man-made lake in the world by volume"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-nasser",
+      "name": "Lake Nasser",
+      "aliases": [
+        "Nasser",
+        "Lake Nubia"
+      ],
+      "type": "lake",
+      "country": "EGY",
+      "point": [
+        31.8,
+        22.4
+      ],
+      "land": [
+        "Lake Nasser"
+      ],
+      "significance": "The reservoir behind the Aswan High Dam, flooding the river's valley across the Egypt–Sudan border",
+      "notes": [
+        "On the **Nile** river",
+        "A man-made lake: the **Aswan High Dam** (1970)",
+        "Shared by Egypt and Sudan — the Sudanese part is called Lake Nubia"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-tana",
+      "name": "Lake Tana",
+      "aliases": [
+        "Tana",
+        "Tsana"
+      ],
+      "type": "lake",
+      "country": "ETH",
+      "point": [
+        37.3,
+        12.02
+      ],
+      "land": [
+        "Lake Tana"
+      ],
+      "significance": "Ethiopia's largest lake, high on its highlands, out of which the Blue Nile flows",
+      "notes": [
+        "In Ethiopia",
+        "Origin of the **Blue Nile**",
+        "The largest lake of Ethiopia, about 1,800 m above sea level"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-assal",
+      "name": "Lake Assal",
+      "aliases": [
+        "Assal",
+        "Lac Assal"
+      ],
+      "type": "lake",
+      "country": "DJI",
+      "point": [
+        42.42,
+        11.67
+      ],
+      "land": [
+        "Lake Assal"
+      ],
+      "significance": "Africa's lowest point, 155 m below sea level in Djibouti, and one of the saltiest lakes on Earth",
+      "notes": [
+        "In Djibouti",
+        "155 m below sea level — the lowest point of Africa",
+        "One of the saltiest lakes in the world, saltier than the Dead Sea"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-manzala",
+      "name": "Lake Manzala",
+      "aliases": [
+        "Manzala",
+        "Al Manzala Lake",
+        "Lake Menzaleh"
+      ],
+      "type": "lake",
+      "country": "EGY",
+      "point": [
+        32.136,
+        31.276
+      ],
+      "land": [],
+      "significance": "The largest of the delta's coastal lagoons, between Damietta and Port Said",
+      "notes": [
+        "In Egypt",
+        "A brackish lagoon on the Nile Delta's north-east edge, beside the Suez Canal's Mediterranean end"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-timsah",
+      "name": "Lake Timsah",
+      "aliases": [
+        "Timsah",
+        "Crocodile Lake"
+      ],
+      "type": "lake",
+      "country": "EGY",
+      "point": [
+        32.293,
+        30.57
+      ],
+      "land": [],
+      "significance": "The small lake halfway along the Suez Canal, on whose shore Ismailia stands",
+      "notes": [
+        "In Egypt, on the Suez Canal",
+        "Ismailia stands on its shore"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-great-bitter",
+      "name": "Great Bitter Lake",
+      "aliases": [
+        "Great Bitter"
+      ],
+      "type": "lake",
+      "country": "EGY",
+      "point": [
+        32.41,
+        30.32
+      ],
+      "land": [
+        "Great Bitter Lake"
+      ],
+      "significance": "The salt lake the Suez Canal crosses at its widest, where ships wait and pass one another",
+      "notes": [
+        "In Egypt, on the Suez Canal",
+        "Joined to the Little Bitter Lake at its southern end"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-little-bitter",
+      "name": "Little Bitter Lake",
+      "aliases": [
+        "Little Bitter",
+        "Small Bitter Lake"
+      ],
+      "type": "lake",
+      "country": "EGY",
+      "point": [
+        32.53,
+        30.21
+      ],
+      "land": [],
+      "significance": "The lesser salt lake on the Suez Canal, just south of its larger twin",
+      "notes": [
+        "In Egypt, on the Suez Canal",
+        "South of the Great Bitter Lake"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "lak-rift-valley",
+      "name": "Great Rift Valley",
+      "aliases": [
+        "Rift Valley",
+        "East African Rift",
+        "Great Rift"
+      ],
+      "type": "valley",
+      "country": "KEN",
+      "point": [
+        36.2,
+        1.0
+      ],
+      "land": [
+        "GREAT RIFT VALLEY"
+      ],
+      "landAll": true,
+      "significance": "A great trench where Africa is splitting apart, running from the Red Sea through Ethiopia and East Africa to Mozambique in two arms",
+      "notes": [
+        "Formed where the African plate is pulling apart — the Nubian and Somali plates",
+        "Two arms: the **Eastern** (Gregory) and the **Western** (Albertine)",
+        "Its lakes are long and deep: Tanganyika, Malawi, Turkana, Albert, Edward",
+        "Lake Victoria lies between the two arms — it is not a rift valley lake"
+      ],
+      "tier": 1
     }
   ],
-  "groups": []
+  "groups": [
+    {
+      "id": "lak-victoria-trick",
+      "name": "Lake Victoria — its countries",
+      "members": [
+        "lak-victoria"
+      ],
+      "mnemonic": "UKT — Uganda, Kenya, Tanzania"
+    },
+    {
+      "id": "lak-malawi-trick",
+      "name": "Lake Malawi — its countries",
+      "members": [
+        "lak-malawi"
+      ],
+      "mnemonic": "MMT — Malawi, Mozambique, Tanzania"
+    }
+  ]
 }

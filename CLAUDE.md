@@ -416,6 +416,31 @@ a place's parts), clipped to Argentina, so it meets the Mountains section's
 Andes edge to edge. The desert lies on the plateau, so the two nearly coincide;
 the plateau's point, its label's anchor, sits on the Santa Cruz tableland,
 apart from the desert's, or the unified map dropped one name.
+Africa came second. Natural Earth's own polygons stand for its lakes (Victoria
+to Assal; Manzala, Timsah and the Little Bitter Lake are not in it and stay
+markers), the Atlas, the Hoggar (its AHAGGAR), the Tibesti and the Drakensberg,
+the Katanga Plateau, the Nubian and Namib deserts, the Kalahari — clipped to
+Botswana, Namibia and South Africa, its outline having run a finger to Angola's
+coast (`clip` takes a list of countries, or `"land"` for all of them) — and the
+Great Rift Valley, two polygons of one name taken together (`landAll`), filed
+with the lakes as `type: "valley"`. Its Sahara swallowed the Sahel and its Sahel
+was mostly desert, so the climate decides those: the Sahara is Köppen's BWh
+inside Natural Earth's Sahara and Libyan Desert, clipped to ten North African
+countries; the Sahel is BSh in the eleven from Senegal to Eritrea, and is `type:
+"semiarid"`, never asked as a desert; the Savanna is Aw on the mainland, the
+climate map's own Sudan type; the Libyan Desert is Natural Earth's (which ran
+south into Darfur's savanna at 10°N) less its Sahel, held to BWh. Overlapping
+frames are joined when filled onto a grid, not counted even-odd, or the Sahara
+had a hole where the Libyan Desert lay. The Velds are the Highveld by its
+definition, land between 1,500 and 2,100 m in Gauteng, the Free State,
+Mpumalanga and North West, from NOAA's ETOPO1 relief (`elevation`). Peaks are
+OSM's summit nodes. The Nile is formed at Khartoum (`startsAt`, the Mogran) by
+the White Nile from Jinja and the Blue Nile from Lake Tana's outlet, both
+`headstream`s, and runs out by the Rosetta branch; the Congo is OSM's Lualaba
+from Musofi on the Katanga plateau joined to its Congo at Kisangani; the Limpopo
+rises as the Crocodile on the Witwatersrand. A physical place's card shows only
+its own mnemonics: a group with country members is a political trick about where
+countries sit, so `groupsFor` matches a country only for a Political Map place.
 A lake is a patch too when it names one: Natural Earth's lakes layer
 (`LAKES_URL`) for Titicaca and Poopó, the marine layer for Maracaibo and the
 Lagoa dos Patos. Each kind is drawn over the land in its own tint

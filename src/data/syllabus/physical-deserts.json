@@ -2,7 +2,7 @@
   "continent": "World Deserts",
   "title": "Deserts",
   "section": "physical",
-  "source": "After the notes' South America physical maps, with standard UPSC facts added",
+  "source": "After the notes' South America and Africa physical maps, with standard UPSC facts added",
   "places": [
     {
       "id": "dst-atacama",
@@ -58,6 +58,205 @@
         "A rain shadow desert of the Andes",
         "The **westerlies** drop their rain on the Chilean side",
         "On the leeward side of the Andes"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-sahara",
+      "name": "Sahara",
+      "aliases": [
+        "Sahara Desert",
+        "The Sahara",
+        "Great Desert"
+      ],
+      "type": "desert",
+      "country": "DZA",
+      "point": [
+        3,
+        25
+      ],
+      "land": [
+        "SAHARA",
+        "LIBYAN DESERT"
+      ],
+      "koppen": [
+        "BWh"
+      ],
+      "clip": [
+        "MAR",
+        "DZA",
+        "TUN",
+        "LBY",
+        "EGY",
+        "MRT",
+        "MLI",
+        "NER",
+        "TCD",
+        "SDN"
+      ],
+      "significance": "The largest hot desert on Earth, spanning North Africa from the Atlantic to the Red Sea",
+      "notes": [
+        "The largest hot desert in the world, about 9 million km²",
+        "Its sandy part is the **erg**, its rocky plateau the **hamada**, its gravel plain the **serir** (reg)",
+        "The cold **Canary current** runs along its Atlantic coast",
+        "Its parts include the Libyan and Nubian deserts"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-sahel",
+      "name": "Sahel",
+      "aliases": [
+        "The Sahel"
+      ],
+      "type": "semiarid",
+      "country": "NER",
+      "point": [
+        7,
+        13.8
+      ],
+      "countries": [
+        "SEN",
+        "GMB",
+        "MRT",
+        "MLI",
+        "BFA",
+        "NER",
+        "NGA",
+        "TCD",
+        "SDN",
+        "ERI",
+        "CMR"
+      ],
+      "koppen": [
+        "BSh"
+      ],
+      "clip": [
+        "SEN",
+        "GMB",
+        "MRT",
+        "MLI",
+        "BFA",
+        "NER",
+        "NGA",
+        "TCD",
+        "SDN",
+        "ERI",
+        "CMR"
+      ],
+      "significance": "The semi-arid belt along the great desert's southern edge, from Senegal to the Red Sea",
+      "notes": [
+        "A semi-arid area, south of the Sahara",
+        "The **Great Green Wall** initiative: a belt of trees across Africa to hold back the desert",
+        "Prone to drought and desertification"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-libyan",
+      "name": "Libyan Desert",
+      "aliases": [
+        "Libyan Sahara",
+        "Eastern Sahara"
+      ],
+      "type": "desert",
+      "country": "LBY",
+      "point": [
+        25,
+        25
+      ],
+      "land": [
+        "LIBYAN DESERT"
+      ],
+      "erase": [
+        "SAHEL"
+      ],
+      "koppen": [
+        "BWh"
+      ],
+      "clip": [
+        "LBY",
+        "EGY",
+        "SDN"
+      ],
+      "significance": "The great desert's dry north-eastern part, across three countries west of the river — mostly rock and gravel plain",
+      "notes": [
+        "Mostly **serir** — a rocky, gravel plain",
+        "Covers eastern Libya, the Western Desert of Egypt and north-western Sudan",
+        "One of the driest parts of the Sahara"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-nubian",
+      "name": "Nubian Desert",
+      "aliases": [
+        "Nubian"
+      ],
+      "type": "desert",
+      "country": "SDN",
+      "point": [
+        33.5,
+        20.5
+      ],
+      "land": [
+        "NUBIAN DESERT"
+      ],
+      "significance": "The rocky desert of north-eastern Sudan, between the river's great bend and the Red Sea hills",
+      "notes": [
+        "In Sudan, east of the Nile",
+        "Part of the Sahara: sandstone plateau and dry wadis"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-namib",
+      "name": "Namib",
+      "aliases": [
+        "Namib Desert"
+      ],
+      "type": "desert",
+      "country": "NAM",
+      "point": [
+        15,
+        -24
+      ],
+      "land": [
+        "NAMIB DESERT"
+      ],
+      "significance": "The ancient coastal desert of south-west Africa, kept dry by the cold Benguela current offshore",
+      "notes": [
+        "In Namibia (and southern Angola)",
+        "Cold **Benguela current** offshore",
+        "One of the oldest deserts on Earth, with some of its highest dunes"
+      ],
+      "tier": 1
+    },
+    {
+      "id": "dst-kalahari",
+      "name": "Kalahari",
+      "aliases": [
+        "Kalahari Desert"
+      ],
+      "type": "desert",
+      "country": "BWA",
+      "point": [
+        22,
+        -23
+      ],
+      "land": [
+        "KALAHARI DESERT"
+      ],
+      "clip": [
+        "BWA",
+        "NAM",
+        "ZAF"
+      ],
+      "significance": "The semi-arid sandy basin over most of Botswana, home of the San, the Bushmen",
+      "notes": [
+        "Mainly in Botswana; also Namibia and South Africa",
+        "Home of the **Bushman** (San) tribe",
+        "A semi-desert: rain enough for grass and thorn scrub"
       ],
       "tier": 1
     }

@@ -38,6 +38,8 @@ const TYPE_PLURAL: Partial<Record<string, string>> = {
   grassland: 'Grasslands',
   desert: 'Deserts',
   lake: 'Lakes',
+  valley: 'Rift valleys',
+  semiarid: 'Semi-arid',
 }
 
 export function LearnScreen({
