@@ -460,6 +460,16 @@ in `rounds.ts` is the one function that says which section a place is in, by
 its syllabus `continent`. The per-kind and per-system chips stay on the
 section rounds; the unified map narrows by section only.
 
+Every physical round — the unified map and each section — narrows first by
+continent: Continent chips on setup (`physicalContinents` pref, toggling like
+the sections), one preference for all of them, so Africa ticked on the
+Physical Map is Africa on the Rivers map too. A place's continent is its
+`realm`, stamped by the build from its country's continent, or, for a place
+filed under no country (the Savanna), from the country under its point; the
+build fails if any world physical place has none. Sections, river systems and
+counts are then what the chosen continents hold, and the map, in Learn and in
+Play, is framed on them (`framing`, exported from `rounds.ts`).
+
 The world's rivers are the Indian ones' machinery at another scale
 (`physical-rivers.json`, section `rivers`, atlas `world`): systems as `basin`,
 origins, tributaries, landmarks (Macapá at the Amazon's mouth, Angel Falls, the

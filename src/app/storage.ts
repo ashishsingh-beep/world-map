@@ -42,6 +42,8 @@ export interface Prefs {
   basins: string[]
   /** Which sections the unified Physical Map asks (`physical-rivers`…); none means all of them. */
   physicalSections: string[]
+  /** Which continents a physical round asks; none means all of them. */
+  physicalContinents: string[]
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -56,6 +58,7 @@ export const DEFAULT_PREFS: Prefs = {
   placeKinds: { country: true, capital: true, other: false, region: false },
   basins: [],
   physicalSections: [],
+  physicalContinents: [],
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -138,6 +141,9 @@ export function loadPrefs(): Prefs {
     physicalSections: Array.isArray(raw.physicalSections)
       ? raw.physicalSections.filter((s): s is string => typeof s === 'string')
       : DEFAULT_PREFS.physicalSections,
+    physicalContinents: Array.isArray(raw.physicalContinents)
+      ? raw.physicalContinents.filter((s): s is string => typeof s === 'string')
+      : DEFAULT_PREFS.physicalContinents,
   }
 }
 

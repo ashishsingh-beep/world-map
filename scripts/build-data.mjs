@@ -2678,6 +2678,22 @@ const dateLine = (() => {
   console.log(`Climate: ${[...regions].map(([id, f]) => `${id} ${mkm2(f)}M km²`).join(', ')}; ${checked} places check out`)
 }
 
+/**
+ * A world physical place's continent — its `realm` — for the Physical Map's
+ * continent chips: its country's, or, for one filed under no country (the
+ * Savanna spans thirty), the continent of the country its point lies in.
+ */
+{
+  const unplaced = []
+  for (const p of places) {
+    if (p.atlas !== 'world' || (p.section !== 'physical' && p.section !== 'rivers')) continue
+    const iso = p.country ?? [...picked].find(([, f]) => geoContains(f, p.point))?.[0]
+    p.realm = iso ? meta[iso]?.continent : undefined
+    if (!p.realm) unplaced.push(p.id)
+  }
+  if (unplaced.length) throw new Error(`No continent for physical places: ${unplaced.join(', ')}`)
+}
+
 writeFileSync(resolve(OUT, 'places.json'), JSON.stringify({ continents, places, groups }, null, 2))
 
 const byContinent = {}

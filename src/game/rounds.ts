@@ -388,7 +388,7 @@ function continentsOf(ps: Place[]): string[] {
  * river's whole course — with a margin, so South America alone is framed as
  * South America, and the frame widens as the other continents arrive.
  */
-function framing(ps: Place[], pad = 4): BBox {
+export function framing(ps: Place[], pad = 4): BBox {
   const pts: [number, number][] = []
   for (const p of ps) {
     pts.push(p.point, ...((p.line as [number, number][] | undefined) ?? []))

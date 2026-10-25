@@ -21654,7 +21654,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "dst-patagonian",
@@ -21692,7 +21693,8 @@
       "atlas": "world",
       "tint": "#d97706",
       "onLand": true,
-      "clip": true
+      "clip": true,
+      "realm": "South America"
     },
     {
       "id": "dst-sahara",
@@ -21739,7 +21741,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "dst-sahel",
@@ -21793,7 +21796,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#a3a335",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "dst-libyan",
@@ -21833,7 +21837,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "dst-nubian",
@@ -21860,7 +21865,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "dst-namib",
@@ -21888,7 +21894,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "dst-kalahari",
@@ -21921,7 +21928,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#d97706",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "grs-llanos",
@@ -21946,7 +21954,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "grs-catingas",
@@ -21974,7 +21983,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "grs-cerrados",
@@ -22001,7 +22011,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "grs-campos",
@@ -22026,7 +22037,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "grs-gran-chaco",
@@ -22053,7 +22065,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "grs-pampas",
@@ -22081,7 +22094,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "grs-savanna",
@@ -22116,7 +22130,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#16a34a",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "grs-velds",
@@ -22154,7 +22169,8 @@
       "atlas": "world",
       "tint": "#16a34a",
       "onLand": true,
-      "clip": true
+      "clip": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-maracaibo",
@@ -22184,7 +22200,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "lak-titicaca",
@@ -22213,7 +22230,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "lak-poopo",
@@ -22243,7 +22261,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "lak-patos",
@@ -22270,7 +22289,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "lak-victoria",
@@ -22302,7 +22322,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-tanganyika",
@@ -22331,7 +22352,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-malawi",
@@ -22363,7 +22385,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-turkana",
@@ -22393,7 +22416,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-albert",
@@ -22422,7 +22446,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-edward",
@@ -22451,7 +22476,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-chad",
@@ -22480,7 +22506,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-volta",
@@ -22508,7 +22535,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-kariba",
@@ -22536,7 +22564,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-nasser",
@@ -22565,7 +22594,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-tana",
@@ -22594,7 +22624,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-assal",
@@ -22623,7 +22654,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-manzala",
@@ -22648,7 +22680,8 @@
       "tier": 1,
       "continent": "World Lakes",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "lak-timsah",
@@ -22672,7 +22705,8 @@
       "tier": 1,
       "continent": "World Lakes",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "lak-great-bitter",
@@ -22699,7 +22733,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#1d4ed8",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "lak-little-bitter",
@@ -22723,7 +22758,8 @@
       "tier": 1,
       "continent": "World Lakes",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "lak-rift-valley",
@@ -22755,7 +22791,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#be123c",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "mtn-andes",
@@ -22785,7 +22822,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#92400e",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "mtn-cordillera-oriental",
@@ -22812,7 +22850,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#92400e",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "mtn-cotopaxi",
@@ -22832,7 +22871,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "mtn-chimborazo",
@@ -22852,7 +22892,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "mtn-huascaran",
@@ -22875,7 +22916,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "mtn-misti",
@@ -22897,7 +22939,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "mtn-ojos-del-salado",
@@ -22918,7 +22961,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "mtn-aconcagua",
@@ -22938,7 +22982,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "mtn-atlas",
@@ -22968,7 +23013,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#92400e",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "mtn-hoggar",
@@ -22998,7 +23044,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#92400e",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "mtn-tibesti",
@@ -23025,7 +23072,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#92400e",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "mtn-drakensberg",
@@ -23056,7 +23104,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#92400e",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "mtn-kilimanjaro",
@@ -23081,7 +23130,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "mtn-kenya",
@@ -23105,7 +23155,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "mtn-cameroon",
@@ -23130,7 +23181,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "mtn-ras-dashen",
@@ -23154,7 +23206,8 @@
       "tier": 1,
       "continent": "World Mountains",
       "section": "physical",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "plt-bolivian",
@@ -23184,7 +23237,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#7c3aed",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "plt-mato-grosso",
@@ -23212,7 +23266,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#7c3aed",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "plt-borborema",
@@ -23238,7 +23293,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#7c3aed",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "plt-patagonian",
@@ -23273,7 +23329,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#7c3aed",
-      "onLand": true
+      "onLand": true,
+      "realm": "South America"
     },
     {
       "id": "plt-katanga",
@@ -23302,7 +23359,8 @@
       "section": "physical",
       "atlas": "world",
       "tint": "#7c3aed",
-      "onLand": true
+      "onLand": true,
+      "realm": "Africa"
     },
     {
       "id": "wriv-amazon",
@@ -26536,7 +26594,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-madeira",
@@ -27196,7 +27255,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-macapa",
@@ -27219,7 +27279,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-magdalena",
@@ -28295,7 +28356,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-orinoco",
@@ -29343,7 +29405,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-angel-falls",
@@ -29368,7 +29431,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-parana",
@@ -31594,7 +31658,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-itaipu",
@@ -31618,7 +31683,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-la-plata",
@@ -31643,7 +31709,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "wriv-nile",
@@ -33135,7 +33202,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-white-nile",
@@ -34503,7 +34571,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-blue-nile",
@@ -35670,7 +35739,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-niger",
@@ -38174,7 +38244,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-benue",
@@ -38877,7 +38948,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-congo",
@@ -40999,7 +41071,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-zambezi",
@@ -42780,7 +42853,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-orange",
@@ -44705,7 +44779,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-limpopo",
@@ -45977,7 +46052,8 @@
       ],
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-khartoum",
@@ -46004,7 +46080,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-aswan",
@@ -46029,7 +46106,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-cairo",
@@ -46052,7 +46130,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-alexandria",
@@ -46075,7 +46154,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-port-harcourt",
@@ -46097,7 +46177,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-boyoma",
@@ -46121,7 +46202,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-victoria-falls",
@@ -46144,7 +46226,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "wriv-kariba-dam",
@@ -46167,7 +46250,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-amazon",
@@ -46190,7 +46274,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "origin-wriv-magdalena",
@@ -46211,7 +46296,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "origin-wriv-orinoco",
@@ -46232,7 +46318,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "origin-wriv-parana",
@@ -46255,7 +46342,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "South America"
     },
     {
       "id": "origin-wriv-white-nile",
@@ -46278,7 +46366,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-blue-nile",
@@ -46300,7 +46389,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-niger",
@@ -46321,7 +46411,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-congo",
@@ -46341,7 +46432,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-zambezi",
@@ -46363,7 +46455,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-orange",
@@ -46385,7 +46478,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "origin-wriv-limpopo",
@@ -46407,7 +46501,8 @@
       "tier": 1,
       "continent": "World Rivers",
       "section": "rivers",
-      "atlas": "world"
+      "atlas": "world",
+      "realm": "Africa"
     },
     {
       "id": "riv-godavari",

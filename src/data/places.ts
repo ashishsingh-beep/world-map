@@ -70,6 +70,11 @@ export interface Place {
   name: string
   aliases: string[]
   type: PlaceType
+  /**
+   * A world physical place's continent — South America, Africa… — which the
+   * Physical Map's continent chips narrow by. Its country's, from the build.
+   */
+  realm?: string
   /** Which menu section this belongs to. */
   section: 'places' | 'water' | 'mountains' | 'phenomena' | 'rivers' | 'physical'
   /** ISO3 of the country it belongs to, or null for territories and shared features. */

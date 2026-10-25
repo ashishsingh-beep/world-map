@@ -12,6 +12,7 @@ import {
   WATER_CONTINENTS,
   PHENOMENA_CONTINENTS,
   allPlacesRoundId,
+  framing,
   roundById,
 } from './game/rounds'
 import type { Mode, QuizSnapshot } from './game/useQuiz'
@@ -90,7 +91,7 @@ export default function App() {
 
 function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, replace?: boolean) => void }) {
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref, physicalSections: sectionPref } = prefs
+  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref, physicalSections: sectionPref, physicalContinents: continentPref } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
@@ -100,6 +101,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
   const setRegion = (region: WaterRegion) => setPrefs((p) => ({ ...p, region }))
   const setBasins = (basins: string[]) => setPrefs((p) => ({ ...p, basins }))
   const setSections = (physicalSections: string[]) => setPrefs((p) => ({ ...p, physicalSections }))
+  const setContinents = (physicalContinents: string[]) => setPrefs((p) => ({ ...p, physicalContinents }))
   const setPlaceKinds = (next: (k: Record<PlaceKind, boolean>) => Record<PlaceKind, boolean>) =>
     setPrefs((p) => ({ ...p, placeKinds: next(p.placeKinds) }))
   useEffect(() => savePrefs(prefs), [prefs])
@@ -149,8 +151,35 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
    * The unified Physical Map narrows by section — rivers, mountains, any
    * several — exactly as a rivers round narrows by system.
    */
+  /**
+   * Every physical round — the unified map and each section — narrows first
+   * by continent: the continents its features lie on (`realm`), any several
+   * together, toggled like the sections. Sections, systems and the frame are
+   * then what those continents hold.
+   */
+  const isPhysical = !!round.physical
+  const continentsHere: string[] = isPhysical
+    ? POLITICAL_SCOPES.flatMap((s) => (s.continent && roundPlaces.some((p) => p.realm === s.continent) ? [s.continent] : []))
+    : []
+  const continentsChosen = continentPref.filter((c) => continentsHere.includes(c))
+  const allContinents = continentsChosen.length === 0 || continentsChosen.length === continentsHere.length
+  const inContinents = (p: Place) => allContinents || continentsChosen.includes(p.realm ?? '')
+  const tapContinent = (id: string) => {
+    if (id === 'all') return setContinents([])
+    const next = allContinents
+      ? [id]
+      : continentsChosen.includes(id)
+        ? continentsChosen.filter((c) => c !== id)
+        : [...continentsChosen, id]
+    if (!next.length) return
+    setContinents(next.length === continentsHere.length ? [] : next)
+  }
+  const localPlaces = isPhysical ? roundPlaces.filter(inContinents) : roundPlaces
+  /** The chosen continents' own frame, or the round's when every one is on. */
+  const localView = isPhysical && !allContinents ? framing(localPlaces) : round.view
+
   const isPhysicalAll = !!round.physicalAll
-  const sectionsHere = PHYSICAL_SECTIONS.filter((s) => roundPlaces.some((p) => physicalSectionOf(p)?.id === s.id))
+  const sectionsHere = PHYSICAL_SECTIONS.filter((s) => localPlaces.some((p) => physicalSectionOf(p)?.id === s.id))
   const sectionsChosen = sectionPref.filter((id) => sectionsHere.some((s) => s.id === id))
   const allSections = sectionsChosen.length === 0 || sectionsChosen.length === sectionsHere.length
   const inSections = (p: Place) => allSections || sectionsChosen.includes(physicalSectionOf(p)?.id ?? '')
@@ -165,7 +194,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     setSections(next.length === sectionsHere.length ? [] : next)
   }
   const isRivers = !isPhysicalAll && roundPlaces[0]?.section === 'rivers'
-  const basins = isRivers ? [...new Set(roundPlaces.map((p) => p.basin ?? ''))].filter(Boolean) : []
+  const basins = isRivers ? [...new Set(localPlaces.map((p) => p.basin ?? ''))].filter(Boolean) : []
   const basinsHere = basinPref.filter((b) => basins.includes(b))
   const allBasins = basinsHere.length === 0 || basinsHere.length === basins.length
   const inBasins = (b: string | undefined) => allBasins || basinsHere.includes(b ?? '')
@@ -179,10 +208,10 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
   const inRegion = isWaterRound
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : isRivers
-      ? roundPlaces.filter((p) => inBasins(p.basin))
+      ? localPlaces.filter((p) => inBasins(p.basin))
       : isPhysicalAll
-        ? roundPlaces.filter(inSections)
-        : roundPlaces
+        ? localPlaces.filter(inSections)
+        : localPlaces
   /**
    * Why mode's clue for a country is its capital, so a country no syllabus
    * names a capital for yet has no clue to ask from, and sits out.
@@ -209,6 +238,9 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
       ? inRegion.filter((p) => kindOn(placeKindOf(p.type)))
       : inRegion
   const askedCountries = isPolitical && kindOn('country') ? roundCountries : []
+  /** Context rivers ride along with their own system, sections and continents only. */
+  const inContext = (p: Place) =>
+    (!isPhysical || inContinents(p)) && (isRivers ? inBasins(p.basin) : !isPhysicalAll || inSections(p))
   /**
    * A round narrowed to these questions. A Political Map round with no places
    * left in it takes the countries' own frame — Oceania's stops at Samoa, not
@@ -226,12 +258,11 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
         ? {
             ...round,
             places,
+            view: localView,
             // Context rivers ride along with their own system only.
             backdrop: [
               ...inRegion.map((p) => p.id),
-              ...(round.context ?? []).filter((id) =>
-                isRivers ? inBasins(placeOf(id).basin) : !isPhysicalAll || inSections(placeOf(id))
-              ),
+              ...(round.context ?? []).filter((id) => inContext(placeOf(id))),
             ],
           }
         : { ...round, askable: countries }
@@ -335,9 +366,17 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
         ? {
             ...round,
             places: inRegion.map((p) => p.id),
-            context: round.context?.filter((id) => !isRivers || inBasins(placeOf(id).basin)),
+            context: round.context?.filter((id) => !isRivers || inContext(placeOf(id))),
+            view: localView,
           }
-        : round
+        : isPhysical && !allContinents
+          ? {
+              ...round,
+              places: localPlaces.map((p) => p.id),
+              context: round.context?.filter((id) => inContinents(placeOf(id))),
+              view: localView,
+            }
+          : round
     return (
       <LearnScreen
         round={learnRound}
@@ -430,6 +469,36 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
               </>
             )}
 
+            {isPhysical && continentsHere.length > 1 && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Continent</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {['all', ...continentsHere].map((id) => {
+                    const on = id === 'all' ? allContinents : !allContinents && continentsChosen.includes(id)
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => tapContinent(id)}
+                        aria-pressed={on}
+                        className={`cursor-pointer rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                          on ? 'border-blue-600' : 'border-transparent'
+                        }`}
+                      >
+                        <div className="font-extrabold text-slate-900">{id === 'all' ? 'All' : id}</div>
+                        <div className="text-xs font-semibold text-slate-500">
+                          {id === 'all' ? roundPlaces.length : roundPlaces.filter((p) => p.realm === id).length}
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+                <p className="mt-2 text-xs font-semibold text-slate-500">
+                  Tap continents to practise several together, or All for the whole map.
+                </p>
+              </>
+            )}
+
             {isPhysicalAll && sectionsHere.length > 1 && (
               <>
                 <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Features</h2>
@@ -449,8 +518,8 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                         <div className="font-extrabold text-slate-900">{title}</div>
                         <div className="text-xs font-semibold text-slate-500">
                           {id === 'all'
-                            ? roundPlaces.length
-                            : roundPlaces.filter((p) => physicalSectionOf(p)?.id === id).length}
+                            ? localPlaces.length
+                            : localPlaces.filter((p) => physicalSectionOf(p)?.id === id).length}
                         </div>
                       </button>
                     )
