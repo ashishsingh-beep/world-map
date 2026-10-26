@@ -2552,6 +2552,76 @@
       ]
     },
     {
+      "id": "riv-tamas",
+      "name": "Tamas",
+      "aliases": [
+        "Tons",
+        "Tamsa",
+        "Tamasa"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "R13412125",
+      "joins": "riv-ganga",
+      "bank": "right",
+      "significance": "The river of Rewa's plateau, plunging off the Kaimur scarp at the Purwa Falls before it reaches the Ganga below Prayagraj",
+      "notes": [
+        "Also called the **Tons** (Tamsa) — not the Yamuna's Tons in Uttarakhand",
+        "Rises in the Kaimur Range, in Satna district",
+        "Flows through Satna and Rewa in Madhya Pradesh",
+        "The **Purwa Falls** lie on it, in Rewa district",
+        "Its tributary the **Beehar** flows through Rewa",
+        "Joins the Ganga at **Sirsa**, below Prayagraj"
+      ],
+      "tier": 1,
+      "osmExtra": [
+        "W210000389",
+        "W210001715"
+      ]
+    },
+    {
+      "id": "riv-beehar",
+      "name": "Beehar",
+      "aliases": [
+        "Bihar",
+        "Bihad",
+        "Beehar River"
+      ],
+      "type": "river",
+      "country": "IND",
+      "role": "tributary",
+      "basin": "Ganga",
+      "osm": "W210049022",
+      "joins": "riv-tamas",
+      "bank": "right",
+      "significance": "Rewa's own river, which winds through the city and drops 130 m at the Chachai Falls on its way to the Tamas",
+      "notes": [
+        "Flows through **Rewa** city",
+        "The **Chachai Falls** lie on it",
+        "Joins the Tamas north of Rewa"
+      ],
+      "tier": 1,
+      "osmNames": [
+        "Bihar",
+        "Beehar",
+        "Bihad",
+        "बीहर",
+        "बिहर"
+      ],
+      "osmBox": [
+        [
+          80.8,
+          24.0
+        ],
+        [
+          81.6,
+          25.0
+        ]
+      ]
+    },
+    {
       "id": "riv-ganga-patna",
       "name": "Ganga (Patna channel)",
       "aliases": [],

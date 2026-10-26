@@ -782,7 +782,11 @@ Lachen Chu above Chungthang. A seed walk and a relation combine the same way:
 the Indus is walked by its Chinese names from Tibet to Demchok, where OSM's
 relation for it begins, with that relation as its `osmExtra`. `osmSkip` drops
 ways a relation runs above where the notes say the river rises: the Jhelum's
-climbs the Sandran past Verinag's spring.
+climbs the Sandran past Verinag's spring. The Tamas is OSM's "Tons" relation — not the
+Yamuna's Tons in Uttarakhand, so the name is an alias — which starts near Satna;
+above it the course is an unnamed way from the Kaimur hills and a stretch OSM
+labels "Satna", both `osmExtra`. Its tributary the Beehar is "Bihar" in OSM,
+walked by name inside a box round Rewa.
 
 A river may run abroad only where it says: `through` lists the countries
 besides India its course may cross — the Brahmaputra's CHN and BGD, from
