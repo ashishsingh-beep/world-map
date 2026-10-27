@@ -922,6 +922,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
             return (
               <MenuCard
                 key={r.id}
+                wide
                 icon="waves"
                 title={r.title}
                 blurb="Oceans and seas as their real extent, straits as diamonds, canals as squares."
@@ -932,6 +933,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
           })}
           {PHYSICAL_ALL_ROUND && (
             <MenuCard
+              wide
               icon="terrain"
               title="Physical Map"
               blurb="Rivers, mountains, plateaus, deserts, grasslands and lakes — every physical feature on one map."
