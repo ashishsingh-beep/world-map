@@ -116,6 +116,7 @@
         ],
         "significance": "Where Colombia's great river rises, a small lake high in the Colombian Massif, where the Andes part into three ranges"
       },
+      "origin": false,
       "significance": "Colombia's chief river, running north between the Andes' cordilleras to the Caribbean at Barranquilla",
       "notes": [
         "Flows through Colombia",
@@ -148,6 +149,7 @@
         ],
         "significance": "Where Venezuela's great river rises, on a peak of the highlands along the Brazilian border"
       },
+      "origin": false,
       "significance": "Venezuela's great river, arcing round the Guiana Highlands and across the grasslands of the Llanos to a delta on the Atlantic",
       "notes": [
         "Flows through Venezuela, and along its border with Colombia",
@@ -195,6 +197,9 @@
         "URY"
       ],
       "osm": "R421678",
+      "osmExtra": [
+        "R9449531"
+      ],
       "osmWalks": [
         {
           "seed": "W358275779",
@@ -317,9 +322,13 @@
       "type": "estuary",
       "country": "ARG",
       "point": [
-        -57.6,
-        -34.9
+        -57.0,
+        -35.05
       ],
+      "land": [
+        "Río de la Plata"
+      ],
+      "below": -33.93,
       "basin": "Paraná",
       "offshore": true,
       "significance": "The broad estuary between Buenos Aires and Montevideo into which South America's second river empties",

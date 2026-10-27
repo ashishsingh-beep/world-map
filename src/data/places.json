@@ -96,7 +96,7 @@
       "title": "Rivers",
       "section": "rivers",
       "atlas": "world",
-      "count": 37
+      "count": 35
     },
     {
       "name": "Rivers",
@@ -27304,6 +27304,7 @@
         ],
         "significance": "Where Colombia's great river rises, a small lake high in the Colombian Massif, where the Andes part into three ranges"
       },
+      "origin": false,
       "significance": "Colombia's chief river, running north between the Andes' cordilleras to the Caribbean at Barranquilla",
       "notes": [
         "Flows through Colombia",
@@ -28384,6 +28385,7 @@
         ],
         "significance": "Where Venezuela's great river rises, on a peak of the highlands along the Brazilian border"
       },
+      "origin": false,
       "significance": "Venezuela's great river, arcing round the Guiana Highlands and across the grasslands of the Llanos to a delta on the Atlantic",
       "notes": [
         "Flows through Venezuela, and along its border with Colombia",
@@ -29451,6 +29453,9 @@
         "URY"
       ],
       "osm": "R421678",
+      "osmExtra": [
+        "R9449531"
+      ],
       "osmWalks": [
         {
           "seed": "W358275779",
@@ -30430,16 +30435,20 @@
           -20.263
         ],
         [
-          -48.992,
-          -20.165
+          -48.984,
+          -20.173
         ],
         [
-          -49.0648,
-          -20.1526
+          -49.014,
+          -20.154
         ],
         [
-          -49.1297,
-          -20.2808
+          -49.0675,
+          -20.1547
+        ],
+        [
+          -49.1194,
+          -20.2693
         ],
         [
           -49.1703,
@@ -30448,6 +30457,10 @@
         [
           -49.2265,
           -20.3054
+        ],
+        [
+          -49.2472,
+          -20.28
         ],
         [
           -49.299,
@@ -30462,12 +30475,16 @@
           -20.0093
         ],
         [
-          -49.2504,
-          -20.0011
+          -49.248,
+          -19.999
         ],
         [
-          -49.249,
-          -19.969
+          -49.2455,
+          -19.9765
+        ],
+        [
+          -49.265,
+          -19.962
         ],
         [
           -49.297,
@@ -30506,16 +30523,12 @@
           -19.946
         ],
         [
-          -49.891,
-          -19.943
-        ],
-        [
           -49.962,
           -19.92
         ],
         [
-          -50.0386,
-          -19.9183
+          -50.012,
+          -19.926
         ],
         [
           -50.103,
@@ -30558,8 +30571,8 @@
           -20.2314
         ],
         [
-          -51.1379,
-          -20.2939
+          -51.1262,
+          -20.2883
         ],
         [
           -51.2847,
@@ -30626,8 +30639,8 @@
           -21.2538
         ],
         [
-          -51.8632,
-          -21.3464
+          -51.8607,
+          -21.3374
         ],
         [
           -51.9109,
@@ -30638,16 +30651,12 @@
           -21.4545
         ],
         [
-          -51.9702,
-          -21.504
+          -51.9836,
+          -21.5125
         ],
         [
-          -51.9988,
-          -21.5171
-        ],
-        [
-          -52.0634,
-          -21.5081
+          -52.0525,
+          -21.5057
         ],
         [
           -52.0942,
@@ -30658,16 +30667,12 @@
           -21.5702
         ],
         [
-          -52.0509,
-          -21.6371
+          -52.0471,
+          -21.6516
         ],
         [
-          -52.0511,
-          -21.6669
-        ],
-        [
-          -52.1014,
-          -21.7379
+          -52.078,
+          -21.7157
         ],
         [
           -52.1573,
@@ -31503,7 +31508,7 @@
         ],
         [
           -60.7716,
-          -32.5078
+          -32.5149
         ],
         [
           -60.7455,
@@ -31522,28 +31527,20 @@
           -32.757
         ],
         [
-          -60.6776,
-          -32.8929
+          -60.6798,
+          -32.8879
         ],
         [
           -60.6133,
           -32.9524
         ],
         [
-          -60.598,
-          -33.0093
+          -60.5889,
+          -33.0228
         ],
         [
-          -60.5232,
-          -33.0803
-        ],
-        [
-          -60.4966,
-          -33.1307
-        ],
-        [
-          -60.4642,
-          -33.1474
+          -60.4792,
+          -33.1413
         ],
         [
           -60.4002,
@@ -31554,8 +31551,12 @@
           -33.1809
         ],
         [
-          -60.3032,
-          -33.1867
+          -60.32,
+          -33.18
+        ],
+        [
+          -60.294,
+          -33.1931
         ],
         [
           -60.2825,
@@ -31570,8 +31571,8 @@
           -33.2979
         ],
         [
-          -60.1628,
-          -33.3547
+          -60.166,
+          -33.3517
         ],
         [
           -60.1022,
@@ -31606,8 +31607,8 @@
           -33.5895
         ],
         [
-          -59.7895,
-          -33.6024
+          -59.7763,
+          -33.6085
         ],
         [
           -59.7108,
@@ -31626,35 +31627,99 @@
           -33.6882
         ],
         [
-          -59.5444,
-          -33.6413
+          -59.5365,
+          -33.6358
         ],
         [
-          -59.5135,
-          -33.6307
+          -59.5032,
+          -33.6336
         ],
         [
-          -59.4829,
-          -33.6471
+          -59.4423,
+          -33.7273
         ],
         [
-          -59.4661,
-          -33.7061
+          -59.3976,
+          -33.7367
         ],
         [
-          -59.4309,
-          -33.7324
+          -59.2469,
+          -33.7262
         ],
         [
-          -59.2911,
-          -33.7266
+          -59.2342,
+          -33.7388
+        ],
+        [
+          -59.2537,
+          -33.7942
+        ],
+        [
+          -59.2365,
+          -33.8117
+        ],
+        [
+          -59.1721,
+          -33.8063
+        ],
+        [
+          -59.1329,
+          -33.8477
+        ],
+        [
+          -59.0556,
+          -33.8348
+        ],
+        [
+          -59.0192,
+          -33.8479
+        ],
+        [
+          -58.9941,
+          -33.8414
+        ],
+        [
+          -58.9729,
+          -33.8727
+        ],
+        [
+          -58.8983,
+          -33.8905
+        ],
+        [
+          -58.8399,
+          -33.9509
+        ],
+        [
+          -58.7582,
+          -33.9467
+        ],
+        [
+          -58.6578,
+          -34.0341
+        ],
+        [
+          -58.6019,
+          -34.0365
+        ],
+        [
+          -58.4774,
+          -34.0026
+        ],
+        [
+          -58.4195,
+          -34.0038
+        ],
+        [
+          -58.3874,
+          -33.9854
         ]
       ],
-      "lengthKm": 3926,
+      "lengthKm": 4035,
       "rank": 0,
       "point": [
-        -51.6685,
-        -20.9685
+        -51.8804,
+        -21.1978
       ],
       "continent": "World Rivers",
       "section": "rivers",
@@ -31697,9 +31762,13 @@
       "type": "estuary",
       "country": "ARG",
       "point": [
-        -57.6,
-        -34.9
+        -57,
+        -35.05
       ],
+      "land": [
+        "Río de la Plata"
+      ],
+      "below": -33.93,
       "basin": "Paraná",
       "offshore": true,
       "significance": "The broad estuary between Buenos Aires and Montevideo into which South America's second river empties",
@@ -31710,6 +31779,8 @@
       "continent": "World Rivers",
       "section": "rivers",
       "atlas": "world",
+      "tint": "#1d4ed8",
+      "onLand": true,
       "realm": "South America"
     },
     {
@@ -46270,50 +46341,6 @@
         -10.9191
       ],
       "significance": "Where the river of the selvas rises: a river of the Andes of central Peru, flowing out of Lake Junín",
-      "notes": [],
-      "tier": 1,
-      "continent": "World Rivers",
-      "section": "rivers",
-      "atlas": "world",
-      "realm": "South America"
-    },
-    {
-      "id": "origin-wriv-magdalena",
-      "name": "Laguna de la Magdalena",
-      "aliases": [
-        "Magdalena Lake"
-      ],
-      "type": "origin",
-      "country": "COL",
-      "basin": "Magdalena",
-      "river": "wriv-magdalena",
-      "point": [
-        -76.6071,
-        1.9353
-      ],
-      "significance": "Where Colombia's great river rises, a small lake high in the Colombian Massif, where the Andes part into three ranges",
-      "notes": [],
-      "tier": 1,
-      "continent": "World Rivers",
-      "section": "rivers",
-      "atlas": "world",
-      "realm": "South America"
-    },
-    {
-      "id": "origin-wriv-orinoco",
-      "name": "Cerro Delgado Chalbaud",
-      "aliases": [
-        "Delgado Chalbaud"
-      ],
-      "type": "origin",
-      "country": "VEN",
-      "basin": "Orinoco",
-      "river": "wriv-orinoco",
-      "point": [
-        -63.4082,
-        2.3858
-      ],
-      "significance": "Where Venezuela's great river rises, on a peak of the highlands along the Brazilian border",
       "notes": [],
       "tier": 1,
       "continent": "World Rivers",

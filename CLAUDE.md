@@ -485,7 +485,14 @@ Ucayali, Amazonas); the Paraná from the Rio Grande's in the Brazilian
 Highlands. The Rio Grande has no relation, and its reservoirs break any walk by
 name, so it is `osmWalks`: several seed ways walked by name inside a box, the
 gaps under 40km bridged. The course search is a heap Dijkstra: the Amazon's
-graph is too big for the linear scan India's rivers got by with.
+graph is too big for the linear scan India's rivers got by with. OSM's Paraná stops
+at the head of its delta, 80km short of the estuary, so the Paraná Guazú
+relation carries it on to the Río de la Plata. The Río de la Plata is drawn
+as its extent, Natural Earth's marine polygon (an `estuary` patch, looked up
+like a lake), cut at Punta Gorda (`below`, 33.93°S) where the Paraná and the
+Uruguay meet — Natural Earth's runs 160km on up the Uruguay. A river may set
+`"origin": false` to keep its `source` as the course's anchor and ask nothing
+about it: the Magdalena's and the Orinoco's are not questions, on request.
 
 **Oceania's regions are drawn, and held to their members.** Melanesia,
 Micronesia and Polynesia are a convention, not a coastline: no dataset

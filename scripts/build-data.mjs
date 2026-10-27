@@ -146,6 +146,7 @@ const PHYSICAL_TINT = {
   lake: '#1d4ed8',
   valley: '#be123c',
   semiarid: '#a3a335',
+  estuary: '#1d4ed8',
 }
 /**
  * A region that is not a peninsula — the Afar Region, say — is a zone, and a
@@ -154,7 +155,7 @@ const PHYSICAL_TINT = {
  */
 const isLandArea = (p) =>
   LAND_AREA_TYPES.has(p.type) ||
-  (['zone', 'state', 'island', 'territory', 'lake'].includes(p.type) &&
+  (['zone', 'state', 'island', 'territory', 'lake', 'estuary'].includes(p.type) &&
     Boolean(p.land?.length || p.admin1?.length || p.countries?.length || p.south != null))
 
 /** Natural Earth shouts some names and accents others: SOUTHERN OCEAN, Bahía. */
@@ -1404,8 +1405,10 @@ for (const file of syllabusFiles) {
    * once the course has put it where the line begins. Authored on the river,
    * not beside it, so the two can never drift apart.
    */
+  // `"origin": false` keeps the source as the course's anchor but asks
+  // nothing about it: the Magdalena's and the Orinoco's are not questions.
   for (const r of rivers) {
-    if (!r.source) continue
+    if (!r.source || r.origin === false) continue
     if (!r.source.significance) errors.push(`${where(r.id)}: its source needs a significance, to be asked about`)
     doc.places.push({
       id: `origin-${r.id.replace(/^riv-/, '')}`,
@@ -1874,6 +1877,11 @@ function clipToCountry(parts, isos) {
     isos.length === 1
       ? picked.get(isos[0])
       : { geometry: topojsonMerge(countriesTopo, countriesTopo.objects.countries.geometries.filter((g) => isos.includes(g.id))) }
+  return clipToShape(parts, country.geometry)
+}
+
+/** Clips one place's gathered parts to any lon/lat shape, via a throwaway job. */
+function clipToShape(parts, shape) {
   const penIn = resolve(CACHE, 'land-clip-pen.geojson')
   const countryIn = resolve(CACHE, 'land-clip-country.geojson')
   const clipOut = resolve(CACHE, 'land-clip-out.topo.json')
@@ -1886,7 +1894,7 @@ function clipToCountry(parts, isos) {
   )
   writeFileSync(
     countryIn,
-    JSON.stringify({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: country.geometry }] })
+    JSON.stringify({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: shape }] })
   )
   execFileSync(
     resolve(ROOT, 'node_modules/.bin/mapshaper'),
@@ -2038,12 +2046,12 @@ for (const p of places) {
     }
   }
   for (const name of p.admin1 || p.countries || p.south != null ? (p.land ?? []) : (p.land ?? [p.name])) {
-    const found = (p.type === 'constituent' ? unitByName : p.type === 'lake' ? lakeByName : landByName).get(loose(name))
+    const found = (p.type === 'constituent' ? unitByName : p.type === 'lake' || p.type === 'estuary' ? lakeByName : landByName).get(loose(name))
     // `landAll` takes every polygon of a repeated name: Natural Earth draws
     // the Great Rift Valley as two, its Ethiopian–Eastern arm and its Western.
     const fs = Array.isArray(found) ? (p.landAll ? found : [pickFor(p, found)]) : [found]
     if (!fs[0]) {
-      errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : p.type === 'lake' ? 'lake' : 'land polygon'} named "${name}"`)
+      errors.push(`${p.id}: no ${p.type === 'constituent' ? 'map unit' : p.type === 'lake' || p.type === 'estuary' ? 'lake or marine polygon' : 'land polygon'} named "${name}"`)
       continue
     }
     for (const { geometry: g } of fs) parts.push(...(g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]))
@@ -2075,6 +2083,18 @@ for (const p of places) {
    * Mendoza and west over the Andes' forests and icefields to Chile's fjords.
    * Clipped to the country after, since the 0.1° cells overrun the coast.
    */
+  /**
+   * An estuary Natural Earth runs on up a river is cut at the parallel where
+   * it begins (`below`): its Río de la Plata climbs 160km up the lower
+   * Uruguay, and the estuary starts only where the Paraná and the Uruguay
+   * meet, at Punta Gorda.
+   */
+  if (p.below != null && parts.length) {
+    let [w, s, e] = [Infinity, Infinity, -Infinity]
+    for (const [x, y] of parts.flat(2)) [w, s, e] = [Math.min(w, x), Math.min(s, y), Math.max(e, x)]
+    const box = [[w - 1, p.below], [e + 1, p.below], [e + 1, s - 1], [w - 1, s - 1], [w - 1, p.below]]
+    parts = clipToShape(parts, { type: 'Polygon', coordinates: [box] })
+  }
   // An erase leaves slivers where the two outlines nearly meet; anything
   // under 2,000 km² of what is left is one, not a part of the place.
   if (p.erase && parts.length) {
