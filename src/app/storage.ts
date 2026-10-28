@@ -44,6 +44,8 @@ export interface Prefs {
   physicalSections: string[]
   /** Which continents a physical round asks; none means all of them. */
   physicalContinents: string[]
+  /** What a rivers round asks — rivers, origins, confluences, places; none means all of them. */
+  riverKinds: string[]
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -59,6 +61,7 @@ export const DEFAULT_PREFS: Prefs = {
   basins: [],
   physicalSections: [],
   physicalContinents: [],
+  riverKinds: [],
 }
 
 /** A round interrupted part-way, enough to put it back exactly as it was. */
@@ -144,6 +147,9 @@ export function loadPrefs(): Prefs {
     physicalContinents: Array.isArray(raw.physicalContinents)
       ? raw.physicalContinents.filter((s): s is string => typeof s === 'string')
       : DEFAULT_PREFS.physicalContinents,
+    riverKinds: Array.isArray(raw.riverKinds)
+      ? raw.riverKinds.filter((s): s is string => typeof s === 'string')
+      : DEFAULT_PREFS.riverKinds,
   }
 }
 

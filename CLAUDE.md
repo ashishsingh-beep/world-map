@@ -860,7 +860,7 @@ A rivers map can ask about a place on a river's course too — Majuli, the
 largest river island, and Namcha Barwa, the peak the Brahmaputra bends round —
 filed with its system's `basin` like any river. The Indus map's are Pangong Tso
 and Tso Moriri (`type: "lake"`) and Shipki La, where the Sutlej enters India
-(`type: "pass"`). Learn calls them Landmarks,
+(`type: "pass"`). Learn and setup call them Places,
 with their own chip; setup counts them apart from rivers and origins.
 
 A note may set words in **bold** (the Brahmaputra's **Jamuna** and
@@ -916,7 +916,12 @@ screen; a practice of misses still draws the whole system (`Round.backdrop`).
 Setup narrows by river system, several at once (the `basins` pref, none meaning
 all): the chips toggle like the Political Map's continents — All stands alone,
 ticking every system is All, and the last one ticked cannot be tapped away; a
-stored single `basin` from before carries over. Learn narrows by role and system.
+stored single `basin` from before carries over. It then narrows by kind —
+Rivers, Origins, Confluences, Places (`RIVER_KINDS` and `riverKindOf` in `App`,
+the `riverKinds` pref), toggled the same way: a kind left out is not asked, but
+the rivers stay drawn, since an origin or a confluence is read off the courses,
+and Learn opens with the left-out origins, confluences or places put away.
+Learn narrows by role and system.
 Credit for OSM's rivers and DataMeet's state lines sits at the map's foot.
 
 **A coast is a line with width too.** The Grain, Ivory, Gold and Slave Coasts

@@ -49,7 +49,13 @@ export function LearnScreen({
 }: {
   round: Round
   /** What the setup screen has chosen, which Learn opens on. */
-  initial?: { placeKinds?: Record<PlaceKind, boolean>; kinds?: Record<WaterKind, boolean>; sections?: string[] }
+  initial?: {
+    placeKinds?: Record<PlaceKind, boolean>
+    kinds?: Record<WaterKind, boolean>
+    sections?: string[]
+    /** A rivers round's kinds chosen on setup: origins, confluences, places left out start hidden. */
+    riverKinds?: string[]
+  }
   onExit: () => void
 }) {
   const [showAll, setShowAll] = useState(false)
@@ -61,14 +67,14 @@ export function LearnScreen({
     () => initial?.placeKinds ?? { country: true, capital: true, other: true, region: true }
   )
   /** Which rivers are drawn, by role and by system. */
-  const [rolesShown, setRolesShown] = useState({
+  const [rolesShown, setRolesShown] = useState(() => ({
     main: true,
     tributary: true,
     distributary: true,
-    origin: true,
-    confluence: true,
-    landmark: true,
-  })
+    origin: !initial?.riverKinds || initial.riverKinds.includes('origin'),
+    confluence: !initial?.riverKinds || initial.riverKinds.includes('confluence'),
+    landmark: !initial?.riverKinds || initial.riverKinds.includes('place'),
+  }))
   const [basinsHidden, setBasinsHidden] = useState<string[]>([])
   /** A physical section's kinds put away in the legend: the Andes' range, its peaks. */
   const [kindsHidden, setKindsHidden] = useState<string[]>([])
@@ -356,7 +362,7 @@ export function LearnScreen({
                   ['distributary', 'Distributaries'],
                   ['origin', 'Origins'],
                   ['confluence', 'Confluences'],
-                  ['landmark', 'Landmarks'],
+                  ['landmark', 'Places'],
                 ] as const
               )
                 .filter(([role]) => role !== 'landmark' || roundPlaces.some(isLandmark))

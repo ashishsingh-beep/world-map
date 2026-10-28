@@ -56,16 +56,30 @@ const riverTally = (asked: Place[]) => {
   const origins = asked.filter((p) => p.type === 'origin').length
   const confluences = asked.filter((p) => p.type === 'confluence').length
   // Majuli, Namcha Barwa: places on a river's course, asked beside it.
-  const landmarks = asked.length - rivers - origins - confluences
+  const places = asked.length - rivers - origins - confluences
   return [
-    n(rivers, 'river'),
+    rivers && n(rivers, 'river'),
     origins && n(origins, 'origin'),
     confluences && n(confluences, 'confluence'),
-    landmarks && n(landmarks, 'landmark'),
+    places && n(places, 'place'),
   ]
     .filter(Boolean)
     .join(' · ')
 }
+
+/**
+ * What a rivers round can ask, by kind: the rivers themselves, where they
+ * rise, where they meet, and the places on their courses (Majuli, Shipki La,
+ * Angel Falls) — one bucket for everything that is none of the other three.
+ */
+const RIVER_KINDS = [
+  ['river', 'Rivers'],
+  ['origin', 'Origins'],
+  ['confluence', 'Confluences'],
+  ['place', 'Places'],
+] as const
+const riverKindOf = (p: Place) =>
+  p.type === 'river' || p.type === 'origin' || p.type === 'confluence' ? p.type : 'place'
 
 /** A physical section's round, once its syllabus has something in it. */
 const physicalRound = (s: PhysicalSection) => {
@@ -91,7 +105,7 @@ export default function App() {
 
 function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, replace?: boolean) => void }) {
   const [prefs, setPrefs] = useState(loadPrefs)
-  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref, physicalSections: sectionPref, physicalContinents: continentPref } = prefs
+  const { mode, timed, count, suggestions, kinds, region, placeKinds, basins: basinPref, physicalSections: sectionPref, physicalContinents: continentPref, riverKinds: riverKindPref } = prefs
   const setMode = (mode: Mode) => setPrefs((p) => ({ ...p, mode }))
   const setTimed = (timed: boolean) => setPrefs((p) => ({ ...p, timed }))
   const setCount = (count: QuestionCount) => setPrefs((p) => ({ ...p, count }))
@@ -102,6 +116,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
   const setBasins = (basins: string[]) => setPrefs((p) => ({ ...p, basins }))
   const setSections = (physicalSections: string[]) => setPrefs((p) => ({ ...p, physicalSections }))
   const setContinents = (physicalContinents: string[]) => setPrefs((p) => ({ ...p, physicalContinents }))
+  const setRiverKinds = (riverKinds: string[]) => setPrefs((p) => ({ ...p, riverKinds }))
   const setPlaceKinds = (next: (k: Record<PlaceKind, boolean>) => Record<PlaceKind, boolean>) =>
     setPrefs((p) => ({ ...p, placeKinds: next(p.placeKinds) }))
   useEffect(() => savePrefs(prefs), [prefs])
@@ -205,6 +220,27 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     if (!next.length) return
     setBasins(next.length === basins.length ? [] : next)
   }
+  /**
+   * Then by kind — rivers, origins, confluences, places — several at once,
+   * toggled like the systems. A kind left out is not asked, but the rivers
+   * stay drawn: an origin or a confluence is read off the courses.
+   */
+  const riverKindsHere: string[] = isRivers
+    ? RIVER_KINDS.map(([k]) => k as string).filter((k) => localPlaces.some((p) => inBasins(p.basin) && riverKindOf(p) === k))
+    : []
+  const riverKindsChosen = riverKindPref.filter((k) => riverKindsHere.includes(k))
+  const allRiverKinds = riverKindsChosen.length === 0 || riverKindsChosen.length === riverKindsHere.length
+  const inRiverKinds = (p: Place) => allRiverKinds || riverKindsChosen.includes(riverKindOf(p))
+  const tapRiverKind = (id: string) => {
+    if (id === 'all') return setRiverKinds([])
+    const next = allRiverKinds
+      ? [id]
+      : riverKindsChosen.includes(id)
+        ? riverKindsChosen.filter((k) => k !== id)
+        : [...riverKindsChosen, id]
+    if (!next.length) return
+    setRiverKinds(next.length === riverKindsHere.length ? [] : next)
+  }
   const inRegion = isWaterRound
     ? roundPlaces.filter((p) => region === 'all' || p.regions?.includes(region))
     : isRivers
@@ -236,7 +272,9 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
     ? inRegion.filter((p) => kinds[p.type as WaterKind] ?? true)
     : isPlacesRound
       ? inRegion.filter((p) => kindOn(placeKindOf(p.type)))
-      : inRegion
+      : isRivers
+        ? inRegion.filter(inRiverKinds)
+        : inRegion
   const askedCountries = isPolitical && kindOn('country') ? roundCountries : []
   /** Context rivers ride along with their own system, sections and continents only. */
   const inContext = (p: Place) =>
@@ -386,6 +424,7 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
             : undefined,
           kinds: isWaterRound ? kinds : undefined,
           sections: isPhysicalAll && !allSections ? sectionsChosen : undefined,
+          riverKinds: isRivers && !allRiverKinds ? riverKindsChosen : undefined,
         }}
         onExit={() => navigate({ view: 'setup', roundId })}
       />
@@ -557,6 +596,39 @@ function Rounds({ route, navigate }: { route: Route; navigate: (next: Route, rep
                 <p className="mt-2 text-xs font-semibold text-slate-500">
                   Tap systems to practise several together, or All for every one. A system is
                   its main river with every tributary and distributary that belongs to it.
+                </p>
+              </>
+            )}
+
+            {isRivers && riverKindsHere.length > 1 && (
+              <>
+                <h2 className="mt-5 mb-2 font-extrabold text-slate-900">Questions on</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {['all', ...riverKindsHere].map((id) => {
+                    const on = id === 'all' ? allRiverKinds : !allRiverKinds && riverKindsChosen.includes(id)
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => tapRiverKind(id)}
+                        aria-pressed={on}
+                        className={`cursor-pointer rounded-xl border-2 bg-white px-3 py-3 text-center ${
+                          on ? 'border-blue-600' : 'border-transparent'
+                        }`}
+                      >
+                        <div className="font-extrabold text-slate-900">
+                          {id === 'all' ? 'All' : RIVER_KINDS.find(([k]) => k === id)![1]}
+                        </div>
+                        <div className="text-xs font-semibold text-slate-500">
+                          {id === 'all' ? inRegion.length : inRegion.filter((p) => riverKindOf(p) === id).length}
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+                <p className="mt-2 text-xs font-semibold text-slate-500">
+                  Tap kinds to practise several together, or All for everything. The rivers stay
+                  on the map either way.
                 </p>
               </>
             )}
